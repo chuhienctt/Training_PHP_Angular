@@ -1,0 +1,95 @@
+
+<div class="about-wrapper index-1">
+  <div class="container">
+    <!-- Section Name-->
+    <div class="section-name index-1">
+      <h1>Đăng nhập</h1>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, ab.</p>
+      <div class="sep"></div>
+    </div>
+    <!-- Tab switcher-->
+    <ul class="nav nav-pills tab-switcher text-center">
+      <li class="active"><a data-toggle="tab" href="#tab-1">Đăng nhập</a></li>
+      <li><a data-toggle="tab" href="#tab-2">Đăng ký</a></li>
+    </ul>
+    <!-- Tabs Content-->
+    <div class="tab-content">
+      <!-- Tab Content 1-->
+      <div id="tab-1" class="active tab-pane">
+        <div class="row">
+          <!-- Image-->
+          <div class="col-md-3"></div>
+          <div class="col-md-6 contact-form-wrapper">
+            <!-- Contact Form-->
+            <form action="#" class="contact-form">
+              <div class="field">
+                <input type="text" name="name" placeholder="Name">
+              </div>
+              <div class="field">
+                <input type="email" name="email" placeholder="E-mail">
+              </div>
+              <input type="submit" value="Send Message" class="submit">
+            </form>
+          </div>
+          <div class="col-md-3"></div>
+        </div>
+      </div>
+      <!-- Tab Content 2-->
+      <div id="tab-2" class="tab-pane">
+        <div class="row">
+          <!-- Image-->
+          <div class="col-md-3"></div>
+          <div class="col-md-6 contact-form-wrapper">
+            <!-- Contact Form-->
+            <form action="#" class="contact-form">
+              <div class="field">
+                <input type="text" name="name" placeholder="Họ tên">
+              </div>
+              <div class="field">
+                <input type="email" name="email" placeholder="E-mail">
+              </div>
+              <div class="field">
+                <input type="text" name="phone" placeholder="Số điện thoại">
+              </div>
+              <div class="field">
+                <input type="text" name="address" placeholder="Địa chỉ cụ thể">
+              </div>
+              <div class="field">
+                <p-dropdown [style]="style" (onChange)="getDistrict($event.value.name)" [options]="listCity" optionLabel="name" [showClear]="true" placeholder="Chọn tỉnh">
+                  <ng-template pTemplate="selectedItem">
+                    <div class="country-item country-item-value" *ngFor="let item of listCity">
+                      <div>{{item.name}}</div>
+                    </div>
+                  </ng-template>
+                </p-dropdown>
+              </div>
+              <div class="field">
+                <p-dropdown [style]="style" [disabled]="listDistrict.length == 0" (onChange)="getCommune($event.value.name)" [options]="listDistrict" optionLabel="name" [showClear]="true" placeholder="Chọn quận, huyện">
+                  <ng-template pTemplate="selectedItem">
+                    <div class="country-item country-item-value" *ngFor="let item of listDistrict">
+                      <div>{{item.name}}</div>
+                    </div>
+                  </ng-template>
+                </p-dropdown>
+              </div>
+              <div class="field">
+                <p-dropdown [style]="style"[disabled]="listCommune.length == 0" (onChange)="getNameCommune($event.value.name)" [options]="listCommune" optionLabel="name" [showClear]="true" placeholder="Chọn xã, phường, thị trấn">
+                  <ng-template pTemplate="selectedItem">
+                    <div class="country-item country-item-value" *ngFor="let item of listCommune">
+                      <div>{{item.name}}</div>
+                    </div>
+                  </ng-template>
+                </p-dropdown>
+              </div>
+              <div class="field">
+                <p-calendar [style]="{'width': '100%'}" ngModel="value" placeholder="Ngày sinh" dateFormat="dd/mm/yy"></p-calendar>
+              </div>
+              <input type="submit" value="Send Message" class="submit">
+            </form>
+          </div>
+          <div class="col-md-3"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
