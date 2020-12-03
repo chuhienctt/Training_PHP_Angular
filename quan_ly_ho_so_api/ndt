@@ -2,8 +2,28 @@
 
 // terminal
 
+const OS_UNKNOWN = 1;
+const OS_WIN = 2;
+const OS_LINUX = 3;
+const OS_OSX = 4;
+
 switch($argv[1]) {
     case '-s':
-        exec('php -S localhost:8000 '.__DIR__.'/public/index.php | start http://localhost:8000');
+        if(getOS() == OS_WIN) {
+            exec('php -S localhost:8000 '.__DIR__.'/public/index.php | start http://localhost:8000');
+        } else if(getOS() == OS_OSX) {
+            exec('php -S localhost:8000 '.__DIR__.'/public/index.php | open http://localhost:8000');
+        } else if(getOS() == OS_LINUX) {
+            exec('php -S localhost:8000 '.__DIR__.'/public/index.php | xdg-open http://localhost:8000');
+        }
     break;
+}
+
+function getOS() {
+    switch (true) {
+        case stristr(PHP_OS, 'DAR'): return OS_OSX;
+        case stristr(PHP_OS, 'WIN'): return OS_WIN;
+        case stristr(PHP_OS, 'LINUX'): return OS_LINUX;
+        default : return OS_UNKNOWN;
+    }
 }

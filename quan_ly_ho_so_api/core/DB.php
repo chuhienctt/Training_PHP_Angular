@@ -26,6 +26,7 @@ class DB {
                 self::$connect->exec("SET NAMES 'utf8'");
             }
         } catch (PDOException $ex) {
+            echo "Error Connection SQL";
             die($ex->getMessage());
         }
     }
