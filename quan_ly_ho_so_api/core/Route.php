@@ -18,7 +18,11 @@ class Route {
 
         // $urls = explode('/', rtrim($path, '/'));
 
-        $this->route = substr($path, strripos($path, 'public') + 6);
+        if(strpos('public', $path) > 0) {
+            $this->route = substr($path, strripos($path, 'public') + 6);
+        } else {
+            $this->route = $path;
+        }
         $this->request_method = $_SERVER["REQUEST_METHOD"];
     }
 
@@ -56,7 +60,7 @@ class Route {
         $controllerName = $funcs[0];
         $methodName = $funcs[1];
 
-        $file = "../app/Controllers/{$controllerName}.php";
+        $file = __DIR__."/../app/Controllers/{$controllerName}.php";
         if(!file_exists($file)) {
             throw new Exception("{$controllerName} not found");
         }
@@ -119,7 +123,7 @@ class Route {
     public static function group($config, $callback) {
         if(isset($config['middleware'])) {
             $middlewareName = $config['middleware'];
-            $file = "../app/Middlewares/{$middlewareName}.php";
+            $file = __DIR__."/../app/Middlewares/{$middlewareName}.php";
 
             if(!file_exists($file)) {
                 echo "Caught exception: {$middlewareName} not found\n";

@@ -11,17 +11,17 @@ foreach($config['header'] as $key => $value) {
 }
 
 // autoload core
-$files = getFiles('../core/');
+$files = getFiles(__DIR__.'/../core/');
 
 foreach($files as $file) {
-    require_once '../core/'.$file;
+    require_once __DIR__.'/../core/'.$file;
 }
 
 // autoload models
-$files = getFiles('../app/Models/');
+$files = getFiles(__DIR__.'/../app/Models/');
 
 foreach($files as $file) {
-    require_once '../app/Models/'.$file;
+    require_once __DIR__.'/../app/Models/'.$file;
 
     // init model
     $className = "App\\Model\\".explode('.', $file)[0];

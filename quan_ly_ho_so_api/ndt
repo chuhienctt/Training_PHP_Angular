@@ -1,0 +1,9 @@
+<?php
+
+// terminal
+
+switch($argv[1]) {
+    case '-s':
+        exec('php -S localhost:8000 '.__DIR__.'/public/index.php | start http://localhost:8000');
+    break;
+}
