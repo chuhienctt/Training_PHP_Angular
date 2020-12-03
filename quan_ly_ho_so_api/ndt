@@ -2,22 +2,41 @@
 
 // terminal
 
+const RUN_PORT = 8200;
+
 const OS_UNKNOWN = 1;
 const OS_WIN = 2;
 const OS_LINUX = 3;
 const OS_OSX = 4;
 
-switch($argv[1]) {
-    case '-s':
-        if(getOS() == OS_WIN) {
-            exec('php -S localhost:8000 '.__DIR__.'/public/index.php | start http://localhost:8000');
-        } else if(getOS() == OS_OSX) {
-            exec('php -S localhost:8000 '.__DIR__.'/public/index.php | open http://localhost:8000');
-        } else if(getOS() == OS_LINUX) {
-            exec('php -S localhost:8000 '.__DIR__.'/public/index.php | xdg-open http://localhost:8000');
-        }
-    break;
+
+if(isset($argv[1])) {
+    // main cmd
+
+    switch($argv[1]) {
+        case 's':
+        case '-s':
+            $os = getOS();
+
+            // for windows
+            $cmd = 'start';
+
+            if($os == OS_OSX) {
+                // for macosx
+                $cmd = 'open';
+            } else if($os == OS_LINUX) {
+                // for linux
+                $cmd = 'xdg-open';
+            }
+
+            exec('php -S localhost:'.RUN_PORT.' '.__DIR__.'/public/index.php | '.$cmd.' http://localhost:'.RUN_PORT);
+        break;
+    }
+
+} else {
+    echo file_get_contents('README.md');
 }
+
 
 function getOS() {
     switch (true) {

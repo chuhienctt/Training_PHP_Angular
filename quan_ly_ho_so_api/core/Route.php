@@ -18,11 +18,13 @@ class Route {
 
         // $urls = explode('/', rtrim($path, '/'));
 
-        if(strpos('public', $path) > 0) {
+
+        if(strpos($path, 'public') > 0) {
             $this->route = substr($path, strripos($path, 'public') + 6);
         } else {
             $this->route = $path;
         }
+        
         $this->request_method = $_SERVER["REQUEST_METHOD"];
     }
 
