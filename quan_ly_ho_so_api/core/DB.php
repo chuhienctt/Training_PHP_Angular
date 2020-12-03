@@ -12,6 +12,7 @@ class DB {
     protected $where = [];
     protected $offset = 0;
     protected $limit = 0;
+    protected $orderBy = '';
 
     function __construct($table) {
         $this->table = $table;
@@ -59,7 +60,7 @@ class DB {
             $data[] = $this->offset;
         }
 
-        $sql = "SELECT $select FROM $this->table $where $limit $offset";
+        $sql = "SELECT $select FROM $this->table $where $this->orderBy $limit $offset";
         $statement = self::$connect->prepare($sql);
 
         $index = 1;
@@ -75,6 +76,13 @@ class DB {
         }
 
         return self::cast($returnData);
+    }
+
+    public function find($id) {
+        // SELECT [*] FROM table WHERE id=x LIMIT 1
+        
+        $record = $this->where(['id' => $id])->limit(1)->get();
+        return $record[0] ?? null;
     }
 
     public function insert($data = []) {
@@ -168,6 +176,12 @@ class DB {
         }
 
         return count($fields) ? "WHERE ".implode('AND ', $fields) : '';
+    }
+
+    public function orderBy($column, $type = 'asc') {
+        $this->orderBy = "ORDER BY $column $type";
+
+        return $this;
     }
 
     public function offset($n) {

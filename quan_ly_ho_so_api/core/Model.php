@@ -20,6 +20,10 @@ class Model {
         return self::$db->get();
     }
 
+    public static function find($id) {
+        return self::$db->find($id);
+    }
+
     public static function insert($data) {
         return self::$db->insert($data);
     }
@@ -42,6 +46,10 @@ class Model {
 
     public static function offset($n) {
         return self::$db->offset($n);
+    }
+
+    public static function orderBy($column, $type = 'asc') {
+        return self::$db->orderBy($column, $type);
     }
 
     public static function limit($n) {
