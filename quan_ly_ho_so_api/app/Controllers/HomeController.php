@@ -9,7 +9,9 @@ use App\Model\Users;
 class HomeController extends Controller {
 
     public function index() {
-        return response()->json(PHP_OS);
+        return response()->json([
+            'welcome' => 'Welcome to NDT API Framework'
+        ]);
     }
 
     public function getApiNoAuth() {
