@@ -9,14 +9,16 @@ use App\Model\Users;
 class HomeController extends Controller {
 
     public function index() {
-        return response()->code(200);
+        return response()->json([
+            'welcome' => 'Welcome to NDT API Framework'
+        ]);
     }
 
     public function getApiNoAuth() {
-        echo "Không có middleware";
+        echo "Use middleware";
     }
 
     public function getApiAuth() {
-        echo "Có middleware";
+        echo "Do not use middleware";
     }
 }
