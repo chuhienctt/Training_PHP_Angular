@@ -26,8 +26,12 @@ class DB {
                 self::$connect->exec("SET NAMES 'utf8'");
             }
         } catch (PDOException $ex) {
-            echo "Error Connection SQL";
-            die($ex->getMessage());
+            header("HTTP/1.1 500 Internal Server Error");
+            echo json_encode([
+                'error'   => 'Error Connection SQL',
+                'message' => $ex->getMessage()
+            ]);
+            exit;
         }
     }
 
@@ -76,7 +80,7 @@ class DB {
             $returnData[] = $object;
         }
 
-        return self::cast($returnData);
+        return $returnData;
     }
 
     public function find($id) {
@@ -222,23 +226,6 @@ class DB {
         }
 
         return $returnData;
-    }
-
-    private static function cast($data) {
-        return array_map(function($object) {
-            return self::castObject($object);
-        }, $data);
-    }
-
-    private static function castObject($instance) {
-        $className = "Core\\Model";
-        
-        return unserialize(sprintf(
-            'O:%d:"%s"%s',
-            strlen($className),
-            $className,
-            strstr(strstr(serialize($instance), '"'), ':')
-        ));
     }
 
 }

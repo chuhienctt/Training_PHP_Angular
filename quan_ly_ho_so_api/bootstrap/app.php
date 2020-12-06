@@ -20,17 +20,22 @@ foreach($files as $file) {
 // autoload models
 $files = getFiles(__DIR__.'/../app/Models/');
 
+
+require_once "static.php";
+
+
+$models = [];
 foreach($files as $file) {
     require_once __DIR__.'/../app/Models/'.$file;
 
     // init model
-    $className = "App\\Model\\".explode('.', $file)[0];
-    new $className();
+    $modelName = explode('.', $file)[0];
+    $class = "App\\Model\\".$modelName;
+
+    $models[$modelName] =  new $class();
 }
 
 // end
-
-require_once "static.php";
 
 // run the application
 $app = new Core\App();

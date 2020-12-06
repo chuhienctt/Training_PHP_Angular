@@ -4,70 +4,70 @@ namespace Core;
 
 class Model {
     protected $table = '';
-    private static $db = null;
-    protected static $columns = [];
+    private $db = [];
+    protected $columns = [];
 
     public function __construct() {
-        self::$db = new DB($this->table);
-        self::$columns = self::$db->columns();
+        $this->db = new DB($this->table);
+        $this->columns = $this->db->columns();
     }
 
-    public static function all() {
-        return self::$db->all();
+    public function all() {
+        return $this->cast($this->db->all());
     }
 
-    public static function get() {
-        return self::$db->get();
+    public function get() {
+        return $this->cast($this->db->get());
     }
 
-    public static function find($id) {
-        return self::$db->find($id);
+    public function find($id) {
+        return $this->castObject($this->db->find($id));
     }
 
-    public static function insert($data) {
-        return self::$db->insert($data);
+    public function insert($data) {
+        return $this->db->insert($data);
     }
 
-    public static function update($data) {
-        return self::$db->update($data);
+    public function update($data) {
+        return $this->db->update($data);
     }
 
-    public static function delete() {
-        return self::$db->delete();
+    public function delete() {
+        return $this->db->delete();
     }
 
-    public static function select($data) {
-        return self::$db->select($data);
+    public function select($data) {
+        return $this->db->select($data);
     }
 
-    public static function where($data) {
-        return self::$db->where($data);
+    public function where($data) {
+        return $this->db->where($data);
     }
 
-    public static function offset($n) {
-        return self::$db->offset($n);
+    public function offset($n) {
+        return $this->db->offset($n);
     }
 
-    public static function orderBy($column, $type = 'asc') {
-        return self::$db->orderBy($column, $type);
+    public function orderBy($column, $type = 'asc') {
+        return $this->db->orderBy($column, $type);
     }
 
-    public static function limit($n) {
-        return self::$db->limit($n);
+    public function limit($n) {
+        return $this->db->limit($n);
     }
 
-    public static function skip($n) {
-        return self::$db->skip($n);
+    public function skip($n) {
+        return $this->db->skip($n);
     }
 
-    public static function take($n) {
-        return self::$db->take($n);
+    public function take($n) {
+        return $this->db->take($n);
     }
 
     public function save() {
         $data = [];
 
-        foreach(self::$columns as $column) {
+        foreach($this->columns as $column) {
             if($column != 'id') {
                 $data[$column] = $this->{$column};
             }
@@ -75,10 +75,37 @@ class Model {
         
         if(isset($this->id)) {
             // update
-            return self::$db->update($data);
+            return $this->db->update($data);
         } else {
             // insert
-            return self::$db->insert($data);
+            return $this->db->insert($data);
         }
+    }
+
+    public function hasMany($model, $foreign_key) {
+        return model($model)->where([
+            $foreign_key => $this->id
+        ])->get();
+    }
+
+    public function belongsTo($model, $foreign_key) {
+        return model($model)->find($this->{$foreign_key});
+    }
+
+    private function cast($data) {
+        return array_map(function($object) {
+            return $this->castObject($object);
+        }, $data);
+    }
+
+    private function castObject($instance) {
+        $className = static::class;
+        
+        return unserialize(sprintf(
+            'O:%d:"%s"%s',
+            strlen($className),
+            $className,
+            strstr(strstr(serialize($instance), '"'), ':')
+        ));
     }
 }

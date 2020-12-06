@@ -16,3 +16,8 @@ function request() {
     global $request;
     return $request;
 }
+
+function model($modelName) {
+    global $models;
+    return $models[$modelName];
+}

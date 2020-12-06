@@ -51,7 +51,7 @@ class Route {
 
         } else {
             // redirect to 404 page
-            echo '404';
+            header("HTTP/1.1 500 Internal Server Error");
         }
 
     }
@@ -83,40 +83,26 @@ class Route {
     }
 
     public static function get($route, $func) {
-        try {
-            $route = (self::get_config('prefix') ?? '').$route;
-
-            self::$routes[$route]['GET'] = self::request($func);
-        } catch(Exception $e) {
-            echo "Caught exception: ".$e->getMessage()."\n";
-        }
+        self::baseMethod('GET', $route, $func);
     }
 
     public static function post($route, $func) {
-        try {
-            $route = (self::get_config('prefix') ?? '').$route;
-            
-            self::$routes[$route]['POST'] = self::request($func);
-        } catch(Exception $e) {
-            echo "Caught exception: ".$e->getMessage()."\n";
-        }
+        self::baseMethod('POST', $route, $func);
     }
 
     public static function put($route, $func) {
-        try {
-            $route = (self::get_config('prefix') ?? '').$route;
-            
-            self::$routes[$route]['PUT'] = self::request($func);
-        } catch(Exception $e) {
-            echo "Caught exception: ".$e->getMessage()."\n";
-        }
+        self::baseMethod('PUT', $route, $func);
     }
 
     public static function delete($route, $func) {
+        self::baseMethod('DELETE', $route, $func);
+    }
+
+    private static function baseMethod($method, $route, $func) {
         try {
             $route = (self::get_config('prefix') ?? '').$route;
             
-            self::$routes[$route]['DELETE'] = self::request($func);
+            self::$routes[$route][$method] = self::request($func);
         } catch(Exception $e) {
             echo "Caught exception: ".$e->getMessage()."\n";
         }
@@ -143,7 +129,7 @@ class Route {
         self::$group_config = $tmp_config;
     }
 
-    public static function get_config($key) {
+    private static function get_config($key) {
         return self::$group_config[$key] ?? null;
     }
 }
