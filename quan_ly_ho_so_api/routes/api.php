@@ -8,7 +8,8 @@ Route::group([
     'prefix' => '/api'
 ], function () {
 
-    Route::get('/no-auth', 'HomeController@getApiNoAuth');
+    Route::post('/auth/login', 'AuthenticateController@login');
+    Route::post('/auth/register', 'AuthenticateController@register');
 
     Route::group([
         'middleware' => 'Authenticate'
@@ -17,7 +18,5 @@ Route::group([
         Route::get('/auth', 'HomeController@getApiAuth');
 
     });
-    
-    Route::get('/no-auth2', 'HomeController@getApiNoAuth');
 
 });

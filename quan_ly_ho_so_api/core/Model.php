@@ -69,7 +69,11 @@ class Model {
 
         foreach($this->columns as $column) {
             if($column != 'id') {
-                $data[$column] = $this->{$column};
+                if(isset($this->{$column})) {
+                    $data[$column] = $this->{$column};
+                } else {
+                    $data[$column] = null;
+                }
             }
         }
         
