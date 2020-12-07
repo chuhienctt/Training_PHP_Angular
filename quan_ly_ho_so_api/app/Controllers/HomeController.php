@@ -13,10 +13,14 @@ class HomeController extends Controller {
     }
 
     public function getApiNoAuth() {
-        echo "Use middleware";
+        return response()->json([
+            'message' => 'Use middleware'
+        ]);
     }
 
     public function getApiAuth() {
-        echo "Do not use middleware";
+        return response()->json([
+            'welcome' => 'Do not use middleware'
+        ]);
     }
 }

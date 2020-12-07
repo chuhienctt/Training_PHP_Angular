@@ -13,7 +13,7 @@ class Route {
     public function URLProcess() {
         $url = urldecode($_SERVER['REQUEST_URI']);
 
-        $path = parse_url($url, PHP_URL_PATH);
+        $path = parse_url($url, PHP_URL_PATH); // /api/auth
         // $query = parse_url($url, PHP_URL_QUERY);
 
         // $urls = explode('/', rtrim($path, '/'));
