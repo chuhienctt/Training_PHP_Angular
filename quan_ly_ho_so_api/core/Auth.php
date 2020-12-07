@@ -4,7 +4,6 @@ namespace Core;
 
 class Auth {
     private static $user = null;
-    private static $cost = 10;
 
     function __construct() {
     }
@@ -22,7 +21,7 @@ class Auth {
     }
 
     public static function createPassword($password) {
-        return password_hash($password, PASSWORD_BCRYPT, ["cost" => self::$cost]);
+        return password_hash($password, PASSWORD_DEFAULT);
     }
 
     public static function checkPassword($password, $hash) {

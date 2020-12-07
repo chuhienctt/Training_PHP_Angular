@@ -14,15 +14,20 @@ class AuthenticateController extends Controller {
         
         $user = model('Users')->where(['tai_khoan' => $tai_khoan])->first();
 
-        if($user && Auth::createPassword($mat_khau, $user->mat_khau)) {
+        if($user && Auth::checkPassword($mat_khau, $user->mat_khau)) {
 
             $user->token = Auth::createToken($user->id);
 
             $user->save();
 
-            return response()->json($user);
+            return response()->json([
+                'status' => 1,
+                'message' => 'Đăng nhập thành công!',
+                'data' => $user
+            ]);
         } else {
             return response()->json([
+                'status' => 2,
                 'message' => 'Tài khoản hoặc mật khẩu không chính xác!'
             ]);
         }
@@ -41,6 +46,7 @@ class AuthenticateController extends Controller {
 
         if($user) {
             return response()->json([
+                'status' => 2,
                 'message' => 'Tài khoản này đã tồn tại!'
             ]);
         }
@@ -58,7 +64,11 @@ class AuthenticateController extends Controller {
 
         $user->save();
 
-        return response()->json($user);
+        return response()->json([
+            'status' => 1,
+            'message' => 'Đăng ký thành công!',
+            'data' => $user
+        ]);
     }
 
 }
