@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2020-12-03 10:28:39
+Date: 2020-12-07 11:30:40
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -32,10 +32,6 @@ CREATE TABLE `buoc` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
--- Records of buoc
--- ----------------------------
-
--- ----------------------------
 -- Table structure for co_quan
 -- ----------------------------
 DROP TABLE IF EXISTS `co_quan`;
@@ -52,10 +48,6 @@ CREATE TABLE `co_quan` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
--- Records of co_quan
--- ----------------------------
-
--- ----------------------------
 -- Table structure for co_quan_linh_vuc
 -- ----------------------------
 DROP TABLE IF EXISTS `co_quan_linh_vuc`;
@@ -69,10 +61,6 @@ CREATE TABLE `co_quan_linh_vuc` (
   CONSTRAINT `co_quan_linh_vuc_ibfk_1` FOREIGN KEY (`id_co_quan`) REFERENCES `co_quan` (`id`),
   CONSTRAINT `co_quan_linh_vuc_ibfk_2` FOREIGN KEY (`id_linh_vuc`) REFERENCES `linh_vuc` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- ----------------------------
--- Records of co_quan_linh_vuc
--- ----------------------------
 
 -- ----------------------------
 -- Table structure for ho_so
@@ -92,10 +80,6 @@ CREATE TABLE `ho_so` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
--- Records of ho_so
--- ----------------------------
-
--- ----------------------------
 -- Table structure for linh_vuc
 -- ----------------------------
 DROP TABLE IF EXISTS `linh_vuc`;
@@ -109,10 +93,6 @@ CREATE TABLE `linh_vuc` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `ten_linh_vuc` (`ten_linh_vuc`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- ----------------------------
--- Records of linh_vuc
--- ----------------------------
 
 -- ----------------------------
 -- Table structure for quy_trinh
@@ -129,10 +109,6 @@ CREATE TABLE `quy_trinh` (
   KEY `id_thu_tuc` (`id_thu_tuc`),
   CONSTRAINT `quy_trinh_ibfk_1` FOREIGN KEY (`id_thu_tuc`) REFERENCES `thu_tuc` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- ----------------------------
--- Records of quy_trinh
--- ----------------------------
 
 -- ----------------------------
 -- Table structure for thu_tuc
@@ -156,10 +132,6 @@ CREATE TABLE `thu_tuc` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
--- Records of thu_tuc
--- ----------------------------
-
--- ----------------------------
 -- Table structure for users
 -- ----------------------------
 DROP TABLE IF EXISTS `users`;
@@ -174,10 +146,7 @@ CREATE TABLE `users` (
   `dia_chi` varchar(255) DEFAULT '',
   `ngay_sinh` date NOT NULL,
   `role` tinyint(4) NOT NULL,
+  `token` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `tai_khoan` (`tai_khoan`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- ----------------------------
--- Records of users
--- ----------------------------
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;

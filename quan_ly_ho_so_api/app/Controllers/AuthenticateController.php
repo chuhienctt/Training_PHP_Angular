@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use Core\Controller;
+use Core\Auth;
 use App\Models\Users;
 
 class AuthenticateController extends Controller {
@@ -13,9 +14,9 @@ class AuthenticateController extends Controller {
         
         $user = model('Users')->where(['tai_khoan' => $tai_khoan])->first();
 
-        if($user && password_verify($mat_khau, $user->mat_khau)) {
+        if($user && Auth::createPassword($mat_khau, $user->mat_khau)) {
 
-            $user->token = password_hash($user->id.time(), PASSWORD_BCRYPT, ["cost" => 5]);
+            $user->token = Auth::createToken($user->id);
 
             $user->save();
 
@@ -47,7 +48,7 @@ class AuthenticateController extends Controller {
         $user = new Users();
 
         $user->tai_khoan = $tai_khoan;
-        $user->mat_khau = password_hash($mat_khau, PASSWORD_BCRYPT, ["cost" => 10]);
+        $user->mat_khau = Auth::createPassword($mat_khau);
         $user->ho_ten = $ho_ten;
         $user->email = $email;
         $user->so_dien_thoai = $so_dien_thoai;

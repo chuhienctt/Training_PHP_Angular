@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use Core\Controller;
+use Core\Auth;
 
 class HomeController extends Controller {
 
@@ -19,8 +20,6 @@ class HomeController extends Controller {
     }
 
     public function getApiAuth() {
-        return response()->json([
-            'welcome' => 'Đã đăng nhập'
-        ]);
+        return response()->json(Auth::get());
     }
 }
