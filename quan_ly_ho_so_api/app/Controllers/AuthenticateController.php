@@ -20,20 +20,20 @@ class AuthenticateController extends Controller {
 
             $user->save();
 
-            return response()->json([
-                'status' => 1,
-                'message' => 'Đăng nhập thành công!',
-                'data' => $user
-            ]);
+            return response()->success(1, 'Đăng nhập thành công!', $user);
         } else {
-            return response()->json([
-                'status' => 2,
-                'message' => 'Tài khoản hoặc mật khẩu không chính xác!'
-            ]);
+            return response()->error(2, 'Tài khoản hoặc mật khẩu không chính xác!');
         }
     }
 
     public function register() {
+
+        request()->validate([
+            'tai_khoan' => [
+                'required' => ''
+            ]
+        ]);
+
         $tai_khoan = request()->tai_khoan;
         $mat_khau = request()->mat_khau;
         $ho_ten = request()->ho_ten;
@@ -45,10 +45,7 @@ class AuthenticateController extends Controller {
         $user = model('Users')->where(['tai_khoan' => $tai_khoan])->first();
 
         if($user) {
-            return response()->json([
-                'status' => 2,
-                'message' => 'Tài khoản này đã tồn tại!'
-            ]);
+            return response()->error(2, 'Tài khoản này đã tồn tại!');
         }
 
         $user = new Users();
@@ -64,11 +61,7 @@ class AuthenticateController extends Controller {
 
         $user->save();
 
-        return response()->json([
-            'status' => 1,
-            'message' => 'Đăng ký thành công!',
-            'data' => $user
-        ]);
+        return response()->success(1, 'Đăng ký thành công!', $user);
     }
 
 }
