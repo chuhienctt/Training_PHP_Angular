@@ -13,6 +13,13 @@ class HomeController extends Controller {
         ]);
     }
 
+    public function test() {
+        $data = request()->data;
+        return response()->json([
+            'data' => $data
+        ]);
+    }
+
     public function getApiNoAuth() {
         return response()->json([
             'message' => 'Use middleware'
