@@ -18,3 +18,5 @@ $config = require_once __DIR__.'/../config/app.php';
 define("CONFIG", $config);
 
 require_once __DIR__.'/../bootstrap/app.php';
+
+// hello
