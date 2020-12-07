@@ -56,4 +56,19 @@ class Response {
         $this->code(200, $data);
     }
 
+    public function success($status, $message, $data) {
+        $this->code(200, [
+            'status' => $status,
+            'message' => $message,
+            'data' => $data,
+        ]);
+    }
+
+    public function error($status, $message) {
+        $this->code(400, [
+            'status' => $status,
+            'message' => $message,
+        ]);
+    }
+
 }
