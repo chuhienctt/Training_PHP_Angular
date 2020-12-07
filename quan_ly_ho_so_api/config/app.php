@@ -5,7 +5,6 @@ $dotenv->load();
 
 return [
 
-
     // database
     'database' => [
         'host'     => $_ENV['HOST'],
@@ -17,20 +16,4 @@ return [
 
     // timezone
     'timezone' => $_ENV['TIMEZONE'],
-
-
-    // url
-    'url' => [
-        'base'   => '/',
-        'assets' => 'public/assets'
-    ],
-
-    // header
-    'header' => [
-        'Access-Control-Allow-Origin'  => '*',
-        'Content-Type'                 => 'application/json',
-        "Accept"                       => 'application/json',
-        'Access-Control-Allow-Methods' => 'PUT, GET, POST, DELETE, OPTIONS',
-        'Access-Control-Allow-Headers' => 'Content-Type',
-    ]
 ];

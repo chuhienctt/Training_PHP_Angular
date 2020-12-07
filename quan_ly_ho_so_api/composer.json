@@ -7,7 +7,6 @@
         }
     ],
     "require": {
-        "vlucas/phpdotenv": "^5.2",
-        "tuupola/cors-middleware": "^1.2"
+        "vlucas/phpdotenv": "^5.2"
     }
 }
