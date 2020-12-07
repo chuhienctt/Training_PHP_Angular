@@ -21,9 +21,6 @@ foreach($files as $file) {
 $files = getFiles(__DIR__.'/../app/Models/');
 
 
-require_once "static.php";
-
-
 $models = [];
 foreach($files as $file) {
     require_once __DIR__.'/../app/Models/'.$file;
@@ -34,6 +31,9 @@ foreach($files as $file) {
 
     $models[$modelName] =  new $class();
 }
+
+
+require_once "static.php";
 
 // end
 

@@ -20,7 +20,7 @@ class HomeController extends Controller {
 
     public function getApiAuth() {
         return response()->json([
-            'welcome' => 'Do not use middleware'
+            'welcome' => 'Đã đăng nhập'
         ]);
     }
 }
