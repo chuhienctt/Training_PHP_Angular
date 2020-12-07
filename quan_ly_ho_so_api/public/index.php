@@ -6,7 +6,6 @@
  * @package  NDT
  * @author   NDTpro <admin@ndtoan.com>
  */
-
 // get config app
 $config = require_once __DIR__.'/../config/app.php';
 

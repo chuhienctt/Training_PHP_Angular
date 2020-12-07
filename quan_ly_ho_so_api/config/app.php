@@ -8,7 +8,7 @@ return [
         'host'     => '127.0.0.1',
         'username' => 'root',
         'password' => '',
-        'db_name'  => 'quan_ly_ho_so'
+        'db_name'  => 'test'
     ],
 
 
