@@ -28,8 +28,9 @@ return [
     // header
     'header' => [
         'Access-Control-Allow-Origin'  => '*',
-        'Content-Type'                 => 'application/json; charset=UTF-8',
-        'Access-Control-Allow-Methods' => '*',
-        'Access-Control-Allow-Headers' => '*',
+        'Content-Type'                 => 'application/json',
+        "Accept"                       => 'application/json',
+        'Access-Control-Allow-Methods' => 'PUT, GET, POST, DELETE, OPTIONS',
+        'Access-Control-Allow-Headers' => 'Content-Type',
     ]
 ];
