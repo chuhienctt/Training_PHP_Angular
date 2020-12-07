@@ -1,19 +1,22 @@
 <?php
 
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__, '/../.env');
+$dotenv->load();
+
 return [
 
 
     // database
     'database' => [
-        'host'     => '127.0.0.1',
-        'username' => 'root',
-        'password' => '',
-        'db_name'  => 'quan_ly_ho_so'
+        'host'     => $_ENV['HOST'],
+        'username' => $_ENV['USERNAME'],
+        'password' => $_ENV['PASSWORD'],
+        'db_name'  => $_ENV['DB_NAME']
     ],
 
 
     // timezone
-    'timezone' => 'Asia/Ho_Chi_Minh',
+    'timezone' => $_ENV['TIMEZONE'],
 
 
     // url
