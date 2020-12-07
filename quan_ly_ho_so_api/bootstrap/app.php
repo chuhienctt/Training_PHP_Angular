@@ -30,7 +30,7 @@ foreach($files as $file) {
 
     // init model
     $modelName = explode('.', $file)[0];
-    $class = "App\\Model\\".$modelName;
+    $class = "App\\Models\\".$modelName;
 
     $models[$modelName] =  new $class();
 }
