@@ -15,7 +15,7 @@ Route::group([
         'middleware' => 'Authenticate'
     ], function () {
 
-        Route::get('/auth', 'HomeController@getApiAuth');
+        Route::get('/test', 'HomeController@getApiAuth');
 
     });
 

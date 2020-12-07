@@ -24,6 +24,10 @@ class Model {
         return $this->castObject($this->db->find($id));
     }
 
+    public function first() {
+        return $this->castObject($this->db->first());
+    }
+
     public function insert($data) {
         return $this->db->insert($data);
     }
@@ -37,31 +41,31 @@ class Model {
     }
 
     public function select($data) {
-        return $this->db->select($data);
+        return $this->db->select($data, $this);
     }
 
     public function where($data) {
-        return $this->db->where($data);
-    }
-
-    public function offset($n) {
-        return $this->db->offset($n);
+        return $this->db->where($data, $this);
     }
 
     public function orderBy($column, $type = 'asc') {
-        return $this->db->orderBy($column, $type);
+        return $this->db->orderBy($column, $type, $this);
+    }
+
+    public function offset($n) {
+        return $this->db->offset($n, $this);
     }
 
     public function limit($n) {
-        return $this->db->limit($n);
+        return $this->db->limit($n, $this);
     }
 
     public function skip($n) {
-        return $this->db->skip($n);
+        return $this->offset($n);
     }
 
     public function take($n) {
-        return $this->db->take($n);
+        return $this->limit($n);
     }
 
     public function save() {
@@ -104,12 +108,29 @@ class Model {
 
     private function castObject($instance) {
         $className = static::class;
+
+        $modelName = substr($className, strripos($className, '\\') + 1);
+
+        $model = clone model($modelName);
+
+        foreach($this->columns as $column) {
+            if(isset($instance->{$column})) {
+                $model->{$column} = $instance->{$column};
+            } else {
+                if($column == 'id') {
+                    return null;
+                }
+                $model->{$column} = null;
+            }
+        }
+
+        return $model;
         
-        return unserialize(sprintf(
-            'O:%d:"%s"%s',
-            strlen($className),
-            $className,
-            strstr(strstr(serialize($instance), '"'), ':')
-        ));
+        // return unserialize(sprintf(
+        //     'O:%d:"%s"%s',
+        //     strlen($className),
+        //     $className,
+        //     strstr(strstr(serialize($instance), '"'), ':')
+        // ));
     }
 }

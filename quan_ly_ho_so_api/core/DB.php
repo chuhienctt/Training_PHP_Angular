@@ -66,6 +66,7 @@ class DB {
         }
 
         $sql = "SELECT $select FROM $this->table $where $this->orderBy $limit $offset";
+
         $statement = self::$connect->prepare($sql);
 
         $index = 1;
@@ -87,6 +88,13 @@ class DB {
         // SELECT [*] FROM table WHERE id=x LIMIT 1
         
         $record = $this->where(['id' => $id])->limit(1)->get();
+        return $record[0] ?? null;
+    }
+
+    public function first() {
+        // SELECT [*] FROM table WHERE id=x LIMIT 1
+        
+        $record = $this->limit(1)->get();
         return $record[0] ?? null;
     }
 
@@ -154,10 +162,10 @@ class DB {
         return $statement->rowCount();
     }
 
-    public function select($data = []) {
+    public function select($data = [], $instance = null) {
         $this->select = $data;
 
-        return $this;
+        return $instance ?? $this;
     }
 
     private function buildSelect() {
@@ -167,10 +175,10 @@ class DB {
         return implode(', ', $this->select);
     }
 
-    public function where($data = []) {
+    public function where($data = [], $instance = null) {
         $this->where = $data;
 
-        return $this;
+        return $instance ?? $this;
     }
 
     private function buildWhere() {
@@ -183,22 +191,22 @@ class DB {
         return count($fields) ? "WHERE ".implode('AND ', $fields) : '';
     }
 
-    public function orderBy($column, $type = 'asc') {
+    public function orderBy($column, $type = 'asc', $instance = null) {
         $this->orderBy = "ORDER BY $column $type";
 
-        return $this;
+        return $instance ?? $this;
     }
 
-    public function offset($n) {
+    public function offset($n, $instance = null) {
         $this->offset = $n;
 
-        return $this;
+        return $instance ?? $this;
     }
 
-    public function limit($n) {
+    public function limit($n, $instance = null) {
         $this->limit = $n;
 
-        return $this;
+        return $instance ?? $this;
     }
 
     public function skip($n) {

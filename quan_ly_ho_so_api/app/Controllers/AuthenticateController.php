@@ -10,8 +10,21 @@ class AuthenticateController extends Controller {
     public function login() {
         $tai_khoan = request()->tai_khoan;
         $mat_khau = request()->mat_khau;
-
         
+        $user = model('Users')->where(['tai_khoan' => $tai_khoan])->first();
+
+        if($user && password_verify($mat_khau, $user->mat_khau)) {
+
+            $user->token = password_hash($user->id.time(), PASSWORD_BCRYPT, ["cost" => 5]);
+
+            $user->save();
+
+            return response()->json($user);
+        } else {
+            return response()->json([
+                'message' => 'Tài khoản hoặc mật khẩu không chính xác!'
+            ]);
+        }
     }
 
     public function register() {
@@ -22,6 +35,14 @@ class AuthenticateController extends Controller {
         $so_dien_thoai = request()->so_dien_thoai;
         $dia_chi = request()->dia_chi;
         $ngay_sinh = request()->ngay_sinh;
+
+        $user = model('Users')->where(['tai_khoan' => $tai_khoan])->first();
+
+        if($user) {
+            return response()->json([
+                'message' => 'Tài khoản này đã tồn tại!'
+            ]);
+        }
 
         $user = new Users();
 
