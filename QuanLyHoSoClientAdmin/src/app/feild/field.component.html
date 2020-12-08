@@ -25,7 +25,6 @@
             <h2>Quản lý <strong>danh mục</strong></h2>
             <ul class="header-dropdown">
               <li>
-                <button (click)="abc()"></button>
                 <!--                <a (click)="create()"><i class="mdi mdi-plus-circle"></i></a>-->
               </li>
               <li class="remove">
@@ -34,8 +33,8 @@
             </ul>
           </div>
           <div class="body">
-            <p-table [value]="list" [lazy]="true" (onLazyLoad)="loadData($event)" [paginator]="true" [rows]="10"
-                     [totalRecords]="totalRecords" [loading]="loading">
+<!--            <p-table [value]="list" [lazy]="true" (onLazyLoad)="loadData($event)" [paginator]="true" [rows]="10"-->
+<!--                     [totalRecords]="totalRecords" [loading]="loading">-->
               <ng-template pTemplate="header">
                 <tr>
                   <th>#</th>
@@ -62,7 +61,7 @@
 <!--                  </td>-->
 <!--                </tr>-->
               </ng-template>
-            </p-table>
+<!--            </p-table>-->
           </div>
         </div>
       </div>

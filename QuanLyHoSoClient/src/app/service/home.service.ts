@@ -1,15 +1,21 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
+import {environment} from "../../environments/environment";
+
+const baseUrl = environment.apiUrl + "auth/";
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class HomeService {
-  // tslint:disable-next-line:variable-name
   constructor(private _http: HttpClient) { }
 
-  // tslint:disable-next-line:typedef
   getAddress() {
     return this._http.get('/assets/libs/all.json');
+  }
+
+  register(user) {
+    return this._http.post(baseUrl + "register", user);
   }
 }

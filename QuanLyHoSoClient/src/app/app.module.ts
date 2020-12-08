@@ -13,6 +13,7 @@ import {DropdownModule} from 'primeng/dropdown';
 import {CalendarModule} from 'primeng/calendar';
 import { ProcedureComponent } from './procedure/procedure.component';
 import { DetailComponent } from './detail/detail.component';
+import {ReactiveFormsModule} from '@angular/forms';
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import { DetailComponent } from './detail/detail.component';
     HttpClientModule,
     BrowserAnimationsModule,
     DropdownModule,
-    CalendarModule
+    CalendarModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

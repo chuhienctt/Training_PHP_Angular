@@ -3,6 +3,12 @@
   <component name="PhpIncludePathManager">
     <include_path>
       <path value="$PROJECT_DIR$/quan_ly_ho_so_api/vendor/composer" />
+      <path value="$PROJECT_DIR$/quan_ly_ho_so_api/vendor/vlucas/phpdotenv" />
+      <path value="$PROJECT_DIR$/quan_ly_ho_so_api/vendor/graham-campbell/result-type" />
+      <path value="$PROJECT_DIR$/quan_ly_ho_so_api/vendor/phpoption/phpoption" />
+      <path value="$PROJECT_DIR$/quan_ly_ho_so_api/vendor/symfony/polyfill-ctype" />
+      <path value="$PROJECT_DIR$/quan_ly_ho_so_api/vendor/symfony/polyfill-php80" />
+      <path value="$PROJECT_DIR$/quan_ly_ho_so_api/vendor/symfony/polyfill-mbstring" />
     </include_path>
   </component>
 </project>

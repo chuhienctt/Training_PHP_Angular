@@ -12,3 +12,7 @@
   width: 100%!important;
   border-radius: 25px;
 }
+
+.country-item {
+  padding: 10px 0 10px 0;
+}

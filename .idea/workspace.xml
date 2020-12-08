@@ -20,9 +20,28 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8597eeb5-c727-42b0-98f6-1554ed19bd53" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/QuanLyHoSoClient/src/app/libs/alert.service.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/quan_ly_ho_so_api/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/Training_PHP_Angular.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Training_PHP_Angular.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuanLyHoSoClient/angular.json" beforeDir="false" afterPath="$PROJECT_DIR$/QuanLyHoSoClient/angular.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuanLyHoSoClient/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/QuanLyHoSoClient/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuanLyHoSoClient/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/QuanLyHoSoClient/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuanLyHoSoClient/src/app/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/QuanLyHoSoClient/src/app/app.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuanLyHoSoClient/src/app/home/home.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/QuanLyHoSoClient/src/app/home/home.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuanLyHoSoClient/src/app/login/login.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/QuanLyHoSoClient/src/app/login/login.component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuanLyHoSoClient/src/app/login/login.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/QuanLyHoSoClient/src/app/login/login.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuanLyHoSoClient/src/app/login/login.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/QuanLyHoSoClient/src/app/login/login.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuanLyHoSoClient/src/app/service/home.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/QuanLyHoSoClient/src/app/service/home.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuanLyHoSoClient/src/app/share/header/header.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/QuanLyHoSoClient/src/app/share/header/header.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuanLyHoSoClient/src/environments/environment.ts" beforeDir="false" afterPath="$PROJECT_DIR$/QuanLyHoSoClient/src/environments/environment.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuanLyHoSoClient/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/QuanLyHoSoClient/tsconfig.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuanLyHoSoClientAdmin/src/app/feild/field.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/QuanLyHoSoClientAdmin/src/app/feild/field.component.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/quan_ly_ho_so_api/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/quan_ly_ho_so_api/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/quan_ly_ho_so_api/public/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/quan_ly_ho_so_api/public/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quan_ly_ho_so_api/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/quan_ly_ho_so_api/routes/api.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,6 +78,12 @@
   <component name="PhpWorkspaceProjectConfiguration">
     <include_path>
       <path value="$PROJECT_DIR$/quan_ly_ho_so_api/vendor/composer" />
+      <path value="$PROJECT_DIR$/quan_ly_ho_so_api/vendor/vlucas/phpdotenv" />
+      <path value="$PROJECT_DIR$/quan_ly_ho_so_api/vendor/graham-campbell/result-type" />
+      <path value="$PROJECT_DIR$/quan_ly_ho_so_api/vendor/phpoption/phpoption" />
+      <path value="$PROJECT_DIR$/quan_ly_ho_so_api/vendor/symfony/polyfill-ctype" />
+      <path value="$PROJECT_DIR$/quan_ly_ho_so_api/vendor/symfony/polyfill-php80" />
+      <path value="$PROJECT_DIR$/quan_ly_ho_so_api/vendor/symfony/polyfill-mbstring" />
     </include_path>
   </component>
   <component name="ProjectId" id="1l8fl8CBVnNv9S05xRicJg8w8xy" />
@@ -69,8 +94,12 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="org.jetbrains.plugins.github.ui.GithubSettingsConfigurable" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="ts.external.directory.path" value="$PROJECT_DIR$/QuanLyHoSoClient/node_modules/typescript/lib" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -83,7 +112,9 @@
       <updated>1606983786734</updated>
       <workItem from="1606983787818" duration="586000" />
       <workItem from="1606988122453" duration="2149000" />
-      <workItem from="1607303937862" duration="2360000" />
+      <workItem from="1607303937862" duration="8391000" />
+      <workItem from="1607322911640" duration="2584000" />
+      <workItem from="1607325512249" duration="11120000" />
     </task>
     <task id="LOCAL-00001" summary="update">
       <created>1607306184455</created>
@@ -99,7 +130,14 @@
       <option name="project" value="LOCAL" />
       <updated>1607306286265</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="abcd">
+      <created>1607306863260</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1607306863260</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -120,7 +158,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="update" />
     <MESSAGE value="abc" />
-    <option name="LAST_COMMIT_MESSAGE" value="abc" />
+    <MESSAGE value="abcd" />
+    <option name="LAST_COMMIT_MESSAGE" value="abcd" />
   </component>
   <component name="WindowStateProjectService">
     <state x="452" y="257" key="#Notifications" timestamp="1607306465550">
@@ -131,41 +170,50 @@
       <screen x="0" y="23" width="1440" height="797" />
     </state>
     <state x="184" y="83" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1440.797@0.23.1440.797" timestamp="1607306133839" />
-    <state x="307" y="23" key="CommitChangelistDialog2" timestamp="1607306286059">
+    <state x="466" y="221" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1607391147960">
       <screen x="0" y="23" width="1440" height="797" />
     </state>
-    <state x="307" y="23" key="CommitChangelistDialog2/0.23.1440.797@0.23.1440.797" timestamp="1607306286059" />
+    <state x="466" y="221" key="#com.intellij.fileTypes.FileTypeChooser/0.23.1440.797@0.23.1440.797" timestamp="1607391147960" />
+    <state x="307" y="23" key="CommitChangelistDialog2" timestamp="1607306863078">
+      <screen x="0" y="23" width="1440" height="797" />
+    </state>
+    <state x="307" y="23" key="CommitChangelistDialog2/0.23.1440.797@0.23.1440.797" timestamp="1607306863078" />
     <state x="144" y="90" width="1152" height="638" key="DiffContextDialog" timestamp="1607306080197">
       <screen x="0" y="23" width="1440" height="797" />
     </state>
     <state x="144" y="90" width="1152" height="638" key="DiffContextDialog/0.23.1440.797@0.23.1440.797" timestamp="1607306080197" />
     <state x="144" y="90" width="1152" height="638" key="DiffContextDialog/0.23.1440.798@0.23.1440.798" timestamp="1606989788879" />
     <state x="144" y="90" key="DiffContextDialog/0.23.1440.801@0.23.1440.801" timestamp="1606988731246" />
-    <state x="144" y="90" key="MergeDialog" timestamp="1606988858610">
-      <screen x="0" y="23" width="1440" height="801" />
+    <state x="144" y="90" key="MergeDialog" timestamp="1607307236116">
+      <screen x="0" y="23" width="1440" height="797" />
     </state>
+    <state x="144" y="90" key="MergeDialog/0.23.1440.797@0.23.1440.797" timestamp="1607307236116" />
     <state x="144" y="90" key="MergeDialog/0.23.1440.801@0.23.1440.801" timestamp="1606988858610" />
+    <state x="354" y="182" key="MultipleFileMergeDialog" timestamp="1607389879334">
+      <screen x="0" y="23" width="1440" height="797" />
+    </state>
+    <state x="354" y="182" key="MultipleFileMergeDialog/0.23.1440.797@0.23.1440.797" timestamp="1607389879334" />
     <state x="427" y="47" key="RollbackChangesDialog" timestamp="1606988756213">
       <screen x="0" y="23" width="1440" height="801" />
     </state>
     <state x="427" y="47" key="RollbackChangesDialog/0.23.1440.801@0.23.1440.801" timestamp="1606988756213" />
-    <state x="229" y="60" key="SettingsEditor" timestamp="1607305953431">
+    <state x="229" y="60" key="SettingsEditor" timestamp="1607310358041">
       <screen x="0" y="23" width="1440" height="797" />
     </state>
-    <state x="229" y="60" key="SettingsEditor/0.23.1440.797@0.23.1440.797" timestamp="1607305953431" />
-    <state x="320" y="157" key="Vcs.Push.Dialog.v2" timestamp="1607306289357">
+    <state x="229" y="60" key="SettingsEditor/0.23.1440.797@0.23.1440.797" timestamp="1607310358041" />
+    <state x="320" y="157" key="Vcs.Push.Dialog.v2" timestamp="1607393138281">
       <screen x="0" y="23" width="1440" height="797" />
     </state>
-    <state x="320" y="157" key="Vcs.Push.Dialog.v2/0.23.1440.797@0.23.1440.797" timestamp="1607306289357" />
+    <state x="320" y="157" key="Vcs.Push.Dialog.v2/0.23.1440.797@0.23.1440.797" timestamp="1607393138281" />
     <state x="320" y="158" key="Vcs.Push.Dialog.v2/0.23.1440.801@0.23.1440.801" timestamp="1606989494338" />
     <state x="513" y="80" key="VcsDiffUtil.ChangesDialog" timestamp="1607305992118">
       <screen x="0" y="23" width="1440" height="797" />
     </state>
     <state x="513" y="80" key="VcsDiffUtil.ChangesDialog/0.23.1440.797@0.23.1440.797" timestamp="1607305992118" />
-    <state x="523" y="378" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1607306165237">
+    <state x="523" y="378" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1607389865220">
       <screen x="0" y="23" width="1440" height="797" />
     </state>
-    <state x="523" y="378" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.23.1440.797@0.23.1440.797" timestamp="1607306165237" />
+    <state x="523" y="378" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.23.1440.797@0.23.1440.797" timestamp="1607389865220" />
     <state x="523" y="378" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.23.1440.798@0.23.1440.798" timestamp="1606989727483" />
     <state x="523" y="379" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.23.1440.801@0.23.1440.801" timestamp="1606988992914" />
     <state x="479" y="312" key="git4idea.remote.GitConfigureRemotesDialog" timestamp="1607306043660">

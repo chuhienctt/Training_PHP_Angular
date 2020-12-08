@@ -21,15 +21,15 @@
           <div class="col-md-3"></div>
           <div class="col-md-6 contact-form-wrapper">
             <!-- Contact Form-->
-            <form action="#" class="contact-form">
-              <div class="field">
-                <input type="text" name="name" placeholder="Name">
-              </div>
-              <div class="field">
-                <input type="email" name="email" placeholder="E-mail">
-              </div>
-              <input type="submit" value="Send Message" class="submit">
-            </form>
+<!--            <form action="#" class="contact-form">-->
+<!--              <div class="field">-->
+<!--                <input type="text" name="name" placeholder="Name">-->
+<!--              </div>-->
+<!--              <div class="field">-->
+<!--                <input type="email" name="email" placeholder="E-mail">-->
+<!--              </div>-->
+<!--              <input type="submit" value="Send Message" class="submit">-->
+<!--            </form>-->
           </div>
           <div class="col-md-3"></div>
         </div>
@@ -40,19 +40,25 @@
           <!-- Image-->
           <div class="col-md-3"></div>
           <div class="col-md-6 contact-form-wrapper">
-            <!-- Contact Form-->
-            <form action="#" class="contact-form">
+<!--             Contact Form-->
+            <form class="contact-form" [formGroup]="formRegister" (ngSubmit)="register()">
               <div class="field">
-                <input type="text" name="name" placeholder="Họ tên">
+                <input type="text" formControlName="tai_khoan" placeholder="Tài khoản">
               </div>
               <div class="field">
-                <input type="email" name="email" placeholder="E-mail">
+                <input type="text" formControlName="mat_khau" placeholder="Mật khẩu">
               </div>
               <div class="field">
-                <input type="text" name="phone" placeholder="Số điện thoại">
+                <input type="text" formControlName="ho_ten" placeholder="Họ tên">
               </div>
               <div class="field">
-                <input type="text" name="address" placeholder="Địa chỉ cụ thể">
+                <input type="email" formControlName="email" placeholder="E-mail">
+              </div>
+              <div class="field">
+                <input type="text" formControlName="so_dien_thoai" placeholder="Số điện thoại">
+              </div>
+              <div class="field">
+                <input type="text" formControlName="dia_chi" placeholder="Địa chỉ cụ thể">
               </div>
               <div class="field">
                 <p-dropdown [style]="style" (onChange)="getDistrict($event.value.name)" [options]="listCity" optionLabel="name" [showClear]="true" placeholder="Chọn tỉnh">
@@ -73,7 +79,7 @@
                 </p-dropdown>
               </div>
               <div class="field">
-                <p-dropdown [style]="style"[disabled]="listCommune.length == 0" (onChange)="getNameCommune($event.value.name)" [options]="listCommune" optionLabel="name" [showClear]="true" placeholder="Chọn xã, phường, thị trấn">
+                <p-dropdown [style]="style" [disabled]="listCommune.length == 0" (onChange)="getNameCommune($event.value.name)" [options]="listCommune" optionLabel="name" [showClear]="true" placeholder="Chọn xã, phường, thị trấn">
                   <ng-template pTemplate="selectedItem">
                     <div class="country-item country-item-value" *ngFor="let item of listCommune">
                       <div>{{item.name}}</div>
@@ -82,7 +88,8 @@
                 </p-dropdown>
               </div>
               <div class="field">
-                <p-calendar [style]="{'width': '100%'}" ngModel="value" placeholder="Ngày sinh" dateFormat="dd/mm/yy"></p-calendar>
+                <p-calendar formControlName="ngay_sinh" [style]="{'width': '100%'}" placeholder="Ngày sinh" dateFormat="dd/mm/yy"></p-calendar>
+<!--                <p-calendar formControlName="ngay_sinh" [style]="{'width': '100%'}" ngModel="value" placeholder="Ngày sinh" dateFormat="dd/mm/yy"></p-calendar>-->
               </div>
               <input type="submit" value="Send Message" class="submit">
             </form>
