@@ -123,6 +123,10 @@ class Route {
             $config['middleware'] = new $m;
         }
 
+        if(isset($config['prefix']) && isset(self::$group_config['prefix'])) {
+            $config['prefix'] = self::$group_config['prefix'].$config['prefix'];
+        }
+
         $tmp_config = self::$group_config;
         self::$group_config = array_merge(self::$group_config, $config);
         $callback();
