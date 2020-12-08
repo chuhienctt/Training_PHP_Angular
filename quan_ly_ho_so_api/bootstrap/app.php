@@ -6,8 +6,14 @@ session_start();
 date_default_timezone_set($config['timezone']);
 
 // header config
-foreach($config['header'] as $key => $value) {
-    header("{$key}: {$value}");
+header('Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE, OPTIONS');
+header('Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Origin, Access-Control-Allow-Headers, Authorization, X-Requested-With');
+header('Access-Control-Allow-Origin: *');
+header('Content-Type: application/json, charset=utf-8');
+
+if($_SERVER["REQUEST_METHOD"] == 'OPTIONS') {
+    header("HTTP/1.1 200 OK");
+    exit;
 }
 
 // autoload core

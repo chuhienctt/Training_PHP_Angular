@@ -3,7 +3,9 @@
 use Core\Route;
 
 Route::get('/', 'HomeController@index');
+Route::get('/test', 'HomeController@test');
 Route::post('/test', 'HomeController@test');
+Route::put('/test', 'HomeController@test');
 
 Route::group([
     'prefix' => '/api'
