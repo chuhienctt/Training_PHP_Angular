@@ -99,7 +99,7 @@ class DB {
     }
 
     public function insert($data = []) {
-        // INSERT INTOtable([fields]) VALUES([values])
+        // INSERT INTO table([fields]) VALUES([values])
 
         $fields = implode(', ', array_keys($data));
         $values = implode(', ', array_fill(0, count($data), '?'));
