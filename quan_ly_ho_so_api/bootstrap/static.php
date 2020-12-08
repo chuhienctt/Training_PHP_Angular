@@ -21,7 +21,3 @@ function model($modelName) {
     global $models;
     return $models[$modelName];
 }
-
-function validate($validate) {
-    
-}

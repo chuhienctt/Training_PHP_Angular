@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use Core\Controller;
 use Core\Auth;
+use Core\Validator;
 use App\Models\Users;
 
 class AuthenticateController extends Controller {
@@ -28,7 +29,7 @@ class AuthenticateController extends Controller {
 
     public function register() {
 
-        request()->validate([
+        Validator::validate(request(), [
             'tai_khoan' => [
                 'required' => 'Tài khoản không được để trống',
                 'max:50' => 'Tài khoản không quá 50 kí tự',
