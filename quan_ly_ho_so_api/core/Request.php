@@ -56,8 +56,4 @@ class Request {
         return null;
     }
 
-    public function validate($validate) {
-        
-    }
-
 }
