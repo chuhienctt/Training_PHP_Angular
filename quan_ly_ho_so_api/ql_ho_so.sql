@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th12 07, 2020 lúc 07:42 AM
+-- Thời gian đã tạo: Th12 08, 2020 lúc 04:11 AM
 -- Phiên bản máy phục vụ: 10.4.14-MariaDB
 -- Phiên bản PHP: 7.4.11
 
@@ -152,9 +152,13 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `id_co_quan`, `tai_khoan`, `mat_khau`, `ho_ten`, `email`, `so_dien_thoai`, `dia_chi`, `ngay_sinh`, `role`, `token`) VALUES
-(2, NULL, 'test', '$2y$10$G7srdNt7exUicGDcrdAlTe5rEw6wHhU9FWyM61QUdeAMkpzcjB8ES', 'Nguyễn Đức Toàn', 'toannguyen080199@gmail.com', '987654321', 'test', '2020-12-07', 1, '$2y$05$Jog/pJxVi4tiOo7dUOfHUu/m0L.1WkOzWJl7zwajhryHt3p0FnGfC'),
-(3, NULL, 'admin', '$2y$10$M5gWlKFfYeZl/ABV0myIPuDlCxk.XZw2vwgVSbqr5hfxmi8iN71d2', 'Nguyễn Đức Toàn', 'toannguyen080199@gmail.com', '987654321', 'test', '2020-12-07', 1, '64bc28d46acbca7caa75a16e054663dd9bf10d83'),
-(4, NULL, 'admin2', '$2y$10$2sc6HxabXYKGDp8oXhGbJeO.u91XRuuBD3u3z3GEYc8xHwj164AVi', 'Nguyễn Đức Toàn', 'toannguyen080199@gmail.com', '987654321', 'test', '2020-12-07', 1, '$2y$05$8ub1ddsH6uHVzAnVk/xq6O07KN7sd2AyOgETm6sl6NZawJQGn15f.');
+(5, NULL, 'admin3', '$2y$10$N9Cdk8BncgWtILE8./rg6.ELNx71Xhr/o0K3j2KVnkKifwOLdLd1m', 'Nguyễn Đức Toàn', 'toannguyen080199@gmail.com', '987654321', 'test', '2020-12-07', 1, '27eb7c56d47a087b2363bd069f23fe0d4658ca23'),
+(6, NULL, 'admin', '$2y$10$2F14w/pXKX35CCMSJ5HuYenLDzog2.8smOwDzw6Jqjs4c8/jD2TRq', 'Nguyễn Đức Toàn', 'toannguyen080199@gmail.com', '987654321', 'test', '2020-12-07', 1, '58c2a7836351eb3ce2174c7bd83627630a5f944b'),
+(7, NULL, 'adminx', '$2y$10$p9bQxIrDMYTJ1GvZtiyEN.Muc6nZ4sIDXS9t1BK5zx0HIN6aGm7dC', 'Nguyễn Đức Toàn', 'toannguyen080199@gmail.com', '987654321', 'test', '2020-12-05', 1, NULL),
+(8, NULL, 'sadasd', '$2y$10$ouu2o0xeLwgMhk0jsk/AueCn/AQwMbfWjS.bGhHgHLmRDe120sonq', 'dasdas sadasdas', 'dsadsa@gmail.com', '977902031', 'thôn 4,Xã Nà Tòng,Huyện Tuần Giáo,Tỉnh Điện Biên', '2020-12-05', 1, NULL),
+(9, NULL, 'adminzz', '$2y$10$6baeXaiu69hzAgUD6tqtC.0/RggZi5um9A1C3j1lxQxkEQNuSfenG', 'NGuyễn Đức Toàn', 'toan@gmail.com', '987654332', 'asdasd,Xã Bạch Đích,Huyện Yên Minh,Tỉnh Hà Giang', '2020-12-08', 1, NULL),
+(10, NULL, 'vudz', '$2y$10$x3QvdzBZ5fRETbHrKI8TpOvM96gm4L/snyHeJXO6igKosS6w4ecSS', 'đào xuân vũ', 'vu140999@gmail.com', '977902031', 'thôn 4,Xã Pả Vi,Huyện Mèo Vạc,Tỉnh Hà Giang', '2020-12-06', 1, NULL),
+(11, NULL, 'toan', '$2y$10$fcrT4ywTmEaCyIBu/nRpdupVdOlS67f4z3w9rHseCeIMpum5C4ds.', 'Nguyễn Đức Toàn', 'toannguyen@gmail.com', '386420310', 'thôn Minh Khai, xã Đại Tập, huyện Khoái Châu, tỉnh Hưng Yên', '1999-01-08', 1, NULL);
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -269,7 +273,7 @@ ALTER TABLE `thu_tuc`
 -- AUTO_INCREMENT cho bảng `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- Các ràng buộc cho các bảng đã đổ
