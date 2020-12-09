@@ -10,7 +10,10 @@ class App {
 
         require_once __DIR__.'/../routes/api.php';
 
-        $route->RouteProcess();
+        $result = $route->RouteProcess();
+        if(!$result) {
+            return response()->code(404);
+        }
     }
 
 }

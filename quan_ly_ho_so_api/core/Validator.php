@@ -2,6 +2,8 @@
 
 namespace Core;
 
+use DateTime;
+
 class Validator {
 
     function __construct() {
@@ -54,6 +56,36 @@ class Validator {
                         $check = true;
                     }
                 break;
+                case 'date':
+                    if(DateTime::createFromFormat(Format::$dateFormat, $value) === false) {
+                        $check = true;
+                    }
+                break;
+                case 'time':
+                    if(DateTime::createFromFormat(Format::$timeFormat, $value) === false) {
+                        $check = true;
+                    }
+                break;
+                case 'datetime':
+                    if(DateTime::createFromFormat(Format::$dateTimeFormat, $value) === false) {
+                        $check = true;
+                    }
+                break;
+                case 'password':
+                    $uppercase = preg_match('@[A-Z]@', $value);
+                    $lowercase = preg_match('@[a-z]@', $value);
+                    $number = preg_match('@[0-9]@', $value);
+                    $specialChars = preg_match('@[^\w]@', $value);
+
+                    if(!$uppercase || !$lowercase  || !$number || !$specialChars) {
+                        $check = true;
+                    }
+                break;
+                case 'unique':
+                    if(DB::table($g)->where([$key => $value])->first()) {
+                        $check = true;
+                    }
+                break;
             }
             if($check) {
                 $this->alert($alert);
@@ -62,7 +94,7 @@ class Validator {
     }
 
     private function alert($text) {
-        response()->error(2, $text);
+        response()->error(0, $text);
         exit;
     }
 

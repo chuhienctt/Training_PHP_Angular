@@ -19,10 +19,10 @@ class HomeController extends Controller {
     public function login() {
         
         validator()->validate([
-            'tai_khoan' => [
-                'required' => 'Tài khoản không được để trống',
-                'max:50' => 'Tài khoản không quá 50 kí tự',
-                'min:8' => 'Tài khoản không dưới 8 kí tự',
+            'email' => [
+                'required' => 'Email không được để trống',
+                'max:100' => 'Email không quá 100 kí tự',
+                'email' => 'Email không đúng định dạng',
             ],
             'mat_khau' => [
                 'required' => 'Mật khẩu không được để trống',
@@ -31,10 +31,10 @@ class HomeController extends Controller {
             ],
         ]);
 
-        $tai_khoan = request()->tai_khoan;
+        $email = request()->email;
         $mat_khau = request()->mat_khau;
         
-        $user = model('Users')->where(['tai_khoan' => $tai_khoan])->first();
+        $user = model('Users')->where(['email' => $email])->first();
 
         if($user && Auth::checkPassword($mat_khau, $user->mat_khau)) {
 
@@ -44,57 +44,50 @@ class HomeController extends Controller {
 
             return response()->success(1, 'Đăng nhập thành công!', $user);
         }
-        return response()->error(2, 'Tài khoản hoặc mật khẩu không chính xác!');
+        return response()->error(2, 'Email hoặc mật khẩu không chính xác!');
     }
 
     public function register() {
 
         validator()->validate([
-            'tai_khoan' => [
-                'required' => 'Tài khoản không được để trống',
-                'max:50' => 'Tài khoản không quá 50 kí tự',
-                'min:8' => 'Tài khoản không dưới 8 kí tự',
+            'email' => [
+                'required' => 'Email không được để trống',
+                'max:100' => 'Email không quá 100 kí tự',
+                'email' => 'Email không đúng định dạng',
+                'unique:users' => 'Email này đã tồn tại',
             ],
             'mat_khau' => [
                 'required' => 'Mật khẩu không được để trống',
                 'max:50' => 'Mật khẩu không quá 50 kí tự',
                 'min:8' => 'Mật khẩu không dưới 8 kí tự',
+                'password' => 'Mật khẩu phải chứa ít nhất 1 kí tự hoa, 1 kí tự thường, 1 kí tự đặc biệt',
             ],
             'ho_ten' => [
                 'required' => 'Họ tên không được để trống',
                 'max:100' => 'Họ tên không quá 100 kí tự',
                 'min:3' => 'Họ tên quá ngắn',
             ],
-            'email' => [
-                'required' => 'Email không được để trống',
-                'max:100' => 'Email không quá 100 kí tự',
-                'email' => 'Email không đúng định dạng',
-            ],
             'so_dien_thoai' => [
                 'required' => 'Số điện thoại không được để trống',
                 'max:10' => 'Số điện thoại không quá 10 kí tự',
                 'phone_number' => 'Số điện thoại không đúng định dạng',
+                'unique:users' => 'Số điện thoại này đã tồn tại',
             ],
             'dia_chi' => [
                 'required' => 'Địa chỉ không được để trống',
                 'max:255' => 'Mật khẩu không quá 255 kí tự',
             ],
+            'ngay_sinh' => [
+                'required' => 'Ngày sinh không được để trống',
+                'date' => 'Ngày không đúng định dạng',
+            ],
         ]);
-
-        $tai_khoan = request()->tai_khoan;
-
-        $user = model('Users')->where(['tai_khoan' => $tai_khoan])->first();
-
-        if($user) {
-            return response()->error(2, 'Tài khoản này đã tồn tại!');
-        }
 
         $user = new Users();
 
-        $user->tai_khoan = $tai_khoan;
+        $user->email = request()->email;
         $user->mat_khau = Auth::createPassword(request()->mat_khau);
         $user->ho_ten = request()->ho_ten;
-        $user->email = request()->email;
         $user->so_dien_thoai = request()->so_dien_thoai;
         $user->dia_chi = request()->dia_chi;
         $user->ngay_sinh = Format::toDate(request()->ngay_sinh);
@@ -104,6 +97,10 @@ class HomeController extends Controller {
             return response()->success(1, 'Đăng ký thành công!', $user);
         }
 
-        return response()->error(3, 'Đăng ký thất bại!');
+        return response()->error(2, 'Đăng ký thất bại!');
+    }
+
+    public function file() {
+        var_dump(request()->file);
     }
 }

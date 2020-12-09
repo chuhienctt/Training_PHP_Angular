@@ -48,12 +48,9 @@ class Route {
             if($middlewareCheck) {
                 $curr_route['controller']->{$curr_route['action']}();
             }
-
-        } else {
-            // redirect to 404 page
-            header("HTTP/1.1 500 Internal Server Error");
+            return true;
         }
-
+        return false;
     }
 
     private static function request($func) {
