@@ -11,11 +11,12 @@ use App\Models\Users;
 class AdminController extends Controller {
 
     public function login() {
+
         validator()->validate([
-            'tai_khoan' => [
-                'required' => 'Tài khoản không được để trống',
-                'max:50' => 'Tài khoản không quá 50 kí tự',
-                'min:8' => 'Tài khoản không dưới 8 kí tự',
+            'email' => [
+                'required' => 'Email không được để trống',
+                'max:100' => 'Email không quá 100 kí tự',
+                'email' => 'Email không đúng định dạng',
             ],
             'mat_khau' => [
                 'required' => 'Mật khẩu không được để trống',
@@ -24,13 +25,20 @@ class AdminController extends Controller {
             ],
         ]);
 
-        $tai_khoan = request()->tai_khoan;
+        $email = request()->email;
         $mat_khau = request()->mat_khau;
         
         $user = model('Users')->where([
-            'tai_khoan' => $tai_khoan,
+            'email' => $email,
             'role' => 3,
         ])->first();
+
+        if(!$user) {
+            $user = model('Users')->where([
+                'email' => $email,
+                'role' => 2,
+            ])->first();
+        }
 
         if($user && Auth::checkPassword($mat_khau, $user->mat_khau)) {
 
@@ -40,6 +48,6 @@ class AdminController extends Controller {
 
             return response()->success(1, 'Đăng nhập thành công!', $user);
         }
-        return response()->error(2, 'Tài khoản hoặc mật khẩu không chính xác!');
+        return response()->error(2, 'Email hoặc mật khẩu không chính xác!');
     }
 }

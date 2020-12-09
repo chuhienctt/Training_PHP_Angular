@@ -71,7 +71,7 @@ class DB {
 
         $index = 1;
         foreach($data as $value) {
-            $statement->bindValue($index++, $value, is_numeric($value) ? PDO::PARAM_INT : PDO::PARAM_STR);
+            $statement->bindValue($index++, $value, gettype($value) != 'string' ? PDO::PARAM_INT : PDO::PARAM_STR);
         }
 
         $statement->execute();
@@ -109,7 +109,7 @@ class DB {
 
         $index = 1;
         foreach($data as $value) {
-            $statement->bindValue($index++, $value, is_numeric($value) ? PDO::PARAM_INT : PDO::PARAM_STR);
+            $statement->bindValue($index++, $value, gettype($value) != 'string' ? PDO::PARAM_INT : PDO::PARAM_STR);
         }
         $statement->execute();
 
@@ -136,7 +136,7 @@ class DB {
 
         $index = 1;
         foreach($data as $value) {
-            $statement->bindValue($index++, $value, is_numeric($value) ? PDO::PARAM_INT : PDO::PARAM_STR);
+            $statement->bindValue($index++, $value, gettype($value) != 'string' ? PDO::PARAM_INT : PDO::PARAM_STR);
         }
         $statement->execute();
 
@@ -155,7 +155,7 @@ class DB {
 
         $index = 1;
         foreach($data as $value) {
-            $statement->bindValue($index++, $value, is_numeric($value) ? PDO::PARAM_INT : PDO::PARAM_STR);
+            $statement->bindValue($index++, $value, gettype($value) != 'string' ? PDO::PARAM_INT : PDO::PARAM_STR);
         }
         $statement->execute();
 

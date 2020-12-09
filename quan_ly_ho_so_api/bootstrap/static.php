@@ -28,8 +28,3 @@ function validator() {
     global $validator;
     return $validator;
 }
-
-function validator() {
-    global $validator;
-    return $validator;
-}
