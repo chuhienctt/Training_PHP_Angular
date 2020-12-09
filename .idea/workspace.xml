@@ -2,16 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="03cb1574-7373-4fad-ab19-f86e2ac71880" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuanLyHoSoClient/src/app/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/QuanLyHoSoClient/src/app/app.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuanLyHoSoClient/src/app/libs/alert.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/QuanLyHoSoClient/src/app/libs/alert.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuanLyHoSoClient/src/app/login/login.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/QuanLyHoSoClient/src/app/login/login.component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuanLyHoSoClient/src/app/login/login.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/QuanLyHoSoClient/src/app/login/login.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuanLyHoSoClient/src/app/login/login.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/QuanLyHoSoClient/src/app/login/login.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuanLyHoSoClient/src/app/service/home.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/QuanLyHoSoClient/src/app/service/home.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuanLyHoSoClient/src/assets/libs/all.json" beforeDir="false" afterPath="$PROJECT_DIR$/QuanLyHoSoClient/src/assets/libs/all.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quan_ly_ho_so_api/app/Controllers/AuthenticateController.php" beforeDir="false" afterPath="$PROJECT_DIR$/quan_ly_ho_so_api/app/Controllers/AuthenticateController.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,6 +59,10 @@
     <option name="version" value="3" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="320" y="157" key="Vcs.Push.Dialog.v2" timestamp="1607497869024">
+      <screen x="0" y="23" width="1440" height="797" />
+    </state>
+    <state x="320" y="157" key="Vcs.Push.Dialog.v2/0.23.1440.797@0.23.1440.797" timestamp="1607497869024" />
     <state x="520" y="338" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1607397910067">
       <screen x="0" y="23" width="1440" height="797" />
     </state>
