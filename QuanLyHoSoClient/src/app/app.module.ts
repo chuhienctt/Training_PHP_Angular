@@ -14,7 +14,7 @@ import {CalendarModule} from 'primeng/calendar';
 import { ProcedureComponent } from './procedure/procedure.component';
 import { DetailComponent } from './detail/detail.component';
 import {ReactiveFormsModule} from '@angular/forms';
-import {ToastModule} from "primeng/toast";
+import {ToastModule} from 'primeng/toast';
 
 
 @NgModule({

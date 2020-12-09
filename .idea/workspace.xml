@@ -3,6 +3,20 @@
   <component name="ChangeListManager">
     <list default="true" id="03cb1574-7373-4fad-ab19-f86e2ac71880" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuanLyHoSoClient/src/app/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/QuanLyHoSoClient/src/app/app.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuanLyHoSoClient/src/app/login/login.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/QuanLyHoSoClient/src/app/login/login.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuanLyHoSoClient/src/app/login/login.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/QuanLyHoSoClient/src/app/login/login.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuanLyHoSoClientAdmin/src/app/app-routing.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/QuanLyHoSoClientAdmin/src/app/app-routing.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuanLyHoSoClientAdmin/src/app/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/QuanLyHoSoClientAdmin/src/app/app.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuanLyHoSoClientAdmin/src/app/home/home.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/QuanLyHoSoClientAdmin/src/app/home/home.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuanLyHoSoClientAdmin/src/app/share/header/header.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/QuanLyHoSoClientAdmin/src/app/share/header/header.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuanLyHoSoClientAdmin/src/environments/environment.ts" beforeDir="false" afterPath="$PROJECT_DIR$/QuanLyHoSoClientAdmin/src/environments/environment.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quan_ly_ho_so_api/app/Controllers/AdminController.php" beforeDir="false" afterPath="$PROJECT_DIR$/quan_ly_ho_so_api/app/Controllers/AdminController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quan_ly_ho_so_api/app/Controllers/HomeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/quan_ly_ho_so_api/app/Controllers/HomeController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quan_ly_ho_so_api/bootstrap/static.php" beforeDir="false" afterPath="$PROJECT_DIR$/quan_ly_ho_so_api/bootstrap/static.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quan_ly_ho_so_api/core/Format.php" beforeDir="false" afterPath="$PROJECT_DIR$/quan_ly_ho_so_api/core/Format.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quan_ly_ho_so_api/core/Validator.php" beforeDir="false" afterPath="$PROJECT_DIR$/quan_ly_ho_so_api/core/Validator.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quan_ly_ho_so_api/ql_ho_so.sql" beforeDir="false" afterPath="$PROJECT_DIR$/quan_ly_ho_so_api/ql_ho_so.sql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,6 +66,7 @@
       <updated>1607395471975</updated>
       <workItem from="1607395473010" duration="118000" />
       <workItem from="1607476504310" duration="12217000" />
+      <workItem from="1607502202286" duration="233000" />
     </task>
     <servers />
   </component>
@@ -59,13 +74,17 @@
     <option name="version" value="3" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="320" y="157" key="Vcs.Push.Dialog.v2" timestamp="1607497869024">
+    <state x="577" y="332" key="#TSLint" timestamp="1607502233771">
       <screen x="0" y="23" width="1440" height="797" />
     </state>
-    <state x="320" y="157" key="Vcs.Push.Dialog.v2/0.23.1440.797@0.23.1440.797" timestamp="1607497869024" />
-    <state x="520" y="338" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1607397910067">
+    <state x="577" y="332" key="#TSLint/0.23.1440.797@0.23.1440.797" timestamp="1607502233771" />
+    <state x="320" y="157" key="Vcs.Push.Dialog.v2" timestamp="1607502321589">
       <screen x="0" y="23" width="1440" height="797" />
     </state>
-    <state x="520" y="338" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.23.1440.797@0.23.1440.797" timestamp="1607397910067" />
+    <state x="320" y="157" key="Vcs.Push.Dialog.v2/0.23.1440.797@0.23.1440.797" timestamp="1607502321589" />
+    <state x="520" y="338" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1607502313705">
+      <screen x="0" y="23" width="1440" height="797" />
+    </state>
+    <state x="520" y="338" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.23.1440.797@0.23.1440.797" timestamp="1607502313705" />
   </component>
 </project>

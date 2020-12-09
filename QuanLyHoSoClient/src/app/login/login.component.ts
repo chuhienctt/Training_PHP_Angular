@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {HomeService} from '../service/home.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {AlertService} from "../libs/alert.service";
-import {Router} from "@angular/router";
-import {MessageService} from "primeng/api";
+import {AlertService} from '../libs/alert.service';
+import {Router} from '@angular/router';
+import {MessageService} from 'primeng/api';
 
 @Component({
   selector: 'app-login',
@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private homeService: HomeService,
     private alertService: AlertService,
-    private  router:Router,
+    private  router: Router,
     private formBuilder: FormBuilder,
     private messageService: MessageService
   ) {
@@ -81,7 +81,7 @@ export class LoginComponent implements OnInit {
       } else {
         matchingControl.setErrors(null);
       }
-    }
+    };
   }
 
   getDistrict(val) {

@@ -3,27 +3,24 @@
 namespace Core;
 
 class Format {
-    public static $dateFormat = "Y-m-d";
-    public static $timeFormat = "H:i:s";
-    public static $dateTimeFormat = "Y-m-d H:i:s";
 
     function __construct() {
     }
 
     public static function toDateTime($value) {
-        return date(self::$dateTimeFormat, strtotime($value));
+        return date('Y-m-d H:i:s', strtotime($value));
     }
 
     public static function toTime($value) {
-        return date(self::$timeFormat, strtotime($value));
+        return date('H:i:s', strtotime($value));
     }
 
     public static function toDate($value) {
-        return date(self::$dateFormat, strtotime($value));
+        return date('Y-m-d', strtotime($value));
     }
 
     public static function timeNow() {
-        return date(self::$dateTimeFormat);
+        return date('Y-m-d H:i:s');
     }
 
 }

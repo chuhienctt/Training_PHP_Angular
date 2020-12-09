@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th12 09, 2020 lúc 08:59 AM
+-- Thời gian đã tạo: Th12 07, 2020 lúc 07:42 AM
 -- Phiên bản máy phục vụ: 10.4.14-MariaDB
 -- Phiên bản PHP: 7.4.11
 
@@ -136,15 +136,25 @@ CREATE TABLE `thu_tuc` (
 CREATE TABLE `users` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `id_co_quan` bigint(20) DEFAULT NULL,
+  `tai_khoan` varchar(50) NOT NULL,
   `mat_khau` varchar(255) NOT NULL,
   `ho_ten` varchar(100) NOT NULL,
   `email` varchar(100) NOT NULL,
-  `so_dien_thoai` varchar(10) DEFAULT '',
+  `so_dien_thoai` char(10) DEFAULT NULL,
   `dia_chi` varchar(255) DEFAULT '',
   `ngay_sinh` date NOT NULL,
   `role` tinyint(4) NOT NULL,
   `token` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Đang đổ dữ liệu cho bảng `users`
+--
+
+INSERT INTO `users` (`id`, `id_co_quan`, `tai_khoan`, `mat_khau`, `ho_ten`, `email`, `so_dien_thoai`, `dia_chi`, `ngay_sinh`, `role`, `token`) VALUES
+(2, NULL, 'test', '$2y$10$G7srdNt7exUicGDcrdAlTe5rEw6wHhU9FWyM61QUdeAMkpzcjB8ES', 'Nguyễn Đức Toàn', 'toannguyen080199@gmail.com', '987654321', 'test', '2020-12-07', 1, '$2y$05$Jog/pJxVi4tiOo7dUOfHUu/m0L.1WkOzWJl7zwajhryHt3p0FnGfC'),
+(3, NULL, 'admin', '$2y$10$M5gWlKFfYeZl/ABV0myIPuDlCxk.XZw2vwgVSbqr5hfxmi8iN71d2', 'Nguyễn Đức Toàn', 'toannguyen080199@gmail.com', '987654321', 'test', '2020-12-07', 1, '64bc28d46acbca7caa75a16e054663dd9bf10d83'),
+(4, NULL, 'admin2', '$2y$10$2sc6HxabXYKGDp8oXhGbJeO.u91XRuuBD3u3z3GEYc8xHwj164AVi', 'Nguyễn Đức Toàn', 'toannguyen080199@gmail.com', '987654321', 'test', '2020-12-07', 1, '$2y$05$8ub1ddsH6uHVzAnVk/xq6O07KN7sd2AyOgETm6sl6NZawJQGn15f.');
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -207,7 +217,7 @@ ALTER TABLE `thu_tuc`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `email_unique` (`email`);
+  ADD UNIQUE KEY `tai_khoan` (`tai_khoan`);
 
 --
 -- AUTO_INCREMENT cho các bảng đã đổ
@@ -259,7 +269,7 @@ ALTER TABLE `thu_tuc`
 -- AUTO_INCREMENT cho bảng `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Các ràng buộc cho các bảng đã đổ
