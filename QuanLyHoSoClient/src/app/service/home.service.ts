@@ -18,4 +18,8 @@ export class HomeService {
   register(user) {
     return this._http.post(baseUrl + "register", user);
   }
+
+  login(user) {
+    return this._http.post(baseUrl + "login", user);
+  }
 }

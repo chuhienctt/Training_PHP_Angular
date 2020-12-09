@@ -6,7 +6,8 @@ import Swal from 'sweetalert2/dist/sweetalert2.js';
 })
 
 export class AlertService {
-  success(messenger, showbutton = true, textButton = 'OK', callback = () => {}) {
+
+  success(messenger, showbutton = true, textButton = 'OK', callback) {
     Swal.fire({
       title: 'Thành công',
       text: messenger,

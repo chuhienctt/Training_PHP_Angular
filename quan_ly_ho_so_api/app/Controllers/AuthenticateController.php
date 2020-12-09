@@ -83,7 +83,7 @@ class AuthenticateController extends Controller {
         $user->email = $email;
         $user->so_dien_thoai = $so_dien_thoai;
         $user->dia_chi = $dia_chi;
-        $user->ngay_sinh = $ngay_sinh;
+        $user->ngay_sinh = date('Y-m-d', strtotime($ngay_sinh));
         $user->role = 1;
 
         if($user->save()) {

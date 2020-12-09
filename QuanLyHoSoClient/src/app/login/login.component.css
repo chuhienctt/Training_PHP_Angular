@@ -16,3 +16,11 @@
 .country-item {
   padding: 10px 0 10px 0;
 }
+
+.p-dropdown-items {
+  max-height: 200px !important;
+}
+
+.text-danger {
+  color: red;
+}

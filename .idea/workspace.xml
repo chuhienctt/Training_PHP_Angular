@@ -2,27 +2,39 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="03cb1574-7373-4fad-ab19-f86e2ac71880" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/Training_PHP_Angular.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Training_PHP_Angular.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_12_3_20,_4_47_CH_[Default_Changelist]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_12_3_20__4_47_CH__Default_Changelist_.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_12_7_20,_8_43_SA_[Default_Changelist]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_12_7_20__8_43_SA__Default_Changelist_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quan_ly_ho_so_api/.env" beforeDir="false" afterPath="$PROJECT_DIR$/quan_ly_ho_so_api/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuanLyHoSoClient/src/app/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/QuanLyHoSoClient/src/app/app.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuanLyHoSoClient/src/app/libs/alert.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/QuanLyHoSoClient/src/app/libs/alert.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuanLyHoSoClient/src/app/login/login.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/QuanLyHoSoClient/src/app/login/login.component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuanLyHoSoClient/src/app/login/login.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/QuanLyHoSoClient/src/app/login/login.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuanLyHoSoClient/src/app/login/login.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/QuanLyHoSoClient/src/app/login/login.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuanLyHoSoClient/src/app/service/home.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/QuanLyHoSoClient/src/app/service/home.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuanLyHoSoClient/src/assets/libs/all.json" beforeDir="false" afterPath="$PROJECT_DIR$/QuanLyHoSoClient/src/assets/libs/all.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quan_ly_ho_so_api/app/Controllers/AuthenticateController.php" beforeDir="false" afterPath="$PROJECT_DIR$/quan_ly_ho_so_api/app/Controllers/AuthenticateController.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ComposerSettings" synchronizationState="SYNCHRONIZE">
+  <component name="ComposerSettings" doNotAsk="true" synchronizationState="SYNCHRONIZE">
     <pharConfigPath>$PROJECT_DIR$/quan_ly_ho_so_api/composer.json</pharConfigPath>
     <execution />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="PhpWorkspaceProjectConfiguration">
+    <include_path>
+      <path value="$PROJECT_DIR$/quan_ly_ho_so_api/vendor/symfony/polyfill-mbstring" />
+      <path value="$PROJECT_DIR$/quan_ly_ho_so_api/vendor/vlucas/phpdotenv" />
+      <path value="$PROJECT_DIR$/quan_ly_ho_so_api/vendor/phpoption/phpoption" />
+      <path value="$PROJECT_DIR$/quan_ly_ho_so_api/vendor/symfony/polyfill-php80" />
+      <path value="$PROJECT_DIR$/quan_ly_ho_so_api/vendor/graham-campbell/result-type" />
+      <path value="$PROJECT_DIR$/quan_ly_ho_so_api/vendor/symfony/polyfill-ctype" />
+      <path value="$PROJECT_DIR$/quan_ly_ho_so_api/vendor/composer" />
+    </include_path>
   </component>
   <component name="ProjectId" id="1lM8COGnhbWKUuRgJyEEI4i8tqi" />
   <component name="ProjectViewState">
@@ -32,7 +44,11 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
+    <property name="ts.external.directory.path" value="$PROJECT_DIR$/QuanLyHoSoClientAdmin/node_modules/typescript/lib" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -44,10 +60,17 @@
       <option name="presentableId" value="Default" />
       <updated>1607395471975</updated>
       <workItem from="1607395473010" duration="118000" />
+      <workItem from="1607476504310" duration="12217000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="520" y="338" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1607397910067">
+      <screen x="0" y="23" width="1440" height="797" />
+    </state>
+    <state x="520" y="338" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.23.1440.797@0.23.1440.797" timestamp="1607397910067" />
   </component>
 </project>
