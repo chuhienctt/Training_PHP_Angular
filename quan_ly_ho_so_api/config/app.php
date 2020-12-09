@@ -5,6 +5,10 @@ $dotenv->load();
 
 return [
 
+    'app' => [
+        'debug' => $_ENV['DEBUG'],
+    ],
+
     // database
     'database' => [
         'host'     => $_ENV['HOST'],
@@ -16,4 +20,8 @@ return [
 
     // timezone
     'timezone' => $_ENV['TIMEZONE'],
+
+
+    // file system
+    'storage' => 'public/storage',
 ];

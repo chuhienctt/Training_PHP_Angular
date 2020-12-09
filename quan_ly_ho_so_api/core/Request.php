@@ -7,10 +7,26 @@ class Request {
     function __construct() {
         $post = json_decode(file_get_contents('php://input'), true);
 
-        $this->data = array_merge($post ?? [], $_GET ?? [], $_FILES ?? []);
+        $this->data = array_merge($post ?? [], $_GET ?? []);
 
         foreach($this->data as $key => $value) {
             $this->{$key} = $value;
+        }
+
+        foreach($_FILES as $key => $value) {
+            if(gettype($value['tmp_name']) == 'array') {
+                // multi file
+
+                $files = [];
+                for($i = 0; $i < count($value['tmp_name']); $i++) {
+                    $value[$i]['error'] == 0 && $files[] = File::create($value[$i]['name'], $value[$i]['type'], $value[$i]['tmp_name'], $value[$i]['size']);
+                }
+                $this->{$key} = $files;
+
+            } else {
+                // single file
+                $value['error'] == 0 && $this->{$key} = File::create($value['name'], $value['type'], $value['tmp_name'], $value['size']);
+            }
         }
     }
 

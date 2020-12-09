@@ -16,6 +16,12 @@ if($_SERVER["REQUEST_METHOD"] == 'OPTIONS') {
     exit;
 }
 
+if($config['app']['debug']) {
+    error_reporting(E_ALL);
+    ini_set('display_errors', 1);
+    set_error_handler('errorHandler');
+}
+
 // autoload core
 $files = getFiles(__DIR__.'/../core/');
 
@@ -50,4 +56,18 @@ function getFiles($path) {
     return array_filter(scandir($path), function($file) {
         return strpos(strtolower($file), '.php') > 0;
     });
+}
+
+function errorHandler($errno, $errstr, $errfile, $errline) {
+    response()->code(417, [
+        'status' => 99,
+        'message' => 'Lỗi hệ thống',
+        'data' => [
+            'level' => $errno,
+            'line' => $errline,
+            'error' => $errstr,
+            'file' => $errfile,
+        ]
+    ]);
+    exit;
 }

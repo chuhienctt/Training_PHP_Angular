@@ -68,6 +68,7 @@ class Response {
         $this->code(400, [
             'status' => $status,
             'message' => $message,
+            'data' => []
         ]);
     }
 
