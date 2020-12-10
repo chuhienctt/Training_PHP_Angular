@@ -16,8 +16,9 @@ import { HeaderComponent } from './share/header/header.component';
 import {FieldComponent} from './main/feild/field.component';
 import {TableModule} from 'primeng/table';
 import {environment} from "../environments/environment";
-import { LoginComponent } from './login/login.component';
+import { LoginComponent } from './auth/login/login.component';
 import { MainComponent } from './main/main.component';
+import { AuthComponent } from './auth/auth.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { MainComponent } from './main/main.component';
     FieldComponent,
     LoginComponent,
     MainComponent,
+    AuthComponent,
   ],
   imports: [
     BrowserModule,
