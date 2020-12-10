@@ -1,9 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {HomeService} from '../service/home.service';
+import {HomeService} from '../../service/home.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {AlertService} from '../libs/alert.service';
+import {AlertService} from '../../libs/alert.service';
 import {Router} from '@angular/router';
 import {MessageService} from 'primeng/api';
+import {DatePipe} from "@angular/common";
 
 @Component({
   selector: 'app-login',
@@ -12,6 +13,7 @@ import {MessageService} from 'primeng/api';
   providers: [MessageService]
 })
 export class LoginComponent implements OnInit {
+  pipe = new DatePipe("en-US");
   listCity = [];
   listDistrict = [];
   listCommune = [];
@@ -46,16 +48,15 @@ export class LoginComponent implements OnInit {
     };
 
     this.formLogin = this.formBuilder.group({
-      tai_khoan: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(50)]],
-      mat_khau: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(50), Validators.pattern('(?=^.{8,}$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$')]],
+      email: ['', [Validators.required, Validators.email, Validators.minLength(8), Validators.maxLength(100)]],
+      mat_khau: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(50), Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$')]],
     })
 
     this.formRegister = this.formBuilder.group({
-      tai_khoan: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(50)]],
-      mat_khau: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(50), Validators.pattern('(?=^.{8,}$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$')]],
-      mat_khau_2: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(50), Validators.pattern('(?=^.{8,}$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$')]],
-      ho_ten: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(100)]],
       email: ['', [Validators.required, Validators.email, Validators.minLength(8), Validators.maxLength(100)]],
+      mat_khau: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(50), Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$')]],
+      mat_khau_2: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(50), Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$')]],
+      ho_ten: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(100)]],
       so_dien_thoai: ['', [Validators.required, Validators.pattern('^(0)[0-9]{9}$')]],
       dia_chi: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(150)]],
       ngay_sinh: ['', [Validators.required]],
@@ -115,13 +116,12 @@ export class LoginComponent implements OnInit {
       return;
     }
     let user = {
-      tai_khoan: this.formRegister.value.tai_khoan,
+      email: this.formRegister.value.email,
       mat_khau: this.formRegister.value.mat_khau,
       ho_ten: this.formRegister.value.ho_ten,
-      email: this.formRegister.value.email,
       so_dien_thoai: this.formRegister.value.so_dien_thoai,
       dia_chi: address.join(", "),
-      ngay_sinh: this.formRegister.value.ngay_sinh.toISOString()
+      ngay_sinh: this.pipe.transform(this.formRegister.value.ngay_sinh, "yyyy-MM-dd")
     }
     this.homeService.register(user).subscribe((res: any) => {
       this.alertService.success(
@@ -130,6 +130,8 @@ export class LoginComponent implements OnInit {
         'Đăng nhập ngay!',
         () => {
           this.homeService.login(user).subscribe((res:any) => {
+            localStorage.setItem("jwt", JSON.stringify(res.data));
+            this.homeService.input(res.data);
             this.router.navigate(["/"]);
           })
         });
@@ -146,6 +148,8 @@ export class LoginComponent implements OnInit {
       return;
     }
     this.homeService.login(this.formLogin.value).subscribe((res:any) => {
+      localStorage.setItem("jwt", JSON.stringify(res.data));
+      this.homeService.input(res.data);
       this.alertService.success(
         'Đăng nhập thành công!',
         true,

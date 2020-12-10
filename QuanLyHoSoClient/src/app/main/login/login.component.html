@@ -23,11 +23,12 @@
 <!--             Contact Form-->
             <form [formGroup]="formLogin" (ngSubmit)="login()" class="contact-form">
               <div class="field">
-                <input type="text" formControlName="tai_khoan" placeholder="Tài khoản">
-                <div *ngIf="submittedLo && formLogin.controls.tai_khoan.errors">
-                  <span class="text-danger" *ngIf="formLogin.controls.tai_khoan.errors.required">Chưa nhập tài khoản.</span>
-                  <span class="text-danger" *ngIf="formLogin.controls.tai_khoan.errors.minlength">Tài khoản không được dưới 8 ký tự.</span>
-                  <span class="text-danger" *ngIf="formLogin.controls.tai_khoan.errors.maxlength">Tài khoản không được trên 50 ký tự.</span>
+                <input type="email" formControlName="email" placeholder="E-mail">
+                <div *ngIf="submittedLo && formLogin.controls.email.errors">
+                  <span class="text-danger" *ngIf="formLogin.controls.email.errors.required">Chưa nhập email.</span>
+                  <span class="text-danger" *ngIf="formLogin.controls.email.errors.email">Email không đúng định dạng.</span>
+                  <span class="text-danger" *ngIf="formLogin.controls.email.errors.minlength">Email không được nhỏ hơn 8 ký tự.</span>
+                  <span class="text-danger" *ngIf="formLogin.controls.email.errors.maxlength">Email không được lớn hơn 50 ký tự.</span>
                 </div>
               </div>
               <div class="field">
@@ -54,11 +55,12 @@
 <!--             Contact Form-->
             <form class="contact-form" [formGroup]="formRegister" (ngSubmit)="register()">
               <div class="field">
-                <input type="text" formControlName="tai_khoan" placeholder="Tài khoản" autocomplete="off">
-                <div *ngIf="submittedRe && formRegister.controls.tai_khoan.errors">
-                  <span class="text-danger" *ngIf="formRegister.controls.tai_khoan.errors.required">Chưa nhập tài khoản.</span>
-                  <span class="text-danger" *ngIf="formRegister.controls.tai_khoan.errors.minlength">Tài khoản không được dưới 8 ký tự.</span>
-                  <span class="text-danger" *ngIf="formRegister.controls.tai_khoan.errors.maxlength">Tài khoản không được trên 50 ký tự.</span>
+                <input type="email" formControlName="email" placeholder="E-mail">
+                <div *ngIf="submittedRe && formRegister.controls.email.errors">
+                  <span class="text-danger" *ngIf="formRegister.controls.email.errors.required">Chưa nhập email.</span>
+                  <span class="text-danger" *ngIf="formRegister.controls.email.errors.email">Email không đúng định dạng.</span>
+                  <span class="text-danger" *ngIf="formRegister.controls.email.errors.minlength">Email không được nhỏ hơn 8 ký tự.</span>
+                  <span class="text-danger" *ngIf="formRegister.controls.email.errors.maxlength">Email không được lớn hơn 50 ký tự.</span>
                 </div>
               </div>
               <div class="field">
@@ -84,15 +86,6 @@
                   <span class="text-danger" *ngIf="formRegister.controls.ho_ten.errors.required">Chưa nhập họ tên.</span>
                   <span class="text-danger" *ngIf="formRegister.controls.ho_ten.errors.minlength">Họ tên không được dưới 8 ký tự.</span>
                   <span class="text-danger" *ngIf="formRegister.controls.ho_ten.errors.minlength">Họ tên không được trên 50 ký tự.</span>
-                </div>
-              </div>
-              <div class="field">
-                <input type="email" formControlName="email" placeholder="E-mail">
-                <div *ngIf="submittedRe && formRegister.controls.email.errors">
-                  <span class="text-danger" *ngIf="formRegister.controls.email.errors.required">Chưa nhập email.</span>
-                  <span class="text-danger" *ngIf="formRegister.controls.email.errors.email">Email không đúng định dạng.</span>
-                  <span class="text-danger" *ngIf="formRegister.controls.email.errors.minlength">Email không được nhỏ hơn 8 ký tự.</span>
-                  <span class="text-danger" *ngIf="formRegister.controls.email.errors.maxlength">Email không được lớn hơn 50 ký tự.</span>
                 </div>
               </div>
               <div class="field">
