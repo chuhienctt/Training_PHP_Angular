@@ -6,6 +6,7 @@ class Model {
     protected $table = '';
     private $db = [];
     protected $columns = [];
+    public $original_data = [];
 
     public function __construct() {
         $this->db = new DB($this->table);
@@ -74,18 +75,28 @@ class Model {
         foreach($this->columns as $column) {
             if($column != 'id') {
                 if(isset($this->{$column})) {
-                    $data[$column] = $this->{$column};
-                } else {
-                    $data[$column] = null;
+                    $override = true;
+
+                    if(isset($this->original_data[$column]) && $this->original_data[$column] == $this->{$column}) {
+                        $override = false;
+                    }
+
+                    $override && $data[$column] = $this->{$column};
                 }
             }
         }
         
         if(isset($this->id)) {
             // update
+            if(in_array('updated_at', $this->columns)) {
+                $data['updated_at'] = $this->updated_at = Format::timeNow();
+            }
             return $this->db->update($data);
         } else {
             // insert
+            if(in_array('created_at', $this->columns)) {
+                $data['created_at'] = $this->created_at = Format::timeNow();
+            }
             return $this->db->insert($data);
         }
     }
@@ -112,10 +123,11 @@ class Model {
         $modelName = substr($className, strripos($className, '\\') + 1);
 
         $model = clone model($modelName);
+        $model->original_data = [];
 
         foreach($this->columns as $column) {
             if(isset($instance->{$column})) {
-                $model->{$column} = $instance->{$column};
+                $model->original_data[$column] = $model->{$column} = $instance->{$column};
             } else {
                 if($column == 'id') {
                     return null;

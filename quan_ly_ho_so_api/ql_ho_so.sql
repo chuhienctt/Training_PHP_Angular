@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th12 09, 2020 lúc 08:59 AM
+-- Thời gian đã tạo: Th12 10, 2020 lúc 03:08 AM
 -- Phiên bản máy phục vụ: 10.4.14-MariaDB
 -- Phiên bản PHP: 7.4.11
 
@@ -32,8 +32,8 @@ CREATE TABLE `buoc` (
   `id_quy_trinh` bigint(20) UNSIGNED NOT NULL,
   `ten_buoc` varchar(255) NOT NULL,
   `ghi_chu` varchar(255) DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
-  `deleted_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+  `created_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -48,8 +48,8 @@ CREATE TABLE `co_quan` (
   `dia_chi` varchar(255) DEFAULT '',
   `email` varchar(100) NOT NULL,
   `so_dien_thoai` char(10) NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
-  `deleted_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+  `created_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -76,8 +76,8 @@ CREATE TABLE `ho_so` (
   `thong_tin` longtext NOT NULL,
   `trang_thai` tinyint(4) NOT NULL,
   `ghi_chu` varchar(255) DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
-  `deleted_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+  `created_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -91,9 +91,16 @@ CREATE TABLE `linh_vuc` (
   `ten_linh_vuc` varchar(200) NOT NULL,
   `hinh_anh` varchar(255) NOT NULL,
   `mo_ta` varchar(255) DEFAULT '',
-  `created_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
-  `deleted_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+  `created_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Đang đổ dữ liệu cho bảng `linh_vuc`
+--
+
+INSERT INTO `linh_vuc` (`id`, `ten_linh_vuc`, `hinh_anh`, `mo_ta`, `created_at`, `deleted_at`) VALUES
+(11, 'lĩnh vực đã sửa', '/linh-vuc-images/3d6d57318aa2f9aeed2e3e7f99e240aca27f15de.png', 'mô tả đã sửa', '2020-12-10 02:01:35', NULL);
 
 -- --------------------------------------------------------
 
@@ -106,8 +113,8 @@ CREATE TABLE `quy_trinh` (
   `id_thu_tuc` bigint(20) UNSIGNED NOT NULL,
   `ten_quy_trinh` varchar(255) NOT NULL,
   `ghi_chu` varchar(255) DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
-  `deleted_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+  `created_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -123,8 +130,8 @@ CREATE TABLE `thu_tuc` (
   `ten_thu_tuc` varchar(255) NOT NULL,
   `muc_do` tinyint(4) NOT NULL,
   `template` varchar(255) NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
-  `deleted_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+  `created_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -145,6 +152,15 @@ CREATE TABLE `users` (
   `role` tinyint(4) NOT NULL,
   `token` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Đang đổ dữ liệu cho bảng `users`
+--
+
+INSERT INTO `users` (`id`, `id_co_quan`, `mat_khau`, `ho_ten`, `email`, `so_dien_thoai`, `dia_chi`, `ngay_sinh`, `role`, `token`) VALUES
+(19, NULL, '$2y$10$JYCdH8pHvihQ8urEcpIxj.o9XizbXa4Whebfe.IqlI0aFWv8cFXne', 'Nguyễn Đức Toàn', 'toannguyen@gmail.com', '386420313', 'thôn Minh Khai, xã Đại Tập, huyện Khoái Châu, tỉnh Hưng Yên', '1999-01-08', 2, 'bc50e98566e2e51704b8dfeea236615ae4f304a4'),
+(21, NULL, '$2y$10$Md9AGnyz.Aha7C5d4B4wX.WzaEbPYKVv.MtZEqHM1TUxR5SspA0vC', 'Nguyễn Đức Toàn', 'toannguyen1@gmail.com', '386420310', 'thôn Minh Khai, xã Đại Tập, huyện Khoái Châu, tỉnh Hưng Yên', '1999-01-08', 1, NULL),
+(29, NULL, '$2y$10$1xeIQVYcQ5xj6tJDIwMeS.WF5naLB31SOFiqRN3sX7NbyvGDyGBRe', 'Nguyễn Đức Toàn', 'toannguyen2@gmail.com', '0386420311', 'thôn Minh Khai, xã Đại Tập, huyện Khoái Châu, tỉnh Hưng Yên', '1999-01-08', 1, NULL);
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -241,7 +257,7 @@ ALTER TABLE `ho_so`
 -- AUTO_INCREMENT cho bảng `linh_vuc`
 --
 ALTER TABLE `linh_vuc`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT cho bảng `quy_trinh`
@@ -259,7 +275,7 @@ ALTER TABLE `thu_tuc`
 -- AUTO_INCREMENT cho bảng `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- Các ràng buộc cho các bảng đã đổ

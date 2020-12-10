@@ -47,9 +47,15 @@ class Response {
         505 => 'HTTP Version Not Supported'
     ];
 
+    protected $variables = [
+        'tmp_data',
+        'original_data',
+        'mat_khau'
+    ];
+
     public function code($code, $data = []) {
         header("HTTP/1.1 $code ".$this->httpStatus[$code]);
-        echo json_encode($data);
+        echo json_encode($this->hiddenVariable($data));
     }
 
     public function json($data) {
@@ -60,7 +66,7 @@ class Response {
         $this->code(200, [
             'status' => $status,
             'message' => $message,
-            'data' => $data,
+            'data' => $this->hiddenVariable($data),
         ]);
     }
 
@@ -70,6 +76,19 @@ class Response {
             'message' => $message,
             'data' => []
         ]);
+    }
+
+    public function hiddenVariable($object) {
+        if(gettype($object) === 'object') {
+            foreach($this->variables as $var) {
+                if(isset($object->{$var})) {
+                    unset($object->{$var});
+                }
+            }
+        }
+
+        return $object;
+        
     }
 
 }
