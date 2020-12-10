@@ -24,7 +24,10 @@ export class HeaderComponent implements OnInit {
     }
   }
   public logOut = () => {
-    localStorage.removeItem("jwt");
+    if(confirm("Bạn muốn đăng xuất?")) {
+      localStorage.removeItem("jwt");
+      this.router.navigate(['/admin/auth/login']);
+    }
   }
 
 }
