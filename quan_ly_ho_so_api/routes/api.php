@@ -3,7 +3,6 @@
 use Core\Route;
 
 Route::get('/', 'HomeController@index');
-Route::post('/file', 'HomeController@file');
 
 Route::group([
     'prefix' => '/api'
@@ -26,6 +25,18 @@ Route::group([
     ], function () {
 
         Route::post('/auth/login', 'AdminController@login');
+
+        Route::group([
+            'prefix' => '/linh-vuc'
+        ], function () {
+
+            Route::get('/get', 'LinhVucController@get');
+            Route::get('/pagination', 'LinhVucController@pagination');
+            Route::post('/create', 'LinhVucController@create');
+            Route::put('/update', 'LinhVucController@update');
+            Route::delete('/delete', 'LinhVucController@delete');
+
+        });
 
     });
 
