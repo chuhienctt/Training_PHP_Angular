@@ -99,8 +99,4 @@ class HomeController extends Controller {
 
         return response()->error(2, 'Đăng ký thất bại!');
     }
-
-    public function file() {
-        var_dump(request()->file);
-    }
 }
