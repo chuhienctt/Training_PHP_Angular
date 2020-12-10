@@ -13,17 +13,19 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from "@angular/common/http";
 import { HeaderComponent } from './share/header/header.component';
-import {FieldComponent} from './feild/field.component';
+import {FieldComponent} from './main/feild/field.component';
 import {TableModule} from 'primeng/table';
-import { LoginComponent } from './login/login.component';
 import {environment} from "../environments/environment";
+import { LoginComponent } from './login/login.component';
+import { MainComponent } from './main/main.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     FieldComponent,
-    LoginComponent
+    LoginComponent,
+    MainComponent,
   ],
   imports: [
     BrowserModule,

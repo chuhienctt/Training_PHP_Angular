@@ -1,5 +1,5 @@
 import {Component, Injector, OnInit} from '@angular/core';
-import {ScriptService} from '../libs/script.service';
+import {ScriptService} from '../../libs/script.service';
 import {MessageService, PrimeNGConfig} from 'primeng/api';
 
 @Component({

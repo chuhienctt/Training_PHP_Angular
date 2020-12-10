@@ -19,7 +19,7 @@ export class ScriptService {
         script.src = src;
         script.async = true;
         script.defer = true;
-        script.className = "dashboard";
+        script.className = "script";
         this._renderer.appendChild(document.body, script);
         return script;
     }
