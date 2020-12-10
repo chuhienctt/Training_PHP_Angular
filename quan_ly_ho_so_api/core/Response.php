@@ -83,7 +83,11 @@ class Response {
             $data = $this->hiddenVariableObject($data);
         } else if(gettype($data) === 'array') {
             foreach($data as $object) {
-                $object = $this->hiddenVariableObject($object);
+                if(gettype($object) == 'array') {
+                    $object = $this->hiddenVariable($object);
+                } else {
+                    $object = $this->hiddenVariableObject($object);
+                }
             }
         }
 
