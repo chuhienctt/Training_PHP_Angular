@@ -62,7 +62,7 @@ class Response {
         $this->code(200, $data);
     }
 
-    public function success($status, $message, $data) {
+    public function success($status, $message, $data = []) {
         $this->code(200, [
             'status' => $status,
             'message' => $message,
@@ -78,17 +78,26 @@ class Response {
         ]);
     }
 
-    public function hiddenVariable($object) {
-        if(gettype($object) === 'object') {
-            foreach($this->variables as $var) {
-                if(isset($object->{$var})) {
-                    unset($object->{$var});
-                }
+    public function hiddenVariable($data) {
+        if(gettype($data) === 'object') {
+            $data = $this->hiddenVariableObject($data);
+        } else if(gettype($data) === 'array') {
+            foreach($data as $object) {
+                $object = $this->hiddenVariableObject($object);
             }
         }
 
-        return $object;
+        return $data;
         
+    }
+
+    public function hiddenVariableObject($object) {
+        foreach($this->variables as $var) {
+            if(isset($object->{$var})) {
+                unset($object->{$var});
+            }
+        }
+        return $object;
     }
 
 }

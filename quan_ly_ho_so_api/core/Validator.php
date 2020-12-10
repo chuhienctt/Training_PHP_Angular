@@ -47,6 +47,16 @@ class Validator {
                     return true;
                 }
             break;
+            case 'numberic':
+                if(is_numeric($value)) {
+                    return true;
+                }
+            break;
+            case 'array':
+                if(gettype($value) == 'array') {
+                    return true;
+                }
+            break;
             case 'email':
                 if(!preg_match("/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/ix", $value)) {
                     return true;

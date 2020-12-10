@@ -97,7 +97,13 @@ class Model {
             if(in_array('created_at', $this->columns)) {
                 $data['created_at'] = $this->created_at = Format::timeNow();
             }
-            return $this->db->insert($data);
+
+            $row = $this->db->insert($data);
+            if($row) {
+                $this->id = $this->db->lastInsertId();
+                $this->updateValues();
+            }
+            return $row;
         }
     }
 
@@ -111,6 +117,19 @@ class Model {
         return model($model)->find($this->{$foreign_key});
     }
 
+    private function updateValues() {
+        $db = new DB($this->table);
+        $table = $db->find($this->id);
+
+        foreach($this->columns as $column) {
+            if(isset($table->{$column})) {
+                $this->original_data[$column] = $this->{$column} = $table->{$column};
+            } else {
+                $this->{$column} = null;
+            }
+        }
+    }
+
     private function cast($data) {
         return array_map(function($object) {
             return $this->castObject($object);
@@ -118,10 +137,9 @@ class Model {
     }
 
     private function castObject($instance) {
-        $className = static::class;
 
-        $modelName = substr($className, strripos($className, '\\') + 1);
-
+        $modelName = $this->getModelName();
+        
         $model = clone model($modelName);
         $model->original_data = [];
 
@@ -137,12 +155,11 @@ class Model {
         }
 
         return $model;
-        
-        // return unserialize(sprintf(
-        //     'O:%d:"%s"%s',
-        //     strlen($className),
-        //     $className,
-        //     strstr(strstr(serialize($instance), '"'), ':')
-        // ));
+    }
+
+    public function getModelName() {
+        $className = static::class;
+        $modelName = substr($className, strripos($className, '\\') + 1);
+        return $modelName;
     }
 }

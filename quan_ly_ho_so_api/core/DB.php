@@ -208,13 +208,13 @@ class DB {
     }
 
     public function offset($n, $instance = null) {
-        $this->offset = $n;
+        $this->offset = (int) $n;
 
         return $instance ?? $this;
     }
 
     public function limit($n, $instance = null) {
-        $this->limit = $n;
+        $this->limit = (int) $n;
 
         return $instance ?? $this;
     }
@@ -225,6 +225,10 @@ class DB {
 
     public function take($n) {
         return $this->limit($n);
+    }
+
+    public function lastInsertId() {
+        return self::$connect->lastInsertId();
     }
 
     // schema

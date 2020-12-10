@@ -10,7 +10,7 @@ use Core\File;
 use Core\DB;
 use App\Models\LinhVuc;
 
-class LinhVucController extends Controller {
+class CoQuanController extends Controller {
 
     public function get() {
         $data = model('LinhVuc')->all();
