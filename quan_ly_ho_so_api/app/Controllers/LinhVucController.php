@@ -7,7 +7,10 @@ use Core\Auth;
 use Core\Validator;
 use Core\Format;
 use Core\File;
+<<<<<<< HEAD
 use Core\DB;
+=======
+>>>>>>> Update database, CURD lĩnh vực
 use App\Models\LinhVuc;
 
 class LinhVucController extends Controller {
@@ -20,6 +23,7 @@ class LinhVucController extends Controller {
         return response()->json($data);
     }
 
+<<<<<<< HEAD
     public function pagination() {
         $first = request()->first ?? 0;
         $row = request()->row ?? 10;
@@ -32,6 +36,8 @@ class LinhVucController extends Controller {
         ]);
     }
 
+=======
+>>>>>>> Update database, CURD lĩnh vực
     public function create() {
         
         validator()->validate([
@@ -65,6 +71,7 @@ class LinhVucController extends Controller {
         $linh_vuc->hinh_anh = '/linh-vuc-images/'.$file->getFileName();
 
         if($linh_vuc->save()) {
+<<<<<<< HEAD
 
             // add referenced
             if(request()->has('co_quan') && is_array(request()->co_quan)) {
@@ -80,6 +87,8 @@ class LinhVucController extends Controller {
 
             }
 
+=======
+>>>>>>> Update database, CURD lĩnh vực
             return response()->success(1, 'Thêm lĩnh vực thành công!', $linh_vuc);
         }
 
@@ -122,6 +131,7 @@ class LinhVucController extends Controller {
         $linh_vuc->mo_ta = request()->mo_ta ?? null;
 
         if($linh_vuc->save()) {
+<<<<<<< HEAD
 
             if(request()->has('co_quan') && is_array(request()->co_quan)) {
 
@@ -142,11 +152,14 @@ class LinhVucController extends Controller {
 
             }
 
+=======
+>>>>>>> Update database, CURD lĩnh vực
             return response()->success(1, 'Sửa lĩnh vực thành công!', $linh_vuc);
         }
 
         return response()->error(2, 'Sửa lĩnh vực thất bại!');
     }
+<<<<<<< HEAD
 
     public function delete() {
         
@@ -165,4 +178,6 @@ class LinhVucController extends Controller {
 
         return response()->error(2, 'Xóa lĩnh vực thất bại!');
     }
+=======
+>>>>>>> Update database, CURD lĩnh vực
 }
