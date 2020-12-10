@@ -2,6 +2,7 @@ import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 import {MainComponent} from "./main.component";
 import {HomeComponent} from "./home/home.component";
+import {FeildComponent} from "./feild/feild.component";
 
 const routes: Routes = [
   {
@@ -14,7 +15,7 @@ const routes: Routes = [
     component: MainComponent,
     children: [
       {path:'dashboard', component:HomeComponent},
-      // {path:'feild', component: Feild},
+      {path:'feild', component: FeildComponent},
     ]
   }]
 

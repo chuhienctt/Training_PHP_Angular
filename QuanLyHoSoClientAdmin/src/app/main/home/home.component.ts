@@ -14,6 +14,12 @@ export class HomeComponent extends ScriptService implements OnInit {
   }
 
   ngOnInit(): void {
+    let elem = document.getElementsByClassName('script');
+    if (elem.length != undefined) {
+      for (var i = elem.length - 1; 0 <= i; i--) {
+        elem[i].remove();
+      }
+    }
     this.loadScripts();
   }
 
