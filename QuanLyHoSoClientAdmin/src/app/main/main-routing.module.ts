@@ -14,6 +14,7 @@ const routes: Routes = [
     component: MainComponent,
     children: [
       {path:'dashboard', component:HomeComponent},
+      // {path:'feild', component: Feild},
     ]
   }]
 
