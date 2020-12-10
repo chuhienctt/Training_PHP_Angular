@@ -41,6 +41,10 @@ class Model {
         return $this->db->delete();
     }
 
+    public function count() {
+        return $this->db->count();
+    }
+
     public function select($data) {
         return $this->db->select($data, $this);
     }

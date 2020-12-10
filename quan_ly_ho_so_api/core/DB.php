@@ -162,6 +162,13 @@ class DB {
         return $statement->rowCount();
     }
 
+    public function count() {
+        $sql = "SELECT COUNT(*) AS count FROM $this->table";
+        $statement = self::$connect->prepare($sql);
+        $statement->execute();
+        return $statement->fetchColumn();
+    }
+
     public function select($data = [], $instance = null) {
         $this->select = $data;
 

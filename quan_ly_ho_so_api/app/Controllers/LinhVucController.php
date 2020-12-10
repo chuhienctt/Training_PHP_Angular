@@ -26,7 +26,10 @@ class LinhVucController extends Controller {
 
         $data = model('LinhVuc')->offset($first)->limit($row)->get();
 
-        return response()->json($data);
+        return response()->json([
+            'total' => model('LinhVuc')->count(),
+            'data' => $data,
+        ]);
     }
 
     public function create() {
