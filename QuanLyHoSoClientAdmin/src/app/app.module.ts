@@ -16,6 +16,7 @@ import { MainComponent } from './main/main.component';
 import { AuthComponent } from './auth/auth.component';
 import {HeaderComponent} from "./share/header/header.component";
 import {ShareModule} from "./share/share.module";
+import {FooterComponent} from "./share/footer/footer.component";
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import {ShareModule} from "./share/share.module";
     LoginComponent,
     MainComponent,
     AuthComponent,
-    HeaderComponent
+    HeaderComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
