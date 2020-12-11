@@ -4,70 +4,66 @@
 <!-- Mirrored from thememakker.com/wrap-theme/square/html/dark/index2.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 26 Sep 2018 02:58:08 GMT -->
 
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <meta name="description" content="sQuare Bootstrap 4 Angular 5 admin dashboard with ui kit.">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <meta name="description" content="sQuare Bootstrap 4 Angular 5 admin dashboard with ui kit.">
 
-    <title>:: sQuare Dark :: Index 2</title>
-    <base href="/">
-    <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
-    <!-- Favicon-->
-    <link rel="stylesheet" href="assets/plugins/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/plugins/material-design-iconic-font/css/materialdesignicons.css">
-    <link rel="stylesheet" href="assets/plugins/morrisjs/morris.css" />
-    <!-- Custom Css -->
-    <link rel="stylesheet" href="assets/css/main.css">
-    <link rel="stylesheet" href="assets/css/hm-style.css">
-    <link rel="stylesheet" href="assets/css/color_skins.css">
-    <!-- <link rel="stylesheet" href="assets/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.css" /> -->
+  <title>:: sQuare Dark :: Index 2</title>
+  <base href="/">
+  <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
+  <!-- Favicon-->
+  <link rel="stylesheet" href="assets/plugins/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/plugins/material-design-iconic-font/css/materialdesignicons.css">
+  <link rel="stylesheet" href="assets/plugins/morrisjs/morris.css"/>
+  <!-- Custom Css -->
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="assets/css/hm-style.css">
+  <link rel="stylesheet" href="assets/css/color_skins.css">
 </head>
 
 <body class="theme-blush index2">
-    <app-root></app-root>
+<app-root></app-root>
 
-    <!-- Jquery Core Js -->
-    <script src="assets/bundles/libscripts.bundle.js"></script>
-    <!-- Lib Scripts Plugin Js -->
-    <script src="assets/bundles/vendorscripts.bundle.js"></script>
-    <!-- Lib Scripts Plugin Js -->
+<!-- Jquery Core Js -->
+<script src="assets/bundles/libscripts.bundle.js"></script>
+<!-- Lib Scripts Plugin Js -->
+<script src="assets/bundles/vendorscripts.bundle.js"></script>
+<!-- Lib Scripts Plugin Js -->
+<script src="assets/bundles/knob.bundle.js"></script>
+<!-- Jquery Knob-->
+<script src="assets/bundles/morrisscripts.bundle.js"></script>
+<script>
+  /*global $ */
+  $(document).ready(function () {
+    "use strict";
+    $('.menu > ul > li:has( > ul)').addClass('menu-dropdown-icon');
+    //Checks if li has sub (ul) and adds class for toggle icon - just an UI
 
-    <script src="assets/bundles/knob.bundle.js"></script>
-    <!-- Jquery Knob-->
-    <script src="assets/bundles/morrisscripts.bundle.js"></script>
-    <!-- Morris Plugin Js -->
-    <!-- <script src="assets/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script> -->
-    <script>
-        /*global $ */
-        $(document).ready(function() {
-            "use strict";
-            $('.menu > ul > li:has( > ul)').addClass('menu-dropdown-icon');
-            //Checks if li has sub (ul) and adds class for toggle icon - just an UI
+    $('.menu > ul > li > ul:not(:has(ul))').addClass('normal-sub');
 
-            $('.menu > ul > li > ul:not(:has(ul))').addClass('normal-sub');
+    $(".menu > ul > li").hover(function (e) {
+      if ($(window).width() > 943) {
+        $(this).children("ul").stop(true, false).fadeToggle(150);
+        e.preventDefault();
+      }
+    });
+    //If width is more than 943px dropdowns are displayed on hover
+    $(".menu > ul > li").on('click', function () {
+      if ($(window).width() <= 943) {
+        $(this).children("ul").fadeToggle(150);
+      }
+    });
+    //If width is less or equal to 943px dropdowns are displayed on click (thanks Aman Jain from stackoverflow)
 
-            $(".menu > ul > li").hover(function(e) {
-                if ($(window).width() > 943) {
-                    $(this).children("ul").stop(true, false).fadeToggle(150);
-                    e.preventDefault();
-                }
-            });
-            //If width is more than 943px dropdowns are displayed on hover    
-            $(".menu > ul > li").on('click', function() {
-                if ($(window).width() <= 943) {
-                    $(this).children("ul").fadeToggle(150);
-                }
-            });
-            //If width is less or equal to 943px dropdowns are displayed on click (thanks Aman Jain from stackoverflow)
+    $(".h-bars").on('click', function (e) {
+      $(".menu > ul").toggleClass('show-on-mobile');
+      e.preventDefault();
+    });
+    //when clicked on mobile-menu, normal menu is shown as a list, classic rwd menu story (thanks mwl from stackoverflow)
 
-            $(".h-bars").on('click', function(e) {
-                $(".menu > ul").toggleClass('show-on-mobile');
-                e.preventDefault();
-            });
-            //when clicked on mobile-menu, normal menu is shown as a list, classic rwd menu story (thanks mwl from stackoverflow)
-
-        });
-    </script>
+  });
+</script>
 </body>
 <!-- Mirrored from thememakker.com/wrap-theme/square/html/dark/index2.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 26 Sep 2018 02:58:09 GMT -->
 

@@ -9,7 +9,8 @@ const Domain = "localhost:8200";
 export const environment = {
   production: false,
   domain: Domain,
-  apiUrl: "https://" + Domain + "/api/",
+  urlImg: "http://" + Domain + "/",
+  apiUrl: "http://" + Domain + "/api/",
   headerOptions: new HttpHeaders({
     'Content-Type': 'application/json'
   })

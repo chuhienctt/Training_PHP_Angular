@@ -8,9 +8,9 @@ export class ScriptService {
     }
 
     public loadScripts() {
-        this.renderExternalScript('assets/bundles/mainscripts.bundle.js').onload = () => { }
-        this.renderExternalScript('assets/js/pages/charts/jquery-knob.js').onload = () => { }
-        this.renderExternalScript('assets/js/pages/index2.js').onload = () => { }
+      this.renderExternalScript('assets/bundles/mainscripts.bundle.js').onload = () => { }
+      // this.renderExternalScript('assets/js/pages/charts/jquery-knob.js').onload = () => { }
+      // this.renderExternalScript('assets/js/pages/index2.js').onload = () => { }
     }
 
     public renderExternalScript(src: string): HTMLScriptElement {
@@ -19,7 +19,7 @@ export class ScriptService {
         script.src = src;
         script.async = true;
         script.defer = true;
-        script.className = "dashboard";
+        script.className = "script";
         this._renderer.appendChild(document.body, script);
         return script;
     }

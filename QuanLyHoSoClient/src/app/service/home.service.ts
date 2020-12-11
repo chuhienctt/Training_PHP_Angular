@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {environment} from "../../environments/environment";
+import {BehaviorSubject} from "rxjs";
 
 const baseUrl = environment.apiUrl + "auth/";
 
@@ -9,7 +10,19 @@ const baseUrl = environment.apiUrl + "auth/";
 })
 
 export class HomeService {
+  private authSubject = new BehaviorSubject(JSON.parse(localStorage.getItem("jwt")));
+  private current = this.authSubject.asObservable();
+  currentUser = null;
+
   constructor(private _http: HttpClient) { }
+
+  input(data) {
+    this.authSubject.next(data);
+  }
+
+  output() {
+    return this.current;
+  }
 
   getAddress() {
     return this._http.get('/assets/libs/all.json');

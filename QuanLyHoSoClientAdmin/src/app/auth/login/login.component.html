@@ -1,0 +1,67 @@
+<p-toast></p-toast>
+<div class="authentication sidebar-collapse">
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg fixed-top navbar-transparent">
+    <div class="container">
+      <div class="navbar-translate n_logo">
+        <a class="navbar-brand" href="javascript:void(0);" title="" target="_blank">sQuare</a>
+        <button class="navbar-toggler" type="button">
+          <span class="navbar-toggler-bar bar1"></span>
+          <span class="navbar-toggler-bar bar2"></span>
+          <span class="navbar-toggler-bar bar3"></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+  <!-- End Navbar -->
+  <div class="page-header">
+    <div class="container">
+      <div class="col-md-12 content-center">
+        <div class="card-plain">
+          <form [formGroup]="form" (ngSubmit)="login()">
+            <div class="header">
+              <div class="logo-container expandUp">
+                <img src="assets/images/image2.svg" alt="">
+              </div>
+              <h5>Log in</h5>
+            </div>
+            <div class="content">
+              <div class="input-group input-lg">
+                <input type="email" class="form-control" placeholder="Nhập email" formControlName="email">
+                <span class="input-group-addon">
+                    <i class="zmdi zmdi-account-circle"></i>
+                </span>
+              </div>
+              <div *ngIf="submited && form.controls.email.errors">
+                <div class="text-danger" *ngIf="form.controls.email.errors.required">Chưa nhập email.</div>
+                <div class="text-danger" *ngIf="form.controls.email.errors.email">Email không đúng định dạng.</div>
+                <div class="text-danger" *ngIf="form.controls.email.errors.minlength">Email không được nhỏ hơn 8 ký tự.</div>
+                <div class="text-danger" *ngIf="form.controls.email.errors.maxlength">Email không được lớn hơn 50 ký tự.</div>
+              </div>
+              <div class="input-group input-lg">
+                <input type="password" placeholder="Nhập mật khẩu" class="form-control" formControlName="mat_khau"/>
+                <span class="input-group-addon"><i class="zmdi zmdi-lock"></i></span>
+              </div>
+              <div *ngIf="submited && form.controls.mat_khau.errors">
+                <div class="text-danger" *ngIf="form.controls.mat_khau.errors.required">Chưa nhập mật khẩu.</div>
+                <div class="text-danger" *ngIf="form.controls.mat_khau.errors.minlength">Mật khẩu không được dưới 8 ký tự.</div>
+                <div class="text-danger" *ngIf="form.controls.mat_khau.errors.maxlength">Mật khẩu không được trên 50 ký tự.</div>
+                <div class="text-danger" *ngIf="form.controls.mat_khau.errors.pattern">Mật khẩu không đúng định dạng.</div>
+              </div>
+            </div>
+            <div class="footer">
+              <button type="submit" class="btn btn-primary btn-round btn-lg btn-block ">Đăng nhập</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <footer class="footer">
+      <div class="container">
+        <div class="copyright">
+          &copy; <a href="#">Xuân Vũ</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+</div>

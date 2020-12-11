@@ -1,0 +1,4 @@
+:host ::ng-deep .ck-editor__editable_inline {
+  min-height: 200px;
+  color: black !important;
+}

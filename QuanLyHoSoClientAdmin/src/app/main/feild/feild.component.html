@@ -1,0 +1,103 @@
+<p-toast></p-toast>
+<section class="content">
+  <div class="block-header">
+    <div class="row">
+      <div class="col-lg-7 col-md-6 col-sm-12">
+        <h2>Jquery DataTables
+          <small>Welcome to sQuare</small>
+        </h2>
+      </div>
+      <div class="col-lg-5 col-md-6 col-sm-12">
+        <ul class="breadcrumb float-md-right">
+          <li class="breadcrumb-item"><a href="index.html"><i class="zmdi zmdi-home"></i> sQuare</a></li>
+          <li class="breadcrumb-item"><a href="javascript:void(0);">Tables</a></li>
+          <li class="breadcrumb-item active">Jquery DataTables</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <!-- Exportable Table -->
+    <div class="row clearfix">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="header">
+            <h2>Quản lý <strong>lĩnh vực</strong> </h2>
+            <ul class="header-dropdown">
+              <li>
+                <a (click)="create()"><i class="mdi mdi-plus-circle"></i></a>
+              </li>
+              <li class="remove">
+                <a role="button" class="boxs-close"><i class="zmdi zmdi-close"></i></a>
+              </li>
+            </ul>
+          </div>
+          <div class="body">
+            <p-table [value]="listFeild" [lazy]="true" (onLazyLoad)="loadData($event)" [paginator]="true" [rows]="10" [totalRecords]="totalRecords" [loading]="loading">
+              <ng-template pTemplate="header">
+                <tr>
+                  <th>#</th>
+                  <th>Tên lĩnh vực</th>
+                  <th>Hình ảnh</th>
+                  <th>Thao tác</th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-item let-i="rowIndex">
+                <tr>
+                  <td>{{ i+1 }}</td>
+                  <td>{{item.ten_linh_vuc}}</td>
+                  <td><img style="width: 30px; vertical-align: middle" *ngIf="item.hinh_anh" [src]="createImg(item.hinh_anh)"></td>
+                  <td>
+                    <p-button icon="pi pi-pencil" styleClass="p-button-warning" [style]="{'margin-right': '.5em'}"></p-button>
+                    <p-button icon="pi pi-trash" styleClass="p-button-danger"></p-button>
+                  </td>
+                </tr>
+              </ng-template>
+            </p-table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- #END# Exportable Table -->
+  </div>
+</section>
+
+<!-- Modal -->
+<div class="modal fade" data-backdrop="false" id="largeModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content bg-blue-grey">
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="modal-header">
+          <h5 class="modal-title">{{ aoe ? "Thêm lĩnh vực" : "Sửa lĩnh vực" }}</h5>
+          <button type="button" class="close" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label>Tên lĩnh vực</label>
+            <input type="text" class="form-control" placeholder="Nhập tên lĩnh vực" formControlName="ten_linh_vuc" required>
+          </div>
+          <div class="form-group">
+            <label>Mô tả</label>
+            <ckeditor [editor]="Editor" formControlName="mo_ta"></ckeditor>
+          </div>
+          <div class="form-group">
+            <p-multiSelect [options]="listOrgan" formControlName="id_co_quan" optionLabel="ten_co_quan"></p-multiSelect>
+          </div>
+          <div class="form-group">
+            <label for="image">Hình ảnh <span *ngIf="!aoe" class="text-danger">(Không thay đổi nếu không
+                                chọn ảnh)</span></label>
+            <p-fileUpload #file mode="basic" chooseLabel="Chọn ảnh" [multiple]="false" accept="image/*" maxFileSize="1000000">
+            </p-fileUpload>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-bold btn-pure btn-secondary" data-dismiss="modal">Đóng</button>
+          <button type="submit" class="btn btn-bold btn-pure btn-primary float-right">Cập nhật</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- /.modal -->

@@ -1,8 +1,7 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
-import {HomeComponent} from './home/home.component';
-import {FieldComponent} from './feild/field.component';
-import {LoginComponent} from "./login/login.component";
+import {LoginComponent} from "./auth/login/login.component";
+import {AuthGuard} from "./guards/auth.guard";
 
 const routes: Routes = [
   {
@@ -12,11 +11,12 @@ const routes: Routes = [
   },
   {
     path: 'admin',
-    children: [
-      {path: 'dashboard', component: HomeComponent},
-      {path: 'feild', component: FieldComponent},
-      {path: 'auth/login', component: LoginComponent}
-    ]
+    canActivate: [AuthGuard],
+    loadChildren: () => import("./main/main.module").then(m => m.MainModule)
+  },
+  {
+    path: 'admin/auth/login',
+    component: LoginComponent
   }
 ];
 
@@ -24,7 +24,8 @@ const routes: Routes = [
   imports: [
     RouterModule.forRoot(routes)
   ],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [AuthGuard]
 })
 export class AppRoutingModule {
 }

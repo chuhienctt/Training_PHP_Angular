@@ -34,7 +34,16 @@
           <!-- Item 7-->
           <!-- Search Icon-->
           <li class="menu-item">
-            <div class="search-nav big" routerLink="/login"><i class="fa fa-user"></i></div>
+            <div class="search-nav big" *ngIf="!user" routerLink="/login">
+              <i class="fa fa-user"></i>
+            </div>
+            <div class="search-nav big" *ngIf="user" data-toggle="dropdown" routerLink="/login">
+              <i class="fa fa-cog"></i>
+              <ul class="sub-menu">
+                <li><a routerLink="/procedure">Hồ sơ</a></li>
+                <li><a (click)="logOut()">Đăng xuất</a></li>
+              </ul>
+            </div>
           </li>
         </ul>
       </div>
