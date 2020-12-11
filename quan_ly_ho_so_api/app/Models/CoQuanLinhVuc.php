@@ -10,4 +10,8 @@ class CoQuanLinhVuc extends Model {
     public function co_quan() {
         return $this->belongsTo('CoQuan', 'id_co_quan');
     }
+
+    public function linh_vuc() {
+        return $this->belongsTo('LinhVuc', 'id_linh_vuc');
+    }
 }
