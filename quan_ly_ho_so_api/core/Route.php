@@ -24,6 +24,10 @@ class Route {
         } else {
             $this->route = $path;
         }
+
+        if(strpos($this->route, 'storage') > 0) {
+            File::fileRender($this->route);
+        }
         
         $this->request_method = $_SERVER["REQUEST_METHOD"];
     }
