@@ -16,6 +16,7 @@ class CoQuanController extends Controller {
         $data = model('CoQuan')->all();
         if(request()->has('id')) {
             $data = model('CoQuan')->find(request()->id);
+            $data->linh_vuc = $data->all_linh_vuc();
         }
         return response()->json($data);
     }

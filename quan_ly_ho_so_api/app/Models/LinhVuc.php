@@ -13,8 +13,8 @@ class LinhVuc extends Model {
 
     public function all_co_quan() {
         $data = [];
-        foreach($this->hasMany('CoQuanLinhVuc', 'id_linh_vuc') as $lv) {
-            $data[] = $lv->co_quan();
+        foreach($this->hasMany('CoQuanLinhVuc', 'id_linh_vuc') as $item) {
+            $data[] = $item->co_quan();
         }
         return $data;
     }

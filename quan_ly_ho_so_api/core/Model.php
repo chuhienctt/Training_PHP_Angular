@@ -95,6 +95,9 @@ class Model {
             if(in_array('updated_at', $this->columns)) {
                 $data['updated_at'] = $this->updated_at = Format::timeNow();
             }
+            if(count($data) == 0) {
+                return 1;
+            }
             return $this->db->update($data);
         } else {
             // insert
