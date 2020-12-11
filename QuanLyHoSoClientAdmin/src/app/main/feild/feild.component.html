@@ -33,7 +33,7 @@
             </ul>
           </div>
           <div class="body">
-            <p-table [value]="listFeild" [lazy]="true" (onLazyLoad)="loadData($event)" [paginator]="true" [rows]="10" [totalRecords]="totalRecords" [loading]="loading">
+            <p-table [value]="listFeild" [lazy]="true" (onLazyLoad)="loadData($event)" [paginator]="true" [rows]="rows" [totalRecords]="totalRecords" [loading]="loading">
               <ng-template pTemplate="header">
                 <tr>
                   <th>#</th>
@@ -48,8 +48,8 @@
                   <td>{{item.ten_linh_vuc}}</td>
                   <td><img style="width: 30px; vertical-align: middle" *ngIf="item.hinh_anh" [src]="createImg(item.hinh_anh)"></td>
                   <td>
-                    <p-button icon="pi pi-pencil" styleClass="p-button-warning" [style]="{'margin-right': '.5em'}"></p-button>
-                    <p-button icon="pi pi-trash" styleClass="p-button-danger"></p-button>
+                    <p-button icon="pi pi-pencil" styleClass="p-button-warning" [style]="{'margin-right': '.5em'}" (onClick)="edit(item.id)"></p-button>
+                    <p-button icon="pi pi-trash" styleClass="p-button-danger" (onClick)="delete(item.id)"></p-button>
                   </td>
                 </tr>
               </ng-template>
@@ -77,24 +77,34 @@
           <div class="form-group">
             <label>Tên lĩnh vực</label>
             <input type="text" class="form-control" placeholder="Nhập tên lĩnh vực" formControlName="ten_linh_vuc" required>
+            <div *ngIf="submited && form.controls.ten_linh_vuc.errors">
+              <div class="text-danger" *ngIf="form.controls.ten_linh_vuc.errors.required">Chưa nhập tên lĩnh vực.</div>
+              <div class="text-danger" *ngIf="form.controls.ten_linh_vuc.errors.maxlength">Tên lĩnh vực không được trên 200 ký tự.</div>
+            </div>
           </div>
           <div class="form-group">
             <label>Mô tả</label>
             <ckeditor [editor]="Editor" formControlName="mo_ta"></ckeditor>
+            <div *ngIf="submited && form.controls.mo_ta.errors">
+              <div class="text-danger" *ngIf="form.controls.mo_ta.errors.maxlength">Mô tả không được trên 255 ký tự.</div>
+            </div>
           </div>
           <div class="form-group">
-            <p-multiSelect [options]="listOrgan" formControlName="id_co_quan" optionLabel="ten_co_quan"></p-multiSelect>
+            <p-multiSelect [options]="listOrgan" defaultLabel="Chọn cơ quan" formControlName="co_quan" [style]="{'width': '100%'}" optionLabel="ten_co_quan" optionValue="id"></p-multiSelect>
           </div>
           <div class="form-group">
-            <label for="image">Hình ảnh <span *ngIf="!aoe" class="text-danger">(Không thay đổi nếu không
+            <label>Hình ảnh <span *ngIf="!aoe" class="text-danger">(Không thay đổi nếu không
                                 chọn ảnh)</span></label>
             <p-fileUpload #file mode="basic" chooseLabel="Chọn ảnh" [multiple]="false" accept="image/*" maxFileSize="1000000">
             </p-fileUpload>
+            <div *ngIf="submited && !file.hasFiles()">
+              <div class="text-danger" >Chưa chọn ảnh.</div>
+            </div>
           </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-bold btn-pure btn-secondary" data-dismiss="modal">Đóng</button>
-          <button type="submit" class="btn btn-bold btn-pure btn-primary float-right">Cập nhật</button>
+          <button type="submit" class="btn btn-bold btn-pure btn-primary float-right">Xác nhận</button>
         </div>
       </form>
     </div>

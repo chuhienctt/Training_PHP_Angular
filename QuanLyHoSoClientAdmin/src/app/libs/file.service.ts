@@ -19,7 +19,7 @@ export class FileService {
                     let result = null;
                     let tmp: any = reader.result;
                     let baseCode = tmp.substring(tmp.indexOf('base64,', 0) + 7);
-                    result = fileUpload.name + ';' + fileUpload.size + ';' + baseCode;
+                    result = 'base64:' + fileUpload.name + ';' + fileUpload.size + ';' + baseCode;
                     return result;
                 })
             );
