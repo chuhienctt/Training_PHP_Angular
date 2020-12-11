@@ -1,0 +1,126 @@
+<p-toast></p-toast>
+<section class="content">
+  <div class="block-header">
+    <div class="row">
+      <div class="col-lg-7 col-md-6 col-sm-12">
+        <h2>Jquery DataTables
+          <small>Welcome to sQuare</small>
+        </h2>
+      </div>
+      <div class="col-lg-5 col-md-6 col-sm-12">
+        <ul class="breadcrumb float-md-right">
+          <li class="breadcrumb-item"><a href="index.html"><i class="zmdi zmdi-home"></i> sQuare</a></li>
+          <li class="breadcrumb-item"><a href="javascript:void(0);">Tables</a></li>
+          <li class="breadcrumb-item active">Jquery DataTables</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <!-- Exportable Table -->
+    <div class="row clearfix">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="header">
+            <h2>Quản lý <strong>cơ quan</strong> </h2>
+            <ul class="header-dropdown">
+              <li>
+                <a (click)="create()"><i class="mdi mdi-plus-circle"></i></a>
+              </li>
+              <li class="remove">
+                <a role="button" class="boxs-close"><i class="zmdi zmdi-close"></i></a>
+              </li>
+            </ul>
+          </div>
+          <div class="body">
+            <p-table [value]="listOrgan" [lazy]="true" (onLazyLoad)="loadData($event)" [paginator]="true" [rows]="rows" [totalRecords]="totalRecords" [loading]="loading">
+              <ng-template pTemplate="header">
+                <tr>
+                  <th>#</th>
+                  <th>Tên cơ quan</th>
+                  <th>Số điện thoại</th>
+                  <th>Email</th>
+                  <th>Địa chỉ</th>
+                  <th>Thao tác</th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-item let-i="rowIndex">
+                <tr>
+                  <td>{{ i+1 }}</td>
+                  <td>{{item.ten_co_quan}}</td>
+                  <td>{{item.so_dien_thoai}}</td>
+                  <td>{{item.email}}</td>
+                  <td>{{item.dia_chi}}</td>
+                  <td>
+                    <p-button icon="pi pi-pencil" styleClass="p-button-warning" [style]="{'margin-right': '.5em'}" (onClick)="edit(item.id)"></p-button>
+                    <p-button icon="pi pi-trash" styleClass="p-button-danger" (onClick)="delete(item.id)"></p-button>
+                  </td>
+                </tr>
+              </ng-template>
+            </p-table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- #END# Exportable Table -->
+  </div>
+</section>
+
+<!-- Modal -->
+<div class="modal fade" data-backdrop="false" id="largeModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content bg-blue-grey">
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="modal-header">
+          <h5 class="modal-title">{{ aoe ? "Thêm cơ quan" : "Cập nhật cơ quan" }}</h5>
+          <button type="button" class="close" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label>Tên cơ quan</label>
+            <input type="text" class="form-control" placeholder="Nhập tên cơ quan" formControlName="ten_co_quan" required>
+            <div *ngIf="submited && form.controls.ten_co_quan.errors">
+              <div class="text-danger" *ngIf="form.controls.ten_co_quan.errors.required">Chưa nhập tên cơ quan.</div>
+              <div class="text-danger" *ngIf="form.controls.ten_co_quan.errors.maxlength">Tên cơ quan không được trên 255 ký tự.</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Số điện thoại</label>
+            <input type="text" class="form-control" placeholder="Nhập số điện thoại" formControlName="so_dien_thoai" required>
+            <div *ngIf="submited && form.controls.so_dien_thoai.errors">
+              <div class="text-danger" *ngIf="form.controls.so_dien_thoai.errors.required">Chưa nhập số điện thoại.</div>
+              <div class="text-danger" *ngIf="form.controls.so_dien_thoai.errors.pattern">Số điện thoại không hợp lệ.</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="text" class="form-control" placeholder="Nhập email" formControlName="email" required>
+            <div *ngIf="submited && form.controls.email.errors">
+              <div class="text-danger" *ngIf="form.controls.email.errors.required">Chưa nhập email.</div>
+              <div class="text-danger" *ngIf="form.controls.email.errors.pattern">Email không đúng định dạng.</div>
+              <div class="text-danger" *ngIf="form.controls.email.errors.maxlength">Email không được trên 100 ký tự.</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Địa chỉ</label>
+            <input type="text" class="form-control" placeholder="Nhập địa chỉ" formControlName="dia_chi" required>
+            <div *ngIf="submited && form.controls.dia_chi.errors">
+              <div class="text-danger" *ngIf="form.controls.dia_chi.errors.required">Chưa nhập địa chỉ.</div>
+              <div class="text-danger" *ngIf="form.controls.dia_chi.errors.maxlength">Địa chỉ không được trên 255 ký tự.</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <p-multiSelect [options]="listFeild" defaultLabel="Chọn lĩnh vực" formControlName="linh_vuc" [style]="{'width': '100%'}" optionLabel="ten_linh_vuc" optionValue="id"></p-multiSelect>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-bold btn-pure btn-secondary" data-dismiss="modal">Đóng</button>
+          <button type="submit" class="btn btn-bold btn-pure btn-primary float-right">Xác nhận</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- /.modal -->
