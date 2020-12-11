@@ -38,6 +38,19 @@ Route::group([
 
         });
 
+        
+        Route::group([
+            'prefix' => '/co-quan'
+        ], function () {
+
+            Route::get('/get', 'CoQuanController@get');
+            Route::get('/pagination', 'CoQuanController@pagination');
+            Route::post('/create', 'CoQuanController@create');
+            Route::put('/update', 'CoQuanController@update');
+            Route::delete('/delete', 'CoQuanController@delete');
+
+        });
+
     });
 
 });

@@ -8,161 +8,164 @@ use Core\Validator;
 use Core\Format;
 use Core\File;
 use Core\DB;
-use App\Models\LinhVuc;
+use App\Models\CoQuan;
 
 class CoQuanController extends Controller {
 
-    // public function get() {
-    //     $data = model('LinhVuc')->all();
-    //     if(request()->has('id')) {
-    //         $data = model('LinhVuc')->find(request()->id);
-    //     }
-    //     return response()->json($data);
-    // }
+    public function get() {
+        $data = model('CoQuan')->all();
+        if(request()->has('id')) {
+            $data = model('CoQuan')->find(request()->id);
+        }
+        return response()->json($data);
+    }
 
-    // public function pagination() {
-    //     $first = request()->first ?? 0;
-    //     $row = request()->row ?? 10;
+    public function pagination() {
+        $first = request()->first ?? 0;
+        $row = request()->row ?? 10;
 
-    //     $data = model('LinhVuc')->offset($first)->limit($row)->get();
+        $data = model('CoQuan')->offset($first)->limit($row)->get();
 
-    //     return response()->json([
-    //         'total' => model('LinhVuc')->count(),
-    //         'data' => $data,
-    //     ]);
-    // }
+        return response()->json([
+            'total' => model('CoQuan')->count(),
+            'data' => $data,
+        ]);
+    }
 
-    // public function create() {
+    public function create() {
         
-    //     validator()->validate([
-    //         'ten_linh_vuc' => [
-    //             'required' => 'Tên lĩnh vực không được để trống',
-    //             'max:200' => 'Tên lĩnh vực không quá 200 kí tự',
-    //             'unique:linh_vuc' => 'Tên lĩnh vực đã tồn tại',
-    //         ],
-    //         'mo_ta' => [
-    //             'max:255' => 'Mô tả không quá 255 kí tự',
-    //         ],
-    //         'hinh_anh' => [
-    //             'required' => 'Vui lòng chọn một hình ảnh',
-    //             'base64' => 'File không đúng định dạng base64',
-    //         ],
-    //     ]);
+        validator()->validate([
+            'ten_co_quan' => [
+                'required' => 'Tên cơ quan không được để trống',
+                'max:255' => 'Tên cơ quan không quá 255 kí tự',
+                'unique:co_quan' => 'Tên cơ quan đã tồn tại',
+            ],
+            'dia_chi' => [
+                'required' => 'Địa chỉ không được để trống',
+                'max:255' => 'Địa chỉ không quá 255 kí tự',
+            ],
+            'email' => [
+                'required' => 'Email không được để trống',
+                'max:100' => 'Email không quá 100 kí tự',
+                'email' => 'Email không đúng định dạng',
+                'unique:co_quan' => 'Email này đã tồn tại',
+            ],
+            'so_dien_thoai' => [
+                'required' => 'Số điện thoại không được để trống',
+                'max:10' => 'Số điện thoại không quá 10 kí tự',
+                'phone_number' => 'Số điện thoại không đúng định dạng',
+                'unique:co_quan' => 'Số điện thoại này đã tồn tại',
+            ],
+        ]);
+
+        $co_quan = new CoQuan();
+
+        $co_quan->ten_co_quan = request()->ten_co_quan;
+        $co_quan->dia_chi = request()->dia_chi;
+        $co_quan->email = request()->email;
+        $co_quan->so_dien_thoai = request()->so_dien_thoai;
+
+        if($co_quan->save()) {
+
+            // add referenced
+            if(request()->has('linh_vuc') && is_array(request()->linh_vuc)) {
+
+                foreach(request()->linh_vuc as $option) {
+                    if(model('LinhVuc')->find($option)) {
+                        model('CoQuanLinhVuc')->insert([
+                            'id_linh_vuc' => $option,
+                            'id_co_quan' => $co_quan->id,
+                        ]);
+                    }
+                }
+
+            }
+
+            return response()->success(1, 'Thêm cơ quan thành công!', $co_quan);
+        }
+
+        return response()->error(2, 'Thêm cơ quan thất bại!');
+    }
+
+    public function update() {
         
-    //     $file = File::createBase64(request()->hinh_anh);
+        validator()->validate([
+            'id' => [
+                'required' => 'Thiếu id cơ quan',
+                'exists:co_quan' => 'Không tồn tại cơ quan',
+            ],
+            'ten_co_quan' => [
+                'required' => 'Tên cơ quan không được để trống',
+                'max:255' => 'Tên cơ quan không quá 255 kí tự',
+                'unique:co_quan' => 'Tên cơ quan đã tồn tại',
+            ],
+            'dia_chi' => [
+                'required' => 'Địa chỉ không được để trống',
+                'max:255' => 'Địa chỉ không quá 255 kí tự',
+            ],
+            'email' => [
+                'required' => 'Email không được để trống',
+                'max:100' => 'Email không quá 100 kí tự',
+                'email' => 'Email không đúng định dạng',
+                'unique:co_quan' => 'Email này đã tồn tại',
+            ],
+            'so_dien_thoai' => [
+                'required' => 'Số điện thoại không được để trống',
+                'max:10' => 'Số điện thoại không quá 10 kí tự',
+                'phone_number' => 'Số điện thoại không đúng định dạng',
+                'unique:co_quan' => 'Số điện thoại này đã tồn tại',
+            ],
+        ]);
 
-    //     if(!$file->isImage()) {
-    //         Validator::alert("Ảnh không đúng định dạng (png, jpg, jpeg)");
-    //     }
+        $co_quan = model('CoQuan')->find(request()->id);
 
-    //     $file->generateFileName();
-    //     $file->save('/linh-vuc-images/');
+        $co_quan->ten_co_quan = request()->ten_co_quan;
+        $co_quan->dia_chi = request()->dia_chi;
+        $co_quan->email = request()->email;
+        $co_quan->so_dien_thoai = request()->so_dien_thoai;
 
-    //     $linh_vuc = new LinhVuc();
+        if($co_quan->save()) {
 
-    //     $linh_vuc->ten_linh_vuc = request()->ten_linh_vuc;
-    //     $linh_vuc->mo_ta = request()->mo_ta ?? null;
-    //     $linh_vuc->hinh_anh = '/linh-vuc-images/'.$file->getFileName();
+            if(request()->has('linh_vuc') && is_array(request()->linh_vuc)) {
 
-    //     if($linh_vuc->save()) {
+                // remove referenced
+                model('CoQuanLinhVuc')->where([
+                    'id_co_quan' => $co_quan->id
+                ])->delete();
 
-    //         // add referenced
-    //         if(request()->has('co_quan') && is_array(request()->co_quan)) {
+                // add referenced
+                foreach(request()->linh_vuc as $option) {
+                    if(model('LinhVuc')->find($option)) {
+                        model('CoQuanLinhVuc')->insert([
+                            'id_linh_vuc' => $option,
+                            'id_co_quan' => $co_quan->id,
+                        ]);
+                    }
+                }
 
-    //             foreach(request()->co_quan as $option) {
-    //                 if(model('CoQuan')->find($option)) {
-    //                     model('CoQuanLinhVuc')->insert([
-    //                         'id_linh_vuc' => $linh_vuc->id,
-    //                         'id_co_quan' => $option,
-    //                     ]);
-    //                 }
-    //             }
+            }
 
-    //         }
+            return response()->success(1, 'Sửa cơ quan thành công!', $co_quan);
+        }
 
-    //         return response()->success(1, 'Thêm lĩnh vực thành công!', $linh_vuc);
-    //     }
+        return response()->error(2, 'Sửa cơ quan thất bại!');
+    }
 
-    //     return response()->error(2, 'Thêm lĩnh vực thất bại!');
-    // }
-
-    // public function update() {
+    public function delete() {
         
-    //     validator()->validate([
-    //         'id' => [
-    //             'required' => 'Thiếu id lĩnh vực',
-    //             'exists:linh_vuc' => 'Không tồn tại lĩnh vực',
-    //         ],
-    //         'ten_linh_vuc' => [
-    //             'required' => 'Tên lĩnh vực không được để trống',
-    //             'max:200' => 'Tên lĩnh vực không quá 200 kí tự',
-    //             'unique:linh_vuc' => 'Tên lĩnh vực đã tồn tại',
-    //         ],
-    //         'mo_ta' => [
-    //             'max:255' => 'Mô tả không quá 255 kí tự',
-    //         ],
-    //     ]);
+        validator()->validate([
+            'id' => [
+                'required' => 'Thiếu id cơ quan',
+                'exists:linh_vuc' => 'Không tồn tại cơ quan',
+            ],
+        ]);
 
-    //     $linh_vuc = model('LinhVuc')->find(request()->id);
+        $row = model('CoQuan')->where(['id' => request()->id])->update(['deleted_at' => Format::timeNow()]);
 
-    //     if(request()->has('hinh_anh') && !Validator::check('base64', request()->hinh_anh)) {
-    //         $file = File::createBase64(request()->hinh_anh);
+        if($row) {
+            return response()->success(1, 'Xóa cơ quan thành công!');
+        }
 
-    //         if(!$file->isImage()) {
-    //             Validator::alert("Ảnh không đúng định dạng (png, jpg, jpeg)");
-    //         }
-
-    //         $file->generateFileName();
-    //         $file->save('/linh-vuc-images/');
-
-    //         $linh_vuc->hinh_anh = '/linh-vuc-images/'.$file->getFileName();
-    //     }
-
-    //     $linh_vuc->ten_linh_vuc = request()->ten_linh_vuc;
-    //     $linh_vuc->mo_ta = request()->mo_ta ?? null;
-
-    //     if($linh_vuc->save()) {
-
-    //         if(request()->has('co_quan') && is_array(request()->co_quan)) {
-
-    //             // remove referenced
-    //             model('CoQuanLinhVuc')->where([
-    //                 'id_linh_vuc' => $linh_vuc->id
-    //             ])->delete();
-
-    //             // add referenced
-    //             foreach(request()->co_quan as $option) {
-    //                 if(model('CoQuan')->find($option)) {
-    //                     model('CoQuanLinhVuc')->insert([
-    //                         'id_linh_vuc' => $linh_vuc->id,
-    //                         'id_co_quan' => $option,
-    //                     ]);
-    //                 }
-    //             }
-
-    //         }
-
-    //         return response()->success(1, 'Sửa lĩnh vực thành công!', $linh_vuc);
-    //     }
-
-    //     return response()->error(2, 'Sửa lĩnh vực thất bại!');
-    // }
-
-    // public function delete() {
-        
-    //     validator()->validate([
-    //         'id' => [
-    //             'required' => 'Thiếu id lĩnh vực',
-    //             'exists:linh_vuc' => 'Không tồn tại lĩnh vực',
-    //         ],
-    //     ]);
-
-    //     $row = model('LinhVuc')->where(['id' => request()->id])->update(['deleted_at' => Format::timeNow()]);
-
-    //     if($row) {
-    //         return response()->success(1, 'Xóa lĩnh vực thành công!');
-    //     }
-
-    //     return response()->error(2, 'Xóa lĩnh vực thất bại!');
-    // }
+        return response()->error(2, 'Xóa cơ quan thất bại!');
+    }
 }
