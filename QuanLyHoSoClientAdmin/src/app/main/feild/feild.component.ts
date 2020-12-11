@@ -1,7 +1,12 @@
 import {Component, Injector, OnInit} from '@angular/core';
-import {MessageService} from "primeng/api";
+import {MessageService, PrimeNGConfig} from "primeng/api";
 import {ScriptService} from "../../libs/script.service";
 import {FeildService} from "../../services/feild.service";
+import {environment} from "../../../environments/environment";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+
+declare var $:any;
 
 @Component({
   selector: 'app-feild',
@@ -10,13 +15,20 @@ import {FeildService} from "../../services/feild.service";
   providers: [MessageService]
 })
 export class FeildComponent extends ScriptService implements OnInit {
+  public Editor = ClassicEditor;
   listFeild = [];
   totalRecords: number;
-  loaing: boolean;
+  loading: boolean;
+  aoe: boolean;
+  form: FormGroup;
+  submited = false;
 
   constructor(
     injetor: Injector,
-    private feildService: FeildService) {
+    private primeConfig: PrimeNGConfig,
+    private feildService: FeildService,
+    private formBuilder: FormBuilder
+  ) {
     super(injetor)
   }
 
@@ -28,12 +40,40 @@ export class FeildComponent extends ScriptService implements OnInit {
       }
     }
     this.loadScripts();
+
+    this.form = this.formBuilder.group({
+      ten_linh_vuc: ['',[Validators.required, Validators.maxLength(200)]],
+      mo_ta: ['',[Validators.required, Validators.maxLength(200)]],
+      co_quan: [''],
+      hinh_anh: ['', [Validators.required]]
+    })
   }
 
   loadData(event) {
-    this.feildService.getData(event.first, event.rows).subscribe((res:any) => {
-      console.log(res);
+    this.feildService.getData(event.first, event.rows).subscribe((res: any) => {
+      console.log(res)
+      this.listFeild = res.data;
+      this.totalRecords = res.total;
     })
+  }
+
+  createImg(path) {
+    return "http://localhost:8200/storage" + path;
+  }
+
+  create() {
+    $("#largeModal").modal("show");
+    this.aoe = true;
+  }
+
+  onSubmit()  {
+    this.submited = true;
+    if (this.form.invalid) {
+      return;
+    }
+    if (this.aoe == true) {
+
+    }
   }
 
 }

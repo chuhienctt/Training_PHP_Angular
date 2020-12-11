@@ -25,7 +25,7 @@
             <h2>Quản lý <strong>lĩnh vực</strong> </h2>
             <ul class="header-dropdown">
               <li>
-                <a><i class="mdi mdi-plus-circle"></i></a>
+                <a (click)="create()"><i class="mdi mdi-plus-circle"></i></a>
               </li>
               <li class="remove">
                 <a role="button" class="boxs-close"><i class="zmdi zmdi-close"></i></a>
@@ -37,24 +37,19 @@
               <ng-template pTemplate="header">
                 <tr>
                   <th>#</th>
-                  <th>Tên</th>
-                  <th>Đường dẫn</th>
-                  <th>Thứ tự</th>
-                  <th>Trạng thái</th>
+                  <th>Tên lĩnh vực</th>
+                  <th>Hình ảnh</th>
                   <th>Thao tác</th>
                 </tr>
               </ng-template>
               <ng-template pTemplate="body" let-item let-i="rowIndex">
                 <tr>
                   <td>{{ i+1 }}</td>
-                  <td>{{item.name}}</td>
-                  <td>{{item.slug}}</td>
-                  <td>{{item.sortOrder}}</td>
-                  <td *ngIf="item.status == false">Ẩn</td>
-                  <td *ngIf="item.status == true">Hiện</td>
+                  <td>{{item.ten_linh_vuc}}</td>
+                  <td><img style="width: 30px; vertical-align: middle" *ngIf="item.hinh_anh" [src]="createImg(item.hinh_anh)"></td>
                   <td>
-                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-warning mr-2" (click)="edit(item.id)"></button>
-                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger" (click)="delete(item.id)"></button>
+                    <p-button icon="pi pi-pencil" styleClass="p-button-warning" [style]="{'margin-right': '.5em'}"></p-button>
+                    <p-button icon="pi pi-trash" styleClass="p-button-danger"></p-button>
                   </td>
                 </tr>
               </ng-template>
@@ -71,36 +66,28 @@
 <div class="modal fade" data-backdrop="false" id="largeModal" tabindex="-1">
   <div class="modal-dialog">
     <div class="modal-content bg-blue-grey">
-<!--      <form [formGroup]="form" (ngSubmit)="onSubmit()">-->
-<!--        <div class="modal-header">-->
-<!--          <h5 class="modal-title">{{ aoe ? "Thêm danh mục" : "Sửa danh mục" }}</h5>-->
-<!--          <button type="button" class="close" data-dismiss="modal">-->
-<!--            <span aria-hidden="true">&times;</span>-->
-<!--          </button>-->
-<!--        </div>-->
-<!--        <div class="modal-body">-->
-<!--          <div class="form-group">-->
-<!--            <label for="name">Tên danh mục</label>-->
-<!--            <input type="text" class="form-control" placeholder="Nhập tên danh mục" formControlName="name" required>-->
-<!--          </div>-->
-<!--          <div class="form-group">-->
-<!--            <label for="slug">Đường dẫn</label>-->
-<!--            <input type="text" class="form-control" placeholder="Nhập đường dẫn không dấu, không dấu cách" formControlName="slug" required>-->
-<!--          </div>-->
-<!--          <div class="form-group">-->
-<!--            <label for="sort_order">Thứ tự</label>-->
-<!--            <input type="number" placeholder="Nhập số thứ tự" min="0" class="form-control" formControlName="sort_order">-->
-<!--          </div>-->
-<!--          <div class="form-group">-->
-<!--            <label for="">Trạng thái</label><br>-->
-<!--            <p-inputSwitch formControlName="status"></p-inputSwitch>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--        <div class="modal-footer">-->
-<!--          <button type="button" class="btn btn-bold btn-pure btn-secondary" data-dismiss="modal">Đóng</button>-->
-<!--          <button type="submit" class="btn btn-bold btn-pure btn-primary float-right">Cập nhật</button>-->
-<!--        </div>-->
-<!--      </form>-->
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="modal-header">
+          <h5 class="modal-title">{{ aoe ? "Thêm danh mục" : "Sửa danh mục" }}</h5>
+          <button type="button" class="close" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label>Tên lĩnh vực</label>
+            <input type="text" class="form-control" placeholder="Nhập tên danh mục" formControlName="ten_linh_vuc" required>
+          </div>
+          <div class="form-group">
+            <label>Mô tả</label>
+            <ckeditor [editor]="Editor" formControlName="mo_ta"></ckeditor>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-bold btn-pure btn-secondary" data-dismiss="modal">Đóng</button>
+          <button type="submit" class="btn btn-bold btn-pure btn-primary float-right">Cập nhật</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>

@@ -6,6 +6,7 @@ import {ShareModule} from "../share/share.module";
 import {HomeComponent} from "./home/home.component";
 import { FeildComponent } from './feild/feild.component';
 import {TableModule} from "primeng/table";
+import {ButtonModule} from "primeng/button";
 
 
 @NgModule({
@@ -16,8 +17,7 @@ import {TableModule} from "primeng/table";
   imports: [
     CommonModule,
     ShareModule,
-    MainRoutingModule,
-    TableModule,
+    MainRoutingModule
   ]
 })
 export class MainModule { }
