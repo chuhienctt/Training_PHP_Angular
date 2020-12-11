@@ -16,6 +16,7 @@ class LinhVucController extends Controller {
         $data = model('LinhVuc')->all();
         if(request()->has('id')) {
             $data = model('LinhVuc')->find(request()->id);
+            $data->co_quan = $data->all_co_quan();
         }
         return response()->json($data);
     }

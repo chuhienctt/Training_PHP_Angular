@@ -6,7 +6,7 @@ class Model {
     protected $table = '';
     private $db = [];
     protected $columns = [];
-    public $original_data = [];
+    private $original_data = [];
 
     public function __construct() {
         $this->db = new DB($this->table);

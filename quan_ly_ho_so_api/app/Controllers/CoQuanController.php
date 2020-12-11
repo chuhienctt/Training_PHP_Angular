@@ -156,7 +156,7 @@ class CoQuanController extends Controller {
         validator()->validate([
             'id' => [
                 'required' => 'Thiếu id cơ quan',
-                'exists:linh_vuc' => 'Không tồn tại cơ quan',
+                'exists:co_quan' => 'Không tồn tại cơ quan',
             ],
         ]);
 
