@@ -30,6 +30,7 @@ export class FeildComponent extends ScriptService implements OnInit {
   listOrgan = [];
   first = 0;
   rows = 10;
+  image:string;
 
   constructor(
     injetor: Injector,
@@ -53,13 +54,14 @@ export class FeildComponent extends ScriptService implements OnInit {
     this.loadScripts();
 
     this.form = this.formBuilder.group({
+      id: [''],
       ten_linh_vuc: ['',[Validators.required, Validators.maxLength(200)]],
       mo_ta: ['',[Validators.maxLength(250)]],
       co_quan: ['']
     })
 
     this.organService.getAll().subscribe((res:any) => {
-      this.listOrgan = res;
+      this.listOrgan = res.filter(e => {return e.deleted_at == null});
     })
   }
 
@@ -77,6 +79,7 @@ export class FeildComponent extends ScriptService implements OnInit {
   }
 
   create() {
+    this.form.reset();
     $("#largeModal").modal("show");
     this.aoe = true;
   }
@@ -86,10 +89,12 @@ export class FeildComponent extends ScriptService implements OnInit {
     this.aoe = false;
     this.feildService.edit(id).subscribe((res:any) => {
       this.form.patchValue({
+        id: res.id,
         ten_linh_vuc: res.ten_linh_vuc,
         mo_ta: res.mo_ta,
         co_quan: res.co_quan
       })
+      this.image = res.hinh_anh;
     })
   }
 
@@ -99,6 +104,7 @@ export class FeildComponent extends ScriptService implements OnInit {
       return;
     }
     let feild = {
+      id: this.form.value.id,
       ten_linh_vuc: this.form.value.ten_linh_vuc,
       mo_ta: this.form.value.mo_ta,
       co_quan: this.form.value.co_quan.map(e => {return e.id}),
@@ -113,6 +119,21 @@ export class FeildComponent extends ScriptService implements OnInit {
           this.loadData({first: this.first, rows: this.rows});
           $("#largeModal").modal("hide");
           this.messageService.add({ severity: 'success', summary: 'Thành công!', detail: "Thêm lĩnh vực thành công!" });
+        }, err => {
+          console.log(err)
+          this.messageService.add({ severity: 'error', summary: 'Thất bại!', detail: err.error.message });
+        })
+      })
+    } else {
+      this.fileService.getEncodeFromImage(this.file.files[0]).subscribe((data:any) => {
+        if (data != null) {
+          feild.hinh_anh = data;
+        }
+        this.feildService.update(feild).subscribe((res:any) => {
+          this.submited = false;
+          this.loadData({first: this.first, rows: this.rows});
+          $("#largeModal").modal("hide");
+          this.messageService.add({ severity: 'success', summary: 'Thành công!', detail: "Cập nhật lĩnh vực thành công!" });
         }, err => {
           console.log(err)
           this.messageService.add({ severity: 'error', summary: 'Thất bại!', detail: err.error.message });

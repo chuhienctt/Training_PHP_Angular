@@ -11,6 +11,10 @@ export class FeildService {
 
   constructor(private _http: HttpClient) { }
 
+  getAll() {
+    return this._http.get(baseUrl + "get");
+  }
+
   getData(first, rows) {
     return this._http.get(baseUrl + "pagination?first=" + first + "&&rows=" + rows);
   }
@@ -21,6 +25,10 @@ export class FeildService {
 
   edit(id) {
     return this._http.get(baseUrl + "get?id=" + id);
+  }
+
+  update(feild) {
+    return this._http.put(baseUrl + "update", feild);
   }
 
   delete(id) {

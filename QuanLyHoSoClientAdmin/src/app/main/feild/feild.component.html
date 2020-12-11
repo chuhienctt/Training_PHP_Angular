@@ -68,7 +68,7 @@
     <div class="modal-content bg-blue-grey">
       <form [formGroup]="form" (ngSubmit)="onSubmit()">
         <div class="modal-header">
-          <h5 class="modal-title">{{ aoe ? "Thêm lĩnh vực" : "Sửa lĩnh vực" }}</h5>
+          <h5 class="modal-title">{{ aoe ? "Thêm lĩnh vực" : "Cập nhật lĩnh vực" }}</h5>
           <button type="button" class="close" data-dismiss="modal">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -97,7 +97,10 @@
                                 chọn ảnh)</span></label>
             <p-fileUpload #file mode="basic" chooseLabel="Chọn ảnh" [multiple]="false" accept="image/*" maxFileSize="1000000">
             </p-fileUpload>
-            <div *ngIf="submited && !file.hasFiles()">
+            <div>
+              <img style="width: 30px; vertical-align: middle; margin-top: 5px;" *ngIf="image && !aoe" [src]="createImg(image)">
+            </div>
+            <div *ngIf="aoe && submited && !file.hasFiles()">
               <div class="text-danger" >Chưa chọn ảnh.</div>
             </div>
           </div>
