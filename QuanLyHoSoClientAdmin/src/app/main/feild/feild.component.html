@@ -82,6 +82,15 @@
             <label>Mô tả</label>
             <ckeditor [editor]="Editor" formControlName="mo_ta"></ckeditor>
           </div>
+          <div class="form-group">
+            <p-multiSelect [options]="listOrgan" formControlName="id_co_quan" optionLabel="ten_co_quan"></p-multiSelect>
+          </div>
+          <div class="form-group">
+            <label for="image">Hình ảnh <span *ngIf="!aoe" class="text-danger">(Không thay đổi nếu không
+                                chọn ảnh)</span></label>
+            <p-fileUpload #file mode="basic" chooseLabel="Chọn ảnh" [multiple]="false" accept="image/*" maxFileSize="1000000">
+            </p-fileUpload>
+          </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-bold btn-pure btn-secondary" data-dismiss="modal">Đóng</button>

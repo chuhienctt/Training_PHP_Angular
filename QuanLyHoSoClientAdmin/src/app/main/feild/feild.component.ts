@@ -1,10 +1,12 @@
-import {Component, Injector, OnInit} from '@angular/core';
+import {Component, Injector, OnInit, ViewChild} from '@angular/core';
 import {MessageService, PrimeNGConfig} from "primeng/api";
 import {ScriptService} from "../../libs/script.service";
 import {FeildService} from "../../services/feild.service";
 import {environment} from "../../../environments/environment";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import {FileUpload} from "primeng/fileupload";
+import {MultiSelectModule} from 'primeng/multiselect';
 
 declare var $:any;
 
@@ -15,6 +17,7 @@ declare var $:any;
   providers: [MessageService]
 })
 export class FeildComponent extends ScriptService implements OnInit {
+  @ViewChild(FileUpload, { static: false }) file: FileUpload
   public Editor = ClassicEditor;
   listFeild = [];
   totalRecords: number;
@@ -22,6 +25,7 @@ export class FeildComponent extends ScriptService implements OnInit {
   aoe: boolean;
   form: FormGroup;
   submited = false;
+  listOrgan = [];
 
   constructor(
     injetor: Injector,
@@ -44,7 +48,7 @@ export class FeildComponent extends ScriptService implements OnInit {
     this.form = this.formBuilder.group({
       ten_linh_vuc: ['',[Validators.required, Validators.maxLength(200)]],
       mo_ta: ['',[Validators.required, Validators.maxLength(200)]],
-      co_quan: [''],
+      id_co_quan: [''],
       hinh_anh: ['', [Validators.required]]
     })
   }

@@ -5,6 +5,8 @@ import {ToastModule} from "primeng/toast";
 import {TableModule} from "primeng/table";
 import {CKEditorModule} from "@ckeditor/ckeditor5-angular";
 import {ButtonModule} from "primeng/button";
+import {FileUploadModule} from "primeng/fileupload";
+import {MultiSelectModule} from "primeng/multiselect";
 
 @NgModule({
   declarations: [],
@@ -14,7 +16,9 @@ import {ButtonModule} from "primeng/button";
     ToastModule,
     TableModule,
     CKEditorModule,
-    ButtonModule
+    ButtonModule,
+    FileUploadModule,
+    MultiSelectModule
   ],
   exports: [
     ReactiveFormsModule,
@@ -22,7 +26,9 @@ import {ButtonModule} from "primeng/button";
     CommonModule,
     TableModule,
     CKEditorModule,
-    ButtonModule
+    ButtonModule,
+    FileUploadModule,
+    MultiSelectModule
   ]
 })
 export class ShareModule { }
