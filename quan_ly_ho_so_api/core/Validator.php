@@ -19,7 +19,6 @@ class Validator {
         $value = request()->{$key} ?? null;
 
         foreach($valis as $v => $alert) {
-            
             if(self::check($v, $value, $key)) {
                 self::alert($alert);
             }
