@@ -16,6 +16,7 @@ Route::group([
     ], function () {
 
         Route::post('/auth/change-pass', 'HomeController@change_pass');
+        Route::put('/auth/update', 'HomeController@update');
 
         // Route::get('/test', 'HomeController@getApiAuth');
 
