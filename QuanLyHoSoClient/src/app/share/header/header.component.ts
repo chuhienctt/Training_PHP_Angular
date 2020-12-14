@@ -29,16 +29,6 @@ export class HeaderComponent implements OnInit {
     return this.homeService.currentUser;
   }
 
-  isUserAuthenticated() {
-    const token: string = localStorage.getItem("jwt");
-    if (token && !this.jwtHelper.isTokenExpired(token)) {
-      return true;
-    }
-    else {
-      return false;
-    }
-  }
-
   logOut() {
     localStorage.removeItem("jwt");
     this.homeService.currentUser = null;

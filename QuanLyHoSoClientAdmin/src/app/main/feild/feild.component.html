@@ -98,7 +98,7 @@
             <p-fileUpload #file mode="basic" chooseLabel="Chọn ảnh" [multiple]="false" accept="image/*" maxFileSize="1000000">
             </p-fileUpload>
             <div>
-              <img style="width: 30px; vertical-align: middle; margin-top: 5px;" *ngIf="image && !aoe" [src]="createImg(image)">
+              <img style="width: 40px; vertical-align: middle; margin-top: 5px;" *ngIf="image && !aoe" [src]="createImg(image)">
             </div>
             <div *ngIf="aoe && submited && !file.hasFiles()">
               <div class="text-danger" >Chưa chọn ảnh.</div>

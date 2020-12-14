@@ -3,14 +3,15 @@
   <div class="container">
     <!-- Section Name-->
     <div class="section-name index-1">
-      <h1>Đăng nhập</h1>
+      <h1 *ngIf="title">Đăng nhập</h1>
+      <h1 *ngIf="!title">Đăng ký</h1>
       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, ab.</p>
       <div class="sep"></div>
     </div>
     <!-- Tab switcher-->
     <ul class="nav nav-pills tab-switcher text-center">
-      <li class="active"><a data-toggle="tab" href="#tab-1">Đăng nhập</a></li>
-      <li><a data-toggle="tab" href="#tab-2">Đăng ký</a></li>
+      <li class="active"><a data-toggle="tab" href="#tab-1" (click)="changeTitle(true)">Đăng nhập</a></li>
+      <li><a data-toggle="tab" href="#tab-2" (click)="changeTitle(false)">Đăng ký</a></li>
     </ul>
     <!-- Tabs Content-->
     <div class="tab-content">
@@ -40,7 +41,7 @@
                   <div class="text-danger" *ngIf="formLogin.controls.mat_khau.errors.pattern">Mật khẩu không đúng định dạng.</div>
                 </div>
               </div>
-              <input type="submit" value="Đăng nhập" class="submit">
+              <button type="submit" class="btn-custom btn">Đăng nhập</button>
             </form>
           </div>
           <div class="col-md-3"></div>
@@ -136,7 +137,7 @@
                   <span class="text-danger" *ngIf="formRegister.controls.ngay_sinh.errors.maxlength">Ngày sinh không hợp lệ.</span>
                 </div>
               </div>
-              <input type="submit" value="Đăng ký" class="submit">
+              <button type="submit" class="btn-custom btn">Đăng ký</button>
             </form>
           </div>
           <div class="col-md-3"></div>

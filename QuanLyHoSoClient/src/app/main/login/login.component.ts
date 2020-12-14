@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {HomeService} from '../../service/home.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AlertService} from '../../libs/alert.service';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {MessageService} from 'primeng/api';
 import {DatePipe} from "@angular/common";
 
@@ -22,18 +22,24 @@ export class LoginComponent implements OnInit {
   submittedLo = false;
   formRegister: FormGroup;
   formLogin: FormGroup;
+  title = true;
+  returnUrl: string;
 
   constructor(
     private homeService: HomeService,
     private alertService: AlertService,
     private  router: Router,
     private formBuilder: FormBuilder,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private route: ActivatedRoute
   ) {
   }
 
   ngOnInit(): void {
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+
     this.homeService.getAddress().subscribe((data: any) => {
+      console.log(data)
       this.listCity = data;
     });
 
@@ -66,6 +72,10 @@ export class LoginComponent implements OnInit {
     }, {
       validator: this.confirm_password_validate('mat_khau', 'mat_khau_2')
     })
+  }
+
+  changeTitle(val: boolean) {
+    this.title = val;
   }
 
   confirm_password_validate(pass: string, pass_confirm: string) {
@@ -124,17 +134,17 @@ export class LoginComponent implements OnInit {
       ngay_sinh: this.pipe.transform(this.formRegister.value.ngay_sinh, "yyyy-MM-dd")
     }
     this.homeService.register(user).subscribe((res: any) => {
-      this.alertService.success(
-        'Đăng ký thành công!',
-        true,
-        'Đăng nhập ngay!',
-        () => {
-          this.homeService.login(user).subscribe((res:any) => {
-            localStorage.setItem("jwt", JSON.stringify(res.data));
-            this.homeService.input(res.data);
-            this.router.navigate(["/"]);
-          })
-        });
+      this.alertService.success(() => {
+        this.homeService.login(user).subscribe((res:any) => {
+          localStorage.setItem("jwt", JSON.stringify(res.data));
+          this.homeService.input(res.data);
+          if (this.returnUrl) {
+            this.router.navigateByUrl(this.returnUrl)
+          } else {
+            this.router.navigate(['/']);
+          }
+        })
+      });
     }, err => {
       if (err.status != 1) {
         this.messageService.add({ severity: 'error', summary: 'Thất bại!', detail: err.error.message });
@@ -150,13 +160,13 @@ export class LoginComponent implements OnInit {
     this.homeService.login(this.formLogin.value).subscribe((res:any) => {
       localStorage.setItem("jwt", JSON.stringify(res.data));
       this.homeService.input(res.data);
-      this.alertService.success(
-        'Đăng nhập thành công!',
-        true,
-        'Đến trang chủ!',
-        () => {
-          this.router.navigate(["/"]);
-        });
+      this.alertService.success(() => {
+          if (this.returnUrl) {
+            this.router.navigateByUrl(this.returnUrl)
+          } else {
+            this.router.navigate(['/']);
+          }
+      });
     }, err => {
       if (err.status != 1) {
         this.messageService.add({ severity: 'error', summary: 'Thất bại!', detail: err.error.message });
