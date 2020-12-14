@@ -12,19 +12,22 @@ Route::group([
     Route::post('/auth/register', 'HomeController@register');
 
     Route::group([
-        'middleware' => 'Authenticate'
+        'middleware' => 'UserGuard'
     ], function () {
+
+        Route::post('/auth/change-pass', 'HomeController@change_pass');
 
         // Route::get('/test', 'HomeController@getApiAuth');
 
     });
     
 
-    Route::group([
-        'prefix' => '/admin'
-    ], function () {
+    Route::post('/admin/auth/login', 'AdminController@login');
 
-        Route::post('/auth/login', 'AdminController@login');
+    Route::group([
+        'prefix' => '/admin',
+        'middleware' => 'AdminGuard'
+    ], function () {
 
         Route::group([
             'prefix' => '/linh-vuc'

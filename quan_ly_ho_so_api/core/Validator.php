@@ -117,7 +117,6 @@ class Validator {
 
     public static function alert($text) {
         response()->error(0, $text);
-        exit;
     }
 
 }

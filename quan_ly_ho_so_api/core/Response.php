@@ -56,6 +56,7 @@ class Response {
     public function code($code, $data = []) {
         header($_SERVER["SERVER_PROTOCOL"]." $code ".$this->httpStatus[$code]);
         echo json_encode($this->hiddenVariable($data));
+        exit;
     }
 
     public function json($data) {

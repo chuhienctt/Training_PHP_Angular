@@ -114,10 +114,23 @@ class Model {
         }
     }
 
-    public function hasMany($model, $foreign_key) {
-        return model($model)->where([
+    public function hasMany($model, $foreign_key, $model2 = null, $foreign_key2 = null) {
+
+        $data = model($model)->where([
             $foreign_key => $this->id
         ])->get();
+
+        if($model2 && $foreign_key2) {
+            $new_data = [];
+
+            foreach($data as $item) {
+                $new_data[] = $item->belongsTo($model2, $foreign_key2);
+            }
+
+            $data = $new_data;
+        }
+
+        return $data;
     }
 
     public function belongsTo($model, $foreign_key) {
