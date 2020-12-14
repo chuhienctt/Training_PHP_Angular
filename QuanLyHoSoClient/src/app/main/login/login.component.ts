@@ -14,7 +14,7 @@ import {DatePipe} from "@angular/common";
 })
 export class LoginComponent implements OnInit {
   pipe = new DatePipe("en-US");
-  listCity = [];
+  listProvince = [];
   listDistrict = [];
   listCommune = [];
   style = {};
@@ -38,16 +38,12 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
 
-    this.homeService.getAddress().subscribe((data: any) => {
-      console.log(data)
-      this.listCity = data;
+    this.homeService.getProvince().subscribe((res: any) => {
+      this.listProvince = res;
     });
 
     this.style = {
       width: '100%',
-      // 'border-radius': '25px',
-      // 'padding-left': '22px',
-      // height: '50px',
       boder: '1px solid rgba(51, 51, 51, 0.1);',
       'font-weight': 400,
       'font-family': 'Roboto'
@@ -95,30 +91,33 @@ export class LoginComponent implements OnInit {
     };
   }
 
-  getDistrict(val) {
+  getDistrict(id) {
     this.listDistrict = [];
     this.listCommune = [];
-
-    this.listDistrict = this.listCity.filter(d => d.name == val)[0].huyen;
-    if (this.listDistrict.length != 0) {
-      this.formRegister.controls.district.enable();
-    }
+    this.homeService.getDistrict(id).subscribe((res:any) => {
+      this.listDistrict = res;
+      if (this.listDistrict.length != 0) {
+        this.formRegister.controls.district.enable();
+      }
+    })
   }
 
-  getCommune(val) {
+  getCommune(id) {
     this.listCommune = [];
-    this.listCommune = this.listDistrict.filter(c => c.name == val)[0].xa;
-    if (this.listCommune.length != 0) {
-      this.formRegister.controls.commune.enable();
-    }
+    this.homeService.getCommune(id).subscribe((res:any) => {
+      this.listCommune = res;
+      if (this.listCommune.length != 0) {
+        this.formRegister.controls.commune.enable();
+      }
+    })
   }
 
   register() {
     let address = [];
     if (this.formRegister.value.dia_chi != null) {
-      address.push(this.formRegister.value.dia_chi, this.formRegister.value.city,  this.formRegister.value.district, this.formRegister.value.commune);
+      address.push(this.formRegister.value.dia_chi, this.formRegister.value.commune,  this.formRegister.value.district, this.formRegister.value.city);
     } else {
-      address.push(this.formRegister.value.city,  this.formRegister.value.district, this.formRegister.value.commune);
+      address.push(this.formRegister.value.commune,  this.formRegister.value.district, this.formRegister.value.city);
     }
 
     this.submittedRe = true;
@@ -168,6 +167,7 @@ export class LoginComponent implements OnInit {
           }
       });
     }, err => {
+      console.log(err)
       if (err.status != 1) {
         this.messageService.add({ severity: 'error', summary: 'Thất bại!', detail: err.error.message });
       }

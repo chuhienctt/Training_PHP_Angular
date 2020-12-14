@@ -39,11 +39,10 @@
             </div>
           </li>
           <li class="menu-item" *ngIf="user">
-            <p class="user-name" data-toggle="dropdown">
+            <div class="user-name" data-toggle="dropdown" routerLink="/profile">
               {{user.ho_ten}}
-            </p>
+            </div>
                 <ul class="sub-menu">
-                  <li><a routerLink="/profile">Hồ sơ</a></li>
                   <li><a (click)="logOut()">Đăng xuất</a></li>
                 </ul>
           </li>

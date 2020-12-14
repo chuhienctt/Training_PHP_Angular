@@ -16,7 +16,7 @@ export class AlertService {
     Swal.fire({
       icon: 'success',
       title: 'Thành công',
-      html: 'Chuyển hướng đến trang chủ trong <b></b> giây.',
+      html: 'Chuyển hướng trong <b></b> giây.',
       timer: 3000,
       showConfirmButton: false,
       timerProgressBar: true,

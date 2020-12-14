@@ -21,9 +21,9 @@ import { MainComponent } from './main/main.component';
 import { ProfileComponent } from './main/profile/profile.component';
 
 export function tokenGetter() {
-  return localStorage.getItem("jwt");
+  let user = JSON.parse(localStorage.getItem("jwt"));
+  return user ? user.token : null;
 }
-
 
 @NgModule({
   declarations: [
