@@ -14,6 +14,7 @@ Route::group([
     Route::get('/dia-chinh/get-tinh', 'DiaChinhController@getTinh');
     Route::get('/dia-chinh/get-huyen', 'DiaChinhController@getHuyen');
     Route::get('/dia-chinh/get-xa', 'DiaChinhController@getXa');
+    Route::get('/dia-chinh/get-dia-chi', 'DiaChinhController@getDiaChi');
 
     Route::group([
         'middleware' => 'UserGuard'
