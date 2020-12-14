@@ -2,16 +2,10 @@
 <div class="about-wrapper index-1">
   <div class="container">
     <!-- Section Name-->
-    <div class="section-name index-1">
-      <h1 *ngIf="title">Đăng nhập</h1>
-      <h1 *ngIf="!title">Đăng ký</h1>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, ab.</p>
-      <div class="sep"></div>
-    </div>
     <!-- Tab switcher-->
     <ul class="nav nav-pills tab-switcher text-center">
-      <li class="active"><a data-toggle="tab" href="#tab-1" (click)="changeTitle(true)">Đăng nhập</a></li>
-      <li><a data-toggle="tab" href="#tab-2" (click)="changeTitle(false)">Đăng ký</a></li>
+      <li class="active"><a data-toggle="tab" href="#tab-1" (click)="changeTitle($event)">Đăng nhập</a></li>
+      <li><a data-toggle="tab" href="#tab-2" (click)="changeTitle($event)">Đăng ký</a></li>
     </ul>
     <!-- Tabs Content-->
     <div class="tab-content">
@@ -21,7 +15,7 @@
           <!-- Image-->
           <div class="col-md-3"></div>
           <div class="col-md-6 contact-form-wrapper">
-<!--             Contact Form-->
+            <!--             Contact Form-->
             <form [formGroup]="formLogin" (ngSubmit)="login()" class="contact-form">
               <div class="field">
                 <input type="email" formControlName="email" placeholder="E-mail">
@@ -53,7 +47,7 @@
           <!-- Image-->
           <div class="col-md-3"></div>
           <div class="col-md-6 contact-form-wrapper">
-<!--             Contact Form-->
+            <!--             Contact Form-->
             <form class="contact-form" [formGroup]="formRegister" (ngSubmit)="register()">
               <div class="field">
                 <input type="email" formControlName="email" placeholder="E-mail">
@@ -107,8 +101,8 @@
               <div class="row">
                 <div class="col-md-4">
                   <div class="field">
-              <p-dropdown formControlName="city" (onChange)="getDistrict($event.value)" optionValue="name" optionLabel="name" [style]="style" [options]="listCity" placeholder="Chọn tỉnh, thành phố" [virtualScroll]="true" [itemSize]="31"
-                          [filter]="false"></p-dropdown>
+                    <p-dropdown formControlName="city" (onChange)="getDistrict($event.value)" optionValue="name" optionLabel="name" [style]="style" [options]="listCity" placeholder="Chọn tỉnh, thành phố" [virtualScroll]="true" [itemSize]="31"
+                                [filter]="false"></p-dropdown>
                   </div>
                 </div>
                 <div class="col-md-4">
@@ -123,7 +117,7 @@
                                 [filter]="false"></p-dropdown>
                   </div>
                 </div>
-                </div>
+              </div>
               <div *ngIf="submittedRe && formRegister.controls.city.errors && formRegister.controls.district.errors && formRegister.controls.commune.errors">
                 <span class="text-danger" *ngIf="formRegister.controls.city.errors.required">Chưa chọn thành phố.</span>
                 <span class="text-danger" *ngIf="formRegister.controls.district.errors.required">Chưa chọn quận, huyện.</span>

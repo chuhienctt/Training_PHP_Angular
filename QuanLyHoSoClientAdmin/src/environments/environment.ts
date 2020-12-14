@@ -10,7 +10,7 @@ export const environment = {
   production: false,
   domain: Domain,
   urlImg: "http://" + Domain + "/",
-  apiUrl: "http://" + Domain + "/api/",
+  apiUrl: "http://" + Domain + "/api/admin/",
   headerOptions: new HttpHeaders({
     'Content-Type': 'application/json'
   })

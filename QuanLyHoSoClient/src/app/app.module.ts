@@ -18,6 +18,7 @@ import {ToastModule} from 'primeng/toast';
 import { JwtModule } from "@auth0/angular-jwt";
 import {environment} from "../environments/environment";
 import { MainComponent } from './main/main.component';
+import { ProfileComponent } from './main/profile/profile.component';
 
 export function tokenGetter() {
   return localStorage.getItem("jwt");
@@ -33,7 +34,8 @@ export function tokenGetter() {
     FooterComponent,
     ProcedureComponent,
     DetailComponent,
-    MainComponent
+    MainComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,

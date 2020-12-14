@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {HomeService} from '../../service/home.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AlertService} from '../../libs/alert.service';
@@ -7,12 +7,12 @@ import {MessageService} from 'primeng/api';
 import {DatePipe} from "@angular/common";
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css'],
+  selector: 'app-profile',
+  templateUrl: './profile.component.html',
+  styleUrls: ['./profile.component.css'],
   providers: [MessageService]
 })
-export class LoginComponent implements OnInit {
+export class ProfileComponent implements OnInit {
   pipe = new DatePipe("en-US");
   listCity = [];
   listDistrict = [];
@@ -39,7 +39,6 @@ export class LoginComponent implements OnInit {
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
 
     this.homeService.getAddress().subscribe((data: any) => {
-      console.log(data)
       this.listCity = data;
     });
 
@@ -74,8 +73,9 @@ export class LoginComponent implements OnInit {
     })
   }
 
-  changeTitle(val: boolean) {
-    this.title = val;
+  changeTitle(val) {
+    // this.title = val;
+    console.log(val)
   }
 
   confirm_password_validate(pass: string, pass_confirm: string) {
@@ -161,11 +161,11 @@ export class LoginComponent implements OnInit {
       localStorage.setItem("jwt", JSON.stringify(res.data));
       this.homeService.input(res.data);
       this.alertService.success(() => {
-          if (this.returnUrl) {
-            this.router.navigateByUrl(this.returnUrl)
-          } else {
-            this.router.navigate(['/']);
-          }
+        if (this.returnUrl) {
+          this.router.navigateByUrl(this.returnUrl)
+        } else {
+          this.router.navigate(['/']);
+        }
       });
     }, err => {
       if (err.status != 1) {

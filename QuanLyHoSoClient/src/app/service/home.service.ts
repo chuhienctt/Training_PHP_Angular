@@ -25,7 +25,7 @@ export class HomeService {
   }
 
   getAddress() {
-    return this._http.get('/assets/libs/all.json');
+    return this._http.get(environment.apiUrl + "dia-chinh/get-tinh");
   }
 
   register(user) {

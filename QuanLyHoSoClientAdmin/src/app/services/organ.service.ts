@@ -2,14 +2,14 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 
-const baseUrl = environment.apiUrl + "linh-vuc/";
+const baseUrl = environment.apiUrl + "co-quan/";
 
 @Injectable({
   providedIn: 'root'
 })
-export class FeildService {
+export class OrganService {
 
-  constructor(private _http: HttpClient) { }
+  constructor(private _http:HttpClient) { }
 
   getAll() {
     return this._http.get(baseUrl + "get");
@@ -34,4 +34,6 @@ export class FeildService {
   delete(id) {
     return this._http.delete(baseUrl + "delete?id=" + id);
   }
+
+
 }
