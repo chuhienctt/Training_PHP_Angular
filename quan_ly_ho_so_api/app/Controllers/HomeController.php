@@ -133,4 +133,58 @@ class HomeController extends Controller {
 
         return response()->error(2, 'Đổi mật khẩu thất bại!');
     }
+    
+    public function update() {
+        
+        validator()->validate([
+            'ho_ten' => [
+                'required' => 'Họ tên không được để trống',
+                'max:100' => 'Họ tên không quá 100 kí tự',
+                'min:3' => 'Họ tên quá ngắn',
+            ],
+            'so_dien_thoai' => [
+                'required' => 'Số điện thoại không được để trống',
+                'max:10' => 'Số điện thoại không quá 10 kí tự',
+                'phone_number' => 'Số điện thoại không đúng định dạng',
+                'unique:users' => 'Số điện thoại này đã tồn tại',
+            ],
+            'dia_chi' => [
+                'required' => 'Địa chỉ không được để trống',
+                'max:255' => 'Mật khẩu không quá 255 kí tự',
+            ],
+            'ngay_sinh' => [
+                'required' => 'Ngày sinh không được để trống',
+                'date' => 'Ngày không đúng định dạng',
+            ],
+        ]);
+
+        $user = Auth::get();
+
+        if($user) {
+
+            $user->ho_ten = request()->ho_ten;
+            $user->so_dien_thoai = request()->so_dien_thoai;
+            $user->dia_chi = request()->dia_chi;
+            $user->ngay_sinh = Format::toDate(request()->ngay_sinh);
+
+            if(request()->has('avatar') && !Validator::check('base64', request()->avatar)) {
+                $file = File::createBase64(request()->avatar);
+    
+                if(!$file->isImage()) {
+                    Validator::alert("Ảnh không đúng định dạng (png, jpg, jpeg)");
+                }
+    
+                $file->generateFileName();
+                $file->save('/avatar/');
+    
+                $user->avatar = '/avatar/'.$file->getFileName();
+            }
+
+            if($user->save()) {
+                return response()->error(1, 'Thay đổi thông tin thành công!');
+            }
+        }
+
+        return response()->error(2, 'Không thể thay đổi thông tin!');
+    }
 }
