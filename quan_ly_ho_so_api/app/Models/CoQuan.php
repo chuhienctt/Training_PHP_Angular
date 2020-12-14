@@ -12,10 +12,6 @@ class CoQuan extends Model {
     }
 
     public function all_linh_vuc() {
-        $data = [];
-        foreach($this->hasMany('CoQuanLinhVuc', 'id_co_quan') as $item) {
-            $data[] = $item->linh_vuc();
-        }
-        return $data;
+        return $this->hasMany('CoQuanLinhVuc', 'id_co_quan', 'LinhVuc', 'id_linh_vuc');
     }
 }

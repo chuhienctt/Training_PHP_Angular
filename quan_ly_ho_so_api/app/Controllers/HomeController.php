@@ -26,8 +26,6 @@ class HomeController extends Controller {
             ],
             'mat_khau' => [
                 'required' => 'Mật khẩu không được để trống',
-                'max:50' => 'Mật khẩu không quá 50 kí tự',
-                'min:8' => 'Mật khẩu không dưới 8 kí tự',
             ],
         ]);
 
@@ -98,5 +96,40 @@ class HomeController extends Controller {
         }
 
         return response()->error(2, 'Đăng ký thất bại!');
+    }
+    
+    public function change_pass() {
+        
+        validator()->validate([
+            'mat_khau_cu' => [
+                'required' => 'Mật khẩu cũ không được để trống',
+            ],
+            'mat_khau_moi' => [
+                'required' => 'Mật khẩu mới không được để trống',
+                'max:50' => 'Mật khẩu mới không quá 50 kí tự',
+                'min:8' => 'Mật khẩu mới không dưới 8 kí tự',
+                'password' => 'Mật khẩu mới phải chứa ít nhất 1 kí tự hoa, 1 kí tự thường, 1 kí tự đặc biệt',
+            ],
+        ]);
+
+        $user = Auth::get();
+
+        if($user) {
+            $mat_khau_cu = request()->mat_khau_cu;
+            $mat_khau_moi = request()->mat_khau_moi;
+
+            if(Auth::checkPassword($mat_khau_cu, $user->mat_khau)) {
+
+                $user->mat_khau = Auth::createPassword($mat_khau_moi);
+                if($user->save()) {
+                    return response()->success(1, 'Đổi mật khẩu thành công!');
+                }
+
+            } else {
+                Validator::alert("Mật khẩu cũ không khớp");
+            }
+        }
+
+        return response()->error(2, 'Đổi mật khẩu thất bại!');
     }
 }

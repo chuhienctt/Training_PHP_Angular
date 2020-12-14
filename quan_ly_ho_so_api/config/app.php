@@ -24,4 +24,11 @@ return [
 
     // file system
     'storage' => 'public/storage',
+
+
+    // jwt
+    'jwt' => [
+        'secret' => $_ENV['SECRET'],
+        'time_life' => $_ENV['TIME_LIFE'],
+    ],
 ];
