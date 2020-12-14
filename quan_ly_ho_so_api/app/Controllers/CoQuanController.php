@@ -57,7 +57,24 @@ class CoQuanController extends Controller {
                 'phone_number' => 'Số điện thoại không đúng định dạng',
                 'unique:co_quan' => 'Số điện thoại này đã tồn tại',
             ],
+            'ward_id' => [
+                'required' => 'Xã, phường không được để trống',
+                'exists:ward' => 'Xã, phường không tồn tại',
+            ],
+            'hinh_anh' => [
+                'required' => 'Vui lòng chọn một hình ảnh',
+                'base64' => 'File không đúng định dạng base64',
+            ],
         ]);
+        
+        $file = File::createBase64(request()->hinh_anh);
+
+        if(!$file->isImage()) {
+            Validator::alert("Ảnh không đúng định dạng (png, jpg, jpeg)");
+        }
+
+        $file->generateFileName();
+        $file->save('/co-quan-images/');
 
         $co_quan = new CoQuan();
 
@@ -65,6 +82,8 @@ class CoQuanController extends Controller {
         $co_quan->dia_chi = request()->dia_chi;
         $co_quan->email = request()->email;
         $co_quan->so_dien_thoai = request()->so_dien_thoai;
+        $co_quan->hinh_anh = '/co-quan-images/'.$file->getFileName();
+        $co_quan->ward_id = request()->ward_id;
 
         if($co_quan->save()) {
 
@@ -116,14 +135,32 @@ class CoQuanController extends Controller {
                 'phone_number' => 'Số điện thoại không đúng định dạng',
                 'unique:co_quan' => 'Số điện thoại này đã tồn tại',
             ],
+            'ward_id' => [
+                'required' => 'Xã, phường không được để trống',
+                'exists:ward' => 'Xã, phường không tồn tại',
+            ],
         ]);
 
         $co_quan = model('CoQuan')->find(request()->id);
+
+        if(request()->has('hinh_anh') && !Validator::check('base64', request()->hinh_anh)) {
+            $file = File::createBase64(request()->hinh_anh);
+
+            if(!$file->isImage()) {
+                Validator::alert("Ảnh không đúng định dạng (png, jpg, jpeg)");
+            }
+
+            $file->generateFileName();
+            $file->save('/co-quan-images/');
+
+            $co_quan->hinh_anh = '/co-quan-images/'.$file->getFileName();
+        }
 
         $co_quan->ten_co_quan = request()->ten_co_quan;
         $co_quan->dia_chi = request()->dia_chi;
         $co_quan->email = request()->email;
         $co_quan->so_dien_thoai = request()->so_dien_thoai;
+        $co_quan->ward_id = request()->ward_id;
 
         if($co_quan->save()) {
 

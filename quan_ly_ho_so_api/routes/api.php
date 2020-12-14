@@ -11,14 +11,16 @@ Route::group([
     Route::post('/auth/login', 'HomeController@login');
     Route::post('/auth/register', 'HomeController@register');
 
+    Route::get('/dia-chinh/get-tinh', 'DiaChinhController@getTinh');
+    Route::get('/dia-chinh/get-huyen', 'DiaChinhController@getHuyen');
+    Route::get('/dia-chinh/get-xa', 'DiaChinhController@getXa');
+
     Route::group([
         'middleware' => 'UserGuard'
     ], function () {
 
         Route::post('/auth/change-pass', 'HomeController@change_pass');
         Route::put('/auth/update', 'HomeController@update');
-
-        // Route::get('/test', 'HomeController@getApiAuth');
 
     });
     
