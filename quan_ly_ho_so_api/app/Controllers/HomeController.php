@@ -90,7 +90,7 @@ class HomeController extends Controller {
         $user->dia_chi = request()->dia_chi;
         $user->ngay_sinh = Format::toDate(request()->ngay_sinh);
         $user->role = 1;
-        $user->avatar = "/avatar/no-avavtar.jpg";
+        $user->avatar = "/avatar/no-avatar.jpg";
 
         if($user->save()) {
             return response()->success(1, 'Đăng ký thành công!', $user);

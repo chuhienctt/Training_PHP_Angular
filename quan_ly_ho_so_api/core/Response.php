@@ -39,6 +39,7 @@ class Response {
         415 => 'Unsupported Media Type',
         416 => 'Requested Range Not Satisfiable',
         417 => 'Expectation Failed',
+        422 => 'Unprocessable Entity',
         500 => 'Internal Server Error',
         501 => 'Not Implemented',
         502 => 'Bad Gateway',
@@ -71,8 +72,8 @@ class Response {
         ]);
     }
 
-    public function error($status, $message) {
-        $this->code(400, [
+    public function error($status, $message, $code = 400) {
+        $this->code($code, [
             'status' => $status,
             'message' => $message,
             'data' => []

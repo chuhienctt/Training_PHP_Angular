@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th12 14, 2020 lúc 02:40 AM
+-- Thời gian đã tạo: Th12 14, 2020 lúc 10:32 AM
 -- Phiên bản máy phục vụ: 10.4.14-MariaDB
 -- Phiên bản PHP: 7.4.11
 
@@ -980,6 +980,7 @@ CREATE TABLE `users` (
   `email` varchar(100) NOT NULL,
   `so_dien_thoai` varchar(10) DEFAULT '',
   `dia_chi` varchar(255) DEFAULT '',
+  `ward_id` char(6) DEFAULT NULL,
   `ngay_sinh` date NOT NULL,
   `avatar` varchar(255) NOT NULL,
   `role` tinyint(4) NOT NULL,
@@ -990,11 +991,11 @@ CREATE TABLE `users` (
 -- Đang đổ dữ liệu cho bảng `users`
 --
 
-INSERT INTO `users` (`id`, `id_co_quan`, `mat_khau`, `ho_ten`, `email`, `so_dien_thoai`, `dia_chi`, `ngay_sinh`, `avatar`, `role`, `token`) VALUES
-(19, NULL, '$2y$10$JYCdH8pHvihQ8urEcpIxj.o9XizbXa4Whebfe.IqlI0aFWv8cFXne', 'Nguyễn Đức Toàn', 'toannguyen@gmail.com', '386420313', 'thôn Minh Khai, xã Đại Tập, huyện Khoái Châu, tỉnh Hưng Yên', '1999-01-08', '', 2, 'bc50e98566e2e51704b8dfeea236615ae4f304a4'),
-(21, NULL, '$2y$10$Md9AGnyz.Aha7C5d4B4wX.WzaEbPYKVv.MtZEqHM1TUxR5SspA0vC', 'Nguyễn Đức Toàn', 'toannguyen1@gmail.com', '386420310', 'thôn Minh Khai, xã Đại Tập, huyện Khoái Châu, tỉnh Hưng Yên', '1999-01-08', '', 1, NULL),
-(29, NULL, '$2y$10$1xeIQVYcQ5xj6tJDIwMeS.WF5naLB31SOFiqRN3sX7NbyvGDyGBRe', 'Nguyễn Đức Toàn', 'toannguyen2@gmail.com', '0386420311', 'thôn Minh Khai, xã Đại Tập, huyện Khoái Châu, tỉnh Hưng Yên', '1999-01-08', '', 1, NULL),
-(30, NULL, '$2y$10$omYyXxmrejfkKC2bQGuzd.znAZMveKuZ6/mj8JAylHjyIaBYDsBPy', 'Nguyễn Đức Toàn', 'toannguyen3@gmail.com', '0386420313', 'thôn Minh Khai, xã Đại Tập, huyện Khoái Châu, tỉnh Hưng Yên', '1999-01-08', '', 1, 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MDc3ODU0NjgsImV4cCI6MTYwNzg3MTg2OCwiZGF0YSI6IjMwIn0.4JGUWjsdPQLe2y5MZEASiMSpAFyxZqb4lUz4PIbsuY0');
+INSERT INTO `users` (`id`, `id_co_quan`, `mat_khau`, `ho_ten`, `email`, `so_dien_thoai`, `dia_chi`, `ward_id`, `ngay_sinh`, `avatar`, `role`, `token`) VALUES
+(19, NULL, '$2y$10$JYCdH8pHvihQ8urEcpIxj.o9XizbXa4Whebfe.IqlI0aFWv8cFXne', 'Nguyễn Đức Toàn', 'toannguyen@gmail.com', '386420313', 'thôn Minh Khai, xã Đại Tập, huyện Khoái Châu, tỉnh Hưng Yên', NULL, '1999-01-08', '', 2, 'bc50e98566e2e51704b8dfeea236615ae4f304a4'),
+(21, NULL, '$2y$10$Md9AGnyz.Aha7C5d4B4wX.WzaEbPYKVv.MtZEqHM1TUxR5SspA0vC', 'Nguyễn Đức Toàn', 'toannguyen1@gmail.com', '386420310', 'thôn Minh Khai, xã Đại Tập, huyện Khoái Châu, tỉnh Hưng Yên', NULL, '1999-01-08', '', 1, NULL),
+(29, NULL, '$2y$10$1xeIQVYcQ5xj6tJDIwMeS.WF5naLB31SOFiqRN3sX7NbyvGDyGBRe', 'Nguyễn Đức Toàn', 'toannguyen2@gmail.com', '0386420311', 'thôn Minh Khai, xã Đại Tập, huyện Khoái Châu, tỉnh Hưng Yên', NULL, '1999-01-08', '', 1, NULL),
+(30, NULL, '$2y$10$omYyXxmrejfkKC2bQGuzd.znAZMveKuZ6/mj8JAylHjyIaBYDsBPy', 'Nguyễn Đức Toàn', 'toannguyen3@gmail.com', '0386420313', 'thôn Minh Khai, xã Đại Tập, huyện Khoái Châu, tỉnh Hưng Yên', NULL, '1999-01-08', '', 1, 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MDc5MzYyNzUsImV4cCI6MTYwODAyMjY3NSwiZGF0YSI6IjMwIn0.bJM0PTH7NbArwg7Ir_sF3gf9pYgs0sAtEVfePhzfSzc');
 
 -- --------------------------------------------------------
 
@@ -12200,8 +12201,7 @@ ALTER TABLE `buoc`
 -- Chỉ mục cho bảng `co_quan`
 --
 ALTER TABLE `co_quan`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `ten_co_quan` (`ten_co_quan`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Chỉ mục cho bảng `co_quan_linh_vuc`
@@ -12228,8 +12228,7 @@ ALTER TABLE `ho_so`
 -- Chỉ mục cho bảng `linh_vuc`
 --
 ALTER TABLE `linh_vuc`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `ten_linh_vuc` (`ten_linh_vuc`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Chỉ mục cho bảng `province`
@@ -12249,7 +12248,6 @@ ALTER TABLE `quy_trinh`
 --
 ALTER TABLE `thu_tuc`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `ten_thu_tuc` (`ten_thu_tuc`),
   ADD KEY `id_co_quan` (`id_co_quan`),
   ADD KEY `id_linh_vuc` (`id_linh_vuc`);
 

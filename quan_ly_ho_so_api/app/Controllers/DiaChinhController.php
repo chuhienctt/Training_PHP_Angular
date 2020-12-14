@@ -29,4 +29,20 @@ class DiaChinhController extends Controller {
         $data = DB::table('ward')->where(['district_id' => $id])->get();
         return response()->json($data);
     }
+
+    public function getDiaChi() {
+        $id = request()->id ?? '00001';
+
+        $ward = DB::table('ward')->find($id);
+
+        $district = DB::table('district')->find($ward->district_id);
+
+        $province = DB::table('province')->find($district->province_id);
+
+        return response()->json([
+            'ward' => $ward,
+            'district' => $district,
+            'province' => $province,
+        ]);
+    }
 }
