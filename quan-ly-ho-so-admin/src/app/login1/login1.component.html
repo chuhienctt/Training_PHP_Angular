@@ -3,7 +3,7 @@
         <div class="wrapper">
             <div class="form-inner-cont">
                 <h3>Đăng nhập</h3>
-                <form>[formGroup]="profileForm" (ngSubmit)="onSubmit"
+                <form [formGroup]="form" (ngSubmit)="onSubmit()">
                 <!-- <form> -->
                     <div class="form-input">
                         <span class="fa fa-envelope-o" aria-hidden="true"></span> <input type="email" name="email"

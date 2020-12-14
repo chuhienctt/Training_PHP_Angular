@@ -1,0 +1,74 @@
+{
+  "posts": [
+    {
+      "id": "1",
+      "ten_linh_vuc": "Giao duc",
+      "hinh_anh": "1.jpg",
+      "mo_ta":"thu tuc trong linh vuc giao duc"
+    },
+    {
+      "id": "2",
+      "ten_linh_vuc": "Kinh te",
+      "hinh_anh": "2.jpg",
+      "mo_ta":"thu tuc trong linh vuc kinh te"
+    },
+    {
+      "id": "3",
+      "ten_linh_vuc": "Van hoa",
+      "hinh_anh": "3.jpg",
+      "mo_ta":"thu tuc trong linh vuc van hoa"
+    },
+    {
+      "id": "4",
+      "ten_linh_vuc": "Hanh chinh",
+      "hinh_anh": "4.jpg",
+      "mo_ta":"thu tuc trong linh vuc hanh chinh"
+    },
+    {
+      "id": "5",
+      "ten_linh_vuc": "Kinh doanh",
+      "hinh_anh": "5.jpg",
+      "mo_ta":"thu tuc trong linh vuc kinh doanh"
+    },
+    {
+      "id": "6",
+      "ten_linh_vuc": "Giao thong van tai",
+      "hinh_anh": "6.jpg",
+      "mo_ta":"thu tuc trong linh vuc giao thong van tai"
+    },
+    {
+      "id": "7",
+      "ten_linh_vuc": "Thuong mai",
+      "hinh_anh": "7.jpg",
+      "mo_ta":"thu tuc trong linh vuc thuong mai"
+    },
+    {
+      "id": "8",
+      "ten_linh_vuc": "Xay dung",
+      "hinh_anh": "8.jpg",
+      "mo_ta":"thu tuc trong linh vuc xay dung"
+    },
+    {
+      "id": "9",
+      "ten_linh_vuc": "Nong nghiep",
+      "hinh_anh": "9.jpg",
+      "mo_ta":"thu tuc trong linh vuc giao duc"
+    },
+    {
+      "id": "10",
+      "ten_linh_vuc": "Y te",
+      "hinh_anh": "10.jpg",
+      "mo_ta":"thu tuc trong linh vuc y te"
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  }
+}

@@ -15,11 +15,24 @@ import { SharedModule } from './shared/shared.module';
 import { LoginModule } from './login/login.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { HttpClientModule} from '@angular/common/http';
+import { AccordionModule} from 'primeng/accordion';
+import { reducers } from './_reduces/index';
+//import { Login1Component } from './login1/login1.component';
+//import { Login1Component } from './login1/login1.component';
 
 const routes: Routes = [
   {
       path: 'dashboard',
       loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)  
+  },
+  // {
+  //   path: 'login',
+  //   loadChildren: () => import('./login/login.module').then(m => m.LoginModule)  
+  // },
+  {
+    path: 'login1',
+    loadChildren: () => import('./login1/login1.module').then(m => m.Login1Module)  
   },
   {
     path: 'quan-ly-buoc',
@@ -50,10 +63,6 @@ const routes: Routes = [
     loadChildren: () => import('./quan-ly-thu-tuc/quan-ly-thu-tuc.module').then(m => m.QuanLyThuTucModule)  
   },
   {
-    path: 'login',
-    loadChildren: () => import('./login/login.module').then(m => m.LoginModule)  
-  },
-  {
     path: '',
     redirectTo: '/dashboard',
     pathMatch: 'full',
@@ -64,6 +73,7 @@ const routes: Routes = [
   declarations: [
     AppComponent,
     Er404Component,
+   
   ],
   imports: [
     BrowserModule,
@@ -77,9 +87,11 @@ const routes: Routes = [
     QuanLyLinhVucModule,
     QuanLyNguoiDungModule,
     ReactiveFormsModule,
+    HttpClientModule,
     LoginModule,
     RouterModule.forRoot(routes),
-    CommonModule
+    CommonModule,
+    AccordionModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -4,6 +4,7 @@ import { QuanLyNguoiDungComponent } from './quan-ly-nguoi-dung.component';
 import { RouterModule, Routes } from '@angular/router';
 
 
+
 const routes: Routes = [
   {
     path: '',

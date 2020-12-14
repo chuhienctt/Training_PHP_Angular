@@ -250,7 +250,7 @@ Author URL: http://w3layouts.com
       line-height: 40px;
   }
 
-  button.btn {
+  .button1 {
       line-height: 40px;
       padding: 0;
       min-width: 100px;
