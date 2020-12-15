@@ -84,7 +84,20 @@ class HomeController extends Controller {
                 'required' => 'Ngày sinh không được để trống',
                 'date' => 'Ngày không đúng định dạng',
             ],
+            'avatar' => [
+                'required' => 'Vui lòng chọn một hình ảnh làm avatar',
+                'base64' => 'File không đúng định dạng base64',
+            ],
         ]);
+
+        $file = File::createBase64(request()->hinh_anh);
+
+        if(!$file->isImage()) {
+            Validator::alert("Ảnh không đúng định dạng (png, jpg, jpeg)");
+        }
+
+        $file->generateFileName();
+        $file->save('/avatar/');
 
         $user = new Users();
 
@@ -96,7 +109,7 @@ class HomeController extends Controller {
         $user->ward_id = request()->ward_id;
         $user->ngay_sinh = Format::toDate(request()->ngay_sinh);
         $user->role = 1;
-        $user->avatar = "/avatar/no-avatar.jpg";
+        $user->avatar = '/avatar/'.$file->getFileName();
 
         if($user->save()) {
             return response()->success(1, 'Đăng ký thành công!', $user);

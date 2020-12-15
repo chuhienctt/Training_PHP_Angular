@@ -6,6 +6,7 @@ use Core\Controller;
 use Core\Auth;
 use Core\Validator;
 use Core\Format;
+use Core\File;
 use App\Models\Users;
 
 class UserController extends Controller {
@@ -122,7 +123,6 @@ class UserController extends Controller {
                 'required' => 'Số điện thoại không được để trống',
                 'max:10' => 'Số điện thoại không quá 10 kí tự',
                 'phone_number' => 'Số điện thoại không đúng định dạng',
-                'unique:users' => 'Số điện thoại này đã tồn tại',
             ],
             'dia_chi' => [
                 'required' => 'Địa chỉ không được để trống',
