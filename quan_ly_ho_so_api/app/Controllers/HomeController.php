@@ -191,7 +191,7 @@ class HomeController extends Controller {
             }
 
             if($user->save()) {
-                return response()->error(1, 'Thay đổi thông tin thành công!');
+                return response()->success(1, 'Thay đổi thông tin thành công!', $user);
             }
         }
 
