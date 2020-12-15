@@ -35,4 +35,8 @@ export class HomeService {
   changePass(user) {
     return this._http.post(baseUrl + "change-pass", user);
   }
+
+  update(profile) {
+    return this._http.put(baseUrl + "update", profile);
+  }
 }

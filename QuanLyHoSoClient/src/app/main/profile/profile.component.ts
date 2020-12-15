@@ -2,9 +2,10 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {HomeService} from "../../services/home.service";
 import {MessageService} from "primeng/api";
-import {FileUpload} from "primeng/fileupload";
 import {AddressService} from "../../services/address.service";
-import { FileService } from 'src/app/libs/file.service';
+import {FileService} from 'src/app/libs/file.service';
+import {environment} from "../../../environments/environment";
+
 declare var $: any;
 
 @Component({
@@ -54,7 +55,7 @@ export class ProfileComponent implements OnInit {
     })
 
     let user = this.homeService.currentUser;
-    
+
     this.addressService.getAddress(user.ward_id).subscribe((res: any) => {
       this.listProvince = res.list_province;
       this.listDistrict = res.list_district;
@@ -63,6 +64,7 @@ export class ProfileComponent implements OnInit {
         ho_ten: user.ho_ten,
         so_dien_thoai: user.so_dien_thoai,
         ngay_sinh: new Date(Date.parse(user.ngay_sinh)),
+        dia_chi: user.dia_chi,
         city: res.province.id,
         district: res.district.id,
         commune: res.ward.id
@@ -71,7 +73,7 @@ export class ProfileComponent implements OnInit {
   }
 
   get getUserAvatar() {
-    return "http://localhost:8200/storage" + this.homeService.currentUser.avatar;
+    return environment.urlImg + this.homeService.currentUser.avatar;
   }
 
   confirm_password_validate(pass: string, pass_confirm: string) {
@@ -89,13 +91,6 @@ export class ProfileComponent implements OnInit {
         matchingControl.setErrors(null);
       }
     };
-  }
-
-  updateProfile() {
-    let profile = {
-      ho_ten: this.formProfile.value.ho_ten,
-
-    }
   }
 
   changeTitle(event) {
@@ -148,11 +143,31 @@ export class ProfileComponent implements OnInit {
       var reader = new FileReader();
 
       reader.onload = function (e) {
-          $('.profile-pic').attr('src', e.target.result);
+        $('.profile-pic').attr('src', e.target.result);
+      }
+      reader.readAsDataURL(files[0]);
+    }
+  }
+
+  updateProfile() {
+    let profile = {
+      ho_ten: this.formProfile.value.ho_ten,
+      so_dien_thoai: this.formProfile.value.so_dien_thoai,
+      ngay_sinh: this.formProfile.value.ngay_sinh,
+      dia_chi: this.formProfile.value.dia_chi,
+      ward_id: this.formProfile.value.commune,
+      avatar: null
+    }
+    this.fileService.getEncodeFromImage(this.file_avatar).subscribe((data:any) => {
+      if(data != null) {
+        profile.avatar = data;
       }
 
-      reader.readAsDataURL(files[0]);
-  }
+      console.log(profile)
+      this.homeService.update(profile).subscribe((res:any) => {
+        console.log(res)
+      })
+    })
   }
 
 }
