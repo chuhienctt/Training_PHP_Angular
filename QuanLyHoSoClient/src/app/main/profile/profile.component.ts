@@ -6,6 +6,7 @@ import {AddressService} from "../../services/address.service";
 import {FileService} from 'src/app/libs/file.service';
 import {environment} from "../../../environments/environment";
 import {DatePipe} from "@angular/common";
+import {AlertService} from "../../libs/alert.service";
 
 declare var $: any;
 
@@ -33,7 +34,8 @@ export class ProfileComponent implements OnInit {
     private formBuider: FormBuilder,
     private messageService: MessageService,
     private addressService: AddressService,
-    private fileService: FileService
+    private fileService: FileService,
+    private alertService: AlertService
   ) {
   }
 

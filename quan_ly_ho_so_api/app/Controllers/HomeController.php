@@ -90,7 +90,7 @@ class HomeController extends Controller {
             ],
         ]);
 
-        $file = File::createBase64(request()->hinh_anh);
+        $file = File::createBase64(request()->avatar);
 
         if(!$file->isImage()) {
             Validator::alert("Ảnh không đúng định dạng (png, jpg, jpeg)");

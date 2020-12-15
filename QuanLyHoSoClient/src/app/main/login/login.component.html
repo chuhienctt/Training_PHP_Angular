@@ -24,6 +24,7 @@
 <!--             Contact Form-->
             <form [formGroup]="formLogin" (ngSubmit)="login()" class="contact-form">
               <div class="field">
+                <label class="pl-16px">Email</label>
                 <input type="email" formControlName="email" placeholder="E-mail">
                 <div *ngIf="submittedLo && formLogin.controls.email.errors">
                   <span class="text-danger" *ngIf="formLogin.controls.email.errors.required">Chưa nhập email.</span>
@@ -33,6 +34,7 @@
                 </div>
               </div>
               <div class="field">
+                <label class="pl-16px">Mật khẩu</label>
                 <input type="password" formControlName="mat_khau" placeholder="Mật khẩu">
                 <div *ngIf="submittedLo && formLogin.controls.mat_khau.errors">
                   <div class="text-danger" *ngIf="formLogin.controls.mat_khau.errors.required">Chưa nhập mật khẩu.</div>
@@ -62,7 +64,7 @@
                   </div>
                   <input class="file-upload" type="file" accept="image/*" (change)="readFileUpload($event.target.files)" />
                 </div>
-                <div class="text-center">
+                <div class="text-center" *ngIf="!file_avatar && submittedRe">
                   <p class="text-danger">Chưa chọn ảnh.</p>
                 </div>
               </div>
@@ -158,7 +160,7 @@
                   <span class="text-danger" *ngIf="formRegister.controls.ngay_sinh.errors.maxlength">Ngày sinh không hợp lệ.</span>
                 </div>
               </div>
-              <button type="submit" class="btn-custom btn">Đăng ký</button>
+              <button type="submit" class="btn-custom btn" [disabled]="!file_avatar">Đăng ký</button>
             </form>
           </div>
           <div class="col-md-3"></div>

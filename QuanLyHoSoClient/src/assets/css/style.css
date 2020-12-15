@@ -8286,8 +8286,8 @@ div:focus {
 
 .avatar-wrapper {
   position: relative;
-  height: 130px;
-  width: 130px;
+  height: 100px;
+  width: 100px;
   margin: 50px auto;
   border-radius: 50%;
   overflow: hidden;
