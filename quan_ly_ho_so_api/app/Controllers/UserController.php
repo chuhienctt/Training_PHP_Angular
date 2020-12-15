@@ -193,7 +193,7 @@ class UserController extends Controller {
         }
 
         if($user->save()) {
-            return response()->success(1, 'Thay đổi thông tin thành công!');
+            return response()->success(1, 'Thay đổi thông tin thành công!', $user);
         }
 
         return response()->error(2, 'Không thể thay đổi thông tin!');

@@ -32,6 +32,9 @@ Route::group([
         'prefix' => '/admin',
         'middleware' => 'AdminGuard'
     ], function () {
+        
+        Route::post('/auth/change-pass', 'AdminController@change_pass');
+        Route::put('/auth/update', 'AdminController@update');
 
         Route::group([
             'prefix' => '/linh-vuc'
