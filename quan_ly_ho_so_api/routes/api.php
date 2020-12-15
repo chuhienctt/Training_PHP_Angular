@@ -58,6 +58,19 @@ Route::group([
 
         });
 
+        
+        Route::group([
+            'prefix' => '/user'
+        ], function () {
+
+            Route::get('/get', 'UserController@get');
+            Route::get('/pagination', 'UserController@pagination');
+            Route::post('/create', 'UserController@create');
+            Route::put('/update', 'UserController@update');
+            Route::delete('/block', 'UserController@block');
+
+        });
+
     });
 
 });

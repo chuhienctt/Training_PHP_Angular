@@ -18,7 +18,7 @@ class AdminGuard extends Middleware {
             if(time() < $dec_token->exp) {
                 $user = model('Users')->where(['token' => $token, 'role' => 3])->first();
     
-                if($user) {
+                if($user && !$user->checkBlock()) {
                     Auth::set($user);
                     return true;
                 }

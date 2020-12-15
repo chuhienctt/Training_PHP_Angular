@@ -37,6 +37,10 @@ class HomeController extends Controller {
 
         if($user && Auth::checkPassword($mat_khau, $user->mat_khau)) {
 
+            if($user->checkBlock()) {
+                return response()->error(3, 'Tài khoản của bạn đang bị khóa!');
+            }
+
             $user->token = Auth::createToken($user->id);
 
             $user->save();
@@ -90,7 +94,7 @@ class HomeController extends Controller {
             ],
         ]);
 
-        $file = File::createBase64(request()->hinh_anh);
+        $file = File::createBase64(request()->avatar);
 
         if(!$file->isImage()) {
             Validator::alert("Ảnh không đúng định dạng (png, jpg, jpeg)");
