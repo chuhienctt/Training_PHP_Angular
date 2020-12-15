@@ -19,11 +19,12 @@ import { JwtModule } from "@auth0/angular-jwt";
 import {environment} from "../environments/environment";
 import { MainComponent } from './main/main.component';
 import { ProfileComponent } from './main/profile/profile.component';
+import {FileUploadModule} from "primeng/fileupload";
 
 export function tokenGetter() {
-  return localStorage.getItem("jwt");
+  let user = JSON.parse(localStorage.getItem("jwt"));
+  return user ? user.token : null;
 }
-
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ export function tokenGetter() {
         whitelistedDomains: [environment.domain],
         blacklistedRoutes: []
       }
-    })
+    }),
+    FileUploadModule
   ],
   providers: [],
   exports: [

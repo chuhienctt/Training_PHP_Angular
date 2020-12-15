@@ -1,10 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {HomeService} from '../../service/home.service';
+import {HomeService} from '../../services/home.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AlertService} from '../../libs/alert.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {MessageService} from 'primeng/api';
 import {DatePipe} from "@angular/common";
+import {AddressService} from "../../services/address.service";
 
 @Component({
   selector: 'app-login',
@@ -14,7 +15,7 @@ import {DatePipe} from "@angular/common";
 })
 export class LoginComponent implements OnInit {
   pipe = new DatePipe("en-US");
-  listCity = [];
+  listProvince = [];
   listDistrict = [];
   listCommune = [];
   style = {};
@@ -31,23 +32,20 @@ export class LoginComponent implements OnInit {
     private  router: Router,
     private formBuilder: FormBuilder,
     private messageService: MessageService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private addressService: AddressService
   ) {
   }
 
   ngOnInit(): void {
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
 
-    this.homeService.getAddress().subscribe((data: any) => {
-      console.log(data)
-      this.listCity = data;
+    this.addressService.getProvince().subscribe((res: any) => {
+      this.listProvince = res;
     });
 
     this.style = {
       width: '100%',
-      // 'border-radius': '25px',
-      // 'padding-left': '22px',
-      // height: '50px',
       boder: '1px solid rgba(51, 51, 51, 0.1);',
       'font-weight': 400,
       'font-family': 'Roboto'
@@ -95,32 +93,28 @@ export class LoginComponent implements OnInit {
     };
   }
 
-  getDistrict(val) {
+  getDistrict(id) {
     this.listDistrict = [];
     this.listCommune = [];
-
-    this.listDistrict = this.listCity.filter(d => d.name == val)[0].huyen;
-    if (this.listDistrict.length != 0) {
-      this.formRegister.controls.district.enable();
-    }
+    this.addressService.getDistrict(id).subscribe((res:any) => {
+      this.listDistrict = res;
+      if (this.listDistrict.length != 0) {
+        this.formRegister.controls.district.enable();
+      }
+    })
   }
 
-  getCommune(val) {
+  getCommune(id) {
     this.listCommune = [];
-    this.listCommune = this.listDistrict.filter(c => c.name == val)[0].xa;
-    if (this.listCommune.length != 0) {
-      this.formRegister.controls.commune.enable();
-    }
+    this.addressService.getCommune(id).subscribe((res:any) => {
+      this.listCommune = res;
+      if (this.listCommune.length != 0) {
+        this.formRegister.controls.commune.enable();
+      }
+    })
   }
 
   register() {
-    let address = [];
-    if (this.formRegister.value.dia_chi != null) {
-      address.push(this.formRegister.value.dia_chi, this.formRegister.value.city,  this.formRegister.value.district, this.formRegister.value.commune);
-    } else {
-      address.push(this.formRegister.value.city,  this.formRegister.value.district, this.formRegister.value.commune);
-    }
-
     this.submittedRe = true;
     if(this.formRegister.invalid) {
       return;
@@ -130,7 +124,8 @@ export class LoginComponent implements OnInit {
       mat_khau: this.formRegister.value.mat_khau,
       ho_ten: this.formRegister.value.ho_ten,
       so_dien_thoai: this.formRegister.value.so_dien_thoai,
-      dia_chi: address.join(", "),
+      dia_chi: this.formRegister.value.dia_chi,
+      ward_id: this.formRegister.value.commune,
       ngay_sinh: this.pipe.transform(this.formRegister.value.ngay_sinh, "yyyy-MM-dd")
     }
     this.homeService.register(user).subscribe((res: any) => {
@@ -168,6 +163,7 @@ export class LoginComponent implements OnInit {
           }
       });
     }, err => {
+      console.log(err)
       if (err.status != 1) {
         this.messageService.add({ severity: 'error', summary: 'Thất bại!', detail: err.error.message });
       }

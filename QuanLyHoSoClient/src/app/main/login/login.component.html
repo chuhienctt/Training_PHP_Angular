@@ -107,19 +107,19 @@
               <div class="row">
                 <div class="col-md-4">
                   <div class="field">
-              <p-dropdown formControlName="city" (onChange)="getDistrict($event.value)" optionValue="name" optionLabel="name" [style]="style" [options]="listCity" placeholder="Chọn tỉnh, thành phố" [virtualScroll]="true" [itemSize]="31"
+              <p-dropdown formControlName="city" (onChange)="getDistrict($event.value)" optionValue="id" optionLabel="name" [style]="style" [options]="listProvince" placeholder="Chọn tỉnh, thành phố" [virtualScroll]="true" [itemSize]="31"
                           [filter]="false"></p-dropdown>
                   </div>
                 </div>
                 <div class="col-md-4">
                   <div class="field">
-                    <p-dropdown formControlName="district" (onChange)="getCommune($event.value)" optionValue="name" optionLabel="name" [style]="style" [options]="listDistrict" placeholder="Chọn quận, huyện" [virtualScroll]="true" [itemSize]="31"
+                    <p-dropdown formControlName="district" (onChange)="getCommune($event.value)" optionValue="id" optionLabel="name" [style]="style" [options]="listDistrict" placeholder="Chọn quận, huyện" [virtualScroll]="true" [itemSize]="31"
                                 [filter]="false"></p-dropdown>
                   </div>
                 </div>
                 <div class="col-md-4">
                   <div class="field">
-                    <p-dropdown formControlName="commune" optionValue="name" optionLabel="name" [style]="style" [options]="listCommune" placeholder="Chọn xã, phường, thị trấn" [virtualScroll]="true" [itemSize]="31"
+                    <p-dropdown formControlName="commune" optionValue="id" optionLabel="name" [style]="style" [options]="listCommune" placeholder="Chọn xã, phường, thị trấn" [virtualScroll]="true" [itemSize]="31"
                                 [filter]="false"></p-dropdown>
                   </div>
                 </div>

@@ -24,15 +24,15 @@ export class HomeService {
     return this.current;
   }
 
-  getAddress() {
-    return this._http.get(environment.apiUrl + "dia-chinh/get-tinh");
-  }
-
   register(user) {
     return this._http.post(baseUrl + "register", user);
   }
 
   login(user) {
     return this._http.post(baseUrl + "login", user);
+  }
+
+  changePass(user) {
+    return this._http.post(baseUrl + "change-pass", user);
   }
 }
