@@ -8,44 +8,29 @@ use Core\Validator;
 use Core\Format;
 use App\Models\Users;
 
-class HomeController extends Controller {
+class UserController extends Controller {
 
-    public function index() {
-        return response()->json([
-            'welcome' => 'Welcome to NDT API Framework'
-        ]);
-    }
-
-    public function login() {
-        
-        validator()->validate([
-            'email' => [
-                'required' => 'Email không được để trống',
-                'max:100' => 'Email không quá 100 kí tự',
-                'email' => 'Email không đúng định dạng',
-            ],
-            'mat_khau' => [
-                'required' => 'Mật khẩu không được để trống',
-            ],
-        ]);
-
-        $email = request()->email;
-        $mat_khau = request()->mat_khau;
-        
-        $user = model('Users')->where(['email' => $email])->first();
-
-        if($user && Auth::checkPassword($mat_khau, $user->mat_khau)) {
-
-            $user->token = Auth::createToken($user->id);
-
-            $user->save();
-
-            return response()->success(1, 'Đăng nhập thành công!', $user);
+    public function get() {
+        $data = model('Users')->all();
+        if(request()->has('id')) {
+            $data = model('Users')->find(request()->id);
         }
-        return response()->error(2, 'Email hoặc mật khẩu không chính xác!');
+        return response()->json($data);
     }
 
-    public function register() {
+    public function pagination() {
+        $first = request()->first ?? 0;
+        $row = request()->row ?? 10;
+
+        $data = model('Users')->offset($first)->limit($row)->get();
+
+        return response()->json([
+            'total' => model('Users')->count(),
+            'data' => $data,
+        ]);
+    }
+
+    public function create() {
 
         validator()->validate([
             'email' => [
@@ -83,7 +68,24 @@ class HomeController extends Controller {
                 'required' => 'Ngày sinh không được để trống',
                 'date' => 'Ngày không đúng định dạng',
             ],
+            'role' => [
+                'required' => 'Chức vụ không được để trống',
+                'in:0,1' => 'Chức vụ không chính xác',
+            ],
+            'avatar' => [
+                'required' => 'Vui lòng chọn một hình ảnh làm avatar',
+                'base64' => 'File không đúng định dạng base64',
+            ],
         ]);
+
+        $file = File::createBase64(request()->hinh_anh);
+
+        if(!$file->isImage()) {
+            Validator::alert("Ảnh không đúng định dạng (png, jpg, jpeg)");
+        }
+
+        $file->generateFileName();
+        $file->save('/avatar/');
 
         $user = new Users();
 
@@ -94,54 +96,23 @@ class HomeController extends Controller {
         $user->dia_chi = request()->dia_chi;
         $user->ward_id = request()->ward_id;
         $user->ngay_sinh = Format::toDate(request()->ngay_sinh);
-        $user->role = 1;
-        $user->avatar = "/avatar/no-avatar.jpg";
+        $user->role = request()->role;
+        $user->avatar = '/avatar/'.$file->getFileName();
 
         if($user->save()) {
-            return response()->success(1, 'Đăng ký thành công!', $user);
+            return response()->success(1, 'Thêm người dùng thành công!', $user);
         }
 
-        return response()->error(2, 'Đăng ký thất bại!');
-    }
-    
-    public function change_pass() {
-        
-        validator()->validate([
-            'mat_khau_cu' => [
-                'required' => 'Mật khẩu cũ không được để trống',
-            ],
-            'mat_khau_moi' => [
-                'required' => 'Mật khẩu mới không được để trống',
-                'max:50' => 'Mật khẩu mới không quá 50 kí tự',
-                'min:8' => 'Mật khẩu mới không dưới 8 kí tự',
-                'password' => 'Mật khẩu mới phải chứa ít nhất 1 kí tự hoa, 1 kí tự thường, 1 kí tự đặc biệt',
-            ],
-        ]);
-
-        $user = Auth::get();
-
-        if($user) {
-            $mat_khau_cu = request()->mat_khau_cu;
-            $mat_khau_moi = request()->mat_khau_moi;
-
-            if(Auth::checkPassword($mat_khau_cu, $user->mat_khau)) {
-
-                $user->mat_khau = Auth::createPassword($mat_khau_moi);
-                if($user->save()) {
-                    return response()->success(1, 'Đổi mật khẩu thành công!');
-                }
-
-            } else {
-                Validator::alert("Mật khẩu cũ không khớp");
-            }
-        }
-
-        return response()->error(2, 'Đổi mật khẩu thất bại!');
+        return response()->error(2, 'Thêm người dùng thất bại!');
     }
     
     public function update() {
         
         validator()->validate([
+            'id' => [
+                'required' => 'Thiếu id người dùng',
+                'exists:users' => 'Không tồn tại người dùng',
+            ],
             'ho_ten' => [
                 'required' => 'Họ tên không được để trống',
                 'max:100' => 'Họ tên không quá 100 kí tự',
@@ -165,9 +136,13 @@ class HomeController extends Controller {
                 'required' => 'Ngày sinh không được để trống',
                 'date' => 'Ngày không đúng định dạng',
             ],
+            'role' => [
+                'required' => 'Chức vụ không được để trống',
+                'in:0,1' => 'Chức vụ không chính xác',
+            ],
         ]);
 
-        $user = Auth::get();
+        $user = model('Users')->find(request()->id);
 
         if($user) {
 
