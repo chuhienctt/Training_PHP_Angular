@@ -6,6 +6,7 @@ use Core\Controller;
 use Core\Auth;
 use Core\Validator;
 use Core\Format;
+use Core\File;
 use App\Models\Users;
 
 class HomeController extends Controller {
