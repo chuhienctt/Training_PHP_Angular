@@ -4,6 +4,8 @@ import {HomeService} from "../../services/home.service";
 import {MessageService} from "primeng/api";
 import {FileUpload} from "primeng/fileupload";
 import {AddressService} from "../../services/address.service";
+import { FileService } from 'src/app/libs/file.service';
+declare var $: any;
 
 @Component({
   selector: 'app-profile',
@@ -12,7 +14,6 @@ import {AddressService} from "../../services/address.service";
   providers: [MessageService]
 })
 export class ProfileComponent implements OnInit {
-  @ViewChild(FileUpload, {static: false}) file: FileUpload
   title = "Hồ sơ";
   formProfile: FormGroup;
   formChangePass: FormGroup;
@@ -22,12 +23,14 @@ export class ProfileComponent implements OnInit {
   listDistrict = [];
   listCommune = [];
   style = {};
+  file_avatar: File;
 
   constructor(
     private homeService: HomeService,
     private formBuider: FormBuilder,
     private messageService: MessageService,
-    private addressService: AddressService
+    private addressService: AddressService,
+    private fileService: FileService
   ) {
   }
 
@@ -51,6 +54,7 @@ export class ProfileComponent implements OnInit {
     })
 
     let user = this.homeService.currentUser;
+    
     this.addressService.getAddress(user.ward_id).subscribe((res: any) => {
       this.listProvince = res.list_province;
       this.listDistrict = res.list_district;
@@ -64,6 +68,10 @@ export class ProfileComponent implements OnInit {
         commune: res.ward.id
       })
     })
+  }
+
+  get getUserAvatar() {
+    return "http://localhost:8200/storage" + this.homeService.currentUser.avatar;
   }
 
   confirm_password_validate(pass: string, pass_confirm: string) {
@@ -127,6 +135,24 @@ export class ProfileComponent implements OnInit {
     }, err => {
       this.messageService.add({severity: 'error', summary: 'Thất bại!', detail: err.error.message});
     })
+  }
+
+  uploadButton() {
+    $(".file-upload").click();
+  }
+
+  readFileUpload(files) {
+    if (files && files[0]) {
+      this.file_avatar = files[0];
+
+      var reader = new FileReader();
+
+      reader.onload = function (e) {
+          $('.profile-pic').attr('src', e.target.result);
+      }
+
+      reader.readAsDataURL(files[0]);
+  }
   }
 
 }

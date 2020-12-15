@@ -23,6 +23,14 @@
           <div class="col-md-6 contact-form-wrapper">
             <!--             Contact Form-->
             <form [formGroup]="formProfile" (ngSubmit)="updateProfile()" class="contact-form">
+              <div class="row">
+                <div class="avatar-wrapper">
+                  <img class="profile-pic" [src]="getUserAvatar" />
+                  <div class="upload-button" (click)="uploadButton()">
+                  </div>
+                  <input class="file-upload" type="file" accept="image/*" (change)="readFileUpload($event.target.files)" />
+                </div>
+              </div>
               <div class="field">
                 <label class="pl-16px">Họ tên</label>
                 <input type="text" formControlName="ho_ten" placeholder="Họ tên">
