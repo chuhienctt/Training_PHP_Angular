@@ -152,7 +152,6 @@ class HomeController extends Controller {
                 'required' => 'Số điện thoại không được để trống',
                 'max:10' => 'Số điện thoại không quá 10 kí tự',
                 'phone_number' => 'Số điện thoại không đúng định dạng',
-                'unique:users' => 'Số điện thoại này đã tồn tại',
             ],
             'dia_chi' => [
                 'required' => 'Địa chỉ không được để trống',
