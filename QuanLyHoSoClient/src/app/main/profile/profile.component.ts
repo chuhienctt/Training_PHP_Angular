@@ -5,6 +5,7 @@ import {MessageService} from "primeng/api";
 import {AddressService} from "../../services/address.service";
 import {FileService} from 'src/app/libs/file.service';
 import {environment} from "../../../environments/environment";
+import {DatePipe} from "@angular/common";
 
 declare var $: any;
 
@@ -15,6 +16,7 @@ declare var $: any;
   providers: [MessageService]
 })
 export class ProfileComponent implements OnInit {
+  pipe = new DatePipe("en-US");
   title = "Hồ sơ";
   formProfile: FormGroup;
   formChangePass: FormGroup;
@@ -153,7 +155,7 @@ export class ProfileComponent implements OnInit {
     let profile = {
       ho_ten: this.formProfile.value.ho_ten,
       so_dien_thoai: this.formProfile.value.so_dien_thoai,
-      ngay_sinh: this.formProfile.value.ngay_sinh,
+      ngay_sinh: this.pipe.transform(this.formProfile.value.ngay_sinh, "yyyy-MM-dd"),
       dia_chi: this.formProfile.value.dia_chi,
       ward_id: this.formProfile.value.commune,
       avatar: null
@@ -163,9 +165,13 @@ export class ProfileComponent implements OnInit {
         profile.avatar = data;
       }
 
-      console.log(profile)
       this.homeService.update(profile).subscribe((res:any) => {
-        console.log(res)
+        localStorage.setItem("jwt", JSON.stringify(res.data));
+        this.homeService.input(res.data);
+        this.messageService.add({severity: 'success', summary: 'Thành công!', detail: "Cập nhật thông tin thành công!"});
+      }, err => {
+        console.log(err)
+        this.messageService.add({severity: 'error', summary: 'Thất bại!', detail: err.error.message});
       })
     })
   }

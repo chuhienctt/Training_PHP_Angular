@@ -8341,3 +8341,7 @@ div:focus {
   opacity: 0.9;
 }
 
+.text-center {
+  text-align: center;
+}
+
