@@ -1,10 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {HomeService} from '../../service/home.service';
+import {HomeService} from '../../services/home.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AlertService} from '../../libs/alert.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {MessageService} from 'primeng/api';
 import {DatePipe} from "@angular/common";
+import {AddressService} from "../../services/address.service";
 
 @Component({
   selector: 'app-login',
@@ -31,14 +32,15 @@ export class LoginComponent implements OnInit {
     private  router: Router,
     private formBuilder: FormBuilder,
     private messageService: MessageService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private addressService: AddressService
   ) {
   }
 
   ngOnInit(): void {
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
 
-    this.homeService.getProvince().subscribe((res: any) => {
+    this.addressService.getProvince().subscribe((res: any) => {
       this.listProvince = res;
     });
 
@@ -94,7 +96,7 @@ export class LoginComponent implements OnInit {
   getDistrict(id) {
     this.listDistrict = [];
     this.listCommune = [];
-    this.homeService.getDistrict(id).subscribe((res:any) => {
+    this.addressService.getDistrict(id).subscribe((res:any) => {
       this.listDistrict = res;
       if (this.listDistrict.length != 0) {
         this.formRegister.controls.district.enable();
@@ -104,7 +106,7 @@ export class LoginComponent implements OnInit {
 
   getCommune(id) {
     this.listCommune = [];
-    this.homeService.getCommune(id).subscribe((res:any) => {
+    this.addressService.getCommune(id).subscribe((res:any) => {
       this.listCommune = res;
       if (this.listCommune.length != 0) {
         this.formRegister.controls.commune.enable();
@@ -113,13 +115,6 @@ export class LoginComponent implements OnInit {
   }
 
   register() {
-    let address = [];
-    if (this.formRegister.value.dia_chi != null) {
-      address.push(this.formRegister.value.dia_chi, this.formRegister.value.commune,  this.formRegister.value.district, this.formRegister.value.city);
-    } else {
-      address.push(this.formRegister.value.commune,  this.formRegister.value.district, this.formRegister.value.city);
-    }
-
     this.submittedRe = true;
     if(this.formRegister.invalid) {
       return;
@@ -129,7 +124,8 @@ export class LoginComponent implements OnInit {
       mat_khau: this.formRegister.value.mat_khau,
       ho_ten: this.formRegister.value.ho_ten,
       so_dien_thoai: this.formRegister.value.so_dien_thoai,
-      dia_chi: address.join(", "),
+      dia_chi: this.formRegister.value.dia_chi,
+      ward_id: this.formRegister.value.commune,
       ngay_sinh: this.pipe.transform(this.formRegister.value.ngay_sinh, "yyyy-MM-dd")
     }
     this.homeService.register(user).subscribe((res: any) => {

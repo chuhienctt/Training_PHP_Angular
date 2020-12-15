@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {JwtHelperService} from "@auth0/angular-jwt";
 import {Router} from "@angular/router";
-import {HomeService} from "../../service/home.service";
+import {HomeService} from "../../services/home.service";
 
 @Component({
   selector: 'app-header',

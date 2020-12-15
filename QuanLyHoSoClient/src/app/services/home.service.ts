@@ -24,18 +24,6 @@ export class HomeService {
     return this.current;
   }
 
-  getProvince() {
-    return this._http.get(environment.apiUrl + "dia-chinh/get-tinh");
-  }
-
-  getDistrict(id) {
-    return this._http.get(environment.apiUrl + "dia-chinh/get-huyen?id=" + id);
-  }
-
-  getCommune(id) {
-    return this._http.get(environment.apiUrl + "dia-chinh/get-xa?id=" + id);
-  }
-
   register(user) {
     return this._http.post(baseUrl + "register", user);
   }

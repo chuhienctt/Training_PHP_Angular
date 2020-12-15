@@ -2200,6 +2200,7 @@ form.contact-form input[type="submit"] {
 }
 /* About Index-1*/
 .about-wrapper.index-1 {
+  padding-bottom: 100px;
   padding-top: 100px;
   background: url(../img/backgrounds/background-1.jpg);
   background-size: cover;
