@@ -102,12 +102,18 @@ class Validator {
                 }
             break;
             case 'exists':
-                if(!DB::table($g)->where([$key => $value])->first()) {
+                if(!DB::table($g)->find($value)) {
                     return true;
                 }
             break;
             case 'base64':
                 if(!preg_match("/^base64:([^;]*);(\d*);(.*)$/", $value)) {
+                    return true;
+                }
+            break;
+            case 'in':
+                $enum = explode(',', $g);
+                if(!in_array($value, $enum)) {
                     return true;
                 }
             break;
