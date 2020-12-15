@@ -144,30 +144,28 @@ class UserController extends Controller {
 
         $user = model('Users')->find(request()->id);
 
-        if($user) {
+        $user->ho_ten = request()->ho_ten;
+        $user->so_dien_thoai = request()->so_dien_thoai;
+        $user->dia_chi = request()->dia_chi;
+        $user->ward_id = request()->ward_id;
+        $user->ngay_sinh = Format::toDate(request()->ngay_sinh);
+        $user->role = request()->role;
 
-            $user->ho_ten = request()->ho_ten;
-            $user->so_dien_thoai = request()->so_dien_thoai;
-            $user->dia_chi = request()->dia_chi;
-            $user->ward_id = request()->ward_id;
-            $user->ngay_sinh = Format::toDate(request()->ngay_sinh);
+        if(request()->has('avatar') && !Validator::check('base64', request()->avatar)) {
+            $file = File::createBase64(request()->avatar);
 
-            if(request()->has('avatar') && !Validator::check('base64', request()->avatar)) {
-                $file = File::createBase64(request()->avatar);
-    
-                if(!$file->isImage()) {
-                    Validator::alert("Ảnh không đúng định dạng (png, jpg, jpeg)");
-                }
-    
-                $file->generateFileName();
-                $file->save('/avatar/');
-    
-                $user->avatar = '/avatar/'.$file->getFileName();
+            if(!$file->isImage()) {
+                Validator::alert("Ảnh không đúng định dạng (png, jpg, jpeg)");
             }
 
-            if($user->save()) {
-                return response()->error(1, 'Thay đổi thông tin thành công!');
-            }
+            $file->generateFileName();
+            $file->save('/avatar/');
+
+            $user->avatar = '/avatar/'.$file->getFileName();
+        }
+
+        if($user->save()) {
+            return response()->success(1, 'Thay đổi thông tin thành công!');
         }
 
         return response()->error(2, 'Không thể thay đổi thông tin!');
