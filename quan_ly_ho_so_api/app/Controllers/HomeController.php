@@ -75,6 +75,10 @@ class HomeController extends Controller {
                 'required' => 'Địa chỉ không được để trống',
                 'max:255' => 'Mật khẩu không quá 255 kí tự',
             ],
+            'ward_id' => [
+                'required' => 'Xã, phường không được để trống',
+                'exists:ward' => 'Xã, phường không tồn tại',
+            ],
             'ngay_sinh' => [
                 'required' => 'Ngày sinh không được để trống',
                 'date' => 'Ngày không đúng định dạng',
@@ -88,6 +92,7 @@ class HomeController extends Controller {
         $user->ho_ten = request()->ho_ten;
         $user->so_dien_thoai = request()->so_dien_thoai;
         $user->dia_chi = request()->dia_chi;
+        $user->ward_id = request()->ward_id;
         $user->ngay_sinh = Format::toDate(request()->ngay_sinh);
         $user->role = 1;
         $user->avatar = "/avatar/no-avatar.jpg";
@@ -152,6 +157,10 @@ class HomeController extends Controller {
                 'required' => 'Địa chỉ không được để trống',
                 'max:255' => 'Mật khẩu không quá 255 kí tự',
             ],
+            'ward_id' => [
+                'required' => 'Xã, phường không được để trống',
+                'exists:ward' => 'Xã, phường không tồn tại',
+            ],
             'ngay_sinh' => [
                 'required' => 'Ngày sinh không được để trống',
                 'date' => 'Ngày không đúng định dạng',
@@ -165,6 +174,7 @@ class HomeController extends Controller {
             $user->ho_ten = request()->ho_ten;
             $user->so_dien_thoai = request()->so_dien_thoai;
             $user->dia_chi = request()->dia_chi;
+            $user->ward_id = request()->ward_id;
             $user->ngay_sinh = Format::toDate(request()->ngay_sinh);
 
             if(request()->has('avatar') && !Validator::check('base64', request()->avatar)) {
