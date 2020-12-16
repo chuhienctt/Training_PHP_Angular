@@ -7,6 +7,7 @@ import {CKEditorModule} from "@ckeditor/ckeditor5-angular";
 import {ButtonModule} from "primeng/button";
 import {FileUploadModule} from "primeng/fileupload";
 import {MultiSelectModule} from "primeng/multiselect";
+import {DropdownModule} from "primeng/dropdown";
 
 @NgModule({
   declarations: [],
@@ -18,7 +19,8 @@ import {MultiSelectModule} from "primeng/multiselect";
     CKEditorModule,
     ButtonModule,
     FileUploadModule,
-    MultiSelectModule
+    MultiSelectModule,
+    DropdownModule
   ],
   exports: [
     ReactiveFormsModule,
@@ -28,7 +30,8 @@ import {MultiSelectModule} from "primeng/multiselect";
     CKEditorModule,
     ButtonModule,
     FileUploadModule,
-    MultiSelectModule
+    MultiSelectModule,
+    DropdownModule
   ]
 })
 export class ShareModule { }

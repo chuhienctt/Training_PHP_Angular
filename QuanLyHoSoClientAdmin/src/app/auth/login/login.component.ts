@@ -42,7 +42,7 @@ export class LoginComponent extends ScriptService implements OnInit {
       mat_khau: this.form.value.mat_khau
     }
     this.adminService.login(user).subscribe((res: any) => {
-      localStorage.setItem("jwt", JSON.stringify(res.data.token));
+      localStorage.setItem("jwt", JSON.stringify(res.data));
       location.replace("/admin");
       // this.router.navigate(["/admin"]);
     }, err => {
