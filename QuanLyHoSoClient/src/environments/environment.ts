@@ -7,6 +7,7 @@ const Domain = 'localhost:8200';
 export const environment = {
   production: false,
   domain: Domain,
+  urlImg: "http://"+Domain+"/storage",
   apiUrl: "http://"+Domain+"/api/"
 };
 

@@ -22,7 +22,7 @@
       <div class="col-lg-12">
         <div class="card">
           <div class="header">
-            <h2>Quản lý <strong>lĩnh vực</strong> </h2>
+            <h2>Quản lý <strong>lĩnh vực</strong></h2>
             <ul class="header-dropdown">
               <li>
                 <a (click)="create()"><i class="mdi mdi-plus-circle"></i></a>
@@ -33,7 +33,8 @@
             </ul>
           </div>
           <div class="body">
-            <p-table [value]="listFeild" [lazy]="true" (onLazyLoad)="loadData($event)" [paginator]="true" [rows]="rows" [totalRecords]="totalRecords" [loading]="loading">
+            <p-table [value]="listFeild" [lazy]="true" (onLazyLoad)="loadData($event)" [paginator]="true" [rows]="rows"
+                     [totalRecords]="totalRecords" [loading]="loading">
               <ng-template pTemplate="header">
                 <tr>
                   <th>#</th>
@@ -44,11 +45,13 @@
               </ng-template>
               <ng-template pTemplate="body" let-item let-i="rowIndex">
                 <tr>
-                  <td>{{ i+1 }}</td>
+                  <td>{{ i + 1 }}</td>
                   <td>{{item.ten_linh_vuc}}</td>
-                  <td><img style="width: 30px; vertical-align: middle" *ngIf="item.hinh_anh" [src]="createImg(item.hinh_anh)"></td>
+                  <td><img style="width: 30px; vertical-align: middle" *ngIf="item.hinh_anh"
+                           [src]="createImg(item.hinh_anh)"></td>
                   <td>
-                    <p-button icon="pi pi-pencil" styleClass="p-button-warning" [style]="{'margin-right': '.5em'}" (onClick)="edit(item.id)"></p-button>
+                    <p-button icon="pi pi-pencil" styleClass="p-button-warning" [style]="{'margin-right': '.5em'}"
+                              (onClick)="edit(item.id)"></p-button>
                     <p-button icon="pi pi-trash" styleClass="p-button-danger" (onClick)="delete(item.id)"></p-button>
                   </td>
                 </tr>
@@ -64,7 +67,7 @@
 
 <!-- Modal -->
 <div class="modal fade" data-backdrop="false" id="largeModal" tabindex="-1">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-lg">
     <div class="modal-content bg-blue-grey">
       <form [formGroup]="form" (ngSubmit)="onSubmit()">
         <div class="modal-header">
@@ -76,32 +79,37 @@
         <div class="modal-body">
           <div class="form-group">
             <label>Tên lĩnh vực</label>
-            <input type="text" class="form-control" placeholder="Nhập tên lĩnh vực" formControlName="ten_linh_vuc" required>
+            <input type="text" class="form-control" placeholder="Nhập tên lĩnh vực" formControlName="ten_linh_vuc"
+                   required>
             <div *ngIf="submited && form.controls.ten_linh_vuc.errors">
               <div class="text-danger" *ngIf="form.controls.ten_linh_vuc.errors.required">Chưa nhập tên lĩnh vực.</div>
-              <div class="text-danger" *ngIf="form.controls.ten_linh_vuc.errors.maxlength">Tên lĩnh vực không được trên 200 ký tự.</div>
+              <div class="text-danger" *ngIf="form.controls.ten_linh_vuc.errors.maxlength">Tên lĩnh vực không được trên
+                200 ký tự.
+              </div>
             </div>
           </div>
           <div class="form-group">
             <label>Mô tả</label>
             <ckeditor [editor]="Editor" formControlName="mo_ta"></ckeditor>
             <div *ngIf="submited && form.controls.mo_ta.errors">
-              <div class="text-danger" *ngIf="form.controls.mo_ta.errors.maxlength">Mô tả không được trên 255 ký tự.</div>
+              <div class="text-danger" *ngIf="form.controls.mo_ta.errors.maxlength">Mô tả không được trên 255 ký tự.
+              </div>
             </div>
           </div>
           <div class="form-group">
-            <p-multiSelect [options]="listOrgan" defaultLabel="Chọn cơ quan" formControlName="co_quan" [style]="{'width': '100%'}" optionLabel="ten_co_quan" optionValue="id"></p-multiSelect>
+            <p-multiSelect [options]="listOrgan" defaultLabel="Chọn cơ quan" formControlName="co_quan"
+                           [style]="{'width': '100%', 'color': 'black'}" optionLabel="ten_co_quan" optionValue="id"></p-multiSelect>
           </div>
           <div class="form-group">
             <label>Hình ảnh <span *ngIf="!aoe" class="text-danger">(Không thay đổi nếu không
                                 chọn ảnh)</span></label>
-            <p-fileUpload #file mode="basic" chooseLabel="Chọn ảnh" [multiple]="false" accept="image/*" maxFileSize="1000000">
+            <p-fileUpload #file mode="advanced" [showUploadButton]="false" [showCancelButton]="false" chooseLabel="Chọn ảnh" [multiple]="false" accept="image/*" maxFileSize="1000000">
+              <ng-template pTemplate="content">
+                <img [style]="{'width': '60px'}" *ngIf="image && !aoe && !file.hasFiles()" [src]="createImg(image)">
+              </ng-template>
             </p-fileUpload>
-            <div>
-              <img style="width: 40px; vertical-align: middle; margin-top: 5px;" *ngIf="image && !aoe" [src]="createImg(image)">
-            </div>
             <div *ngIf="aoe && submited && !file.hasFiles()">
-              <div class="text-danger" >Chưa chọn ảnh.</div>
+              <div class="text-danger">Chưa chọn ảnh.</div>
             </div>
           </div>
         </div>

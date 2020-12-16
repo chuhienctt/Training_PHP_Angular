@@ -4,7 +4,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { JwtModule } from "@auth0/angular-jwt";
 
 export function tokenGetter() {
-  return localStorage.getItem("jwt");
+  let user = JSON.parse(localStorage.getItem("jwt"));
+  return user ? user.token : null;
 }
 
 import { AppRoutingModule } from './app-routing.module';
@@ -17,6 +18,7 @@ import { AuthComponent } from './auth/auth.component';
 import {HeaderComponent} from "./share/header/header.component";
 import {ShareModule} from "./share/share.module";
 import {FooterComponent} from "./share/footer/footer.component";
+import {DropdownModule} from "primeng/dropdown";
 
 @NgModule({
   declarations: [
@@ -33,6 +35,7 @@ import {FooterComponent} from "./share/footer/footer.component";
     HttpClientModule,
     ShareModule,
     BrowserAnimationsModule,
+    DropdownModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,

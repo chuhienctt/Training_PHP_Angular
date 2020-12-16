@@ -38,9 +38,9 @@
                 <tr>
                   <th>#</th>
                   <th>Tên cơ quan</th>
+                  <th>Hình ảnh</th>
                   <th>Số điện thoại</th>
                   <th>Email</th>
-                  <th>Địa chỉ</th>
                   <th>Thao tác</th>
                 </tr>
               </ng-template>
@@ -48,9 +48,12 @@
                 <tr>
                   <td>{{ i+1 }}</td>
                   <td>{{item.ten_co_quan}}</td>
+                  <td>
+                    <img style="width: 30px; vertical-align: middle" *ngIf="item.hinh_anh"
+                           [src]="createImg(item.hinh_anh)">
+                  </td>
                   <td>{{item.so_dien_thoai}}</td>
                   <td>{{item.email}}</td>
-                  <td>{{item.dia_chi}}</td>
                   <td>
                     <p-button icon="pi pi-pencil" styleClass="p-button-warning" [style]="{'margin-right': '.5em'}" (onClick)="edit(item.id)"></p-button>
                     <p-button icon="pi pi-trash" styleClass="p-button-danger" (onClick)="delete(item.id)"></p-button>
@@ -68,7 +71,7 @@
 
 <!-- Modal -->
 <div class="modal fade" data-backdrop="false" id="largeModal" tabindex="-1">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-lg">
     <div class="modal-content bg-blue-grey">
       <form [formGroup]="form" (ngSubmit)="onSubmit()">
         <div class="modal-header">
@@ -111,8 +114,49 @@
               <div class="text-danger" *ngIf="form.controls.dia_chi.errors.maxlength">Địa chỉ không được trên 255 ký tự.</div>
             </div>
           </div>
+          <div class="row">
+            <div class="col-md-4">
+              <label class="pl-5px">Tỉnh</label>
+              <div class="field">
+                <p-dropdown formControlName="city" (onChange)="getDistrict($event.value)" optionLabel="name" [style]="style" [options]="listCity" placeholder="Chọn tỉnh, thành phố" [virtualScroll]="true" [itemSize]="31"
+                            [filter]="false"></p-dropdown>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <label class="pl-5px">Huyện</label>
+              <div class="field">
+                <p-dropdown formControlName="district" (onChange)="getCommune($event.value)" optionLabel="name" [style]="style" [options]="listDistrict" placeholder="Chọn quận, huyện" [virtualScroll]="true" [itemSize]="31"
+                            [filter]="false"></p-dropdown>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <label class="pl-5px">Xã</label>
+              <div class="field">
+                <p-dropdown formControlName="commune" optionValue="id" optionLabel="name" [style]="style" [options]="listCommune" placeholder="Chọn xã, phường, thị trấn" [virtualScroll]="true" [itemSize]="31"
+                            [filter]="false"></p-dropdown>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="submited && form.controls.city.errors && form.controls.district.errors && form.controls.commune.errors">
+            <span class="text-danger" *ngIf="form.controls.city.errors.required">Chưa chọn thành phố.</span>
+            <span class="text-danger" *ngIf="form.controls.district.errors.required">Chưa chọn quận, huyện.</span>
+            <span class="text-danger" *ngIf="form.controls.commune.errors.required">Chưa chọn xã, phường, thị trấn.</span>
+          </div>
           <div class="form-group">
-            <p-multiSelect [options]="listFeild" defaultLabel="Chọn lĩnh vực" formControlName="linh_vuc" [style]="{'width': '100%'}" optionLabel="ten_linh_vuc" optionValue="id"></p-multiSelect>
+            <label>Hình ảnh <span *ngIf="!aoe" class="text-danger">(Không thay đổi nếu không
+                                chọn ảnh)</span></label>
+            <p-fileUpload #file mode="advanced" [showUploadButton]="false" [showCancelButton]="false" chooseLabel="Chọn ảnh" [multiple]="false" accept="image/*" maxFileSize="1000000">
+              <ng-template pTemplate="content">
+                <img [style]="{'width': '60px'}" *ngIf="image && !aoe && !file.hasFiles()" [src]="createImg(image)">
+              </ng-template>
+            </p-fileUpload>
+            <div *ngIf="aoe && submited && !file.hasFiles()">
+              <div class="text-danger">Chưa chọn ảnh.</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Lĩnh vực</label>
+            <p-multiSelect [options]="listFeild" defaultLabel="Chọn lĩnh vực" formControlName="linh_vuc" [style]="{'width': '100%', 'color': 'black'}" optionLabel="ten_linh_vuc" optionValue="id"></p-multiSelect>
           </div>
         </div>
         <div class="modal-footer">

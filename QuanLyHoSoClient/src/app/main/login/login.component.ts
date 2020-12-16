@@ -6,6 +6,9 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {MessageService} from 'primeng/api';
 import {DatePipe} from "@angular/common";
 import {AddressService} from "../../services/address.service";
+import {FileService} from "../../libs/file.service";
+
+declare var $:any;
 
 @Component({
   selector: 'app-login',
@@ -25,6 +28,7 @@ export class LoginComponent implements OnInit {
   formLogin: FormGroup;
   title = true;
   returnUrl: string;
+  file_avatar: File;
 
   constructor(
     private homeService: HomeService,
@@ -33,7 +37,8 @@ export class LoginComponent implements OnInit {
     private formBuilder: FormBuilder,
     private messageService: MessageService,
     private route: ActivatedRoute,
-    private addressService: AddressService
+    private addressService: AddressService,
+    private fileService: FileService
   ) {
   }
 
@@ -126,25 +131,33 @@ export class LoginComponent implements OnInit {
       so_dien_thoai: this.formRegister.value.so_dien_thoai,
       dia_chi: this.formRegister.value.dia_chi,
       ward_id: this.formRegister.value.commune,
-      ngay_sinh: this.pipe.transform(this.formRegister.value.ngay_sinh, "yyyy-MM-dd")
+      ngay_sinh: this.pipe.transform(this.formRegister.value.ngay_sinh, "yyyy-MM-dd"),
+      avatar: null
     }
-    this.homeService.register(user).subscribe((res: any) => {
-      this.alertService.success(() => {
-        this.homeService.login(user).subscribe((res:any) => {
-          localStorage.setItem("jwt", JSON.stringify(res.data));
-          this.homeService.input(res.data);
-          if (this.returnUrl) {
-            this.router.navigateByUrl(this.returnUrl)
-          } else {
-            this.router.navigate(['/']);
-          }
-        })
-      });
-    }, err => {
-      if (err.status != 1) {
-        this.messageService.add({ severity: 'error', summary: 'Thất bại!', detail: err.error.message });
+
+    this.fileService.getEncodeFromImage(this.file_avatar).subscribe(data => {
+      if (data != null) {
+        user.avatar = data;
       }
-    });
+      this.homeService.register(user).subscribe((res: any) => {
+        this.alertService.success(() => {
+          this.homeService.login(user).subscribe((res:any) => {
+            localStorage.setItem("jwt", JSON.stringify(res.data));
+            this.homeService.input(res.data);
+            if (this.returnUrl) {
+              this.router.navigateByUrl(this.returnUrl)
+            } else {
+              this.router.navigate(['/']);
+            }
+          })
+        });
+      }, err => {
+        console.log(err)
+        if (err.status != 1) {
+          this.messageService.add({ severity: 'error', summary: 'Thất bại!', detail: err.error.message });
+        }
+      });
+    })
   }
 
   login() {
@@ -163,11 +176,28 @@ export class LoginComponent implements OnInit {
           }
       });
     }, err => {
-      console.log(err)
       if (err.status != 1) {
         this.messageService.add({ severity: 'error', summary: 'Thất bại!', detail: err.error.message });
       }
     })
   }
+
+  uploadButton() {
+    $(".file-upload").click();
+  }
+
+  readFileUpload(files) {
+    if (files && files[0]) {
+      this.file_avatar = files[0];
+
+      var reader = new FileReader();
+
+      reader.onload = function (e) {
+        $('.profile-pic').attr('src', e.target.result);
+      }
+      reader.readAsDataURL(files[0]);
+    }
+  }
+
 
 }

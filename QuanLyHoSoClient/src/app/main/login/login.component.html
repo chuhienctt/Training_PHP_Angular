@@ -24,6 +24,7 @@
 <!--             Contact Form-->
             <form [formGroup]="formLogin" (ngSubmit)="login()" class="contact-form">
               <div class="field">
+                <label class="pl-16px">Email</label>
                 <input type="email" formControlName="email" placeholder="E-mail">
                 <div *ngIf="submittedLo && formLogin.controls.email.errors">
                   <span class="text-danger" *ngIf="formLogin.controls.email.errors.required">Chưa nhập email.</span>
@@ -33,6 +34,7 @@
                 </div>
               </div>
               <div class="field">
+                <label class="pl-16px">Mật khẩu</label>
                 <input type="password" formControlName="mat_khau" placeholder="Mật khẩu">
                 <div *ngIf="submittedLo && formLogin.controls.mat_khau.errors">
                   <div class="text-danger" *ngIf="formLogin.controls.mat_khau.errors.required">Chưa nhập mật khẩu.</div>
@@ -55,7 +57,19 @@
           <div class="col-md-6 contact-form-wrapper">
 <!--             Contact Form-->
             <form class="contact-form" [formGroup]="formRegister" (ngSubmit)="register()">
+              <div class="row">
+                <div class="avatar-wrapper">
+                  <img class="profile-pic" src="assets/img/no-avatar.jpg" />
+                  <div class="upload-button" (click)="uploadButton()">
+                  </div>
+                  <input class="file-upload" type="file" accept="image/*" (change)="readFileUpload($event.target.files)" />
+                </div>
+                <div class="text-center" *ngIf="!file_avatar && submittedRe">
+                  <p class="text-danger">Chưa chọn ảnh.</p>
+                </div>
+              </div>
               <div class="field">
+                <label class="pl-16px">Email</label>
                 <input type="email" formControlName="email" placeholder="E-mail">
                 <div *ngIf="submittedRe && formRegister.controls.email.errors">
                   <span class="text-danger" *ngIf="formRegister.controls.email.errors.required">Chưa nhập email.</span>
@@ -65,6 +79,7 @@
                 </div>
               </div>
               <div class="field">
+                <label class="pl-16px">Mật khẩu</label>
                 <input type="password" formControlName="mat_khau" placeholder="Mật khẩu" autocomplete="off">
                 <div *ngIf="submittedRe && formRegister.controls.mat_khau.errors">
                   <span class="text-danger" *ngIf="formRegister.controls.mat_khau.errors.required">Chưa nhập mật khẩu.</span>
@@ -74,6 +89,7 @@
                 </div>
               </div>
               <div class="field">
+                <label class="pl-16px">Nhập lại mật khẩu</label>
                 <input type="password" formControlName="mat_khau_2" placeholder="Nhập lại mật khẩu">
                 <div *ngIf="submittedRe && formRegister.controls.mat_khau_2.errors">
                   <span class="text-danger" *ngIf="formRegister.controls.mat_khau_2.errors.required">Chưa xác nhận mật khẩu.</span>
@@ -82,6 +98,7 @@
                 </div>
               </div>
               <div class="field">
+                <label class="pl-16px">Họ tên</label>
                 <input type="text" formControlName="ho_ten" placeholder="Họ tên">
                 <div *ngIf="submittedRe && formRegister.controls.ho_ten.errors">
                   <span class="text-danger" *ngIf="formRegister.controls.ho_ten.errors.required">Chưa nhập họ tên.</span>
@@ -90,6 +107,7 @@
                 </div>
               </div>
               <div class="field">
+                <label class="pl-16px">Số điện thoại</label>
                 <input type="text" formControlName="so_dien_thoai" placeholder="Số điện thoại">
                 <div *ngIf="submittedRe && formRegister.controls.so_dien_thoai.errors">
                   <span class="text-danger" *ngIf="formRegister.controls.so_dien_thoai.errors.required">Chưa nhập số điện thoại.</span>
@@ -97,6 +115,7 @@
                 </div>
               </div>
               <div class="field">
+                <label class="pl-16px">Địa chỉ cụ thể</label>
                 <input type="text" formControlName="dia_chi" placeholder="Địa chỉ cụ thể">
                 <div *ngIf="submittedRe && formRegister.controls.dia_chi.errors">
                   <span class="text-danger" *ngIf="formRegister.controls.dia_chi.errors.required">Chưa nhập địa chỉ.</span>
@@ -106,18 +125,21 @@
               </div>
               <div class="row">
                 <div class="col-md-4">
+                  <label class="pl-5px">Tỉnh</label>
                   <div class="field">
               <p-dropdown formControlName="city" (onChange)="getDistrict($event.value)" optionValue="id" optionLabel="name" [style]="style" [options]="listProvince" placeholder="Chọn tỉnh, thành phố" [virtualScroll]="true" [itemSize]="31"
                           [filter]="false"></p-dropdown>
                   </div>
                 </div>
                 <div class="col-md-4">
+                  <label class="pl-5px">Huyện</label>
                   <div class="field">
                     <p-dropdown formControlName="district" (onChange)="getCommune($event.value)" optionValue="id" optionLabel="name" [style]="style" [options]="listDistrict" placeholder="Chọn quận, huyện" [virtualScroll]="true" [itemSize]="31"
                                 [filter]="false"></p-dropdown>
                   </div>
                 </div>
                 <div class="col-md-4">
+                  <label class="pl-5px">Xã</label>
                   <div class="field">
                     <p-dropdown formControlName="commune" optionValue="id" optionLabel="name" [style]="style" [options]="listCommune" placeholder="Chọn xã, phường, thị trấn" [virtualScroll]="true" [itemSize]="31"
                                 [filter]="false"></p-dropdown>
@@ -130,6 +152,7 @@
                 <span class="text-danger" *ngIf="formRegister.controls.commune.errors.required">Chưa chọn xã, phường, thị trấn.</span>
               </div>
               <div class="field">
+                <label class="pl-16px">Ngày sinh</label>
                 <p-calendar formControlName="ngay_sinh" [style]="{'width': '100%'}" placeholder="Ngày sinh" dateFormat="dd/mm/yy"></p-calendar>
                 <div *ngIf="submittedRe && formRegister.controls.ngay_sinh.errors">
                   <span class="text-danger" *ngIf="formRegister.controls.ngay_sinh.errors.required">Chưa nhập ngày sinh.</span>
@@ -137,7 +160,7 @@
                   <span class="text-danger" *ngIf="formRegister.controls.ngay_sinh.errors.maxlength">Ngày sinh không hợp lệ.</span>
                 </div>
               </div>
-              <button type="submit" class="btn-custom btn">Đăng ký</button>
+              <button type="submit" class="btn-custom btn" [disabled]="!file_avatar">Đăng ký</button>
             </form>
           </div>
           <div class="col-md-3"></div>

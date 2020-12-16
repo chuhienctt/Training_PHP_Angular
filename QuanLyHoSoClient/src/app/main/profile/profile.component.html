@@ -94,13 +94,6 @@
                   <span class="text-danger" *ngIf="formProfile.controls.ngay_sinh.errors.maxlength">Ngày sinh không hợp lệ.</span>
                 </div>
               </div>
-              <div class="field">
-
-                <label class="pl-16px">Hình ảnh <span class="text-danger">(Không thay đổi nếu không
-                                chọn ảnh)</span></label>
-                <p-fileUpload #file [showCancelButton]="false" [showUploadButton]="false" chooseLabel="Chọn ảnh" [multiple]="false" accept="image/*" maxFileSize="1000000">
-                </p-fileUpload>
-              </div>
               <button type="submit" class="btn-custom btn">Cập nhật</button>
             </form>
           </div>

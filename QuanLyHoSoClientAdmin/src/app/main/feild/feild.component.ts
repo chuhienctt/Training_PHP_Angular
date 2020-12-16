@@ -75,7 +75,7 @@ export class FeildComponent extends ScriptService implements OnInit {
   }
 
   createImg(path) {
-    return environment.urlImg + "storage/" + path;
+    return environment.urlImg + path;
   }
 
   create() {
