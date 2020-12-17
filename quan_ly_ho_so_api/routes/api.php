@@ -74,6 +74,28 @@ Route::group([
 
         });
 
+        
+        Route::group([
+            'prefix' => '/dia-chinh'
+        ], function () {
+
+            Route::get('/get-tinhs', 'DiaChinhController@get_tinh');
+            Route::get('/pagination-tinh', 'DiaChinhController@pagination_tinh');
+            Route::post('/create-tinh', 'DiaChinhController@create_tinh');
+            Route::put('/update-tinh', 'DiaChinhController@update_tinh');
+            
+            Route::get('/get-huyens', 'DiaChinhController@get_huyen');
+            Route::get('/pagination-huyen', 'DiaChinhController@pagination_huyen');
+            Route::post('/create-huyen', 'DiaChinhController@create_huyen');
+            Route::put('/update-huyen', 'DiaChinhController@update_huyen');
+            
+            Route::get('/get-xas', 'DiaChinhController@get_xa');
+            Route::get('/pagination-xa', 'DiaChinhController@pagination_xa');
+            Route::post('/create-xa', 'DiaChinhController@create_xa');
+            Route::put('/update-xa', 'DiaChinhController@update_xa');
+
+        });
+
     });
 
 });

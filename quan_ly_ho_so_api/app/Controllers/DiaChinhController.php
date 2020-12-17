@@ -13,6 +13,7 @@ class DiaChinhController extends Controller {
 
     public function getTinh() {
         $data = DB::table('province')->all();
+
         return response()->json($data);
     }
 
@@ -51,5 +52,280 @@ class DiaChinhController extends Controller {
             'list_district' => $list_district,
             'list_ward' => $list_ward,
         ]);
+    }
+    
+    public function get_tinh() {
+
+        $data = DB::table('province')->all();
+        
+        if(request()->has('id')) {
+            $data = DB::table('province')->find(request()->id);
+        }
+        
+        return response()->json($data);
+    }
+
+    public function pagination_tinh() {
+        $first = request()->first ?? 0;
+        $row = request()->row ?? 10;
+
+        $data = DB::table('province')->offset($first)->limit($row)->get();
+
+        return response()->json([
+            'total' => DB::table('province')->count(),
+            'data' => $data,
+        ]);
+    }
+    
+    public function get_huyen() {
+
+        $data = DB::table('district')->all();
+        
+        if(request()->has('id')) {
+            $data = DB::table('district')->find(request()->id);
+        }
+        
+        return response()->json($data);
+    }
+
+    public function pagination_huyen() {
+        $first = request()->first ?? 0;
+        $row = request()->row ?? 10;
+
+        $data = DB::table('district')->offset($first)->limit($row)->get();
+
+        return response()->json([
+            'total' => DB::table('district')->count(),
+            'data' => $data,
+        ]);
+    }
+    
+    public function get_xa() {
+
+        $data = DB::table('ward')->all();
+        
+        if(request()->has('id')) {
+            $data = DB::table('ward')->find(request()->id);
+        }
+        
+        return response()->json($data);
+    }
+
+    public function pagination_xa() {
+        $first = request()->first ?? 0;
+        $row = request()->row ?? 10;
+
+        $data = DB::table('ward')->offset($first)->limit($row)->get();
+
+        return response()->json([
+            'total' => DB::table('ward')->count(),
+            'data' => $data,
+        ]);
+    }
+
+    public function create_tinh() {
+        
+        validator()->validate([
+            'id' => [
+                'required' => 'Mã tỉnh, thành phố không được để trống',
+                'max:45' => 'Mã tỉnh, thành phố không quá 45 kí tự',
+                'unique:province' => 'Mã tỉnh, thành phố đã tồn tại',
+            ],
+            'name' => [
+                'required' => 'Tên tỉnh, thành phố không được để trống',
+                'max:45' => 'Tên tỉnh, thành phố không quá 45 kí tự',
+                'unique:province' => 'Tên tỉnh, thành phố đã tồn tại',
+            ],
+            'type' => [
+                'required' => 'Loại tỉnh, thành phố không được để trống',
+                'max:45' => 'Loại tỉnh, thành phố không quá 45 kí tự',
+            ],
+        ]);
+
+        $result = DB::table('province')->insert([
+            'id' => request()->id,
+            'name' => request()->name,
+            'type' => request()->type,
+        ]);
+
+        if($result) {
+            return response()->success(1, 'Thêm tỉnh, thành phố thành công!');
+        }
+
+        return response()->error(2, 'Thêm tỉnh, thành phố thất bại!');
+    }
+
+    public function update_tinh() {
+        
+        validator()->validate([
+            'id' => [
+                'required' => 'Mã tỉnh, thành phố không được để trống',
+                'exists:province' => 'Mã tỉnh, thành phố không tồn tại',
+            ],
+            'name' => [
+                'required' => 'Tên tỉnh, thành phố không được để trống',
+                'max:45' => 'Tên tỉnh, thành phố không quá 45 kí tự',
+            ],
+            'type' => [
+                'required' => 'Loại tỉnh, thành phố không được để trống',
+                'max:45' => 'Loại tỉnh, thành phố không quá 45 kí tự',
+            ],
+        ]);
+
+        $result = DB::table('province')->where(['id' => request()->id])
+        ->update([
+            'name' => request()->name,
+            'type' => request()->type,
+        ]);
+
+        if($result) {
+            return response()->success(1, 'Sửa tỉnh, thành phố thành công!');
+        }
+
+        return response()->error(2, 'Sửa tỉnh, thành phố thất bại!');
+    }
+
+    public function create_huyen() {
+        
+        validator()->validate([
+            'id' => [
+                'required' => 'Mã quận, huyện không được để trống',
+                'max:45' => 'Mã quận, huyện không quá 45 kí tự',
+                'unique:district' => 'Mã quận, huyện đã tồn tại',
+            ],
+            'name' => [
+                'required' => 'Tên quận, huyện không được để trống',
+                'max:45' => 'Tên quận, huyện không quá 45 kí tự',
+                'unique:district' => 'Tên quận, huyện đã tồn tại',
+            ],
+            'type' => [
+                'required' => 'Loại quận, huyện không được để trống',
+                'max:45' => 'Loại quận, huyện không quá 45 kí tự',
+            ],
+            'province_id' => [
+                'required' => 'Mã tỉnh, thành phố không được để trống',
+                'exists:province' => 'Mã tỉnh, thành phố không tồn tại',
+            ],
+        ]);
+
+        $result = DB::table('district')->insert([
+            'id' => request()->id,
+            'name' => request()->name,
+            'type' => request()->type,
+            'province_id' => request()->province_id,
+        ]);
+
+        if($result) {
+            return response()->success(1, 'Thêm quận, huyện thành công!');
+        }
+
+        return response()->error(2, 'Thêm quận, huyện thất bại!');
+    }
+
+    public function update_huyen() {
+        
+        validator()->validate([
+            'id' => [
+                'required' => 'Mã quận, huyện không được để trống',
+                'exists:district' => 'Mã quận, huyện không tồn tại',
+            ],
+            'name' => [
+                'required' => 'Tên quận, huyện không được để trống',
+                'max:45' => 'Tên quận, huyện không quá 45 kí tự',
+            ],
+            'type' => [
+                'required' => 'Loại quận, huyện không được để trống',
+                'max:45' => 'Loại quận, huyện không quá 45 kí tự',
+            ],
+            'province_id' => [
+                'required' => 'Mã tỉnh, thành phố không được để trống',
+                'exists:province' => 'Mã tỉnh, thành phố không tồn tại',
+            ],
+        ]);
+
+        $result = DB::table('district')->where(['id' => request()->id])
+        ->update([
+            'name' => request()->name,
+            'type' => request()->type,
+            'province_id' => request()->province_id,
+        ]);
+
+        if($result) {
+            return response()->success(1, 'Sửa quận, huyện thành công!');
+        }
+
+        return response()->error(2, 'Sửa quận, huyện thất bại!');
+    }
+
+    public function create_xa() {
+        
+        validator()->validate([
+            'id' => [
+                'required' => 'Mã xã, phường không được để trống',
+                'max:45' => 'Mã xã, phường không quá 45 kí tự',
+                'unique:ward' => 'Mã xã, phường đã tồn tại',
+            ],
+            'name' => [
+                'required' => 'Tên xã, phường không được để trống',
+                'max:45' => 'Tên xã, phường không quá 45 kí tự',
+                'unique:ward' => 'Tên xã, phường đã tồn tại',
+            ],
+            'type' => [
+                'required' => 'Loại xã, phường không được để trống',
+                'max:45' => 'Loại xã, phường không quá 45 kí tự',
+            ],
+            'district_id' => [
+                'required' => 'Mã quận, huyện không được để trống',
+                'exists:district' => 'Mã quận, huyện không tồn tại',
+            ],
+        ]);
+
+        $result = DB::table('ward')->insert([
+            'id' => request()->id,
+            'name' => request()->name,
+            'type' => request()->type,
+            'district_id' => request()->district_id,
+        ]);
+
+        if($result) {
+            return response()->success(1, 'Thêm xã, phường thành công!');
+        }
+
+        return response()->error(2, 'Thêm xã, phường thất bại!');
+    }
+
+    public function update_xa() {
+        
+        validator()->validate([
+            'id' => [
+                'required' => 'Mã xã, phường không được để trống',
+                'exists:ward' => 'Mã xã, phường không tồn tại',
+            ],
+            'name' => [
+                'required' => 'Tên xã, phường không được để trống',
+                'max:45' => 'Tên xã, phường không quá 45 kí tự',
+            ],
+            'type' => [
+                'required' => 'Loại xã, phường không được để trống',
+                'max:45' => 'Loại xã, phường không quá 45 kí tự',
+            ],
+            'district_id' => [
+                'required' => 'Mã quận, huyện không được để trống',
+                'exists:district' => 'Mã quận, huyện không tồn tại',
+            ],
+        ]);
+
+        $result = DB::table('ward')->where(['id' => request()->id])
+        ->update([
+            'name' => request()->name,
+            'type' => request()->type,
+            'district_id' => request()->district_id,
+        ]);
+
+        if($result) {
+            return response()->success(1, 'Sửa xã, phường thành công!');
+        }
+
+        return response()->error(2, 'Sửa xã, phường thất bại!');
     }
 }
