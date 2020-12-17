@@ -1,0 +1,56 @@
+/* Circle Avatar Styles */
+
+.circle {
+	line-height: 0;
+	display: inline-block;
+	margin: -10px 5px 5px 0px;
+	border: 2px solid rgba(255, 255, 255, 0.4);
+	border-radius: 50%;
+	transition: linear 0.25s;
+	height: 50px;
+	width: 50px;
+	cursor: pointer;
+}
+
+.circle img {
+	border-radius: 50%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.circle:hover {
+	transition: ease-out 0.2s;
+	border: 2px solid rgba(255, 255, 255, 0.8);
+	-webkit-transition: ease-out 0.2s;
+}
+
+a.circle {
+	color: transparent;
+}
+
+.dropdown-menu {
+	background: #1b2654;
+    padding: 15px 0px;
+    border-radius: 3px;
+    border-top: 2px solid #17aac9;
+}
+
+.dropdown-menu li {
+	padding: 0;
+	position: relative;
+	width: 100%;
+}
+
+.dropdown-menu li a {
+	display: block;
+	color: #fff;
+	font-size: 14px;
+	font-weight: 700;
+	padding: 5px 30px;
+	text-transform: uppercase;
+}
+
+.dropdown-menu li a:hover {
+	color: #17aac9;
+	background-color:  #1b2654;
+}

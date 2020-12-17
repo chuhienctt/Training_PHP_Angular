@@ -1,0 +1,64 @@
+<p-toast></p-toast>
+<div class="slide-area fix">
+  <div class="display-table">
+    <div class="display-table-cell">
+      <div class="container">
+        <div class="row">
+          <div class="slide-text-inner">
+
+            <app-menu></app-menu>
+            
+            <div class="col-md-9 col-sm-9 col-xs-12">
+              <div class="dashboard-content">
+                <div class="row">
+                  <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="send-money-form">
+                      <div class="form-text">
+                        <h4 class="form-top">ĐỔI MẬT KHẨU</h4>
+                        <div class="form-inner">
+                          <form [formGroup]="form" (ngSubmit)="onSubmit()" class="log-form">
+
+                          <div class="col-md-12 col-sm-12 col-xs-12 mb-3">
+                            <input formControlName="mat_khau_cu" type="password" class="form-control" placeholder="Nhập mật khẩu cũ..." required>
+                            <div *ngIf="submitted && form.controls.mat_khau_cu.errors">
+                              <div class="text-danger" *ngIf="form.controls.mat_khau_cu.errors.required">Chưa nhập mật khẩu cũ.</div>
+                            </div>
+                          </div>
+
+                          <div class="col-md-12 col-sm-12 col-xs-12 mb-3">
+                              <input formControlName="mat_khau_moi" type="password" class="form-control" placeholder="Nhập mật khẩu mới..." required>
+                              <div *ngIf="submitted && form.controls.mat_khau_moi.errors">
+                                <div class="text-danger" *ngIf="form.controls.mat_khau_moi.errors.required">Chưa nhập mật khẩu.</div>
+                                <div class="text-danger" *ngIf="form.controls.mat_khau_moi.errors.minlength">Mật khẩu không được dưới 8 ký tự.</div>
+                                <div class="text-danger" *ngIf="form.controls.mat_khau_moi.errors.maxlength">Mật khẩu không được trên 50 ký tự.</div>
+                                <div class="text-danger" *ngIf="form.controls.mat_khau_moi.errors.pattern">Mật khẩu không đúng định dạng.</div>
+                              </div>
+                            </div>
+        
+                            <div class="col-md-12 col-sm-12 col-xs-12 mb-3">
+                              <input formControlName="mat_khau_2" type="password" class="form-control" placeholder="Nhập lại mật khẩu..." required>
+                              <div *ngIf="submitted && form.controls.mat_khau_2.errors">
+                                <div class="text-danger" *ngIf="form.controls.mat_khau_2.errors.required">Chưa xác nhận mật khẩu.</div>
+                                <div class="text-danger" *ngIf="form.controls.mat_khau_2.errors.confirm_password">Mật khẩu không khớp.</div>
+                              </div>
+                            </div>
+
+                            <div class="col-md-12 col-sm-12 col-xs-12 text-center">
+                              <button type="submit" id="submit" class="slide-btn login-btn">Đổi mật khẩu</button>
+                              <div id="msgSubmit" class="h3 text-center hidden"></div>
+                              <div class="clearfix"></div>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

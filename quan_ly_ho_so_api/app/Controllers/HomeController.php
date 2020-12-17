@@ -18,7 +18,6 @@ class HomeController extends Controller {
     }
 
     public function login() {
-        
         validator()->validate([
             'email' => [
                 'required' => 'Email không được để trống',

@@ -1,0 +1,12 @@
+<div class="col-md-3 col-sm-3 col-xs-12">
+    <aside class="sidebar">
+        <div class="dashboard-side">
+            <ul>
+                <li routerLinkActive="active"><a [routerLink]="['/profile']"><i class="ti-user"></i>Thông tin</a></li>
+                <li routerLinkActive="active"><a [routerLink]="['/change-password']"><i class="ti-key"></i>Đổi mật khẩu</a></li>
+                <li routerLinkActive="active"><a [routerLink]="['/history']"><i class="ti-archive"></i>Lịch sử</a></li>
+                <li><a (click)="logOut()" style="cursor: pointer;"><i class="ti-unlock"></i>Đăng xuất</a></li>
+            </ul>
+        </div>
+    </aside>
+</div>

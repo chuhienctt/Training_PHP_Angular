@@ -1,146 +1,131 @@
 <p-toast></p-toast>
-<div class="about-wrapper index-1">
-  <div class="container">
-    <!-- Section Name-->
-    <div class="section-name index-1">
-      <h1>{{title}}</h1>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, ab.</p>
-      <div class="sep"></div>
-    </div>
-    <!-- Tab switcher-->
-    <ul class="nav nav-pills tab-switcher text-center">
-      <li class="active"><a data-toggle="tab" href="#tab-1" (click)="changeTitle($event)">Hồ sơ</a></li>
-      <li><a data-toggle="tab" href="#tab-2" (click)="changeTitle($event)">Đổi mật khẩu</a></li>
-      <li><a data-toggle="tab" href="#tab-3" (click)="changeTitle($event)">Lịch sử</a></li>
-    </ul>
-    <!-- Tabs Content-->
-    <div class="tab-content">
-      <!-- Tab Content 1-->
-      <div id="tab-1" class="active tab-pane">
+<div class="slide-area fix">
+  <div class="display-table">
+    <div class="display-table-cell">
+      <div class="container">
         <div class="row">
-          <!-- Image-->
-          <div class="col-md-3"></div>
-          <div class="col-md-6 contact-form-wrapper">
-            <!--             Contact Form-->
-            <form [formGroup]="formProfile" (ngSubmit)="updateProfile()" class="contact-form">
-              <div class="row">
-                <div class="avatar-wrapper">
-                  <img class="profile-pic" [src]="getUserAvatar" />
-                  <div class="upload-button" (click)="uploadButton()">
+          <div class="slide-text-inner">
+
+            <app-menu></app-menu>
+            
+            <div class="col-md-9 col-sm-9 col-xs-12">
+              <div class="dashboard-content">
+                <div class="row">
+                  <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="send-money-form">
+                      <div class="form-text">
+                        <h4 class="form-top">THÔNG TIN CÁ NHÂN</h4>
+                        <div class="form-inner">
+                          <form [formGroup]="form" (ngSubmit)="onSubmit()" class="log-form">
+
+                            <div class="col-md-12 col-sm-12 col-xs-12 mb-3">
+                              <div class="row">
+                                <div class="avatar-wrapper">
+                                  <img class="profile-pic" src="{{user.avatar | getImage}}" />
+                                  <div class="upload-button" (click)="uploadButton()">
+                                    <i class="fa fa-camera"></i>
+                                  </div>
+                                  <input class="file-upload" type="file" accept="image/*" (change)="readFileUpload($event.target.files)" />
+                                </div>
+                                <div class="text-center" *ngIf="!file_avatar && submitted">
+                                  <p class="text-danger">Chưa chọn ảnh.</p>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="col-md-12 col-sm-12 col-xs-12 mb-3">
+                              <input formControlName="ho_ten" type="text" class="form-control"
+                                placeholder="Nhập họ tên..." required>
+                              <div *ngIf="submitted && form.controls.ho_ten.errors">
+                                <div class="text-danger" *ngIf="form.controls.ho_ten.errors.required">Chưa nhập họ tên.
+                                </div>
+                                <div class="text-danger" *ngIf="form.controls.ho_ten.errors.minlength">Họ tên không được
+                                  dưới 8 ký tự.</div>
+                                <div class="text-danger" *ngIf="form.controls.ho_ten.errors.minlength">Họ tên không được
+                                  trên 50 ký tự.</div>
+                              </div>
+                            </div>
+
+                            <div class="col-md-6 col-sm-6 col-xs-6 mb-3">
+                              <p-calendar formControlName="ngay_sinh" [style]="{'width': '100%'}"
+                                [inputStyle]="{'background-color': '#1B2654', 'font-size': '14px'}"
+                                placeholder="Ngày sinh" dateFormat="dd/mm/yy">
+                              </p-calendar>
+                              <div *ngIf="submitted && form.controls.ngay_sinh.errors">
+                                <div class="text-danger" *ngIf="form.controls.ngay_sinh.errors.required">Chưa nhập ngày
+                                  sinh.</div>
+                                <div class="text-danger" *ngIf="form.controls.ngay_sinh.errors.minlength">Ngày sinh
+                                  không hợp lệ.</div>
+                                <div class="text-danger" *ngIf="form.controls.ngay_sinh.errors.maxlength">Ngày sinh
+                                  không hợp lệ.</div>
+                              </div>
+                            </div>
+
+                            <div class="col-md-6 col-sm-6 col-xs-6 mb-3">
+                              <input formControlName="so_dien_thoai" type="text" class="form-control"
+                                placeholder="Nhập số điện thoại..." required>
+                              <div *ngIf="submitted && form.controls.so_dien_thoai.errors">
+                                <div class="text-danger" *ngIf="form.controls.so_dien_thoai.errors.required">Chưa nhập
+                                  số điện thoại.</div>
+                                <div class="text-danger" *ngIf="form.controls.so_dien_thoai.errors.pattern">Số điện
+                                  thoại không hợp lệ</div>
+                              </div>
+                            </div>
+
+                            <div class="col-md-12 col-sm-12 col-xs-12 mb-3">
+                              <input formControlName="dia_chi" type="text" class="form-control"
+                                placeholder="Nhập địa chỉ cụ thể..." required>
+                              <div *ngIf="submitted && form.controls.dia_chi.errors">
+                                <div class="text-danger" *ngIf="form.controls.dia_chi.errors.required">Chưa nhập địa
+                                  chỉ.</div>
+                                <div class="text-danger" *ngIf="form.controls.dia_chi.errors.minlength">Địa chỉ không
+                                  được dưới 2 ký tự.</div>
+                                <div class="text-danger" *ngIf="form.controls.dia_chi.errors.maxlength">Địa chỉ không
+                                  được trên 150 ký tự.</div>
+                              </div>
+                            </div>
+
+                            <div class="col-md-4 col-sm-4 col-xs-4">
+                              <select nice-select (change)="getDistrict($event.target.value)" formControlName="city">
+                                <option value="">-- Chọn tỉnh --</option>
+                                <option *ngFor="let item of listProvince" value="{{item.id}}">{{item.name}}</option>
+                              </select>
+                              <div class="text-danger" *ngIf="submitted && form.controls.city.errors.required">Chưa chọn
+                                thành phố.</div>
+                            </div>
+
+                            <div class="col-md-4 col-sm-4 col-xs-4">
+                              <select nice-select (change)="getCommune($event.target.value)" formControlName="district">
+                                <option value="">-- Chọn huyện --</option>
+                                <option *ngFor="let item of listDistrict" value="{{item.id}}">{{item.name}}</option>
+                              </select>
+                              <div class="text-danger" *ngIf="submitted && form.controls.district.errors.required">Chưa
+                                chọn quận, huyện.</div>
+                            </div>
+
+                            <div class="col-md-4 col-sm-4 col-xs-4">
+                              <select nice-select formControlName="commune">
+                                <option value="">-- Chọn xã --</option>
+                                <option *ngFor="let item of listCommune" value="{{item.id}}">{{item.name}}</option>
+                              </select>
+                              <div class="text-danger" *ngIf="submitted && form.controls.commune.errors.required">Chưa
+                                chọn xã, phường, thị trấn.</div>
+                            </div>
+
+                            <div class="col-md-12 col-sm-12 col-xs-12 text-center">
+                              <button type="submit" id="submit" class="slide-btn login-btn">Lưu lại</button>
+                              <div id="msgSubmit" class="h3 text-center hidden"></div>
+                              <div class="clearfix"></div>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <input class="file-upload" type="file" accept="image/*" (change)="readFileUpload($event.target.files)" />
                 </div>
               </div>
-              <div class="field">
-                <label class="pl-16px">Họ tên</label>
-                <input type="text" formControlName="ho_ten" placeholder="Họ tên">
-                <div *ngIf="submittedPro && formProfile.controls.ho_ten.errors">
-                  <span class="text-danger" *ngIf="formProfile.controls.ho_ten.errors.required">Chưa nhập họ tên.</span>
-                  <span class="text-danger" *ngIf="formProfile.controls.ho_ten.errors.minlength">Họ tên không được dưới 8 ký tự.</span>
-                  <span class="text-danger" *ngIf="formProfile.controls.ho_ten.errors.minlength">Họ tên không được trên 50 ký tự.</span>
-                </div>
-              </div>
-              <div class="field">
-                <label class="pl-16px">Số điện thoại</label>
-                <input type="text" formControlName="so_dien_thoai" placeholder="Số điện thoại">
-                <div *ngIf="submittedPro && formProfile.controls.so_dien_thoai.errors">
-                  <span class="text-danger" *ngIf="formProfile.controls.so_dien_thoai.errors.required">Chưa nhập số điện thoại.</span>
-                  <span class="text-danger" *ngIf="formProfile.controls.so_dien_thoai.errors.pattern">Số điện thoại không hợp lệ</span>
-                </div>
-              </div>
-              <div class="field">
-                <label class="pl-16px">Địa chỉ</label>
-                <input type="text" formControlName="dia_chi" placeholder="Địa chỉ cụ thể">
-                <div *ngIf="submittedPro && formProfile.controls.dia_chi.errors">
-                  <span class="text-danger" *ngIf="formProfile.controls.dia_chi.errors.required">Chưa nhập địa chỉ.</span>
-                  <span class="text-danger" *ngIf="formProfile.controls.dia_chi.errors.minlength">Địa chỉ không được dưới 2 ký tự.</span>
-                  <span class="text-danger" *ngIf="formProfile.controls.dia_chi.errors.maxlength">Địa chỉ không được trên 150 ký tự.</span>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-4">
-                  <label class="pl-5px">Tỉnh</label>
-                  <div class="field">
-                    <p-dropdown formControlName="city" (onChange)="getDistrict($event.value)" optionValue="id" optionLabel="name" [options]="listProvince" placeholder="Chọn tỉnh, thành phố" [virtualScroll]="true" [itemSize]="31"
-                                [filter]="false"></p-dropdown>
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <label class="pl-5px">Huyện</label>
-                  <div class="field">
-                    <p-dropdown formControlName="district" (onChange)="getCommune($event.value)" optionValue="id" optionLabel="name" [style]="style" [options]="listDistrict" placeholder="Chọn quận, huyện" [virtualScroll]="true" [itemSize]="31"
-                                [filter]="false"></p-dropdown>
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <label class="pl-5px">Xã</label>
-                  <div class="field">
-                    <p-dropdown formControlName="commune" optionValue="id" optionLabel="name" [style]="style" [options]="listCommune" placeholder="Chọn xã, phường, thị trấn" [virtualScroll]="true" [itemSize]="31"
-                                [filter]="false"></p-dropdown>
-                  </div>
-                </div>
-              </div>
-              <div *ngIf="submittedPro && formProfile.controls.city.errors && formProfile.controls.district.errors && formProfile.controls.commune.errors">
-                <span class="text-danger" *ngIf="formProfile.controls.city.errors.required">Chưa chọn thành phố.</span>
-                <span class="text-danger" *ngIf="formProfile.controls.district.errors.required">Chưa chọn quận, huyện.</span>
-                <span class="text-danger" *ngIf="formProfile.controls.commune.errors.required">Chưa chọn xã, phường, thị trấn.</span>
-              </div>
-              <div class="field">
-                <label class="pl-16px">Ngày sinh</label>
-                <p-calendar formControlName="ngay_sinh" [style]="{'width': '100%'}" placeholder="Ngày sinh" dateFormat="dd/mm/yy"></p-calendar>
-                <div *ngIf="submittedPro && formProfile.controls.ngay_sinh.errors">
-                  <span class="text-danger" *ngIf="formProfile.controls.ngay_sinh.errors.required">Chưa nhập ngày sinh.</span>
-                  <span class="text-danger" *ngIf="formProfile.controls.ngay_sinh.errors.minlength">Ngày sinh không hợp lệ.</span>
-                  <span class="text-danger" *ngIf="formProfile.controls.ngay_sinh.errors.maxlength">Ngày sinh không hợp lệ.</span>
-                </div>
-              </div>
-              <button type="submit" class="btn-custom btn">Cập nhật</button>
-            </form>
+            </div>
           </div>
-          <div class="col-md-3"></div>
-        </div>
-      </div>
-      <!-- Tab Content 2-->
-      <div id="tab-2" class="tab-pane">
-        <div class="row">
-          <!-- Image-->
-          <div class="col-md-3"></div>
-          <div class="col-md-6 contact-form-wrapper">
-            <!--             Contact Form-->
-            <form class="contact-form" [formGroup]="formChangePass" (ngSubmit)="changePass()">
-              <div class="field">
-                <label class="pl-16px">Mật khẩu cũ</label>
-                <input type="email" formControlName="mat_khau_cu" placeholder="Mật khẩu cũ">
-                <div *ngIf="submittedCP && formChangePass.controls.mat_khau_cu.errors">
-                  <span class="text-danger" *ngIf="formChangePass.controls.mat_khau_cu.errors.required">Chưa nhập email.</span>
-                  <span class="text-danger" *ngIf="formChangePass.controls.mat_khau_cu.errors.email">Email không đúng định dạng.</span>
-                  <span class="text-danger" *ngIf="formChangePass.controls.mat_khau_cu.errors.minlength">Email không được nhỏ hơn 8 ký tự.</span>
-                  <span class="text-danger" *ngIf="formChangePass.controls.mat_khau_cu.errors.maxlength">Email không được lớn hơn 50 ký tự.</span>
-                </div>
-              </div>
-              <div class="field">
-                <label class="pl-16px">Mật khẩu mới</label>
-                <input type="password" formControlName="mat_khau_moi" placeholder="Mật khẩu mới" autocomplete="off">
-                <div *ngIf="submittedCP && formChangePass.controls.mat_khau_moi.errors">
-                  <span class="text-danger" *ngIf="formChangePass.controls.mat_khau_moi.errors.required">Chưa nhập mật khẩu.</span>
-                  <span class="text-danger" *ngIf="formChangePass.controls.mat_khau_moi.errors.minlength">Mật khẩu không được dưới 8 ký tự.</span>
-                  <span class="text-danger" *ngIf="formChangePass.controls.mat_khau_moi.errors.maxlength">Mật khẩu không được trên 50 ký tự.</span>
-                  <span class="text-danger" *ngIf="formChangePass.controls.mat_khau_moi.errors.pattern">Mật khẩu không đúng định dạng.</span>
-                </div>
-              </div>
-              <div class="field">
-                <label class="pl-16px">Nhập lại mật khẩu</label>
-                <input type="password" formControlName="mat_khau_2" placeholder="Nhập lại mật khẩu mới">
-                <div *ngIf="submittedCP && formChangePass.controls.mat_khau_2.errors">
-                  <span class="text-danger" *ngIf="formChangePass.controls.mat_khau_2.errors.required">Chưa xác nhận mật khẩu.</span>
-                  <span class="text-danger" *ngIf="formChangePass.controls.mat_khau_2.errors.confirm_password">Mật khẩu không khớp.</span>
-                  <span class="text-danger" *ngIf="formChangePass.controls.mat_khau_2.errors.pattern">Mật khẩu không đúng định dạng.</span>
-                </div>
-              </div>
-              <button type="submit" class="btn-custom btn">Cập nhật</button>
-            </form>
-          </div>
-          <div class="col-md-3"></div>
         </div>
       </div>
     </div>
