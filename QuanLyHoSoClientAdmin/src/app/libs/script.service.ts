@@ -8,9 +8,8 @@ export class ScriptService {
     }
 
     public loadScripts() {
-      this.renderExternalScript('assets/bundles/mainscripts.bundle.js').onload = () => { }
-      // this.renderExternalScript('assets/js/pages/charts/jquery-knob.js').onload = () => { }
-      // this.renderExternalScript('assets/js/pages/index2.js').onload = () => { }
+      this.renderExternalScript('assets/js/plugins/bootstrap-selectpicker.js').onload = () => { }
+      this.renderExternalScript('assets/js/material-dashboard.min6c54.js?v=2.2.2').onload = () => { }
     }
 
     public renderExternalScript(src: string): HTMLScriptElement {

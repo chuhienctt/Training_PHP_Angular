@@ -63,6 +63,8 @@ export class FeildComponent extends ScriptService implements OnInit {
     this.organService.getAll().subscribe((res:any) => {
       this.listOrgan = res.filter(e => {return e.deleted_at == null});
     })
+
+    this.loadData({first: this.first, rows: this.rows});
   }
 
   loadData(event) {
