@@ -1,0 +1,147 @@
+<p-toast></p-toast>
+<div class="slide-area fix">
+  <div class="display-table">
+    <div class="display-table-cell">
+      <div class="container">
+        <div class="row">
+          <div class="slide-text-inner">
+
+            <div class="col-md-offset-2 col-md-8 col-sm-offset-2 col-sm-8 col-xs-12">
+              <div class="login-form">
+                <h4 class="login-title text-center">ĐĂNG KÝ</h4>
+                <div class="row dashboard-content">
+                  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="log-form">
+
+                    <div class="col-md-12 col-sm-12 col-xs-12 mb-3">
+                      <div class="row">
+                        <div class="avatar-wrapper">
+                          <img class="profile-pic" src="assets/img/no-avatar.jpg" />
+                          <div class="upload-button" (click)="uploadButton()">
+                            <i class="fa fa-camera"></i>
+                          </div>
+                          <input class="file-upload" type="file" accept="image/*" (change)="readFileUpload($event.target.files)" />
+                        </div>
+                        <div class="text-center" *ngIf="!file_avatar && submitted">
+                          <p class="text-danger">Chưa chọn ảnh.</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-md-12 col-sm-12 col-xs-12 mb-3">
+                      <input formControlName="email" type="text" class="form-control" placeholder="Nhập email..." required>
+                      <div *ngIf="submitted && form.controls.email.errors">
+                        <div class="text-danger" *ngIf="form.controls.email.errors.required">Chưa nhập email.</div>
+                        <div class="text-danger" *ngIf="form.controls.email.errors.email">Email không đúng định dạng.</div>
+                        <div class="text-danger" *ngIf="form.controls.email.errors.minlength">Email không được nhỏ hơn 8 ký tự.</div>
+                        <div class="text-danger" *ngIf="form.controls.email.errors.maxlength">Email không được lớn hơn 50 ký tự.</div>
+                      </div>
+                    </div>
+
+                    <div class="col-md-12 col-sm-12 col-xs-12 mb-3">
+                      <input formControlName="mat_khau" type="password" class="form-control" placeholder="Nhập mật khẩu..." required>
+                      <div *ngIf="submitted && form.controls.mat_khau.errors">
+                        <div class="text-danger" *ngIf="form.controls.mat_khau.errors.required">Chưa nhập mật khẩu.</div>
+                        <div class="text-danger" *ngIf="form.controls.mat_khau.errors.minlength">Mật khẩu không được dưới 8 ký tự.</div>
+                        <div class="text-danger" *ngIf="form.controls.mat_khau.errors.maxlength">Mật khẩu không được trên 50 ký tự.</div>
+                        <div class="text-danger" *ngIf="form.controls.mat_khau.errors.pattern">Mật khẩu không đúng định dạng.</div>
+                      </div>
+                    </div>
+
+                    <div class="col-md-12 col-sm-12 col-xs-12 mb-3">
+                      <input formControlName="mat_khau_2" type="password" class="form-control" placeholder="Nhập lại mật khẩu..." required>
+                      <div *ngIf="submitted && form.controls.mat_khau_2.errors">
+                        <div class="text-danger" *ngIf="form.controls.mat_khau_2.errors.required">Chưa xác nhận mật khẩu.</div>
+                        <div class="text-danger" *ngIf="form.controls.mat_khau_2.errors.confirm_password">Mật khẩu không khớp.</div>
+                        <div class="text-danger" *ngIf="form.controls.mat_khau_2.errors.pattern">Mật khẩu không đúng định dạng.</div>
+                      </div>
+                    </div>
+
+                    <div class="col-md-12 col-sm-12 col-xs-12 mb-3">
+                      <input formControlName="ho_ten" type="text" class="form-control" placeholder="Nhập họ tên..." required>
+                      <div *ngIf="submitted && form.controls.ho_ten.errors">
+                        <div class="text-danger" *ngIf="form.controls.ho_ten.errors.required">Chưa nhập họ tên.</div>
+                        <div class="text-danger" *ngIf="form.controls.ho_ten.errors.minlength">Họ tên không được dưới 8 ký tự.</div>
+                        <div class="text-danger" *ngIf="form.controls.ho_ten.errors.minlength">Họ tên không được trên 50 ký tự.</div>
+                      </div>
+                    </div>
+
+                    <div class="col-md-12 col-sm-12 col-xs-12 mb-3">
+                      <input formControlName="so_dien_thoai" type="text" class="form-control" placeholder="Nhập số điện thoại..." required>
+                      <div *ngIf="submitted && form.controls.so_dien_thoai.errors">
+                        <div class="text-danger" *ngIf="form.controls.so_dien_thoai.errors.required">Chưa nhập số điện thoại.</div>
+                        <div class="text-danger" *ngIf="form.controls.so_dien_thoai.errors.pattern">Số điện thoại không hợp lệ</div>
+                      </div>
+                    </div>
+
+                    <div class="col-md-12 col-sm-12 col-xs-12 mb-3">
+                      <input formControlName="dia_chi" type="text" class="form-control" placeholder="Nhập địa chỉ cụ thể..." required>
+                      <div *ngIf="submitted && form.controls.dia_chi.errors">
+                        <div class="text-danger" *ngIf="form.controls.dia_chi.errors.required">Chưa nhập địa chỉ.</div>
+                        <div class="text-danger" *ngIf="form.controls.dia_chi.errors.minlength">Địa chỉ không được dưới 2 ký tự.</div>
+                        <div class="text-danger" *ngIf="form.controls.dia_chi.errors.maxlength">Địa chỉ không được trên 150 ký tự.</div>
+                      </div>
+                    </div>
+
+                    <div class="col-md-4 col-sm-4 col-xs-4">
+                      <select nice-select (change)="getDistrict($event.target.value)" formControlName="city">
+                        <option value="">-- Chọn tỉnh --</option>
+                        <option *ngFor="let item of listProvince" value="{{item.id}}">{{item.name}}</option>
+                      </select>
+                      <div class="text-danger" *ngIf="submitted && form.controls.city.errors?.required">Chưa chọn thành phố.</div>
+                    </div>
+
+                    <div class="col-md-4 col-sm-4 col-xs-4">
+                      <select nice-select (change)="getCommune($event.target.value)" formControlName="district">
+                        <option value="">-- Chọn huyện --</option>
+                        <option *ngFor="let item of listDistrict" value="{{item.id}}">{{item.name}}</option>
+                      </select>
+                      <div class="text-danger" *ngIf="submitted && form.controls.district.errors?.required">Chưa chọn quận, huyện.</div>
+                    </div>
+
+                    <div class="col-md-4 col-sm-4 col-xs-4">
+                      <select nice-select formControlName="commune">
+                        <option value="">-- Chọn xã --</option>
+                        <option *ngFor="let item of listCommune" value="{{item.id}}">{{item.name}}</option>
+                      </select>
+                      <div class="text-danger" *ngIf="submitted && form.controls.commune.errors?.required">Chưa chọn xã, phường, thị trấn.</div>
+                    </div>
+
+                    <div class="col-md-12 col-sm-12 col-xs-12 mb-3">
+                      <p-calendar formControlName="ngay_sinh" [style]="{'width': '100%'}" [inputStyle]="{'background-color': '#1B2654', 'font-size': '14px'}" placeholder="Ngày sinh" dateFormat="dd/mm/yy">
+                      </p-calendar>
+                      <div *ngIf="submitted && form.controls.ngay_sinh.errors">
+                        <div class="text-danger" *ngIf="form.controls.ngay_sinh.errors.required">Chưa nhập ngày sinh.</div>
+                        <div class="text-danger" *ngIf="form.controls.ngay_sinh.errors.minlength">Ngày sinh không hợp lệ.</div>
+                        <div class="text-danger" *ngIf="form.controls.ngay_sinh.errors.maxlength">Ngày sinh không hợp lệ.</div>
+                      </div>
+                    </div>
+
+                    <div class="col-md-12 col-sm-12 col-xs-12 text-center">
+                      <button type="submit" id="submit" class="slide-btn login-btn">Đăng ký</button>
+                      <div id="msgSubmit" class="h3 text-center hidden"></div>
+                      <div class="clearfix"></div>
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-xs-12 text-center">
+                      <div class="clear"></div>
+                      <!-- <div class="separetor text-center"><span>Hoặc đăng nhập với</span></div> -->
+                      <div class="sign-icon">
+                        <!-- <ul>
+                          <li><a class="facebook" href="#"><i class="ti-facebook"></i></a>
+                          </li>
+                          <li><a class="twitter" href="#"><i class="ti-twitter"></i></a></li>
+                          <li><a class="google" href="#"><i class="ti-google"></i></a></li>
+                        </ul> -->
+                        <div class="acc-not">Nếu bạn có tài khoản rồi, <a [routerLink]="['/login']">Đăng nhập ngay!</a>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

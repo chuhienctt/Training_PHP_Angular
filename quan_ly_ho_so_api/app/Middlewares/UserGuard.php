@@ -17,8 +17,8 @@ class UserGuard extends Middleware {
 
             if(time() < $dec_token->exp) {
                 $user = model('Users')->where(['token' => $token])->first();
-    
-                if($user) {
+
+                if($user && !$user->checkBlock()) {
                     Auth::set($user);
                     return true;
                 }

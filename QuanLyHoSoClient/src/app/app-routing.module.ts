@@ -5,8 +5,10 @@ import {LoginComponent} from './main/login/login.component';
 import {ProcedureComponent} from './main/procedure/procedure.component';
 import {DetailComponent} from './main/detail/detail.component';
 import {AuthGuard} from "./guards/auth.guard";
-import {IsloginGuard} from "./guards/islogin.guard";
 import {ProfileComponent} from "./main/profile/profile.component";
+import { RegisterComponent } from './main/register/register.component';
+import { IsloginGuard } from './guards/islogin.guard';
+import { ChangepassComponent } from './main/changepass/changepass.component';
 
 const routes: Routes = [
   {
@@ -14,17 +16,36 @@ const routes: Routes = [
     redirectTo: 'home',
     pathMatch: 'full'
   },
-  {path: 'home', component: HomeComponent},
+  {
+    path: 'home',
+    component: HomeComponent
+  },
   {
     path: 'login',
-    canActivate: [IsloginGuard],
-    component: LoginComponent
+    component: LoginComponent,
+    canActivate: [IsloginGuard]
   },
-  {path: 'procedure', component: ProcedureComponent},
-  {path: 'detail', component: DetailComponent},
+  {
+    path: 'register',
+    component: RegisterComponent,
+    canActivate: [IsloginGuard]
+  },
+  {
+    path: 'procedure',
+    component: ProcedureComponent
+  },
+  {
+    path: 'detail',
+    component: DetailComponent
+  },
   {
     path: 'profile',
     component: ProfileComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'change-password',
+    component: ChangepassComponent,
     canActivate: [AuthGuard]
   }
 ];

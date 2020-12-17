@@ -71,7 +71,7 @@ class UserController extends Controller {
             ],
             'role' => [
                 'required' => 'Chức vụ không được để trống',
-                'in:0,1' => 'Chức vụ không chính xác',
+                'in:1,2' => 'Chức vụ không chính xác',
             ],
             'avatar' => [
                 'required' => 'Vui lòng chọn một hình ảnh làm avatar',
@@ -79,7 +79,7 @@ class UserController extends Controller {
             ],
         ]);
 
-        $file = File::createBase64(request()->hinh_anh);
+        $file = File::createBase64(request()->avatar);
 
         if(!$file->isImage()) {
             Validator::alert("Ảnh không đúng định dạng (png, jpg, jpeg)");
@@ -98,6 +98,18 @@ class UserController extends Controller {
         $user->ward_id = request()->ward_id;
         $user->ngay_sinh = Format::toDate(request()->ngay_sinh);
         $user->role = request()->role;
+
+        // add cơ quan khi là cán bộ
+        if($user->role == 2) {
+            $id_co_quan = request()->id_co_quan;
+            $co_quan = model('CoQuan')->find($id_co_quan);
+            if($co_quan) {
+                $user->id_co_quan = $id_co_quan;
+            } else {
+                Validator::alert('Cơ quan không tồn tại!');
+            }
+        }
+
         $user->avatar = '/avatar/'.$file->getFileName();
 
         if($user->save()) {
@@ -138,11 +150,16 @@ class UserController extends Controller {
             ],
             'role' => [
                 'required' => 'Chức vụ không được để trống',
-                'in:0,1' => 'Chức vụ không chính xác',
+                'in:1,2' => 'Chức vụ không chính xác',
             ],
         ]);
 
         $user = model('Users')->find(request()->id);
+
+        // k cho sửa thông tin của admin
+        if($user->role == 3) {
+            Validator::alert("Không thể chỉnh sửa thông tin người dùng này!");
+        }
 
         $user->ho_ten = request()->ho_ten;
         $user->so_dien_thoai = request()->so_dien_thoai;
@@ -150,6 +167,17 @@ class UserController extends Controller {
         $user->ward_id = request()->ward_id;
         $user->ngay_sinh = Format::toDate(request()->ngay_sinh);
         $user->role = request()->role;
+
+        // update cơ quan khi là cán bộ
+        if($user->role == 2) {
+            $id_co_quan = request()->id_co_quan;
+            $co_quan = model('CoQuan')->find($id_co_quan);
+            if($co_quan) {
+                $user->id_co_quan = $id_co_quan;
+            } else {
+                Validator::alert('Cơ quan không tồn tại!');
+            }
+        }
 
         if(request()->has('avatar') && !Validator::check('base64', request()->avatar)) {
             $file = File::createBase64(request()->avatar);
@@ -165,9 +193,38 @@ class UserController extends Controller {
         }
 
         if($user->save()) {
-            return response()->success(1, 'Thay đổi thông tin thành công!');
+            return response()->success(1, 'Thay đổi thông tin thành công!', $user);
         }
 
         return response()->error(2, 'Không thể thay đổi thông tin!');
+    }
+
+    public function block() {
+        
+        validator()->validate([
+            'id' => [
+                'required' => 'Thiếu id người dùng',
+                'exists:users' => 'Không tồn tại người dùng',
+            ],
+            'thoi_han' => [
+                'required' => 'Thời hạn không được để trống',
+                'datetime' => 'Thời hạn không đúng định dạng',
+            ],
+        ]);
+
+        $user = model('Users')->find(request()->id);
+
+        // k cho khóa admin khác
+        if($user->role == 3) {
+            Validator::alert("Không thể khóa người dùng này!");
+        }
+
+        $user->deleted_at = Format::toDateTime(request()->thoi_han);
+
+        if($user->save()) {
+            return response()->success(1, 'Đã khóa người dùng thành công!');
+        }
+
+        return response()->error(2, 'Khóa người dùng không thành công!');
     }
 }

@@ -31,7 +31,19 @@
               "node_modules/primeng/resources/primeng.min.css",
               "node_modules/sweetalert2/src/sweetalert2.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "src/assets/js/vendor/modernizr-2.8.3.min.js",
+              "src/assets/js/vendor/jquery-1.12.4.min.js",
+              "src/assets/js/bootstrap.min.js",
+              "src/assets/js/owl.carousel.min.js",
+              "src/assets/js/jquery.stellar.min.js",
+              "src/assets/js/magnific.min.js",
+              "src/assets/js/jquery.nice-select.min.js",
+              "src/assets/js/wow.min.js",
+              "src/assets/js/jquery.meanmenu.js",
+              "src/assets/js/form-validator.min.js",
+              "src/assets/js/plugins.js"
+            ]
           },
           "configurations": {
             "production": {

@@ -1,90 +1,135 @@
+<header class="header-one">
+    <!-- Start header top bar -->
+    <div class="topbar-area">
+        <div class="container">
+            <div class="row">
+                <div class=" col-md-6 col-sm-6 col-xs-12">
+                    <div class="topbar-left">
+                        <ul>
+                            <li><a href="#"><i class="fa fa-envelope"></i> info@bultifor.com</a></li>
+                            <li><a href="#"><i class="fa fa-clock-o"></i> Live support</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End header top bar -->
+    <!-- Start header menu area -->
+    <div id="sticker" class="header-area hidden-xs">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="row">
+                        <!-- logo start -->
+                        <div class="col-md-3 col-sm-3">
+                            <div class="logo">
+                                <!-- Brand -->
+                                <a class="navbar-brand page-scroll" [routerLink]="['/']">
+                                    <img src="assets/img/logo/logo2.png" alt="">
+                                </a>
+                            </div>
+                            <!-- logo end -->
+                        </div>
+                        <div class="col-md-9 col-sm-9">
+                            <div class="header-right-link">
+                                <!-- search option end -->
+                                <a *ngIf="!user" class="s-menu" [routerLink]="['/login']">Đăng nhập</a>
 
-<div class="header">
-  <!-- Navigation-->
-  <nav class="navbar navbar-1">
-    <!-- Search Form-->
-<!--    <form method="get" action="#" class="search-form container">-->
-<!--      <div>-->
-<!--        <input type="search" name="search-field" placeholder="Type and hit enter..." class="text-search-field"/><i id="close-btn" class="fa fa-close"></i>-->
-<!--      </div>-->
-<!--    </form>-->
-    <div class="navigation container">
-      <!-- Nav Bar Toggle/collapse and Logo-->
-      <div class="navbar-header">
-        <div class="navbar-brand"><a routerLink="/"><img src="assets/img/logo.png" alt=""/></a></div>
-        <!-- Navigation Toggle-->
-        <button type="button" data-toggle="collapse" data-target=".myNavbar" class="navbar-toggle"><span class="src-only"></span><i class="fa fa-bars"></i></button>
-        <div class="search-nav min"><i class="fa fa-search"></i></div>
-      </div>
-      <!-- Collpsing Items and Navigation-->
-      <div class="myNavbar collapse navbar-collapse">
-        <ul class="nav navbar-nav navbar-right">
-          <!-- Item 2-->
-          <li class="menu-item"><a routerLink="/">Home</a></li>
-          <li class="menu-item"><a data-toggle="dropdown" href="#" class="dropdown-toggle">Lĩnh vực<i class="fa fa-angle-down"></i></a>
-            <ul class="sub-menu">
-              <li><a routerLink="/procedure">Giáo dục</a></li>
-              <li><a href="course-list.html">Pháp luật</a></li>
-              <li><a href="course-details.html">Kinh tế</a></li>
-              <li><a href="course-details.html">Văn hóa</a></li>
-              <li><a href="course-details.html">Thể thao</a></li>
-              <li><a href="course-details.html">Y tế</a></li>
-            </ul>
-          </li>
-          <!-- Item 7-->
-          <!-- Search Icon-->
-          <li class="menu-item" *ngIf="!user">
-            <div class="search-nav big" routerLink="/login">
-              <i class="fa fa-user"></i>
+                                <div class="dropdown" *ngIf="user">
+                                    <a class="circle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <img src="{{user.avatar | getImage}}" alt="Braden Hamm">
+                                    </a>
+
+                                    <ul class="dropdown-menu">
+                                        <li><a [routerLink]="['/profile']" >Thông tin</a></li>
+                                        <li><a style="cursor: pointer;" (click)="logOut()">Đăng xuất</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- mainmenu start -->
+                            <nav class="navbar navbar-default">
+                                <div class="collapse navbar-collapse" id="navbar-example">
+                                    <div class="main-menu">
+                                        <ul class="nav navbar-nav navbar-right">
+                                            <li><a [routerLink]="['/']">Trang chủ</a></li>
+                                            <li><a class="pages" href="#">Lĩnh vực</a>
+                                                <ul class="sub-menu">
+                                                    <li><a href="team.html">team</a></li>
+                                                    <li><a href="faq.html">FAQ</a></li>
+                                                    <li><a href="pricing.html">Pricing</a></li>
+                                                </ul>
+                                            </li>
+                                            <li><a >Liên hệ</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </nav>
+                            <!-- mainmenu end -->
+                        </div>
+                    </div>
+                </div>
             </div>
-          </li>
-          <li class="menu-item" *ngIf="user">
-            <div class="user-name" data-toggle="dropdown" routerLink="/profile">
-              {{user.ho_ten}}
+        </div>
+    </div>
+    <!-- End header menu area -->
+    <!-- Start mobile menu area -->
+    <div class="mobile-menu-area hidden-lg hidden-md hidden-sm">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="mobile-menu">
+                        <div class="logo">
+                            <a href="index-2.html"><img src="assets/img/logo/logo2.png" alt="" /></a>
+                        </div>
+                        <nav id="dropdown">
+                            <ul>
+                                <li><a class="pages" href="index-2.html">Home</a>
+                                    <ul class="sub-menu">
+                                        <li><a href="index-2.html">Home 01</a></li>
+                                        <li><a href="index-3.html">Home 02</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="about.html">About us</a></li>
+                                <li><a class="pages" href="#">Pages</a>
+                                    <ul class="sub-menu">
+                                        <li><a href="team.html">team</a></li>
+                                        <li><a href="faq.html">FAQ</a></li>
+                                        <li><a href="pricing.html">Pricing</a></li>
+                                        <li><a href="review.html">Reviews</a></li>
+                                        <li><a href="terms.html">Terms & Conditions</a></li>
+                                        <li><a href="login.html">Login</a></li>
+                                        <li><a href="signup.html">Register</a></li>
+                                    </ul>
+                                </li>
+                                <li><a class="pages" href="#">Dashboard</a>
+                                    <ul class="sub-menu">
+                                        <li><a href="a-dashboard.html">Dashboard</a></li>
+                                        <li><a href="a-send-money.html">Send Money</a></li>
+                                        <li><a href="a-request-money.html">Request Money</a></li>
+                                        <li><a href="a-withdraw-money.html">Withdraw Money</a></li>
+                                        <li><a href="a-deposite-money.html">Deposite Money</a></li>
+                                        <li><a href="a-currency-change.html">Currency Exchange</a></li>
+                                        <li><a href="a-add-bank.html">Bank Account</a></li>
+                                        <li><a href="a-card-number.html">Card Number</a></li>
+                                        <li><a href="a-transection-log.html">Transection Log</a></li>
+                                        <li><a href="a-setting-money.html">Notifications</a></li>
+                                    </ul>
+                                </li>
+                                <li><a class="pages" href="#">Blog</a>
+                                    <ul class="sub-menu">
+                                        <li><a href="blog.html">Blog grid</a></li>
+                                        <li><a href="blog-sidebar.html">Blog Sidebar</a></li>
+                                        <li><a href="blog-details.html">Blog Details</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="contact.html">contacts</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
             </div>
-                <ul class="sub-menu">
-                  <li><a (click)="logOut()">Đăng xuất</a></li>
-                </ul>
-          </li>
-        </ul>
-      </div>
+        </div>
     </div>
-  </nav>
-  <nav class="navbar duplicate hidden navbar-1">
-    <!-- Search Form-->
-<!--    <form method="get" action="#" class="search-form container">-->
-<!--      <div>-->
-<!--        <input type="search" name="search-field" placeholder="Type and hit enter..." class="text-search-field"/><i class="close-btn fa fa-close"></i>-->
-<!--      </div>-->
-<!--    </form>-->
-    <div class="navigation container">
-      <!-- Nav Bar Toggle/collapse and Logo-->
-      <div class="navbar-header">
-        <div class="navbar-brand"><a routerLink="/"><img src="assets/img/logo.html" alt=""/></a></div>
-        <!-- Navigation Toggle-->
-        <button type="button" data-toggle="collapse" data-target="#myNavbar" class="navbar-toggle"><span class="src-only"></span><i class="fa fa-bars"></i></button>
-        <div class="search-nav min"><i class="fa fa-search"></i></div>
-      </div>
-      <!-- Collpsing Items and Navigation-->
-      <div id="myNavbar" class="collapse navbar-collapse">
-        <ul class="nav navbar-nav navbar-right">
-          <!-- Item 1-->
-          <li class="menu-item"><a routerLink="/">Home</a></li>
-          <!-- Item 2-->
-          <li class="menu-item"><a data-toggle="dropdown" href="#" class="dropdown-toggle">Course<i class="fa fa-angle-down"></i></a>
-            <ul class="sub-menu">
-              <li><a href="course-grid.html">Course Grid</a></li>
-              <li><a href="course-list.html">Course List</a></li>
-              <li><a href="course-details.html">Course Details</a></li>
-            </ul>
-          </li>          <!-- Item 1-->
-          <!-- Item 7-->
-          <!-- Search Icon-->
-          <li class="menu-item">
-            <div class="search-nav big" routerLink="/login"><i class="fa fa fa-user"></i></div>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-</div>
+    <!-- End mobile menu area -->
+</header>

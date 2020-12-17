@@ -18,7 +18,6 @@ class HomeController extends Controller {
     }
 
     public function login() {
-        
         validator()->validate([
             'email' => [
                 'required' => 'Email không được để trống',
@@ -36,6 +35,10 @@ class HomeController extends Controller {
         $user = model('Users')->where(['email' => $email])->first();
 
         if($user && Auth::checkPassword($mat_khau, $user->mat_khau)) {
+
+            if($user->checkBlock()) {
+                return response()->error(3, 'Tài khoản của bạn đang bị khóa!');
+            }
 
             $user->token = Auth::createToken($user->id);
 

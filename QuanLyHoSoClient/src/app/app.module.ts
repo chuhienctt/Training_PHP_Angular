@@ -7,6 +7,7 @@ import { HomeComponent } from './main/home/home.component';
 import { LoginComponent } from './main/login/login.component';
 import { HeaderComponent } from './share/header/header.component';
 import { FooterComponent } from './share/footer/footer.component';
+import { MenuComponent } from './share/menu/menu.component';
 import {HttpClientModule} from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {DropdownModule} from 'primeng/dropdown';
@@ -20,6 +21,10 @@ import {environment} from "../environments/environment";
 import { MainComponent } from './main/main.component';
 import { ProfileComponent } from './main/profile/profile.component';
 import {FileUploadModule} from "primeng/fileupload";
+import { RegisterComponent } from './main/register/register.component';
+import { GetImagePipe } from './libs/get.image.pipe';
+import { NiceSelectModule } from "ng-nice-select";
+import { ChangepassComponent } from './main/changepass/changepass.component';
 
 export function tokenGetter() {
   let user = JSON.parse(localStorage.getItem("jwt"));
@@ -28,15 +33,19 @@ export function tokenGetter() {
 
 @NgModule({
   declarations: [
+    GetImagePipe,
     AppComponent,
     HomeComponent,
     LoginComponent,
     HeaderComponent,
     FooterComponent,
+    MenuComponent,
     ProcedureComponent,
     DetailComponent,
     MainComponent,
-    ProfileComponent
+    ProfileComponent,
+    RegisterComponent,
+    ChangepassComponent
   ],
   imports: [
     BrowserModule,
@@ -47,6 +56,7 @@ export function tokenGetter() {
     CalendarModule,
     ReactiveFormsModule,
     ToastModule,
+    NiceSelectModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,

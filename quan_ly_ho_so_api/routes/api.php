@@ -32,6 +32,9 @@ Route::group([
         'prefix' => '/admin',
         'middleware' => 'AdminGuard'
     ], function () {
+        
+        Route::post('/auth/change-pass', 'AdminController@change_pass');
+        Route::put('/auth/update', 'AdminController@update');
 
         Route::group([
             'prefix' => '/linh-vuc'
@@ -55,6 +58,19 @@ Route::group([
             Route::post('/create', 'CoQuanController@create');
             Route::put('/update', 'CoQuanController@update');
             Route::delete('/delete', 'CoQuanController@delete');
+
+        });
+
+        
+        Route::group([
+            'prefix' => '/user'
+        ], function () {
+
+            Route::get('/get', 'UserController@get');
+            Route::get('/pagination', 'UserController@pagination');
+            Route::post('/create', 'UserController@create');
+            Route::put('/update', 'UserController@update');
+            Route::delete('/block', 'UserController@block');
 
         });
 
