@@ -65,26 +65,41 @@
             <div class="row">
               <div class="col-md-4">
                 <div class="form-group">
-                  <label>Tỉnh, thành phố</label>
-                  <select class="selectpicker" (change)="getDistrict($event.target.value)" formControlName="city" data-style="select-with-transition" title="Chọn tỉnh, thành phố" data-size="7">
-                    <option *ngFor="let item of listProvince" value="{{item.id}}">{{item.name}} </option>
-                  </select>
+                  <label class="w-100">Tỉnh, thành phố</label>
+                  <mat-form-field appearance="fill">
+                    <mat-label>Tỉnh, thành phố</mat-label>
+                    <mat-select formControlName="city" (selectionChange)="getDistrict($event.value)">
+                      <mat-option *ngFor="let item of listProvince" [value]="item.id">
+                        {{item.name}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
                 </div>
               </div>
               <div class="col-md-4">
                 <div class="form-group">
-                  <label>Quận, huyện</label>
-                  <select class="selectpicker"(change)="getCommune($event.target.value)" data-style="select-with-transition" title="Chọn tỉnh, thành phố" data-size="7">
-                    <option *ngFor="let item of listDistrict" value="{{item.id}}">{{item.name}} </option>
-                  </select>
+                  <label class="w-100">Quận, huyện</label>
+                  <mat-form-field appearance="fill">
+                    <mat-label>Quận, huyện</mat-label>
+                    <mat-select formControlName="district" (selectionChange)="getCommune($event.value)">
+                      <mat-option *ngFor="let item of listDistrict" [value]="item.id">
+                        {{item.name}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
                 </div>
               </div>
               <div class="col-md-4">
                 <div class="form-group">
                   <label>Xã, phường, thị trấn</label>
-                  <select class="selectpicker" data-style="select-with-transition" title="Chọn tỉnh, thành phố" data-size="7">
-                    <option *ngFor="let item of listCommune" value="{{item.id}}">{{item.name}} </option>
-                  </select>
+                  <mat-form-field appearance="fill">
+                    <mat-label>Xã, phường, thị trấn</mat-label>
+                    <mat-select formControlName="commune">
+                      <mat-option *ngFor="let item of listCommune" [value]="item.id">
+                        {{item.name}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
                 </div>
               </div>
             </div>
