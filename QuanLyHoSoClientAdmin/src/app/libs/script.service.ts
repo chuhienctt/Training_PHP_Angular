@@ -1,4 +1,6 @@
 import { Injector, Renderer2 } from '@angular/core';
+declare var demo:any;
+declare var $:any;
 
 export class ScriptService {
     public _renderer: any;

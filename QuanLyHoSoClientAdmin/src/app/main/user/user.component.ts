@@ -89,7 +89,7 @@ export class UserComponent extends ScriptService implements OnInit {
 
   create() {
     this.aoe = true;
-    $('.card.card-wizard').addClass('active');
+    // $('.card.card-wizard').addClass('active');
     $("#myModal").modal("show");
   }
 
