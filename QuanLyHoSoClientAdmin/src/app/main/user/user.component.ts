@@ -27,6 +27,7 @@ export class UserComponent extends ScriptService implements OnInit {
   file_avatar;
   form: FormGroup;
   aoe: boolean;
+  ok:boolean;
 
   constructor(
     injector: Injector,
