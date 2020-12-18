@@ -18,9 +18,6 @@ export class ProfileComponent extends ScriptService implements OnInit {
   listProvince = [];
   listDistrict = [];
   listCommune = [];
-  provinceId: number;
-  districtId: number;
-  communeId: number;
 
   constructor(
     injector: Injector,
@@ -56,8 +53,8 @@ export class ProfileComponent extends ScriptService implements OnInit {
       dia_chi: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(150)]],
       ngay_sinh: ['', [Validators.required]],
       city: ['', ],
-      district: [{value: '', disabled: true}, ],
-      commune: [{value: '', disabled: true}, ]
+      district: ['', ],
+      commune: ['', Validators.required]
     })
 
     this.addressService.getAddress(this.User.ward_id).subscribe((data:any) => {
@@ -65,9 +62,7 @@ export class ProfileComponent extends ScriptService implements OnInit {
       this.listProvince = data.list_province;
       this.listDistrict = data.list_district;
       this.listCommune = data.list_ward;
-      this.provinceId = data.province.id;
-      this.districtId = data.district.id;
-      this.communeId = data.ward.id;
+
       // console.log(this.provinceId)
       this.form.patchValue({
         email: this.User.email,
@@ -75,17 +70,18 @@ export class ProfileComponent extends ScriptService implements OnInit {
         so_dien_thoai: this.User.so_dien_thoai,
         dia_chi: this.User.dia_chi,
         ngay_sinh: this.pipe.transform(this.User.ngay_sinh, "dd-MM-yyyy"),
-        // city: data.province.id
-
+        city: data.province.id,
+        district: data.district.id,
+        commune: data.ward.id,
       })
+    
+      this.loadScripts();
     })
   }
 
   getDistrict(id) {
-    console.log(id)
     this.addressService.getDistrict(id).subscribe((res:any) => {
       this.listDistrict = res;
-      console.log(this.listDistrict)
     })
   }
 

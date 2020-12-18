@@ -4,6 +4,7 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {ToastModule} from "primeng/toast";
 import {HeaderComponent} from "./header/header.component";
 import {FooterComponent} from "./footer/footer.component";
+import {MatSelectModule} from '@angular/material/select';
 @NgModule({
   declarations: [
     HeaderComponent,
@@ -12,10 +13,12 @@ import {FooterComponent} from "./footer/footer.component";
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    MatSelectModule,
     ToastModule
   ],
   exports: [
     ReactiveFormsModule,
+    MatSelectModule,
     ToastModule,
     CommonModule,
     HeaderComponent,
