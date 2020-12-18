@@ -39,6 +39,7 @@ class Response {
         415 => 'Unsupported Media Type',
         416 => 'Requested Range Not Satisfiable',
         417 => 'Expectation Failed',
+        422 => 'Unprocessable Entity',
         500 => 'Internal Server Error',
         501 => 'Not Implemented',
         502 => 'Bad Gateway',
@@ -47,29 +48,62 @@ class Response {
         505 => 'HTTP Version Not Supported'
     ];
 
+    protected $variables = [
+        'tmp_data',
+        'original_data',
+        'mat_khau'
+    ];
+
     public function code($code, $data = []) {
-        header("HTTP/1.1 $code ".$this->httpStatus[$code]);
-        echo json_encode($data);
+        header($_SERVER["SERVER_PROTOCOL"]." $code ".$this->httpStatus[$code]);
+        echo json_encode($this->hiddenVariable($data));
+        exit;
     }
 
     public function json($data) {
         $this->code(200, $data);
     }
 
-    public function success($status, $message, $data) {
+    public function success($status, $message, $data = []) {
         $this->code(200, [
             'status' => $status,
             'message' => $message,
-            'data' => $data,
+            'data' => $this->hiddenVariable($data),
         ]);
     }
 
-    public function error($status, $message) {
-        $this->code(400, [
+    public function error($status, $message, $code = 400) {
+        $this->code($code, [
             'status' => $status,
             'message' => $message,
             'data' => []
         ]);
+    }
+
+    public function hiddenVariable($data) {
+        if(gettype($data) === 'object') {
+            $data = $this->hiddenVariableObject($data);
+        } else if(gettype($data) === 'array') {
+            foreach($data as $object) {
+                if(gettype($object) == 'array') {
+                    $object = $this->hiddenVariable($object);
+                } else {
+                    $object = $this->hiddenVariableObject($object);
+                }
+            }
+        }
+
+        return $data;
+        
+    }
+
+    public function hiddenVariableObject($object) {
+        foreach($this->variables as $var) {
+            if(isset($object->{$var})) {
+                unset($object->{$var});
+            }
+        }
+        return $object;
     }
 
 }

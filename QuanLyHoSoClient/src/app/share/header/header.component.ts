@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import {JwtHelperService} from "@auth0/angular-jwt";
+import {Router} from "@angular/router";
+import {HomeService} from "../../services/home.service";
+
+declare var $: any;
 
 @Component({
   selector: 'app-header',
@@ -6,10 +11,30 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+  isLogin = false;
 
-  constructor() { }
+  constructor(
+    private jwtHelper: JwtHelperService,
+    private router: Router,
+    private homeService: HomeService
+  ) { }
 
   ngOnInit(): void {
+    this.homeService.output().subscribe(data => {
+      if (data) {
+        this.homeService.currentUser = data;
+      }
+    })
+  }
+
+  get user() {
+    return this.homeService.currentUser;
+  }
+
+  logOut() {
+    localStorage.removeItem("jwt");
+    this.homeService.currentUser = null;
+    this.router.navigate(["/login"]);
   }
 
 }

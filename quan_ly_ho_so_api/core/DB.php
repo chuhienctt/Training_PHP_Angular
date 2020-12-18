@@ -52,7 +52,7 @@ class DB {
         $offset = $this->offset ? "OFFSET ?" : "";
         $limit = $this->limit ? "LIMIT ?" : "";
 
-        $data = array_values($this->where);
+        $data = $where['values'];
 
         if($this->limit) {
             $data[] = $this->limit;
@@ -65,7 +65,7 @@ class DB {
             $data[] = $this->offset;
         }
 
-        $sql = "SELECT $select FROM $this->table $where $this->orderBy $limit $offset";
+        $sql = "SELECT $select FROM $this->table $where[where] $this->orderBy $limit $offset";
 
         $statement = self::$connect->prepare($sql);
 
@@ -129,10 +129,10 @@ class DB {
         
         $where = $this->buildWhere();
 
-        $sql = "UPDATE $this->table SET $fieldStr $where";
+        $sql = "UPDATE $this->table SET $fieldStr $where[where]";
         $statement = self::$connect->prepare($sql);
 
-        $data = array_merge(array_values($data), array_values($this->where));
+        $data = array_merge(array_values($data), $where['values']);
 
         $index = 1;
         foreach($data as $value) {
@@ -148,10 +148,10 @@ class DB {
 
         $where = $this->buildWhere();
 
-        $sql = "DELETE FROM $this->table $where";
+        $sql = "DELETE FROM $this->table $where[where]";
         $statement = self::$connect->prepare($sql);
         
-        $data = array_values($this->where);
+        $data = array_values($where['values']);
 
         $index = 1;
         foreach($data as $value) {
@@ -160,6 +160,13 @@ class DB {
         $statement->execute();
 
         return $statement->rowCount();
+    }
+
+    public function count() {
+        $sql = "SELECT COUNT(*) AS count FROM $this->table";
+        $statement = self::$connect->prepare($sql);
+        $statement->execute();
+        return $statement->fetchColumn();
     }
 
     public function select($data = [], $instance = null) {
@@ -184,11 +191,21 @@ class DB {
     private function buildWhere() {
         $fields = [];
 
+        $values = [];
         foreach($this->where as $key => $value) {
-            $fields[] = "$key = ?";
+            if(gettype($value) == 'array') {
+                $fields[] = "$key $value[0] ?";
+                $values[] = $value[1];
+            } else {
+                $fields[] = "$key = ?";
+                $values[] = $value;
+            }
         }
 
-        return count($fields) ? "WHERE ".implode('AND ', $fields) : '';
+        return [
+            'where' => count($fields) ? "WHERE ".implode('AND ', $fields) : '',
+            'values' => $values,
+        ];
     }
 
     public function orderBy($column, $type = 'asc', $instance = null) {
@@ -198,13 +215,13 @@ class DB {
     }
 
     public function offset($n, $instance = null) {
-        $this->offset = $n;
+        $this->offset = (int) $n;
 
         return $instance ?? $this;
     }
 
     public function limit($n, $instance = null) {
-        $this->limit = $n;
+        $this->limit = (int) $n;
 
         return $instance ?? $this;
     }
@@ -215,6 +232,10 @@ class DB {
 
     public function take($n) {
         return $this->limit($n);
+    }
+
+    public function lastInsertId() {
+        return self::$connect->lastInsertId();
     }
 
     // schema

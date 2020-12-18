@@ -1,0 +1,114 @@
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header card-header-icon card-header-rose">
+          <div class="card-icon">
+            <i class="material-icons">perm_identity</i>
+          </div>
+          <h4 class="card-title">Sửa thông tin
+          </h4>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <div class="row">
+              <div class="ml-auto mr-auto">
+                <div class="fileinput fileinput-new text-center" data-provides="fileinput">
+                  <div class="fileinput-new thumbnail img-circle">
+                    <img *ngIf="!User.avatar" src="assets/img/placeholder.jpg">
+                    <img *ngIf="User.avatar" [src]="createImg(User.avatar)">
+                  </div>
+                  <div class="fileinput-preview fileinput-exists thumbnail img-circle"></div>
+                  <div>
+                    <span class="btn btn-round btn-rose btn-file">
+                      <span class="fileinput-new">Chọn ảnh</span>
+                      <span class="fileinput-exists">Thay đổi</span>
+                      <input type="file" formControlName="avatar" />
+                    </span>
+                    <br />
+                    <a href="#pablo" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput">
+                      <i class="fa fa-times"></i>Xóa
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Họ tên</label>
+                  <input type="text" class="form-control" formControlName="ho_ten">
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Email</label>
+                  <input type="text" class="form-control" formControlName="email">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="bmd-label-static">Số điện thoại</label>
+                  <input type="text" class="form-control" formControlName="so_dien_thoai">
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Ngày sinh</label>
+                      <input type="text" class="form-control datepicker" formControlName="ngay_sinh">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label>Tỉnh, thành phố</label>
+                  <select class="selectpicker" (change)="getDistrict($event.target.value)" formControlName="city" data-style="select-with-transition" title="Chọn tỉnh, thành phố" data-size="7">
+                    <option *ngFor="let item of listProvince" value="{{item.id}}">{{item.name}} </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label>Quận, huyện</label>
+                  <select class="selectpicker"(change)="getCommune($event.target.value)" data-style="select-with-transition" title="Chọn tỉnh, thành phố" data-size="7">
+                    <option *ngFor="let item of listDistrict" value="{{item.id}}">{{item.name}} </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label>Xã, phường, thị trấn</label>
+                  <select class="selectpicker" data-style="select-with-transition" title="Chọn tỉnh, thành phố" data-size="7">
+                    <option *ngFor="let item of listCommune" value="{{item.id}}">{{item.name}} </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-rose pull-right">Cập nhật</button>
+            <div class="clearfix"></div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card card-profile">
+        <div class="card-avatar">
+            <img class="img" [src]="createImg(User.avatar)" />
+        </div>
+        <div class="card-body">
+          <h6 class="card-category text-gray" *ngIf="User.role == 1">Công dân</h6>
+          <h6 class="card-category text-gray" *ngIf="User.role == 2">Cán bộ</h6>
+          <h6 class="card-category text-gray" *ngIf="User.role == 3">Admin</h6>
+          <h4 class="card-title text-uppercase">{{User.ho_ten}}</h4>
+          <p class="card-description">
+            VNPT-IT Nguyễn Phong Sắc
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

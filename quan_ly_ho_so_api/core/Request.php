@@ -7,9 +7,9 @@ class Request {
     function __construct() {
         $post = json_decode(file_get_contents('php://input'), true);
 
-        $this->data = array_merge($post ?? [], $_GET ?? []);
+        $this->tmp_data = array_merge($post ?? [], $_GET ?? []);
 
-        foreach($this->data as $key => $value) {
+        foreach($this->tmp_data as $key => $value) {
             $this->{$key} = $value;
         }
 
@@ -19,7 +19,7 @@ class Request {
 
                 $files = [];
                 for($i = 0; $i < count($value['tmp_name']); $i++) {
-                    $value[$i]['error'] == 0 && $files[] = File::create($value[$i]['name'], $value[$i]['type'], $value[$i]['tmp_name'], $value[$i]['size']);
+                    $value['error'][$i] == 0 && $files[] = File::create($value['name'][$i], $value['type'][$i], $value['tmp_name'][$i], $value['size'][$i]);
                 }
                 $this->{$key} = $files;
 
@@ -31,15 +31,15 @@ class Request {
     }
 
     public function all() {
-        return $this->data;
+        return $this->tmp_data;
     }
 
     public function has($variable) {
-        return isset($this->data[$variable]);
+        return isset($this->{$variable});
     }
 
     public function get($variable) {
-        return $this->data[$variable] ?? null;
+        return $this->tmp_data[$variable] ?? null;
     }
 
     public function getAuthorizationHeader() {

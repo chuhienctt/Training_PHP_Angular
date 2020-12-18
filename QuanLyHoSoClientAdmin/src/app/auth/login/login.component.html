@@ -1,0 +1,85 @@
+<p-toast></p-toast>
+<nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top text-white">
+  <div class="container">
+    <div class="navbar-wrapper">
+      <a class="navbar-brand" href="javascript:;">Login Page</a>
+    </div>
+  </div>
+</nav>
+<!-- End Navbar -->
+<div class="wrapper wrapper-full-page">
+  <div class="page-header login-page header-filter" filter-color="black"
+       style="background-image: url('assets/img/login.jpg'); background-size: cover; background-position: top center;">
+    <!--   you can change the color of the filter page using: data-color="blue | purple | green | orange | red | rose " -->
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4 col-md-6 col-sm-8 ml-auto mr-auto">
+          <form class="form" [formGroup]="form" (ngSubmit)="login()">
+            <div class="card card-login card-hidden">
+              <div class="card-header card-header-rose text-center">
+                <h4 class="card-title">Login</h4>
+<!--                <div class="social-line">-->
+<!--                  <a href="#pablo" class="btn btn-just-icon btn-link btn-white">-->
+<!--                    <i class="fa fa-facebook-square"></i>-->
+<!--                  </a>-->
+<!--                  <a href="#pablo" class="btn btn-just-icon btn-link btn-white">-->
+<!--                    <i class="fa fa-twitter"></i>-->
+<!--                  </a>-->
+<!--                  <a href="#pablo" class="btn btn-just-icon btn-link btn-white">-->
+<!--                    <i class="fa fa-google-plus"></i>-->
+<!--                  </a>-->
+<!--                </div>-->
+              </div>
+              <div class="card-body ">
+<!--                <p class="card-description text-center">Or Be Classical</p>-->
+                <div class="row">
+                  <div class="col-sm-2 col-form-label">
+                        <i class="material-icons">email</i>
+                  </div>
+                  <div class="col-sm-10">
+                    <div class="form-group bmd-form-group has-danger">
+                      <input type="email" class="form-control" formControlName="email" placeholder="Email...">
+                      <div *ngIf="submited && form.controls.email.errors">
+                        <label class="error" *ngIf="form.controls.email.errors.required">Chưa nhập email.</label>
+                        <label class="error" *ngIf="form.controls.email.errors.email">Email không đúng định dạng.</label>
+                        <label class="error" *ngIf="form.controls.email.errors.minlength">Email không được nhỏ hơn 8 ký tự.</label>
+                        <label class="error" *ngIf="form.controls.email.errors.maxlength">Email không được lớn hơn 50 ký tự.</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-2 col-form-label">
+                    <i class="material-icons">lock</i>
+                  </div>
+                  <div class="col-sm-10">
+                    <div class="form-group bmd-form-group has-danger">
+                      <input type="password" class="form-control" formControlName="mat_khau" placeholder="Mật khẩu...">
+                      <div *ngIf="submited && form.controls.mat_khau.errors">
+                        <label class="error" *ngIf="form.controls.mat_khau.errors.required">Chưa nhập mật khẩu.</label>
+                        <label class="error" *ngIf="form.controls.mat_khau.errors.minlength">Mật khẩu không được dưới 8 ký tự.</label>
+                        <label class="error" *ngIf="form.controls.mat_khau.errors.maxlength">Mật khẩu không được trên 50 ký tự.</label>
+                        <label class="error" *ngIf="form.controls.mat_khau.errors.pattern">Mật khẩu không đúng định dạng.</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card-footer justify-content-center">
+                <button type="submit" class="btn btn-rose btn-link btn-lg">Lets Go</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <footer class="footer">
+      <div class="container">
+        <div class="copyright float-right">
+          &copy; 2020, made with <i class="material-icons">favorite</i> by
+          <a href="https://www.facebook.com/xuanvu1409" target="_blank">Xuân Vũ</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+</div>

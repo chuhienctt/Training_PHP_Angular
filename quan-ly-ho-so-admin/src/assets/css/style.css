@@ -210,7 +210,7 @@ div#wrapper {
 }
 .navbar-default.sidebar {
   background-color: #fff;
-  
+
 }
 nav.top1.navbar.navbar-default.navbar-static-top {
   background-color:rgb(6, 217, 149);
@@ -224,7 +224,7 @@ h1 a.navbar-brand {
     text-align: center;
 	width:248px;
 	height: 60px;
-	
+
 }
 .navbar-default .navbar-brand:hover {
     color: #fff;
@@ -309,8 +309,8 @@ ul.nav.navbar-nav.navbar-right {
   font-size: 0.85em;
    border-bottom: 1px solid #E9E9E9;
 }
-.hvr-bounce-to-right:hover i.nav_icon , 
-.hvr-bounce-to-right:focus i.nav_icon, 
+.hvr-bounce-to-right:hover i.nav_icon ,
+.hvr-bounce-to-right:focus i.nav_icon,
 .hvr-bounce-to-right:active i.nav_icon{
 	color:#fff;
 
@@ -351,7 +351,7 @@ a.dropdown-toggle.dropdown-at {
 	float: right;
 }
 .navbar-toolbar{
-	
+
 }
 .full-top{
 	float:left;
@@ -384,7 +384,7 @@ nav.navbar.navbar-static-top {
 	border: none;
 	outline: none;
 	color:#B3AEAE;
-	font-size: 0.9em;	
+	font-size: 0.9em;
 }
 .navbar-left-right input[type="submit"]{
 	background: url(../images/search.png) 0px 2px no-repeat;
@@ -394,7 +394,7 @@ nav.navbar.navbar-static-top {
 	outline: none;
 	color:#B3AEAE;
 	font-size: 0.9em;
-	
+
 }
 .drop-men {
     float: right;
@@ -490,7 +490,7 @@ i.fa.fa-globe {
 .dropdown-menu li a i{
 	color: #B3AEAE;
     font-size: 14px;
-    margin-right: 6%;	
+    margin-right: 6%;
 }
 .dropdown-menu li a {
     padding: 9px 20px;
@@ -524,7 +524,7 @@ i.fa.fa-globe {
 	margin:0;
 }
 /*----*/
-.banner { 
+.banner {
     background: #fff;
     display: block;
     margin: 0em 1em ;
@@ -542,18 +542,18 @@ i.fa.fa-globe {
 .banner  h2{
 	font-size:0.9em;
 }
-.banner  h2 a { 
+.banner  h2 a {
     color:#D95459;
 	text-decoration:none;
 	font-family: 'Muli-Regular';
 	padding:0.3em ;
 }
-.banner  h2 span{ 
+.banner  h2 span{
     color:#000;
 	font-family: 'Muli-Regular';
 	padding:0.3em ;
 }
-.banner  h2 i{ 
+.banner  h2 i{
     color:#000;
 	vertical-align:middle;
 	padding:0.3em ;
@@ -562,7 +562,7 @@ i.fa.fa-globe {
 .content-top-1 {
     background-color: #fff;
    	padding: 1.8em;
-   	margin-bottom: 1em; 
+   	margin-bottom: 1em;
     border: 1px solid #ebeff6;
     border-radius: 4px;
 	-webkit-border-radius: 4px;
@@ -573,7 +573,7 @@ i.fa.fa-globe {
     box-shadow: 0 1px 1px rgba(0,0,0,.05);
 }
 .content-top-1:last-child {
-   	margin-bottom: 0em; 
+   	margin-bottom: 0em;
 }
 .content-graph {
     background-color: #fff;
@@ -676,7 +676,7 @@ i.fa.fa-globe {
  	font-size: 1.5em;
  	color:#000;
  	margin-bottom: 1em;
-}   
+}
 
 /*----*/
 .weather {
@@ -741,7 +741,7 @@ i.fa.fa-globe {
 .weather-bottom1 {
     float: left;
     width: 25%;
-   
+
 }
 .weather-head {
     padding: 2em 1em;
@@ -949,7 +949,7 @@ i.fa.fa-twitter {
     margin-right: 1%;
     margin-bottom: 1%;
 }
-.text-gallery { 
+.text-gallery {
     background: #fff;
     padding: 1em;
     border: none;
@@ -1400,23 +1400,23 @@ label.control-label {
     outline: none;
     font-size: 1em;
     padding: 0.5em 1em;
-    color: #fff;   
+    color: #fff;
     width: 100%;
     -webkit-appearance: none;
     cursor: pointer;
-    background: none;	
+    background: none;
 }
 .login-do a{
 	    font-size: 0.9em;
     padding: 0.5em 1em;
     color: #fff;
     display: block;
-    text-align: center;	
-    text-decoration: none;    
+    text-align: center;
+    text-decoration: none;
 }
 .login-do p{
 	font-size: 0.9em;
-    color: #999;	
+    color: #999;
     margin: 0.7em 0;
     font-family: 'Muli-Regular';
 }
@@ -1541,9 +1541,9 @@ label.control-label {
 	background: #1abc9c;
 }
 .login-sub:before {
-	background: #d95459; 
+	background: #d95459;
 }
-/*--profile--*/
+/*--profiles--*/
 .profile{
 	min-height:800px;
 	padding:1em;
@@ -1607,7 +1607,7 @@ label.control-label {
 .profile-fo h4{
 	font-size: 2em;
 	color:#000;
-	
+
 }
 .profile-fo {
 	text-align:center;
@@ -1762,7 +1762,7 @@ div#home {
 	font-size: 1em;
 	    padding: 15px 8px 15px !important;
      line-height: 1.42857143;
-    vertical-align:middle !important; 
+    vertical-align:middle !important;
     border-top: 1px solid #ddd;
 }
 td.table-text h6{
@@ -1926,7 +1926,7 @@ td span.mar{
    -o-border-top-right-radius: 4px;
    -ms-border-top-right-radius: 4px;
 	-moz-border-top-right-radius: 4px;
-	
+
 }
 .content-box ul li a i{
    margin-right:4%;
@@ -2034,7 +2034,7 @@ tr.table-row {
     border-left: #1ABC9C solid 1em;
     padding-left: .5em;
     font-size: 1em;
-    color: #777F8C;    
+    color: #777F8C;
 }
 .grid-graph div {
     margin: 3px 0;
@@ -2116,7 +2116,7 @@ tr.table-row {
 }
 canvas#bar1 ,canvas#line1{
  width: 428px !important;
-} 
+}
 canvas#polarArea,canvas#radar,canvas#doughnut {
     width: 265px !important;
     height: 265px !important;
@@ -2162,13 +2162,13 @@ canvas#polarArea, canvas#radar, canvas#doughnut {
     height: 190px !important;
 }
 .grid-1 {
-    padding: 1.8em 1em;	
+    padding: 1.8em 1em;
 }
 .but_list h1{
 	font-size:2em;
 }
 /*--table--*/
-.table td, .table>tbody>tr>td, .table>tbody>tr>th, 
+.table td, .table>tbody>tr>td, .table>tbody>tr>th,
 .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td,
  .table>thead>tr>th {
     padding: 8px !important;

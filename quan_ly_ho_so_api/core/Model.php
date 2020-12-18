@@ -6,6 +6,7 @@ class Model {
     protected $table = '';
     private $db = [];
     protected $columns = [];
+    private $original_data = [];
 
     public function __construct() {
         $this->db = new DB($this->table);
@@ -38,6 +39,10 @@ class Model {
 
     public function delete() {
         return $this->db->delete();
+    }
+
+    public function count() {
+        return $this->db->count();
     }
 
     public function select($data) {
@@ -74,30 +79,75 @@ class Model {
         foreach($this->columns as $column) {
             if($column != 'id') {
                 if(isset($this->{$column})) {
-                    $data[$column] = $this->{$column};
-                } else {
-                    $data[$column] = null;
+                    $override = true;
+
+                    if(isset($this->original_data[$column]) && $this->original_data[$column] == $this->{$column}) {
+                        $override = false;
+                    }
+
+                    $override && $data[$column] = $this->{$column};
                 }
             }
         }
         
         if(isset($this->id)) {
             // update
+            if(in_array('updated_at', $this->columns)) {
+                $data['updated_at'] = $this->updated_at = Format::timeNow();
+            }
+            if(count($data) == 0) {
+                return 1;
+            }
             return $this->db->update($data);
         } else {
             // insert
-            return $this->db->insert($data);
+            if(in_array('created_at', $this->columns)) {
+                $data['created_at'] = $this->created_at = Format::timeNow();
+            }
+
+            $row = $this->db->insert($data);
+            if($row) {
+                $this->id = $this->db->lastInsertId();
+                $this->updateValues();
+            }
+            return $row;
         }
     }
 
-    public function hasMany($model, $foreign_key) {
-        return model($model)->where([
+    public function hasMany($model, $foreign_key, $model2 = null, $foreign_key2 = null) {
+
+        $data = model($model)->where([
             $foreign_key => $this->id
         ])->get();
+
+        if($model2 && $foreign_key2) {
+            $new_data = [];
+
+            foreach($data as $item) {
+                $new_data[] = $item->belongsTo($model2, $foreign_key2);
+            }
+
+            $data = $new_data;
+        }
+
+        return $data;
     }
 
     public function belongsTo($model, $foreign_key) {
         return model($model)->find($this->{$foreign_key});
+    }
+
+    private function updateValues() {
+        $db = new DB($this->table);
+        $table = $db->find($this->id);
+
+        foreach($this->columns as $column) {
+            if(isset($table->{$column})) {
+                $this->original_data[$column] = $this->{$column} = $table->{$column};
+            } else {
+                $this->{$column} = null;
+            }
+        }
     }
 
     private function cast($data) {
@@ -107,15 +157,15 @@ class Model {
     }
 
     private function castObject($instance) {
-        $className = static::class;
 
-        $modelName = substr($className, strripos($className, '\\') + 1);
-
+        $modelName = $this->getModelName();
+        
         $model = clone model($modelName);
+        $model->original_data = [];
 
         foreach($this->columns as $column) {
             if(isset($instance->{$column})) {
-                $model->{$column} = $instance->{$column};
+                $model->original_data[$column] = $model->{$column} = $instance->{$column};
             } else {
                 if($column == 'id') {
                     return null;
@@ -125,12 +175,11 @@ class Model {
         }
 
         return $model;
-        
-        // return unserialize(sprintf(
-        //     'O:%d:"%s"%s',
-        //     strlen($className),
-        //     $className,
-        //     strstr(strstr(serialize($instance), '"'), ':')
-        // ));
+    }
+
+    public function getModelName() {
+        $className = static::class;
+        $modelName = substr($className, strripos($className, '\\') + 1);
+        return $modelName;
     }
 }
