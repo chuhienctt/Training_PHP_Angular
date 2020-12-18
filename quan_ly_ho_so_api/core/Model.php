@@ -41,6 +41,14 @@ class Model {
         return $this->db->delete();
     }
 
+    public function hide() {
+        return $this->db->hide();
+    }
+
+    public function show() {
+        return $this->db->show();
+    }
+
     public function count() {
         return $this->db->count();
     }

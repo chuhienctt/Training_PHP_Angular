@@ -198,7 +198,7 @@ class CoQuanController extends Controller {
             ],
         ]);
 
-        $row = model('CoQuan')->where(['id' => request()->id])->update(['deleted_at' => Format::timeNow()]);
+        $row = model('CoQuan')->where(['id' => request()->id])->hide();
 
         if($row) {
             return response()->success(1, 'Xóa cơ quan thành công!');
