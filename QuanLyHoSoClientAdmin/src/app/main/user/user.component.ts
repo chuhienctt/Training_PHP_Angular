@@ -18,7 +18,7 @@ export class UserComponent extends ScriptService implements OnInit {
   listUser = [];
   form: FormGroup;
   aoe: boolean;
-
+// haha
   constructor(
     injector: Injector,
     private adminService: AdminService,
