@@ -47,13 +47,6 @@ export class RegisterComponent implements OnInit {
       this.listProvince = res;
     });
 
-    this.style = {
-      width: '100%',
-      boder: '1px solid rgba(51, 51, 51, 0.1);',
-      'font-weight': 400,
-      'font-family': 'Roboto'
-    };
-
     this.form = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email, Validators.minLength(8), Validators.maxLength(100)]],
       mat_khau: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(50), Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$')]],
@@ -110,7 +103,7 @@ export class RegisterComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-    
+
     if(this.form.invalid || !this.file_avatar) {
       return;
     }
@@ -127,7 +120,7 @@ export class RegisterComponent implements OnInit {
     }
 
     console.log(user);
-    
+
 
     this.fileService.getEncodeFromImage(this.file_avatar).subscribe(data => {
       if (data != null) {
@@ -138,7 +131,7 @@ export class RegisterComponent implements OnInit {
       this.homeService.register(user).subscribe((res: any) => {
 
         this.shareService.closeLoading();
-        
+
         this.alertService.success(() => {
 
           this.shareService.openLoading();

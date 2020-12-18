@@ -6,6 +6,7 @@ import {FeildComponent} from "./feild/feild.component";
 import {OrganComponent} from "./organ/organ.component";
 import {ProfileComponent} from "./profile/profile.component";
 import {ChangepassComponent} from "./changepass/changepass.component";
+import {UserComponent} from "./user/user.component";
 
 const routes: Routes = [
   {
@@ -21,7 +22,8 @@ const routes: Routes = [
       {path:'feild', component: FeildComponent},
       {path: 'organ', component: OrganComponent},
       {path: 'profile', component: ProfileComponent},
-      {path: 'change-password', component: ChangepassComponent}
+      {path: 'change-password', component: ChangepassComponent},
+      {path: 'user', component: UserComponent}
     ]
   }]
 

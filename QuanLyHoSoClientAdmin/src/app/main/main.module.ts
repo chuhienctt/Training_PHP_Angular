@@ -9,6 +9,7 @@ import { OrganComponent } from './organ/organ.component';
 import {PaginatorModule} from 'primeng/paginator';
 import { ProfileComponent } from './profile/profile.component';
 import { ChangepassComponent } from './changepass/changepass.component';
+import { UserComponent } from './user/user.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { ChangepassComponent } from './changepass/changepass.component';
     OrganComponent,
     ProfileComponent,
     ChangepassComponent,
+    UserComponent,
   ],
   imports: [
     CommonModule,

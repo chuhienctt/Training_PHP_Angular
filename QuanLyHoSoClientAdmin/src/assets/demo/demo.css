@@ -53,3 +53,7 @@
 .cursor-pointer {
   cursor: pointer;
 }
+
+.btn-add {
+  padding: 5px 0;
+}
