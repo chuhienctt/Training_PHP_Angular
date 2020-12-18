@@ -42,7 +42,7 @@ class File {
     }
 
     public function getFileExtension() {
-        return pathinfo($this->file_name, PATHINFO_EXTENSION);
+        return strtolower(pathinfo($this->file_name, PATHINFO_EXTENSION));
     }
 
     public function getFileName() {
@@ -101,7 +101,7 @@ class File {
             die();
         } else {
             die("Error: File not found.");
-        } 
+        }
     }
 
 }

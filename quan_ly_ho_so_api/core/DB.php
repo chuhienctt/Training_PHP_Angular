@@ -162,6 +162,14 @@ class DB {
         return $statement->rowCount();
     }
 
+    public function hide() {
+        return $this->update(['deleted_at' => Format::timeNow()]);
+    }
+
+    public function show() {
+        return $this->update(['deleted_at' => 'null']);
+    }
+
     public function count() {
         $sql = "SELECT COUNT(*) AS count FROM $this->table";
         $statement = self::$connect->prepare($sql);
