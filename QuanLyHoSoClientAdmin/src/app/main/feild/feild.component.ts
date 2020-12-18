@@ -63,6 +63,8 @@ export class FeildComponent extends ScriptService implements OnInit {
     this.organService.getAll().subscribe((res:any) => {
       this.listOrgan = res.filter(e => {return e.deleted_at == null});
     })
+
+    this.loadData({first: this.first, rows: this.rows});
   }
 
   loadData(event) {
@@ -71,6 +73,7 @@ export class FeildComponent extends ScriptService implements OnInit {
     this.feildService.getData(this.first, this.rows).subscribe((res: any) => {
       this.listFeild = res.data.filter(e => {return e.deleted_at == null});
       this.totalRecords = res.total;
+      console.log(res)
     })
   }
 
@@ -80,12 +83,12 @@ export class FeildComponent extends ScriptService implements OnInit {
 
   create() {
     this.form.reset();
-    $("#largeModal").modal("show");
+    $("#myModal").modal("show");
     this.aoe = true;
   }
 
   edit(id) {
-    $("#largeModal").modal("show");
+    $("#myModal").modal("show");
     this.aoe = false;
     this.feildService.edit(id).subscribe((res:any) => {
       this.form.patchValue({
@@ -117,7 +120,7 @@ export class FeildComponent extends ScriptService implements OnInit {
         }
         this.feildService.create(feild).subscribe((res:any) => {
           this.loadData({first: this.first, rows: this.rows});
-          $("#largeModal").modal("hide");
+          $("#myModal").modal("hide");
           this.messageService.add({ severity: 'success', summary: 'Thành công!', detail: "Thêm lĩnh vực thành công!" });
         }, err => {
           console.log(err)
@@ -132,7 +135,7 @@ export class FeildComponent extends ScriptService implements OnInit {
         this.feildService.update(feild).subscribe((res:any) => {
           this.submited = false;
           this.loadData({first: this.first, rows: this.rows});
-          $("#largeModal").modal("hide");
+          $("#myModal").modal("hide");
           this.messageService.add({ severity: 'success', summary: 'Thành công!', detail: "Cập nhật lĩnh vực thành công!" });
         }, err => {
           console.log(err)

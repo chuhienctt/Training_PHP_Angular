@@ -1,0 +1,59 @@
+<p-toast></p-toast>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <form class="form-horizontal" [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="card ">
+          <div class="card-header card-header-rose card-header-text">
+            <div class="card-text">
+              <h4 class="card-title">Đổi mật khẩu</h4>
+            </div>
+          </div>
+          <div class="card-body ">
+            <div class="row">
+              <label class="col-sm-2 col-form-label">Email</label>
+              <div class="col-sm-7">
+                <div class="form-group bmd-form-group">
+                  <input class="form-control" type="text" value="{{User.email}}" disabled>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <label class="col-sm-2 col-form-label">Mật khẩu cũ</label>
+              <div class="col-sm-7">
+                <div class="form-group bmd-form-group">
+                  <input class="form-control" type="password" formControlName="mat_khau_cu" placeholder="Mật khẩu cũ">
+                </div>
+              </div>
+              <label class="col-sm-3 label-on-right">
+              </label>
+            </div>
+            <div class="row">
+              <label class="col-sm-2 col-form-label">Mật khẩu mới</label>
+              <div class="col-sm-7">
+                <div class="form-group bmd-form-group">
+                  <input class="form-control" type="password" formControlName="mat_khau_moi" placeholder="Nhập lại mật khẩu">
+                </div>
+              </div>
+              <label class="col-sm-3 label-on-right">
+              </label>
+            </div>
+            <div class="row">
+              <label class="col-sm-2 col-form-label">Nhập lại mật khẩu</label>
+              <div class="col-sm-7">
+                <div class="form-group bmd-form-group">
+                  <input class="form-control" type="password" formControlName="mat_khau_2" placeholder="Nhập lại mật khẩu">
+                </div>
+              </div>
+              <label class="col-sm-3 label-on-right">
+              </label>
+            </div>
+          </div>
+          <div class="card-footer ml-auto mr-auto">
+            <button type="submit" class="btn btn-rose">Cập nhật</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

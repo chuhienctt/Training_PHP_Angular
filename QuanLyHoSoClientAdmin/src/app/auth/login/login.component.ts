@@ -1,9 +1,9 @@
 import {Component, Injector, OnInit} from '@angular/core';
-import {ScriptService} from "../../libs/script.service";
 import {MessageService} from "primeng/api";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {AdminService} from "../../services/admin.service";
 import { Router } from "@angular/router";
+declare var $:any;
 
 @Component({
   selector: 'app-login',
@@ -11,7 +11,7 @@ import { Router } from "@angular/router";
   styleUrls: ['./login.component.css'],
   providers: [MessageService]
 })
-export class LoginComponent extends ScriptService implements OnInit {
+export class LoginComponent implements OnInit {
   form: FormGroup;
   submited = false;
 
@@ -21,10 +21,12 @@ export class LoginComponent extends ScriptService implements OnInit {
     private adminService: AdminService,
     private router: Router,
     private messageService: MessageService) {
-    super(injector)
   }
 
   ngOnInit(): void {
+    setTimeout(() => {
+      $(".card").removeClass("card-hidden");
+    }, 700)
 
     this.form = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email, Validators.minLength(8), Validators.maxLength(100)]],
@@ -43,6 +45,7 @@ export class LoginComponent extends ScriptService implements OnInit {
     }
     this.adminService.login(user).subscribe((res: any) => {
       localStorage.setItem("jwt", JSON.stringify(res.data));
+      this.adminService.input(res.data);
       location.replace("/admin");
       // this.router.navigate(["/admin"]);
     }, err => {

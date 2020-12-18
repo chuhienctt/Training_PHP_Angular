@@ -15,10 +15,8 @@ import {environment} from "../environments/environment";
 import { LoginComponent } from './auth/login/login.component';
 import { MainComponent } from './main/main.component';
 import { AuthComponent } from './auth/auth.component';
-import {HeaderComponent} from "./share/header/header.component";
 import {ShareModule} from "./share/share.module";
-import {FooterComponent} from "./share/footer/footer.component";
-import {DropdownModule} from "primeng/dropdown";
+import {SibarComponent} from "./share/sibar/sibar.component";
 
 @NgModule({
   declarations: [
@@ -26,8 +24,7 @@ import {DropdownModule} from "primeng/dropdown";
     LoginComponent,
     MainComponent,
     AuthComponent,
-    HeaderComponent,
-    FooterComponent
+    SibarComponent
   ],
   imports: [
     BrowserModule,
@@ -35,7 +32,6 @@ import {DropdownModule} from "primeng/dropdown";
     HttpClientModule,
     ShareModule,
     BrowserAnimationsModule,
-    DropdownModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
