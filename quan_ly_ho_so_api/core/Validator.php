@@ -93,9 +93,12 @@ class Validator {
             break;
             case 'unique':
                 $id = request()->id ?? null;
-                $data = [$key => $value];
 
-                $id && $data['id'] = ['!=', $id];
+                if($id) {
+                    $data['id'] = ['!=', $id];
+                } else {
+                    $data = [$key => $value];
+                }
 
                 if(DB::table($g)->where($data)->first()) {
                     return true;

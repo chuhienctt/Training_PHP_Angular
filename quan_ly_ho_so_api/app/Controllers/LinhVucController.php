@@ -158,7 +158,7 @@ class LinhVucController extends Controller {
             ],
         ]);
 
-        $row = model('LinhVuc')->where(['id' => request()->id])->update(['deleted_at' => Format::timeNow()]);
+        $row = model('LinhVuc')->where(['id' => request()->id])->hide();
 
         if($row) {
             return response()->success(1, 'Xóa lĩnh vực thành công!');
