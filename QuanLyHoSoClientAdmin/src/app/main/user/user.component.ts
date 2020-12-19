@@ -92,6 +92,7 @@ export class UserComponent extends ScriptService implements OnInit {
     }, {
       validator: this.confirm_password_validate('mat_khau', 'mat_khau_2')
     })
+
   }
 
   confirm_password_validate(pass: string, pass_confirm: string) {

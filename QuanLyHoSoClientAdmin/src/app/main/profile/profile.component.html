@@ -1,4 +1,4 @@
-
+<p-toast></p-toast>
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-8">
@@ -24,7 +24,7 @@
                     <span class="btn btn-round btn-rose btn-file">
                       <span class="fileinput-new">Chọn ảnh</span>
                       <span class="fileinput-exists">Thay đổi</span>
-                      <input type="file" formControlName="avatar" />
+                      <input type="file" accept="image/*" (change)="readFileUpload($event.target.files)" />
                     </span>
                     <br />
                     <a href="#pablo" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput">
@@ -60,6 +60,12 @@
                   <label>Ngày sinh</label>
                       <input type="text" class="form-control datepicker" formControlName="ngay_sinh">
                 </div>
+              </div>
+            </div>
+            <div class="row-md-12">
+              <div class="form-group">
+                <label>Địa chỉ cụ thể</label>
+                <input type="text" class="form-control" formControlName="dia_chi">
               </div>
             </div>
             <div class="row">
