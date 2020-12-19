@@ -12,10 +12,13 @@ use App\Models\Users;
 class UserController extends Controller {
 
     public function get() {
-        $data = model('Users')->all();
+        
         if(request()->has('id')) {
             $data = model('Users')->find(request()->id);
+        } else {
+            $data = model('Users')->all();
         }
+        
         return response()->json($data);
     }
 

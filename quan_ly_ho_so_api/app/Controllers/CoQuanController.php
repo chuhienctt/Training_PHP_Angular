@@ -13,11 +13,14 @@ use App\Models\CoQuan;
 class CoQuanController extends Controller {
 
     public function get() {
-        $data = model('CoQuan')->all();
+        
         if(request()->has('id')) {
             $data = model('CoQuan')->find(request()->id);
             $data->linh_vuc = $data->all_linh_vuc();
+        } else {
+            $data = model('CoQuan')->all();
         }
+        
         return response()->json($data);
     }
 
