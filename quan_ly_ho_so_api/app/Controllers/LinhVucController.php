@@ -13,11 +13,14 @@ use App\Models\LinhVuc;
 class LinhVucController extends Controller {
 
     public function get() {
-        $data = model('LinhVuc')->all();
+        
         if(request()->has('id')) {
             $data = model('LinhVuc')->find(request()->id);
             $data->co_quan = $data->all_co_quan();
+        } else {
+            $data = model('LinhVuc')->all();
         }
+        
         return response()->json($data);
     }
 
