@@ -14,4 +14,8 @@ export class UserService {
   loadData(first, rows) {
     return this._http.get(baseUrl + "pagination?first=" + first + "row=" + rows);
   }
+
+  create(user) {
+    return this._http.post(baseUrl + "create", user);
+  }
 }

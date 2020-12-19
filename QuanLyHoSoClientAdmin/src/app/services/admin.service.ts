@@ -32,6 +32,6 @@ export class AdminService {
   }
 
   update(profile) {
-    return this._http.put(environment.apiBase + "admin/auth/update", profile);
+    return this._http.put(baseUrl + "update", profile);
   }
 }

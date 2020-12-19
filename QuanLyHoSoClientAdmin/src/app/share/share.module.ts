@@ -5,6 +5,10 @@ import {ToastModule} from "primeng/toast";
 import {HeaderComponent} from "./header/header.component";
 import {FooterComponent} from "./footer/footer.component";
 import {MatSelectModule} from '@angular/material/select';
+import {BsDatepickerModule} from "ngx-bootstrap/datepicker";
+
+
+
 @NgModule({
   declarations: [
     HeaderComponent,
@@ -14,7 +18,8 @@ import {MatSelectModule} from '@angular/material/select';
     CommonModule,
     ReactiveFormsModule,
     MatSelectModule,
-    ToastModule
+    ToastModule,
+    BsDatepickerModule.forRoot(),
   ],
   exports: [
     ReactiveFormsModule,
@@ -22,7 +27,8 @@ import {MatSelectModule} from '@angular/material/select';
     ToastModule,
     CommonModule,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    BsDatepickerModule
   ]
 })
 export class ShareModule { }

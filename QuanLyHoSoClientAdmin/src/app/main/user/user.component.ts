@@ -6,18 +6,22 @@ import {UserService} from "../../services/user.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import { OrganService } from 'src/app/services/organ.service';
 import { AddressService } from 'src/app/services/address.service';
+import {DatePipe} from "@angular/common";
+import {MessageService} from "primeng/api";
+import {FileService} from "../../libs/file.service";
 declare var $: any;
 declare var demo: any;
 
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
-  styleUrls: ['./user.component.css']
+  styleUrls: ['./user.component.css'],
+  providers: [MessageService]
 })
 export class UserComponent extends ScriptService implements OnInit {
   totalRecords: number;
-  rows = 10;
   first = 0;
+  rows = 8;
   listUser = [];
   listOrgan = [];
   listProvince = [];
@@ -27,7 +31,9 @@ export class UserComponent extends ScriptService implements OnInit {
   file_avatar;
   form: FormGroup;
   aoe: boolean;
-  ok:boolean;
+  submitted:boolean;
+  pipe = new DatePipe("en-US");
+  datetimePicker = {};
 
   constructor(
     injector: Injector,
@@ -35,27 +41,21 @@ export class UserComponent extends ScriptService implements OnInit {
     private userService: UserService,
     private formBuilder: FormBuilder,
     private organService: OrganService,
-    private addressService: AddressService
+    private addressService: AddressService,
+    private messageService: MessageService,
+    private fileService: FileService
   ) {
     super(injector)
   }
 
   ngOnInit(): void {
-
-    $(".datepicker").datetimepicker({
-      format: "DD/MM/YYYY",
-      icons: {
-        time: "fa fa-clock-o",
-        date: "fa fa-calendar",
-        up: "fa fa-chevron-up",
-        down: "fa fa-chevron-down",
-        previous: "fa fa-chevron-left",
-        next: "fa fa-chevron-right",
-        today: "fa fa-screenshot",
-        clear: "fa fa-trash",
-        close: "fa fa-remove"
-      }
-    })
+    this.datetimePicker = {
+      dateInputFormat: 'DD-MM-YYYY',
+      adaptivePosition: true,
+      isAnimated: true,
+      maxDate: new Date(),
+      containerClass: 'theme-dark-blue'
+    }
 
     let elem = document.getElementsByClassName('script');
     if (elem.length != undefined) {
@@ -63,6 +63,7 @@ export class UserComponent extends ScriptService implements OnInit {
         elem[i].remove();
       }
     }
+    this.loadScripts();
 
     this.organService.getAll().subscribe((res: any) => {
       this.listOrgan = res;
@@ -71,8 +72,6 @@ export class UserComponent extends ScriptService implements OnInit {
     this.addressService.getProvince().subscribe((res: any) => {
       this.listProvince = res;
     });
-
-    this.loadScripts();
 
     this.loadData({first: this.first, rows: this.rows});
 
@@ -85,7 +84,7 @@ export class UserComponent extends ScriptService implements OnInit {
       so_dien_thoai: ['', [Validators.required, Validators.pattern('^(0)[0-9]{9}$')]],
       dia_chi: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(150)]],
       ngay_sinh: ['', [Validators.required]],
-      id_co_quan: [''],
+      id_co_quan: [{value: '', disabled: true}],
       city: ['', [Validators.required]],
       district: [{ value: '', disabled: true }, [Validators.required]],
       commune: [{ value: '', disabled: true }, [Validators.required]]
@@ -115,6 +114,7 @@ export class UserComponent extends ScriptService implements OnInit {
   getDistrict(id) {
     this.addressService.getDistrict(id).subscribe((res:any) => {
       this.listDistrict = res;
+      this.totalRecords = res.total;
 
       if(res) this.form.controls.district.enable();
     })
@@ -139,11 +139,17 @@ export class UserComponent extends ScriptService implements OnInit {
   loadData(event) {
     this.userService.loadData(event.first, event.rows).subscribe((res:any) => {
       this.listUser = res.data;
+      console.log(res)
     })
   }
 
   choiceRole(role) {
     this.roleSelect = role;
+    if (role == 2) {
+      this.form.controls.id_co_quan.enable();
+    } else {
+      this.form.controls.id_co_quan.disable();
+    }
   }
 
   create() {
@@ -152,7 +158,43 @@ export class UserComponent extends ScriptService implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.file_avatar);
+    this.submitted = true;
+
+    if(this.form.invalid || !this.file_avatar) {
+      return;
+    }
+
+    let user = {
+      email: this.form.value.email,
+      mat_khau: this.form.value.mat_khau,
+      ho_ten: this.form.value.ho_ten,
+      so_dien_thoai: this.form.value.so_dien_thoai,
+      dia_chi: this.form.value.dia_chi,
+      ward_id: this.form.value.commune,
+      ngay_sinh: this.pipe.transform(this.form.value.ngay_sinh, "yyyy-MM-dd"),
+      role: this.roleSelect,
+      id_co_quan: this.form.value.id_co_quan,
+      avatar: null
+    }
+
+    if (this.aoe == true) {
+      this.fileService.getEncodeFromImage(this.file_avatar).subscribe(data => {
+        if (data != null) {
+          user.avatar = data;
+        }
+        this.userService.create(user).subscribe((res:any) => {
+          this.closeModal();
+          this.loadData({first: this.first, rows: this.rows})
+          this.messageService.add({severity: 'success', summary: 'Thành công!', detail: "Thêm người dùng thành công!"});
+        }, err => {
+          console.log(err)
+          this.messageService.add({severity: 'error', summary: 'Thất bại!', detail: err.error.message});
+        })
+      })
+    } else {
+      console.log("chưa làm");
+    }
+
   }
 
   openModal() {
@@ -173,13 +215,6 @@ export class UserComponent extends ScriptService implements OnInit {
   readFileUpload(files) {
     if (files && files[0]) {
       this.file_avatar = files[0];
-
-      var reader = new FileReader();
-
-      reader.onload = function (e) {
-        $('.profile-pic').attr('src', e.target.result);
-      }
-      reader.readAsDataURL(files[0]);
     }
   }
 

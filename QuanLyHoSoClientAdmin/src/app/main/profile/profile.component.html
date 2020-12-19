@@ -24,9 +24,9 @@
                     <span class="btn btn-round btn-rose btn-file">
                       <span class="fileinput-new">Chọn ảnh</span>
                       <span class="fileinput-exists">Thay đổi</span>
-                      <input type="file" accept="image/*" (change)="readFileUpload($event.target.files)" />
+                      <input type="file" accept="image/*" (change)="readFileUpload($event.target.files)"/>
                     </span>
-                    <br />
+                    <br/>
                     <a href="#pablo" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput">
                       <i class="fa fa-times"></i>Xóa
                     </a>
@@ -58,7 +58,7 @@
               <div class="col-md-6">
                 <div class="form-group">
                   <label>Ngày sinh</label>
-                      <input type="text" class="form-control datepicker" formControlName="ngay_sinh">
+                  <input type="text" formControlName="ngay_sinh" [bsConfig]="datetimePicker" class="form-control" bsDatepicker>
                 </div>
               </div>
             </div>
@@ -118,7 +118,7 @@
     <div class="col-md-4">
       <div class="card card-profile">
         <div class="card-avatar">
-            <img class="img" [src]="createImg(User.avatar)" />
+          <img class="img" [src]="createImg(User.avatar)"/>
         </div>
         <div class="card-body">
           <h6 class="card-category text-gray" *ngIf="User.role == 1">Công dân</h6>

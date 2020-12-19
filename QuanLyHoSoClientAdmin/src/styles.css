@@ -8,3 +8,11 @@
 .example-full-width {
   width: 100%;
 }
+
+.theme-dark-blue .bs-datepicker-head {
+  background-color: #9c27b0 !important;
+}
+
+.theme-dark-blue .bs-datepicker-body table td span.selected, .theme-dark-blue .bs-datepicker-body table td.selected span, .theme-dark-blue .bs-datepicker-body table td span[class*="select-"]:after, .theme-dark-blue .bs-datepicker-body table td[class*="select-"] span:after {
+  background-color: #9c27b0 !important;
+}

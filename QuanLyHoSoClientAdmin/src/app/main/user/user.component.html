@@ -1,3 +1,4 @@
+<p-toast></p-toast>
 <div>
   <h4 class="card-title text-uppercase text-center">
     Quản lý người dùng
@@ -58,7 +59,7 @@
       </div>
     </div>
   </div>
-  <p-paginator [rows]="10" totalRecords="{{totalRecords}}" (onPageChange)="loadData($event)"></p-paginator>
+  <p-paginator [rows]="rows" totalRecords="{{totalRecords}}" (onPageChange)="loadData($event)"></p-paginator>
 
 </div>
 
@@ -168,9 +169,9 @@
                           </div>
                           <h6>Cán bộ</h6>
                         </div>
-                        <mat-form-field appearance="fill">
+                        <mat-form-field appearance="fill" [style]="{'z-index': '1500'}">
                           <mat-label>Chọn cơ quan</mat-label>
-                          <mat-select disableRipple formControlName="id_co_quan" [disabled]="roleSelect != 2">
+                          <mat-select disableRipple formControlName="id_co_quan" >
                             <mat-option *ngFor="let item of listOrgan" [value]="item.id">
                               {{item.ten_co_quan}}
                             </mat-option>
@@ -209,13 +210,13 @@
                   <div class="col-sm-5">
                     <div class="form-group">
                       <label>Ngày sinh</label>
-                      <input type="text" class="form-control datepicker">
+                      <input type="text" formControlName="ngay_sinh" [bsConfig]="datetimePicker" class="form-control" bsDatepicker>
                     </div>
                   </div>
                   <div class="col-sm-7">
                     <div class="form-group">
                       <label>Địa chỉ</label>
-                      <input type="text" class="form-control">
+                      <input type="text" class="form-control" formControlName="dia_chi">
                     </div>
                   </div>
                   <div class="col-md-4">

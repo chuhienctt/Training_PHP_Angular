@@ -23,6 +23,7 @@ export class ProfileComponent extends ScriptService implements OnInit {
   listCommune = [];
   file_avatar: File;
   submitted = false;
+  datetimePicker = {};
 
   constructor(
     injector: Injector,
@@ -36,20 +37,13 @@ export class ProfileComponent extends ScriptService implements OnInit {
   }
 
   ngOnInit(): void {
-    $(".datepicker").datetimepicker({
-      format: "DD/MM/YYYY",
-      icons: {
-        time: "fa fa-clock-o",
-        date: "fa fa-calendar",
-        up: "fa fa-chevron-up",
-        down: "fa fa-chevron-down",
-        previous: "fa fa-chevron-left",
-        next: "fa fa-chevron-right",
-        today: "fa fa-screenshot",
-        clear: "fa fa-trash",
-        close: "fa fa-remove"
-      }
-    })
+    this.datetimePicker = {
+      dateInputFormat: 'DD-MM-YYYY',
+      adaptivePosition: true,
+      isAnimated: true,
+      maxDate: new Date(),
+      containerClass: 'theme-dark-blue'
+    }
 
     this.form = this.formBuilder.group({
       email: [{value: '', disabled: true}],
@@ -72,14 +66,14 @@ export class ProfileComponent extends ScriptService implements OnInit {
         ho_ten: this.User.ho_ten,
         so_dien_thoai: this.User.so_dien_thoai,
         dia_chi: this.User.dia_chi,
-        ngay_sinh: this.pipe.transform(this.User.ngay_sinh, "yyyy-MM-dd"),
+        ngay_sinh: new Date(Date.parse(this.User.ngay_sinh)),
         city: data.province.id,
         district: data.district.id,
         commune: data.ward.id,
       })
-
-      this.loadScripts();
     })
+
+    this.loadScripts();
   }
 
   getDistrict(id) {
@@ -100,6 +94,10 @@ export class ProfileComponent extends ScriptService implements OnInit {
 
   createImg(path) {
     return environment.urlImg + path;
+  }
+
+  a(event) {
+    console.log(event)
   }
 
   onSubmit() {
@@ -137,13 +135,6 @@ export class ProfileComponent extends ScriptService implements OnInit {
   readFileUpload(files) {
     if (files && files[0]) {
       this.file_avatar = files[0];
-
-      var reader = new FileReader();
-
-      reader.onload = function (e) {
-        $('.profile-pic').attr('src', e.target.result);
-      }
-      reader.readAsDataURL(files[0]);
     }
   }
 
