@@ -201,6 +201,8 @@ export class UserComponent extends ScriptService implements OnInit {
   }
 
   openModal() {
+    $('#wizardPicturePreview').attr("src", "assets/img/default-avatar.png");
+    this.file_avatar = null;
     $('#myModal').on('show.bs.modal', function (e) {
       setTimeout(() => {
         $('.card.card-wizard').addClass('active');
@@ -229,9 +231,7 @@ export class UserComponent extends ScriptService implements OnInit {
   }
 
   delete(id) {
-    let time = {thoi_han: this.pipe.transform("9999-09-09", "yyyy-MM-dd hh:mm:ss")}
-    this.userService.delete(id, time).subscribe(res => {
-      console.log(res);
+    this.userService.delete(id, {thoi_han: "9999-09-09 12:00:00"}).subscribe(res => {
       this.loadData({first: this.first, rows: this.rows});
     })
   }

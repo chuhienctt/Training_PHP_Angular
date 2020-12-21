@@ -1,3 +1,4 @@
+<p-toast></p-toast>
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-12">
@@ -8,7 +9,8 @@
           </div>
           <h4 class="card-title" style="text-transform: uppercase;">
             Quản lý lĩnh vực
-            <button type="button" (click)="create()" rel="tooltip" class="btn btn-warning btn-add float-right" data-original-title="Thêm" title="Thêm">
+            <button type="button" (click)="create()" rel="tooltip" class="btn btn-primary btn-add float-right"
+                    data-original-title="Thêm" title="Thêm">
               <i class="material-icons">add</i>
             </button>
           </h4>
@@ -29,13 +31,14 @@
                 <td class="text-center">1</td>
                 <td>{{item.ten_linh_vuc}}</td>
                 <td>
-                  <img style="width: 40px" *ngIf="item.hinh_anh" [src]="createImg(item.hinh_anh)" alt="">
+                  <img style="height: 40px" *ngIf="item.hinh_anh" [src]="createImg(item.hinh_anh)" alt="">
                 </td>
                 <td class="td-actions text-right">
-                  <button type="button" rel="tooltip" class="btn btn-warning mr-1" data-original-title="Sửa" title="Sửa">
+                  <button type="button" (click)="edit(item.id)" rel="tooltip" class="btn btn-warning mr-1" data-original-title="Sửa"
+                          title="Sửa">
                     <i class="material-icons">edit</i>
                   </button>
-                  <button type="button" rel="tooltip" class="btn btn-danger" data-original-title="Xóa" title="Xóa">
+                  <button type="button" (click)="delete(item.id)" rel="tooltip" class="btn btn-danger" data-original-title="Xóa" title="Xóa">
                     <i class="material-icons">close</i>
                   </button>
                 </td>
@@ -54,19 +57,72 @@
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">{{ aoe ? "Thêm lĩnh vực" : "Sửa lĩnh vực" }}</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-          <i class="material-icons">clear</i>
-        </button>
-      </div>
-      <div class="modal-body">
-      </div>
-      <div class="modal-footer">
-        <button type="submit" class="btn btn-primary">Cập nhật</button>
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-      </div>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="modal-header pb-0">
+          <h4 class="modal-title card-title"
+              style="text-transform: uppercase">{{ aoe ? "Thêm lĩnh vực" : "Sửa lĩnh vực" }}</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+            <i class="material-icons">clear</i>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="card-body ">
+            <div class="row">
+              <label class="col-sm-4 col-form-label">Tên lĩnh vực</label>
+              <div class="col-sm-8">
+                <div class="form-group bmd-form-group">
+                  <input class="form-control" type="text" formControlName="ten_linh_vuc" minlength="5">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <label class="col-sm-4 col-form-label">Mô tả</label>
+              <div class="col-sm-8">
+                <div class="form-group bmd-form-group">
+                  <input class="form-control" type="text" formControlName="mo_ta" minlength="5">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <label class="col-sm-4 col-form-label">Cơ quan</label>
+              <div class="col-sm-8">
+                <div class="form-group bmd-form-group">
+                  <mat-form-field appearance="fill" [style]="style">
+                    <mat-label>Chọn cơ quan</mat-label>
+                    <mat-select formControlName="co_quan" multiple>
+                      <mat-option *ngFor="let item of listOrgan" [value]="item.id">{{item.ten_co_quan}}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <label class="col-sm-4 col-form-label">Hình ảnh</label>
+              <div class="col-sm-8">
+                <div class="fileinput fileinput-new text-center" data-provides="fileinput">
+                  <div class="fileinput-new thumbnail">
+                    <img src="assets/img/image_placeholder.jpg" alt="...">
+                  </div>
+                  <div class="fileinput-preview fileinput-exists thumbnail"></div>
+                  <div>
+                          <span class="btn btn-rose btn-round btn-file">
+                            <span class="fileinput-new">Chọn ảnh</span>
+                            <span class="fileinput-exists">Đổi ảnh</span>
+                            <input type="file" name="..." (change)="readFileUpload($event.target.files)"/>
+                          </span>
+                    <a href="#pablo" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"><i
+                      class="fa fa-times"></i> Xóa</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer pt-0">
+            <button type="button" class="btn btn-danger mr-2" data-dismiss="modal">Đóng</button>
+            <button type="submit" class="btn btn-primary">Cập nhật</button>
+          </div>
+        </div>
+      </form>
     </div>
   </div>
-</div>
-<!--  End Modal -->
+  <!--  End Modal -->

@@ -70,7 +70,7 @@ Route::group([
             Route::get('/pagination', 'UserController@pagination');
             Route::post('/create', 'UserController@create');
             Route::put('/update', 'UserController@update');
-            Route::delete('/block', 'UserController@block');
+            Route::post('/block', 'UserController@block');
 
         });
 
@@ -83,7 +83,7 @@ Route::group([
             Route::get('/pagination-tinh', 'DiaChinhController@pagination_tinh');
             Route::post('/create-tinh', 'DiaChinhController@create_tinh');
             Route::put('/update-tinh', 'DiaChinhController@update_tinh');
-            Route::delete('/delete-tinh', 'DiaChinhController@delete_tinh');
+            Route::post('/delete-tinh', 'DiaChinhController@delete_tinh');
             
             Route::get('/get-huyens', 'DiaChinhController@get_huyen');
             Route::get('/pagination-huyen', 'DiaChinhController@pagination_huyen');
