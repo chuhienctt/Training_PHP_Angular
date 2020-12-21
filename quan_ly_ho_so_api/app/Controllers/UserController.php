@@ -217,6 +217,8 @@ class UserController extends Controller {
 
         $user = model('Users')->find(request()->id);
 
+        // var_dump($user);
+
         // k cho khóa admin khác
         if($user->role == 3) {
             Validator::alert("Không thể khóa người dùng này!");
