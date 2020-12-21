@@ -136,6 +136,8 @@ class DB {
         $statement = self::$connect->prepare($sql);
 
         $data = array_merge(array_values($data), $where['values']);
+        
+        // var_dump($sql, $data);
 
         $index = 1;
         foreach($data as $value) {
@@ -198,6 +200,8 @@ class DB {
 
     public function where($data = [], $instance = null) {
         $this->where = $data;
+
+        // var_dump($data);
 
         return $instance ?? $this;
     }
