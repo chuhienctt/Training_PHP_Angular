@@ -96,9 +96,8 @@ class Validator {
 
                 if($id) {
                     $data['id'] = ['!=', $id];
-                } else {
-                    $data = [$key => $value];
                 }
+                $data = [$key => $value];
 
                 if(DB::table($g)->where($data)->first()) {
                     return true;
