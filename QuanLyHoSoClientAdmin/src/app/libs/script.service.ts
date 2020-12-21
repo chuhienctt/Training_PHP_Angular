@@ -11,8 +11,7 @@ export class ScriptService {
     }
 
     public loadScripts() {
-      this.renderExternalScript('assets/js/material-dashboard.min6c54.js?v=2.2.2').onload = () => {
-      }
+      this.renderExternalScript('assets/js/material-dashboard.min6c54.js?v=2.2.2').onload = () => {}
     }
 
     public renderExternalScript(src: string): HTMLScriptElement {

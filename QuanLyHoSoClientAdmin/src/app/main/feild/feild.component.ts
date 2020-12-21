@@ -6,7 +6,6 @@ import {environment} from "../../../environments/environment";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import {FileUpload} from "primeng/fileupload";
-import {MultiSelectModule} from 'primeng/multiselect';
 import {OrganService} from "../../services/organ.service";
 import {FileService} from "../../libs/file.service";
 

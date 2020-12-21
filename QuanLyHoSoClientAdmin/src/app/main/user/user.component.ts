@@ -63,7 +63,7 @@ export class UserComponent extends ScriptService implements OnInit {
         elem[i].remove();
       }
     }
-    this.loadScripts();
+    // this.loadScripts();
 
     this.organService.getAll().subscribe((res: any) => {
       this.listOrgan = res;
@@ -137,15 +137,18 @@ export class UserComponent extends ScriptService implements OnInit {
   }
 
   loadData(event) {
-    this.userService.loadData(event.first, event.rows).subscribe((res:any) => {
+    this.first = event.first;
+    this.rows = event.rows;
+    this.userService.loadData(this.first, this.rows).subscribe((res:any) => {
       this.listUser = res.data;
-      console.log(res)
+      this.totalRecords = res.total;
     })
   }
 
   choiceRole(role) {
     this.roleSelect = role;
     if (role == 2) {
+      this.form.controls.id_co_quan.setValidators([Validators.required]);
       this.form.controls.id_co_quan.enable();
     } else {
       this.form.controls.id_co_quan.disable();
@@ -183,11 +186,11 @@ export class UserComponent extends ScriptService implements OnInit {
           user.avatar = data;
         }
         this.userService.create(user).subscribe((res:any) => {
+          this.submitted = false;
           this.closeModal();
           this.loadData({first: this.first, rows: this.rows})
           this.messageService.add({severity: 'success', summary: 'Thành công!', detail: "Thêm người dùng thành công!"});
         }, err => {
-          console.log(err)
           this.messageService.add({severity: 'error', summary: 'Thất bại!', detail: err.error.message});
         })
       })
@@ -204,18 +207,33 @@ export class UserComponent extends ScriptService implements OnInit {
         demo.initMaterialWizard();
       }, 200);
     });
-
     $("#myModal").modal("show");
   }
 
   closeModal() {
     $("#myModal").modal("hide");
+    this.form.reset();
   }
 
   readFileUpload(files) {
     if (files && files[0]) {
       this.file_avatar = files[0];
     }
+  }
+
+  convertString(value, length) {
+    if (value.length > length) {
+      return value.substring(0, length - 3) + '...';
+    }
+    return value;
+  }
+
+  delete(id) {
+    let time = {thoi_han: this.pipe.transform("9999-09-09", "yyyy-MM-dd hh:mm:ss")}
+    this.userService.delete(id, time).subscribe(res => {
+      console.log(res);
+      this.loadData({first: this.first, rows: this.rows});
+    })
   }
 
 }
