@@ -209,10 +209,6 @@ class UserController extends Controller {
                 'required' => 'Thiếu id người dùng',
                 'exists:users' => 'Không tồn tại người dùng',
             ],
-            'thoi_han' => [
-                'required' => 'Thời hạn không được để trống',
-                'datetime' => 'Thời hạn không đúng định dạng',
-            ],
         ]);
 
         $user = model('Users')->find(request()->id);
@@ -224,7 +220,11 @@ class UserController extends Controller {
             Validator::alert("Không thể khóa người dùng này!");
         }
 
-        $user->deleted_at = Format::toDateTime(request()->thoi_han);
+        if(request()->has('thoi_han')) {
+            $user->deleted_at = Format::toDateTime(request()->thoi_han);
+        } else {
+            $user->deleted_at = null;
+        }
 
         if($user->save()) {
             return response()->success(1, 'Đã khóa người dùng thành công!');
