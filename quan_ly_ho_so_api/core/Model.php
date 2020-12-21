@@ -106,7 +106,7 @@ class Model {
             if(count($data) == 0) {
                 return 1;
             }
-            return $this->db->update($data);
+            return $this->db->where(['id' => $this->id])->update($data);
         } else {
             // insert
             if(in_array('created_at', $this->columns)) {
