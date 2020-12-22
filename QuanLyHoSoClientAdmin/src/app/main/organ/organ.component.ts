@@ -9,6 +9,7 @@ import {OrganService} from "../../services/organ.service";
 import {FileUpload} from "primeng/fileupload";
 import {FileService} from "../../libs/file.service";
 import {AddressService} from "../../services/address.service";
+import {GetImagePipe} from "../../libs/get.image.pipe";
 
 declare var $: any;
 
@@ -26,7 +27,7 @@ export class OrganComponent extends ScriptService implements OnInit {
   loading: boolean;
   aoe: boolean;
   form: FormGroup;
-  submited = false;
+  submitted = false;
   listOrgan = [];
   listCity = [];
   listDistrict = [];
@@ -35,6 +36,7 @@ export class OrganComponent extends ScriptService implements OnInit {
   rows = 10;
   style = {};
   image:string;
+  file_img:File;
 
   constructor(
     injetor: Injector,
@@ -62,13 +64,6 @@ export class OrganComponent extends ScriptService implements OnInit {
       this.listCity = res;
     });
 
-    this.style = {
-      width: '100%',
-      boder: '1px solid rgba(51, 51, 51, 0.1);',
-      'font-weight': 400,
-      'font-family': 'Roboto'
-    };
-
     this.form = this.formBuilder.group({
       id: [''],
       ten_co_quan: ['', [Validators.required, Validators.maxLength(255)]],
@@ -77,13 +72,15 @@ export class OrganComponent extends ScriptService implements OnInit {
       so_dien_thoai: ['', [Validators.required, Validators.pattern('^(0)[0-9]{9}$')]],
       linh_vuc: [''],
       city: ['', [Validators.required]],
-      district: ['', [Validators.required]],
-      commune: ['', [Validators.required]]
+      district: [{value: '', disabled: true}, [Validators.required]],
+      commune: [{value: '', disabled: true}, [Validators.required]]
     })
 
     this.feildService.getAll().subscribe((res: any) => {
       this.listFeild = res.filter(e => {return e.deleted_at == null});
     })
+
+    this.loadData({first: this.first, rows: this.rows})
   }
 
   loadData(event) {
@@ -98,14 +95,20 @@ export class OrganComponent extends ScriptService implements OnInit {
   }
 
   create() {
-    this.form.reset();
-    $("#largeModal").modal("show");
+    this.openModal();
+    this.image = "assets/img/image_placeholder.jpg";
+    this.file_img = null;
     this.aoe = true;
+    this.form.controls.district.disable();
+    this.form.controls.commune.disable();
   }
 
   edit(id) {
-    $("#largeModal").modal("show");
+    this.openModal();
     this.aoe = false;
+    this.form.controls.district.enable();
+    this.form.controls.commune.enable();
+
     this.organService.edit(id).subscribe((res: any) => {
       this.addressService.getAddress(res.ward_id).subscribe((data:any) => {
         this.listCity = data.list_province;
@@ -117,16 +120,18 @@ export class OrganComponent extends ScriptService implements OnInit {
           email: res.email,
           dia_chi: res.dia_chi,
           so_dien_thoai: res.so_dien_thoai,
-          city: data.province,
-          district: data.district,
-          commune: data.ward
+          city: data.province.id,
+          district: data.district.id,
+          commune: data.ward.id,
+          linh_vuc: res.linh_vuc.map(e => {return e.id})
         })
+        this.image = new GetImagePipe().transform(res.hinh_anh);
       })
     })
   }
 
   onSubmit() {
-    this.submited = true;
+    this.submitted = true;
     if (this.form.invalid) {
       return;
     }
@@ -136,39 +141,40 @@ export class OrganComponent extends ScriptService implements OnInit {
       email: this.form.value.email,
       dia_chi: this.form.value.dia_chi,
       so_dien_thoai: this.form.value.so_dien_thoai,
-      linh_vuc: this.form.value.linh_vuc.map(e => {
-        return e.id
-      }),
+      linh_vuc: this.form.value.linh_vuc,
       hinh_anh: null,
-      ward_id: this.form.value.commune.id
+      ward_id: this.form.value.commune
     }
     if (this.aoe == true) {
-      this.fileService.getEncodeFromImage(this.file.files[0]).subscribe(data => {
+      this.fileService.getEncodeFromImage(this.file_img).subscribe(data => {
         if (data != null) {
           organ.hinh_anh = data;
-          this.organService.create(organ).subscribe((res: any) => {
-            this.loadData({first: this.first, rows: this.rows});
-            $("#largeModal").modal("hide");
-            this.messageService.add({severity: 'success', summary: 'Thành công!', detail: "Thêm cơ quan thành công!"});
-          }, err => {
-            console.log(err)
-            this.messageService.add({severity: 'error', summary: 'Thất bại!', detail: err.error.message});
-          })
         }
+        this.organService.create(organ).subscribe((res: any) => {
+          this.submitted = false;
+          this.loadData({first: this.first, rows: this.rows});
+          this.closeModal();
+          this.messageService.add({severity: 'success', summary: 'Thành công!', detail: "Thêm cơ quan thành công!"});
+        }, err => {
+          console.log(err)
+          this.messageService.add({severity: 'error', summary: 'Thất bại!', detail: err.error.message});
+        })
       })
     } else {
-      this.fileService.getEncodeFromImage(this.file.files[0]).subscribe(data => {
+      this.fileService.getEncodeFromImage(this.file_img).subscribe(data => {
         if (data != null) {
-          this.organService.update(organ).subscribe((res: any) => {
-            this.submited = false;
-            this.loadData({first: this.first, rows: this.rows});
-            $("#largeModal").modal("hide");
-            this.messageService.add({severity: 'success', summary: 'Thành công!', detail: "Cập nhật cơ quan thành công!"});
-          }, err => {
-            console.log(err)
-            this.messageService.add({severity: 'error', summary: 'Thất bại!', detail: err.error.message});
-          })
+          organ.hinh_anh = data;
         }
+        console.log(organ)
+        this.organService.update(organ).subscribe((res: any) => {
+          this.submitted = false;
+          this.loadData({first: this.first, rows: this.rows});
+          this.closeModal();
+          this.messageService.add({severity: 'success', summary: 'Thành công!', detail: "Cập nhật cơ quan thành công!"});
+        }, err => {
+          console.log(err)
+          this.messageService.add({severity: 'error', summary: 'Thất bại!', detail: err.error.message});
+        })
       })
     }
   }
@@ -185,15 +191,10 @@ export class OrganComponent extends ScriptService implements OnInit {
     }
   }
 
-  createImg(path) {
-    return environment.urlImg + path;
-  }
-
-
-  getDistrict(val) {
+  getDistrict(id) {
     this.listDistrict = [];
     this.listCommune = [];
-    this.addressService.getDistrict(val.id).subscribe((res:any) => {
+    this.addressService.getDistrict(id).subscribe((res:any) => {
       this.listDistrict = res;
       if (this.listDistrict.length != 0) {
         this.form.controls.district.enable();
@@ -201,13 +202,28 @@ export class OrganComponent extends ScriptService implements OnInit {
     })
   }
 
-  getCommune(val) {
+  getCommune(id) {
     this.listCommune = [];
-    this.addressService.getCommune(val.id).subscribe((res:any) => {
+    this.addressService.getCommune(id).subscribe((res:any) => {
       this.listCommune = res;
       if (this.listCommune.length != 0) {
         this.form.controls.commune.enable();
       }
     })
+  }
+
+  readFileUpload(files) {
+    if (files && files[0]) {
+      this.file_img = files[0];
+    }
+  }
+
+  openModal() {
+    $("#myModal").modal("show");
+    this.form.reset();
+  }
+
+  closeModal() {
+    $("#myModal").modal("hide");
   }
 }

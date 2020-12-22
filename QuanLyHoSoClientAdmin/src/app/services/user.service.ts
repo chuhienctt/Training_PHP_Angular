@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {environment} from "../../environments/environment";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 
 const baseUrl = environment.apiUrl + "user/";
 
@@ -12,6 +12,22 @@ export class UserService {
   constructor(private _http: HttpClient) { }
 
   loadData(first, rows) {
-    return this._http.get(baseUrl + "pagination?first=" + first + "row=" + rows);
+    return this._http.get(baseUrl + "pagination?first=" + first + "&row=" + rows);
+  }
+
+  create(user) {
+    return this._http.post(baseUrl + "create", user);
+  }
+
+  delete(id, thoi_han) {
+    return this._http.post(baseUrl + "block?id=" +id, thoi_han);
+  }
+
+  get(id) {
+    return this._http.get(baseUrl + "get?id=" + id);
+  }
+
+  update(id, user) {
+    return this._http.put(baseUrl + "update?id=", user);
   }
 }

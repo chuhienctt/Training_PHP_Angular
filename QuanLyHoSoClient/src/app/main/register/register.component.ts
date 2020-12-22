@@ -119,9 +119,6 @@ export class RegisterComponent implements OnInit {
       avatar: null
     }
 
-    console.log(user);
-
-
     this.fileService.getEncodeFromImage(this.file_avatar).subscribe(data => {
       if (data != null) {
         user.avatar = data;

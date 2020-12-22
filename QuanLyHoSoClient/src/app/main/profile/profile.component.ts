@@ -83,7 +83,7 @@ export class ProfileComponent implements OnInit {
 
   getCommune(id) {
     this.listCommune = [];
-    
+
     this.shareService.openLoading();
     this.addressService.getCommune(id).subscribe((res: any) => {
       this.listCommune = res;
