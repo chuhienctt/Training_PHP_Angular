@@ -117,7 +117,7 @@ class Model {
 
             $row = $this->db->insert($data);
             if($row) {
-                $this->id = $this->db->lastInsertId();
+                $this->id = DB::lastInsertId();
                 $this->updateValues();
             }
             return $row;

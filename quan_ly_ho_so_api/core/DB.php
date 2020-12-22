@@ -252,7 +252,7 @@ class DB {
         return $this->limit($n);
     }
 
-    public function lastInsertId() {
+    public static function lastInsertId() {
         return self::$connect->lastInsertId();
     }
 
