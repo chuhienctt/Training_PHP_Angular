@@ -42,11 +42,13 @@ class Model {
     }
 
     public function hide() {
-        return $this->db->hide();
+        $this->deleted_at = Format::timeNow();
+        return $this->save();
     }
 
     public function show() {
-        return $this->db->show();
+        $this->deleted_at = null;
+        return $this->save();
     }
 
     public function count() {
@@ -86,7 +88,7 @@ class Model {
 
         foreach($this->columns as $column) {
             if($column != 'id') {
-                if(isset($this->{$column})) {
+                if(isset($this->{$column}) || $this->{$column} === NULL) {
                     $override = true;
 
                     if(isset($this->original_data[$column]) && $this->original_data[$column] == $this->{$column}) {

@@ -129,6 +129,12 @@ class UserController extends Controller {
                 'required' => 'Thiếu id người dùng',
                 'exists:users' => 'Không tồn tại người dùng',
             ],
+            'mat_khau' => [
+                'required' => 'Mật khẩu không được để trống',
+                'max:50' => 'Mật khẩu không quá 50 kí tự',
+                'min:8' => 'Mật khẩu không dưới 8 kí tự',
+                'password' => 'Mật khẩu phải chứa ít nhất 1 kí tự hoa, 1 kí tự thường, 1 kí tự đặc biệt',
+            ],
             'ho_ten' => [
                 'required' => 'Họ tên không được để trống',
                 'max:100' => 'Họ tên không quá 100 kí tự',
@@ -164,6 +170,7 @@ class UserController extends Controller {
             Validator::alert("Không thể chỉnh sửa thông tin người dùng này!");
         }
 
+        $user->mat_khau = Auth::createPassword(request()->mat_khau);
         $user->ho_ten = request()->ho_ten;
         $user->so_dien_thoai = request()->so_dien_thoai;
         $user->dia_chi = request()->dia_chi;
@@ -213,23 +220,33 @@ class UserController extends Controller {
 
         $user = model('Users')->find(request()->id);
 
-        // var_dump($user);
-
         // k cho khóa admin khác
         if($user->role == 3) {
             Validator::alert("Không thể khóa người dùng này!");
         }
 
-        if(request()->has('thoi_han')) {
-            $user->deleted_at = Format::toDateTime(request()->thoi_han);
-        } else {
-            $user->deleted_at = null;
-        }
-
-        if($user->save()) {
+        if($user->hide()) {
             return response()->success(1, 'Đã khóa người dùng thành công!');
         }
 
         return response()->error(2, 'Khóa người dùng không thành công!');
+    }
+
+    public function unblock() {
+        
+        validator()->validate([
+            'id' => [
+                'required' => 'Thiếu id người dùng',
+                'exists:users' => 'Không tồn tại người dùng',
+            ],
+        ]);
+
+        $user = model('Users')->find(request()->id);
+
+        if($user->show()) {
+            return response()->success(1, 'Đã mở khóa người dùng thành công!');
+        }
+
+        return response()->error(2, 'Mở khóa người dùng không thành công!');
     }
 }
