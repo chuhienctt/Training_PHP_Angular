@@ -7,6 +7,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import {OrganService} from "../../services/organ.service";
 import {FileService} from "../../libs/file.service";
+import {GetImagePipe} from "../../libs/get.image.pipe";
 
 declare var $:any;
 
@@ -23,13 +24,12 @@ export class FeildComponent extends ScriptService implements OnInit {
   loading: boolean;
   aoe: boolean;
   form: FormGroup;
-  submited = false;
+  submitted = false;
   listOrgan = [];
   first = 0;
   rows = 10;
   image:string;
-  file_img;
-  style = {};
+  file_img: File;
 
   constructor(
     injetor: Injector,
@@ -44,12 +44,6 @@ export class FeildComponent extends ScriptService implements OnInit {
   }
 
   ngOnInit(): void {
-    this.style = {
-      'width': '100%',
-      'background-color': '#fff',
-      'padding': '0',
-      'border-top': '0'
-    }
 
     let elem = document.getElementsByClassName('script');
     if (elem.length != undefined) {
@@ -63,7 +57,7 @@ export class FeildComponent extends ScriptService implements OnInit {
       id: [''],
       ten_linh_vuc: ['',[Validators.required, Validators.maxLength(200)]],
       mo_ta: ['',[Validators.maxLength(250)]],
-      co_quan: ['']
+      co_quan: ['', Validators.required]
     })
 
     this.organService.getAll().subscribe((res:any) => {
@@ -82,12 +76,10 @@ export class FeildComponent extends ScriptService implements OnInit {
     })
   }
 
-  createImg(path) {
-    return environment.urlImg + path;
-  }
-
   create() {
     this.openModal();
+    this.image = "assets/img/image_placeholder.jpg";
+    this.file_img = null;
     this.aoe = true;
   }
 
@@ -101,12 +93,13 @@ export class FeildComponent extends ScriptService implements OnInit {
         mo_ta: res.mo_ta,
         co_quan: res.co_quan.map(e => {return e.id})
       })
-      this.image = res.hinh_anh;
+      this.image = new GetImagePipe().transform(res.hinh_anh);
     })
+
   }
 
   onSubmit()  {
-    this.submited = true;
+    this.submitted = true;
     if (this.form.invalid && !this.file_img) {
       return;
     }
@@ -123,7 +116,7 @@ export class FeildComponent extends ScriptService implements OnInit {
           feild.hinh_anh = data;
         }
         this.feildService.create(feild).subscribe((res:any) => {
-          this.submited = false;
+          this.submitted = false;
           this.loadData({first: this.first, rows: this.rows});
           this.closeModal();
           this.messageService.add({ severity: 'success', summary: 'Thành công!', detail: "Thêm lĩnh vực thành công!" });
@@ -138,7 +131,7 @@ export class FeildComponent extends ScriptService implements OnInit {
           feild.hinh_anh = data;
         }
         this.feildService.update(feild).subscribe((res:any) => {
-          this.submited = false;
+          this.submitted = false;
           this.loadData({first: this.first, rows: this.rows});
           this.closeModal();
           this.messageService.add({ severity: 'success', summary: 'Thành công!', detail: "Cập nhật lĩnh vực thành công!" });
@@ -156,7 +149,6 @@ export class FeildComponent extends ScriptService implements OnInit {
         this.loadData({first: this.first, rows: this.rows});
         this.messageService.add({ severity: 'success', summary: 'Thành công!', detail: "Xoá lĩnh vực thành công!" });
       }, err => {
-        console.log(err)
         this.messageService.add({ severity: 'error', summary: 'Thất bại!', detail: err.error.message });
       })
     }
@@ -169,7 +161,6 @@ export class FeildComponent extends ScriptService implements OnInit {
   }
 
   openModal() {
-    $('#wizardPicturePreview').attr("src", "assets/img/image_placeholder.jpg");
     this.form.reset();
     $("#myModal").modal("show");
   }

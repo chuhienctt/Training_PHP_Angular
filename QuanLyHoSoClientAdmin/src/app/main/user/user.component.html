@@ -14,7 +14,7 @@
       <div class="card card-product">
         <div class="card-header card-header-image" data-header-animation="true">
           <a href="#pablo">
-            <img class="img" [src]="createImg(item.avatar)">
+            <img class="img" src="{{item.avatar | getImage}}">
           </a>
         </div>
         <div class="card-body">
@@ -25,7 +25,7 @@
             <button type="button" class="btn btn-default btn-link">
               <i class="material-icons">art_track</i>
             </button>
-            <button type="button" class="btn btn-success btn-link">
+            <button type="button" class="btn btn-success btn-link" (click)="edit(item.id)">
               <i class="material-icons">edit</i>
             </button>
             <button type="button" class="btn btn-danger btn-link" (click)="delete(item.id)">
@@ -49,7 +49,7 @@
           <div class="stats">
             <div class="togglebutton">
               <label>
-                <input type="checkbox" checked="">
+                <input type="checkbox" [checked]="item.deleted_at == null">
                 <span class="toggle"></span>
               </label>
             </div>
@@ -59,7 +59,6 @@
     </div>
   </div>
   <p-paginator [rows]="rows" totalRecords="{{totalRecords}}" (onPageChange)="loadData($event)"></p-paginator>
-
 </div>
 
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -104,7 +103,7 @@
                   <div class="col-sm-4">
                     <div class="picture-container">
                       <div class="picture">
-                        <img src="assets/img/default-avatar.png" class="picture-src" id="wizardPicturePreview" title="" />
+                        <img src="{{image}}" class="picture-src" id="wizardPicturePreview" title="" />
                         <input type="file" id="wizard-picture" accept="image/*" (change)="readFileUpload($event.target.files)">
                       </div>
                       <h6 class="description">Chọn ảnh</h6>
@@ -136,7 +135,7 @@
                         </span>
                       </div>
                       <div class="form-group">
-                        <label>Mật khẩu</label>
+                        <label>{{ aoe ? 'Mật khẩu' : 'Mật khẩu mới' }}</label>
                         <input type="password" class="form-control" formControlName="mat_khau">
                         <div *ngIf="submitted && form.controls.mat_khau.errors">
                           <small class="error" *ngIf="form.controls.mat_khau.errors.required">Chưa nhập mật khẩu.</small>
@@ -153,7 +152,7 @@
                         </span>
                       </div>
                       <div class="form-group">
-                        <label>Nhập lại mật khẩu</label>
+                        <label>{{ aoe ? 'Nhập lại mật khẩu' : 'Nhập lại mật khẩu mới' }}</label>
                         <input type="password" class="form-control" formControlName="mat_khau_2">
                         <div *ngIf="submitted && form.controls.mat_khau_2.errors">
                           <small class="error" *ngIf="form.controls.mat_khau_2.errors.required">Chưa xác nhận mật khẩu.</small>
@@ -171,7 +170,7 @@
                   <div class="col-lg-10">
                     <div class="row">
                       <div class="col-sm-4">
-                        <div class="choice" data-toggle="wizard-radio" (click)="choiceRole(3)">
+                        <div class="choice" data-toggle="wizard-radio" id="roleSelect3" (click)="choiceRole(3)">
                           <div class="icon">
                             <i class="material-icons">admin_panel_settings</i>
                           </div>
@@ -179,13 +178,13 @@
                         </div>
                       </div>
                       <div class="col-sm-4">
-                        <div class="choice" data-toggle="wizard-radio" (click)="choiceRole(2)">
+                        <div class="choice" data-toggle="wizard-radio" id="roleSelect2" (click)="choiceRole(2)">
                           <div class="icon">
                             <i class="material-icons">support_agent</i>
                           </div>
                           <h6>Cán bộ</h6>
                         </div>
-                        <mat-form-field appearance="fill" [style]="{'z-index': '1500'}">
+                        <mat-form-field appearance="standard">
                           <mat-label>Chọn cơ quan</mat-label>
                           <mat-select formControlName="id_co_quan" >
                             <mat-option *ngFor="let item of listOrgan" [value]="item.id">
@@ -198,7 +197,7 @@
                         </div>
                       </div>
                       <div class="col-sm-4">
-                        <div class="choice" data-toggle="wizard-radio" (click)="choiceRole(1)">
+                        <div class="choice" data-toggle="wizard-radio" id="roleSelect1" (click)="choiceRole(1)">
                           <div class="icon">
                             <i class="material-icons">face</i>
                           </div>
@@ -262,8 +261,7 @@
                   </div>
                   <div class="col-md-4">
                     <div class="form-group">
-                      <label class="w-100">Tỉnh, thành phố</label>
-                      <mat-form-field appearance="fill">
+                      <mat-form-field appearance="standard">
                         <mat-label>Tỉnh, thành phố</mat-label>
                         <mat-select formControlName="city" (selectionChange)="getDistrict($event.value)">
                           <mat-option *ngFor="let item of listProvince" [value]="item.id">
@@ -276,8 +274,7 @@
                   </div>
                   <div class="col-md-4">
                     <div class="form-group">
-                      <label class="w-100">Quận, huyện</label>
-                      <mat-form-field appearance="fill">
+                      <mat-form-field appearance="standard">
                         <mat-label>Quận, huyện</mat-label>
                         <mat-select formControlName="district" (selectionChange)="getCommune($event.value)">
                           <mat-option *ngFor="let item of listDistrict" [value]="item.id">
@@ -290,8 +287,7 @@
                   </div>
                   <div class="col-md-4">
                     <div class="form-group">
-                      <label>Xã, phường, thị trấn</label>
-                      <mat-form-field appearance="fill">
+                      <mat-form-field appearance="standard">
                         <mat-label>Xã, phường, thị trấn</mat-label>
                         <mat-select formControlName="commune">
                           <mat-option *ngFor="let item of listCommune" [value]="item.id">

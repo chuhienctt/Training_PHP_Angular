@@ -6,20 +6,22 @@ import {HeaderComponent} from "./header/header.component";
 import {FooterComponent} from "./footer/footer.component";
 import {MatSelectModule} from '@angular/material/select';
 import {BsDatepickerModule} from "ngx-bootstrap/datepicker";
+import {GetImagePipe} from "../libs/get.image.pipe";
 
 
 
 @NgModule({
   declarations: [
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    GetImagePipe
   ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
     MatSelectModule,
     ToastModule,
-    BsDatepickerModule.forRoot(),
+    BsDatepickerModule.forRoot()
   ],
   exports: [
     ReactiveFormsModule,
@@ -28,7 +30,8 @@ import {BsDatepickerModule} from "ngx-bootstrap/datepicker";
     CommonModule,
     HeaderComponent,
     FooterComponent,
-    BsDatepickerModule
+    BsDatepickerModule,
+    GetImagePipe
   ]
 })
 export class ShareModule { }

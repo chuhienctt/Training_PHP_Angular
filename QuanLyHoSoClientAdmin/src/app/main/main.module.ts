@@ -10,6 +10,8 @@ import {PaginatorModule} from 'primeng/paginator';
 import { ProfileComponent } from './profile/profile.component';
 import { ChangepassComponent } from './changepass/changepass.component';
 import { UserComponent } from './user/user.component';
+import { AddressComponent } from './address/address.component';
+import { ProcedureComponent } from './procedure/procedure.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +21,8 @@ import { UserComponent } from './user/user.component';
     ProfileComponent,
     ChangepassComponent,
     UserComponent,
+    AddressComponent,
+    ProcedureComponent,
   ],
   imports: [
     CommonModule,

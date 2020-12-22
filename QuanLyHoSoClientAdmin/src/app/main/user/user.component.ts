@@ -4,11 +4,13 @@ import {environment} from "../../../environments/environment";
 import {ScriptService} from "../../libs/script.service";
 import {UserService} from "../../services/user.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import { OrganService } from 'src/app/services/organ.service';
-import { AddressService } from 'src/app/services/address.service';
+import {OrganService} from 'src/app/services/organ.service';
+import {AddressService} from 'src/app/services/address.service';
 import {DatePipe} from "@angular/common";
 import {MessageService} from "primeng/api";
 import {FileService} from "../../libs/file.service";
+import {GetImagePipe} from "../../libs/get.image.pipe";
+
 declare var $: any;
 declare var demo: any;
 
@@ -31,9 +33,10 @@ export class UserComponent extends ScriptService implements OnInit {
   file_avatar;
   form: FormGroup;
   aoe: boolean;
-  submitted:boolean;
+  submitted: boolean;
   pipe = new DatePipe("en-US");
   datetimePicker = {};
+  image: string;
 
   constructor(
     injector: Injector,
@@ -63,7 +66,7 @@ export class UserComponent extends ScriptService implements OnInit {
         elem[i].remove();
       }
     }
-    // this.loadScripts();
+    this.loadScripts();
 
     this.organService.getAll().subscribe((res: any) => {
       this.listOrgan = res;
@@ -86,8 +89,8 @@ export class UserComponent extends ScriptService implements OnInit {
       ngay_sinh: ['', [Validators.required]],
       id_co_quan: [{value: '', disabled: true}],
       city: ['', [Validators.required]],
-      district: [{ value: '', disabled: true }, [Validators.required]],
-      commune: [{ value: '', disabled: true }, [Validators.required]]
+      district: ['', [Validators.required]],
+      commune: ['', [Validators.required]]
     }, {
       validator: this.confirm_password_validate('mat_khau', 'mat_khau_2')
     })
@@ -104,7 +107,7 @@ export class UserComponent extends ScriptService implements OnInit {
       }
 
       if (control.value !== matchingControl.value) {
-        matchingControl.setErrors({ confirm_password: true });
+        matchingControl.setErrors({confirm_password: true});
       } else {
         matchingControl.setErrors(null);
       }
@@ -112,24 +115,24 @@ export class UserComponent extends ScriptService implements OnInit {
   }
 
   getDistrict(id) {
-    this.addressService.getDistrict(id).subscribe((res:any) => {
+    this.addressService.getDistrict(id).subscribe((res: any) => {
       this.listDistrict = res;
       this.totalRecords = res.total;
 
-      if(res) this.form.controls.district.enable();
+      if (res) this.form.controls.district.enable();
     })
   }
 
   getCommune(id) {
-    this.addressService.getCommune(id).subscribe((res:any) => {
+    this.addressService.getCommune(id).subscribe((res: any) => {
       this.listCommune = res;
 
-      if(res) this.form.controls.commune.enable();
+      if (res) this.form.controls.commune.enable();
     })
   }
 
   get User() {
-    return  this.adminService.currentUser;
+    return this.adminService.currentUser;
   }
 
   createImg(path) {
@@ -139,8 +142,10 @@ export class UserComponent extends ScriptService implements OnInit {
   loadData(event) {
     this.first = event.first;
     this.rows = event.rows;
-    this.userService.loadData(this.first, this.rows).subscribe((res:any) => {
-      this.listUser = res.data;
+    this.userService.loadData(this.first, this.rows).subscribe((res: any) => {
+      this.listUser = res.data.filter(e => {
+        return e.delete_at == null
+      });
       this.totalRecords = res.total;
     })
   }
@@ -156,14 +161,51 @@ export class UserComponent extends ScriptService implements OnInit {
   }
 
   create() {
+    this.form.controls.district.disable();
+    this.form.controls.commune.disable();
     this.aoe = true;
     this.openModal();
+  }
+
+  edit(id) {
+    this.aoe = false;
+    this.openModal();
+    this.form.controls.district.enable();
+    this.form.controls.commune.enable();
+    this.userService.get(id).subscribe((data: any) => {
+      console.log(data)
+      $("#roleSelect" + data.role).addClass("active");
+      this.roleSelect = data.role;
+      if (data.role == 2) {
+        this.form.controls.id_co_quan.enable();
+        this.form.patchValue({id_co_quan: data.id_co_quan})
+      }
+      this.image = new GetImagePipe().transform(data.avatar);
+      this.form.controls.email.disable();
+      this.form.patchValue({
+        email: data.email,
+        ho_ten: data.ho_ten,
+        so_dien_thoai: data.so_dien_thoai,
+        ngay_sinh: new Date(Date.parse(data.ngay_sinh)),
+        dia_chi: data.dia_chi
+      })
+      this.addressService.getAddress(data.ward_id).subscribe((res: any) => {
+        this.listProvince = res.list_province;
+        this.listDistrict = res.list_district;
+        this.listCommune = res.list_ward;
+        this.form.patchValue({
+          city: res.province.id,
+          district: res.district.id,
+          commune: res.ward.id,
+        })
+      })
+    })
   }
 
   onSubmit() {
     this.submitted = true;
 
-    if(this.form.invalid || !this.file_avatar) {
+    if (this.form.invalid || !this.file_avatar) {
       return;
     }
 
@@ -180,12 +222,12 @@ export class UserComponent extends ScriptService implements OnInit {
       avatar: null
     }
 
-    if (this.aoe == true) {
-      this.fileService.getEncodeFromImage(this.file_avatar).subscribe(data => {
-        if (data != null) {
-          user.avatar = data;
-        }
-        this.userService.create(user).subscribe((res:any) => {
+    this.fileService.getEncodeFromImage(this.file_avatar).subscribe(data => {
+      if (data != null) {
+        user.avatar = data;
+      }
+      if (this.aoe == true) {
+        this.userService.create(user).subscribe((res: any) => {
           this.submitted = false;
           this.closeModal();
           this.loadData({first: this.first, rows: this.rows})
@@ -193,15 +235,17 @@ export class UserComponent extends ScriptService implements OnInit {
         }, err => {
           this.messageService.add({severity: 'error', summary: 'Thất bại!', detail: err.error.message});
         })
-      })
-    } else {
-      console.log("chưa làm");
-    }
+      } else {
+        // this.userService.update()
+      }
+    })
 
   }
 
   openModal() {
-    $('#wizardPicturePreview').attr("src", "assets/img/default-avatar.png");
+    $(".choice").removeClass("active");
+    this.image = "assets/img/default-avatar.png";
+    this.form.controls.id_co_quan.disable();
     this.file_avatar = null;
     $('#myModal').on('show.bs.modal', function (e) {
       setTimeout(() => {
@@ -231,7 +275,7 @@ export class UserComponent extends ScriptService implements OnInit {
   }
 
   delete(id) {
-    this.userService.delete(id, {thoi_han: "9999-09-09 12:00:00"}).subscribe(res => {
+    this.userService.delete(id, {thoi_han: "3000-00-00 00:00:00"}).subscribe(res => {
       this.loadData({first: this.first, rows: this.rows});
     })
   }

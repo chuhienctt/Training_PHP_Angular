@@ -14,8 +14,9 @@
               <div class="ml-auto mr-auto">
                 <div class="fileinput fileinput-new text-center" data-provides="fileinput">
                   <div class="fileinput-new thumbnail img-circle">
-                    <img *ngIf="!User.avatar" src="assets/img/placeholder.jpg">
-                    <img *ngIf="User.avatar" [src]="createImg(User.avatar)">
+<!--                    <img *ngIf="!User.avatar" src="assets/img/placeholder.jpg">-->
+<!--                    <img *ngIf="User.avatar" [src]="createImg(User.avatar)">-->
+                    <img *ngIf="User.avatar" src="{{User.avatar | getImage}}">
                   </div>
                   <div class="fileinput-preview fileinput-exists thumbnail img-circle"></div>
                   <div>
@@ -69,8 +70,7 @@
             <div class="row">
               <div class="col-md-4">
                 <div class="form-group">
-                  <label class="w-100">Tỉnh, thành phố</label>
-                  <mat-form-field appearance="fill">
+                  <mat-form-field appearance="standard">
                     <mat-label>Tỉnh, thành phố</mat-label>
                     <mat-select formControlName="city" (selectionChange)="getDistrict($event.value)">
                       <mat-option *ngFor="let item of listProvince" [value]="item.id">
@@ -82,8 +82,7 @@
               </div>
               <div class="col-md-4">
                 <div class="form-group">
-                  <label class="w-100">Quận, huyện</label>
-                  <mat-form-field appearance="fill">
+                  <mat-form-field appearance="standard">
                     <mat-label>Quận, huyện</mat-label>
                     <mat-select formControlName="district" (selectionChange)="getCommune($event.value)">
                       <mat-option *ngFor="let item of listDistrict" [value]="item.id">
@@ -95,8 +94,7 @@
               </div>
               <div class="col-md-4">
                 <div class="form-group">
-                  <label>Xã, phường, thị trấn</label>
-                  <mat-form-field appearance="fill">
+                  <mat-form-field appearance="standard">
                     <mat-label>Xã, phường, thị trấn</mat-label>
                     <mat-select formControlName="commune">
                       <mat-option *ngFor="let item of listCommune" [value]="item.id">
