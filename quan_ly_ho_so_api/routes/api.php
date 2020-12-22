@@ -71,6 +71,7 @@ Route::group([
             Route::post('/create', 'UserController@create');
             Route::put('/update', 'UserController@update');
             Route::post('/block', 'UserController@block');
+            Route::post('/unblock', 'UserController@unblock');
 
         });
 
