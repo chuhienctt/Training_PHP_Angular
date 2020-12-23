@@ -19,15 +19,18 @@ export class UserService {
     return this._http.post(baseUrl + "create", user);
   }
 
-  delete(id, thoi_han) {
-    return this._http.post(baseUrl + "block?id=" +id, thoi_han);
-  }
-
   get(id) {
     return this._http.get(baseUrl + "get?id=" + id);
   }
 
   update(id, user) {
-    return this._http.put(baseUrl + "update?id=", user);
+    return this._http.put(baseUrl + "update?id="+id, user);
+  }
+
+  block(id) {
+    let param = new HttpParams()
+      .set('id', id);
+    console.log(param.toString())
+    return this._http.post(baseUrl + "block", {headers: param});
   }
 }

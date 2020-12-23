@@ -80,6 +80,7 @@ export class UserComponent extends ScriptService implements OnInit {
 
 
     this.form = this.formBuilder.group({
+      id: [],
       email: ['', [Validators.required, Validators.email, Validators.minLength(8), Validators.maxLength(100)]],
       mat_khau: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(50), Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$')]],
       mat_khau_2: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(50), Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$')]],
@@ -118,7 +119,6 @@ export class UserComponent extends ScriptService implements OnInit {
     this.addressService.getDistrict(id).subscribe((res: any) => {
       this.listDistrict = res;
       this.totalRecords = res.total;
-
       if (res) this.form.controls.district.enable();
     })
   }
@@ -143,9 +143,7 @@ export class UserComponent extends ScriptService implements OnInit {
     this.first = event.first;
     this.rows = event.rows;
     this.userService.loadData(this.first, this.rows).subscribe((res: any) => {
-      this.listUser = res.data.filter(e => {
-        return e.delete_at == null
-      });
+      this.listUser = res.data;
       this.totalRecords = res.total;
     })
   }
@@ -183,6 +181,7 @@ export class UserComponent extends ScriptService implements OnInit {
       this.image = new GetImagePipe().transform(data.avatar);
       this.form.controls.email.disable();
       this.form.patchValue({
+        id: data.id,
         email: data.email,
         ho_ten: data.ho_ten,
         so_dien_thoai: data.so_dien_thoai,
@@ -236,7 +235,10 @@ export class UserComponent extends ScriptService implements OnInit {
           this.messageService.add({severity: 'error', summary: 'Thất bại!', detail: err.error.message});
         })
       } else {
-        // this.userService.update()
+        this.userService.update(this.form.value.id, user).subscribe((res:any) => {
+          console.log(res)
+        }, err => {
+          console.log(err)})
       }
     })
 
@@ -274,10 +276,17 @@ export class UserComponent extends ScriptService implements OnInit {
     return value;
   }
 
-  delete(id) {
-    this.userService.delete(id, {thoi_han: "3000-00-00 00:00:00"}).subscribe(res => {
-      this.loadData({first: this.first, rows: this.rows});
-    })
+  block(id) {
+    console.log(id)
+    if (confirm("Bạn muốn khóa người dùng này?")) {
+      this.userService.block(id).subscribe(res => {
+        this.loadData({first: this.first, rows: this.rows});
+        this.messageService.add({severity: 'success', summary: 'Thành công!', detail: "Khóa người dùng thành công!"});
+      }, err => {
+        console.log(err)
+        this.messageService.add({severity: 'error', summary: 'Thất bại!', detail: err.error.message});
+      })
+    }
   }
 
 }
