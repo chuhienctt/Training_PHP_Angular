@@ -19,13 +19,13 @@
               <thead>
               <tr>
                 <th class="text-center">#</th>
-                <th>Tên tỉnh, thành phố</th>
+                <th>Tên quận, huyện</th>
                 <th> Kiểu</th>
                 <th class="text-right">Hành động</th>
               </tr>
               </thead>
               <tbody>
-              <tr *ngFor="let item of listCity; index as i">
+              <tr *ngFor="let item of listDistrict; index as i">
                 <td class="text-center">{{i+1}}</td>
                 <td>{{item.name}}</td>
                 <td>{{item.type}}</td>

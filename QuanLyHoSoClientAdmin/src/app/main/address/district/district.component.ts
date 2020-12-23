@@ -1,23 +1,23 @@
 import {Component, Injector, OnInit} from '@angular/core';
-import {AddressService} from "../../services/address.service";
-import {ScriptService} from "../../libs/script.service";
+import {ActivatedRoute, ParamMap, Router} from "@angular/router";
+import {AddressService} from "../../../services/address.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {MessageService} from "primeng/api";
-import {Router} from "@angular/router";
+import {ScriptService} from "../../../libs/script.service";
 
-declare var $: any;
+declare var $:any;
 
 @Component({
-  selector: 'app-address',
-  templateUrl: './address.component.html',
-  styleUrls: ['./address.component.css'],
+  selector: 'app-district',
+  templateUrl: './district.component.html',
+  styleUrls: ['./district.component.css'],
   providers: [MessageService]
 })
-export class AddressComponent extends ScriptService implements OnInit {
+export class DistrictComponent extends ScriptService implements OnInit {
   totalRecords: number;
   first = 0;
   rows = 10;
-  listCity = [];
+  listDistrict = [];
   submitted = false;
   aoe: boolean;
   form: FormGroup;
@@ -27,7 +27,8 @@ export class AddressComponent extends ScriptService implements OnInit {
     private addressService: AddressService,
     private formBuilder: FormBuilder,
     private messageService: MessageService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute,
   ) {
     super(injector)
   }
@@ -53,11 +54,13 @@ export class AddressComponent extends ScriptService implements OnInit {
   loadData(event) {
     this.first = event.first;
     this.rows = event.rows;
-    this.addressService.paginationCity(this.first, this.rows).subscribe((res: any) => {
-      this.listCity = res.data.filter(e => {
-        return e.deleted_at == null
-      });
-      this.totalRecords = res.total;
+    let id = this.route.snapshot.params['id'];
+    this.addressService.paginationDistrict(id, this.first, this.rows).subscribe((res: any) => {
+      console.log(res)
+      // this.listDistrict = res.data.filter(e => {
+      //   return e.deleted_at == null
+      // });
+      // this.totalRecords = res.total;
     })
   }
 
@@ -121,4 +124,5 @@ export class AddressComponent extends ScriptService implements OnInit {
   redirectDistrict(id) {
     this.router.navigate(["/admin/district/", id]);
   }
+
 }

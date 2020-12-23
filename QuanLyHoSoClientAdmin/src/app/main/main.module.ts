@@ -12,6 +12,7 @@ import { ChangepassComponent } from './changepass/changepass.component';
 import { UserComponent } from './user/user.component';
 import { AddressComponent } from './address/address.component';
 import { ProcedureComponent } from './procedure/procedure.component';
+import { DistrictComponent } from './address/district/district.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { ProcedureComponent } from './procedure/procedure.component';
     UserComponent,
     AddressComponent,
     ProcedureComponent,
+    DistrictComponent,
   ],
   imports: [
     CommonModule,

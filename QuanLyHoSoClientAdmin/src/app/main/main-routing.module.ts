@@ -9,6 +9,7 @@ import {ChangepassComponent} from "./changepass/changepass.component";
 import {UserComponent} from "./user/user.component";
 import {AddressComponent} from "./address/address.component";
 import {ProcedureComponent} from "./procedure/procedure.component";
+import {DistrictComponent} from "./address/district/district.component";
 
 const routes: Routes = [
   {
@@ -27,7 +28,8 @@ const routes: Routes = [
       {path: 'profile', component: ProfileComponent},
       {path: 'change-password', component: ChangepassComponent},
       {path: 'user', component: UserComponent},
-      {path: 'address', component: AddressComponent}
+      {path: 'address', component: AddressComponent},
+      {path: 'district/:id', component: DistrictComponent}
     ]
   }]
 

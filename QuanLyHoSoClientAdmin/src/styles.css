@@ -21,6 +21,6 @@
 /*  background-color: #ffffff;*/
 /*}*/
 
-/*.mat-form-field-infix {*/
-/*  border-top: 0*/
-/*}*/
+.mat-form-field-infix {
+  border-top: 0
+}
