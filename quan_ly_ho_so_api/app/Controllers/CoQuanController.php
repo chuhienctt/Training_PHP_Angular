@@ -88,23 +88,35 @@ class CoQuanController extends Controller {
         $co_quan->hinh_anh = '/co-quan-images/'.$file->getFileName();
         $co_quan->ward_id = request()->ward_id;
 
+        DB::beginTransaction();
+
         if($co_quan->save()) {
 
             // add referenced
             if(request()->has('linh_vuc') && is_array(request()->linh_vuc)) {
+                try {
+                    foreach(request()->linh_vuc as $option) {
+                        if(model('LinhVuc')->find($option)) {
+                            $result = model('CoQuanLinhVuc')->insert([
+                                'id_linh_vuc' => $option,
+                                'id_co_quan' => $co_quan->id,
+                            ]);
 
-                foreach(request()->linh_vuc as $option) {
-                    if(model('LinhVuc')->find($option)) {
-                        model('CoQuanLinhVuc')->insert([
-                            'id_linh_vuc' => $option,
-                            'id_co_quan' => $co_quan->id,
-                        ]);
+                            if(!$result) {
+                                throw new \PDOException();
+                            }
+                        } else {
+                            throw new \PDOException();
+                        }
                     }
+
+                    DB::commit();
+
+                    return response()->success(1, 'Thêm cơ quan thành công!', $co_quan);
+                } catch(\PDOException $e) {
+                    DB::rollBack();
                 }
-
             }
-
-            return response()->success(1, 'Thêm cơ quan thành công!', $co_quan);
         }
 
         return response()->error(2, 'Thêm cơ quan thất bại!');
@@ -165,28 +177,36 @@ class CoQuanController extends Controller {
         $co_quan->so_dien_thoai = request()->so_dien_thoai;
         $co_quan->ward_id = request()->ward_id;
 
+        DB::beginTransaction();
+
         if($co_quan->save()) {
 
             if(request()->has('linh_vuc') && is_array(request()->linh_vuc)) {
 
                 // remove referenced
-                model('CoQuanLinhVuc')->where([
-                    'id_co_quan' => $co_quan->id
-                ])->delete();
+                try {
+                    foreach(request()->linh_vuc as $option) {
+                        if(model('LinhVuc')->find($option)) {
+                            $result = model('CoQuanLinhVuc')->insert([
+                                'id_linh_vuc' => $option,
+                                'id_co_quan' => $co_quan->id,
+                            ]);
 
-                // add referenced
-                foreach(request()->linh_vuc as $option) {
-                    if(model('LinhVuc')->find($option)) {
-                        model('CoQuanLinhVuc')->insert([
-                            'id_linh_vuc' => $option,
-                            'id_co_quan' => $co_quan->id,
-                        ]);
+                            if(!$result) {
+                                throw new \PDOException();
+                            }
+                        } else {
+                            throw new \PDOException();
+                        }
                     }
+
+                    DB::commit();
+
+                    return response()->success(1, 'Sửa cơ quan thành công!', $co_quan);
+                } catch(\PDOException $e) {
+                    DB::rollBack();
                 }
-
             }
-
-            return response()->success(1, 'Sửa cơ quan thành công!', $co_quan);
         }
 
         return response()->error(2, 'Sửa cơ quan thất bại!');

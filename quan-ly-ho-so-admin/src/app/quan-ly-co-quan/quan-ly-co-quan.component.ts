@@ -8,7 +8,7 @@ import { environment } from '../../environments/environment';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { MessageService } from 'primeng/api';
-import { AdressService } from '../_services/adress.service';
+import { AddressService} from '../_services/adress.service';
 
 @Component({
   selector: 'app-quan-ly-co-quan',
@@ -23,7 +23,7 @@ export class QuanLyCoQuanComponent implements OnInit {
     private fileService: FileService,
     private formBuilder: FormBuilder,
     private messageService: MessageService,
-    private adressService: AdressService
+    private adressService: AddressService
   ) {}
   [x: string]: any;
 
@@ -77,7 +77,7 @@ export class QuanLyCoQuanComponent implements OnInit {
   getDistrict(val) {
     this.listDistrict = [];
     this.listCommune = [];
-    this.adressService.getDistric(val.id).subscribe((res: any) => {
+    this.adressService.getDistrict(val.id).subscribe((res: any) => {
       this.listDistrict = res;
       if (this.listDistrict.length != 0) {
         this.form.controls.district.enable();
@@ -87,7 +87,7 @@ export class QuanLyCoQuanComponent implements OnInit {
 
   getCommune(val) {
     this.listCommune = [];
-    this.adressService.getComune(val.id).subscribe((res: any) => {
+    this.adressService.getCommune(val.id).subscribe((res: any) => {
       this.listCommune = res;
       if (this.listCommune.length != 0) {
         this.form.controls.commune.enable();

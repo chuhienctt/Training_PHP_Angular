@@ -113,10 +113,10 @@ class DB {
         foreach($data as $value) {
             $statement->bindValue($index++, $value, gettype($value) != 'string' ? PDO::PARAM_INT : PDO::PARAM_STR);
         }
-        $statement->execute();
+        $result = $statement->execute();
         $this->clearOption();
 
-        return $statement->rowCount();
+        return $result;
     }
 
     public function update($data = []) {
@@ -143,10 +143,10 @@ class DB {
         foreach($data as $value) {
             $statement->bindValue($index++, $value, gettype($value) != 'string' ? PDO::PARAM_INT : PDO::PARAM_STR);
         }
-        $statement->execute();
+        $result = $statement->execute();
         $this->clearOption();
 
-        return true;
+        return $result;
     }
 
     public function delete() {
@@ -163,10 +163,10 @@ class DB {
         foreach($data as $value) {
             $statement->bindValue($index++, $value, gettype($value) != 'string' ? PDO::PARAM_INT : PDO::PARAM_STR);
         }
-        $statement->execute();
+        $result = $statement->execute();
         $this->clearOption();
 
-        return $statement->rowCount();
+        return $result;
     }
 
     public function hide() {
@@ -254,6 +254,18 @@ class DB {
 
     public static function lastInsertId() {
         return self::$connect->lastInsertId();
+    }
+
+    public static function beginTransaction() {
+        return self::$connect->beginTransaction();
+    }
+
+    public static function rollBack() {
+        return self::$connect->rollBack();
+    }
+
+    public static function commit() {
+        return self::$connect->commit();
     }
 
     // schema

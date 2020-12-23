@@ -68,23 +68,38 @@ class LinhVucController extends Controller {
         $linh_vuc->mo_ta = request()->mo_ta ?? null;
         $linh_vuc->hinh_anh = '/linh-vuc-images/'.$file->getFileName();
 
+        DB::beginTransaction();
+        
         if($linh_vuc->save()) {
 
             // add referenced
             if(request()->has('co_quan') && is_array(request()->co_quan)) {
 
-                foreach(request()->co_quan as $option) {
-                    if(model('CoQuan')->find($option)) {
-                        model('CoQuanLinhVuc')->insert([
-                            'id_linh_vuc' => $linh_vuc->id,
-                            'id_co_quan' => $option,
-                        ]);
+                try {
+                    foreach(request()->co_quan as $option) {
+                        if(model('CoQuan')->find($option)) {
+
+                            $result = model('CoQuanLinhVuc')->insert([
+                                'id_linh_vuc' => $linh_vuc->id,
+                                'id_co_quan' => $option,
+                            ]);
+
+                            if(!$result) {
+                                throw new \PDOException();
+                            }
+
+                        } else {
+                            throw new \PDOException();
+                        }
                     }
+
+                    DB::commit();
+
+                    return response()->success(1, 'Thêm lĩnh vực thành công!', $linh_vuc);
+                } catch(\PDOException $e) {
+                    DB::rollBack();
                 }
-
             }
-
-            return response()->success(1, 'Thêm lĩnh vực thành công!', $linh_vuc);
         }
 
         return response()->error(2, 'Thêm lĩnh vực thất bại!');
@@ -125,28 +140,38 @@ class LinhVucController extends Controller {
         $linh_vuc->ten_linh_vuc = request()->ten_linh_vuc;
         $linh_vuc->mo_ta = request()->mo_ta ?? null;
 
+        DB::beginTransaction();
+        
         if($linh_vuc->save()) {
 
+            // add referenced
             if(request()->has('co_quan') && is_array(request()->co_quan)) {
 
-                // remove referenced
-                model('CoQuanLinhVuc')->where([
-                    'id_linh_vuc' => $linh_vuc->id
-                ])->delete();
+                try {
+                    foreach(request()->co_quan as $option) {
+                        if(model('CoQuan')->find($option)) {
 
-                // add referenced
-                foreach(request()->co_quan as $option) {
-                    if(model('CoQuan')->find($option)) {
-                        model('CoQuanLinhVuc')->insert([
-                            'id_linh_vuc' => $linh_vuc->id,
-                            'id_co_quan' => $option,
-                        ]);
+                            $result = model('CoQuanLinhVuc')->insert([
+                                'id_linh_vuc' => $linh_vuc->id,
+                                'id_co_quan' => $option,
+                            ]);
+
+                            if(!$result) {
+                                throw new \PDOException();
+                            }
+
+                        } else {
+                            throw new \PDOException();
+                        }
                     }
+
+                    DB::commit();
+
+                    return response()->success(1, 'Sửa lĩnh vực thành công!', $linh_vuc);
+                } catch(\PDOException $e) {
+                    DB::rollBack();
                 }
-
             }
-
-            return response()->success(1, 'Sửa lĩnh vực thành công!', $linh_vuc);
         }
 
         return response()->error(2, 'Sửa lĩnh vực thất bại!');
