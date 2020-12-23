@@ -63,6 +63,16 @@ Route::group([
 
         
         Route::group([
+            'prefix' => '/thu-tuc'
+        ], function () {
+
+            Route::get('/get', 'ThuTucController@get');
+            Route::get('/pagination', 'ThuTucController@pagination');
+
+        });
+
+        
+        Route::group([
             'prefix' => '/user'
         ], function () {
 
