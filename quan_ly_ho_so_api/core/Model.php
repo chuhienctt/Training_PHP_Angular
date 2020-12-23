@@ -88,7 +88,7 @@ class Model {
 
         foreach($this->columns as $column) {
             if($column != 'id') {
-                if(isset($this->{$column}) || $this->{$column} === NULL) {
+                if(isset($this->{$column})) {
                     $override = true;
 
                     if(isset($this->original_data[$column]) && $this->original_data[$column] == $this->{$column}) {
@@ -96,6 +96,8 @@ class Model {
                     }
 
                     $override && $data[$column] = $this->{$column};
+                } else {
+                    $data[$column] = NULL;
                 }
             }
         }
