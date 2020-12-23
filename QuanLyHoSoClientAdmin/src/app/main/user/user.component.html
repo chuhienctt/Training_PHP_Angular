@@ -49,7 +49,7 @@
           <div class="stats">
             <div class="togglebutton">
               <label>
-                <input type="checkbox" [checked]="item.deleted_at == null">
+                <input type="checkbox" (change)="unblock($event)" value="{{item.id}}" [checked]="item.deleted_at == null">
                 <span class="toggle"></span>
               </label>
             </div>
@@ -107,7 +107,7 @@
                         <input type="file" id="wizard-picture" accept="image/*" (change)="readFileUpload($event.target.files)">
                       </div>
                       <h6 class="description">Chọn ảnh</h6>
-                      <small class="text-danger" *ngIf="submitted && !file_avatar">Chưa chọn ảnh</small>
+                      <small class="text-danger" *ngIf="submitted && !image">Chưa chọn ảnh</small>
                     </div>
                   </div>
                   <div class="col-sm-6">

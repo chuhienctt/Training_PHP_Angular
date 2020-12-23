@@ -159,8 +159,11 @@ export class UserComponent extends ScriptService implements OnInit {
   }
 
   create() {
+    this.form.controls.mat_khau.setValidators([Validators.required, Validators.minLength(8), Validators.maxLength(50), Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$')]);
+    this.form.controls.mat_khau_2.setValue('', {validator: this.confirm_password_validate('mat_khau', 'mat_khau_2')});
     this.form.controls.district.disable();
     this.form.controls.commune.disable();
+    this.form.controls.email.enable();
     this.aoe = true;
     this.openModal();
   }
@@ -168,10 +171,11 @@ export class UserComponent extends ScriptService implements OnInit {
   edit(id) {
     this.aoe = false;
     this.openModal();
+    this.form.controls.mat_khau.clearValidators();
+    this.form.controls.mat_khau_2.setValue('', {});
     this.form.controls.district.enable();
     this.form.controls.commune.enable();
     this.userService.get(id).subscribe((data: any) => {
-      console.log(data)
       $("#roleSelect" + data.role).addClass("active");
       this.roleSelect = data.role;
       if (data.role == 2) {
@@ -225,6 +229,7 @@ export class UserComponent extends ScriptService implements OnInit {
       if (data != null) {
         user.avatar = data;
       }
+      console.log(user)
       if (this.aoe == true) {
         this.userService.create(user).subscribe((res: any) => {
           this.submitted = false;
@@ -232,6 +237,7 @@ export class UserComponent extends ScriptService implements OnInit {
           this.loadData({first: this.first, rows: this.rows})
           this.messageService.add({severity: 'success', summary: 'Thành công!', detail: "Thêm người dùng thành công!"});
         }, err => {
+          console.log(err)
           this.messageService.add({severity: 'error', summary: 'Thất bại!', detail: err.error.message});
         })
       } else {
@@ -277,7 +283,6 @@ export class UserComponent extends ScriptService implements OnInit {
   }
 
   block(id) {
-    console.log(id)
     if (confirm("Bạn muốn khóa người dùng này?")) {
       this.userService.block(id).subscribe(res => {
         this.loadData({first: this.first, rows: this.rows});
@@ -286,6 +291,28 @@ export class UserComponent extends ScriptService implements OnInit {
         console.log(err)
         this.messageService.add({severity: 'error', summary: 'Thất bại!', detail: err.error.message});
       })
+    }
+  }
+
+  unblock(event) {
+    if (event.target.checked) {
+      if (confirm("Bạn muốn mở khóa người dùng này?")) {
+        this.userService.unblock(event.target.value).subscribe((res:any) => {
+          this.loadData({first: this.first, rows: this.rows});
+          this.messageService.add({severity: 'success', summary: 'Thành công!', detail: "Mở khóa người dùng thành công!"});
+        })
+      } else {
+        this.loadData({first: this.first, rows: this.rows});
+      }
+    } else {
+      if (confirm("Bạn muốn khóa người dùng này?")) {
+        this.userService.block(event.target.value).subscribe((res:any) => {
+          this.loadData({first: this.first, rows: this.rows});
+          this.messageService.add({severity: 'success', summary: 'Thành công!', detail: "Khóa người dùng thành công!"});
+        })
+      } else {
+        this.loadData({first: this.first, rows: this.rows});
+      }
     }
   }
 

@@ -30,7 +30,12 @@ export class UserService {
   block(id) {
     let param = new HttpParams()
       .set('id', id);
-    console.log(param.toString())
-    return this._http.post(baseUrl + "block", {headers: param});
+    return this._http.post(baseUrl + "block", {}, {params:param});
+  }
+
+  unblock(id) {
+    let param = new HttpParams()
+      .set('id', id);
+    return this._http.post(baseUrl + "unblock", {}, {params: param});
   }
 }
