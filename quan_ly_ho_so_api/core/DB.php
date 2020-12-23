@@ -81,6 +81,8 @@ class DB {
             $returnData[] = $object;
         }
 
+        $this->clearOption();
+
         return $returnData;
     }
 
@@ -112,6 +114,7 @@ class DB {
             $statement->bindValue($index++, $value, gettype($value) != 'string' ? PDO::PARAM_INT : PDO::PARAM_STR);
         }
         $statement->execute();
+        $this->clearOption();
 
         return $statement->rowCount();
     }
@@ -133,14 +136,17 @@ class DB {
         $statement = self::$connect->prepare($sql);
 
         $data = array_merge(array_values($data), $where['values']);
+        
+        // var_dump($sql, $data);
 
         $index = 1;
         foreach($data as $value) {
             $statement->bindValue($index++, $value, gettype($value) != 'string' ? PDO::PARAM_INT : PDO::PARAM_STR);
         }
         $statement->execute();
+        $this->clearOption();
 
-        return $statement->rowCount();
+        return true;
     }
 
     public function delete() {
@@ -158,14 +164,24 @@ class DB {
             $statement->bindValue($index++, $value, gettype($value) != 'string' ? PDO::PARAM_INT : PDO::PARAM_STR);
         }
         $statement->execute();
+        $this->clearOption();
 
         return $statement->rowCount();
+    }
+
+    public function hide() {
+        return $this->update(['deleted_at' => Format::timeNow()]);
+    }
+
+    public function show() {
+        return $this->update(['deleted_at' => 'null']);
     }
 
     public function count() {
         $sql = "SELECT COUNT(*) AS count FROM $this->table";
         $statement = self::$connect->prepare($sql);
         $statement->execute();
+        $this->clearOption();
         return $statement->fetchColumn();
     }
 
@@ -184,6 +200,8 @@ class DB {
 
     public function where($data = [], $instance = null) {
         $this->where = $data;
+
+        // var_dump($data);
 
         return $instance ?? $this;
     }
@@ -234,7 +252,7 @@ class DB {
         return $this->limit($n);
     }
 
-    public function lastInsertId() {
+    public static function lastInsertId() {
         return self::$connect->lastInsertId();
     }
 
@@ -255,6 +273,14 @@ class DB {
         }
 
         return $returnData;
+    }
+
+    public function clearOption() {
+        $this->select = [];
+        $this->where = [];
+        $this->offset = 0;
+        $this->limit = 0;
+        $this->orderBy = '';
     }
 
 }

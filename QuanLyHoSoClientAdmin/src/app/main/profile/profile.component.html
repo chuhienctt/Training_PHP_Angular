@@ -1,14 +1,12 @@
-
+<p-toast></p-toast>
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-8">
       <div class="card">
-        <div class="card-header card-header-icon card-header-rose">
-          <div class="card-icon">
-            <i class="material-icons">perm_identity</i>
+        <div class="card-header card-header-rose card-header-text">
+          <div class="card-text">
+            <h4 class="card-title">Hồ sơ</h4>
           </div>
-          <h4 class="card-title">Sửa thông tin
-          </h4>
         </div>
         <div class="card-body">
           <form [formGroup]="form" (ngSubmit)="onSubmit()">
@@ -16,17 +14,18 @@
               <div class="ml-auto mr-auto">
                 <div class="fileinput fileinput-new text-center" data-provides="fileinput">
                   <div class="fileinput-new thumbnail img-circle">
-                    <img *ngIf="!User.avatar" src="assets/img/placeholder.jpg">
-                    <img *ngIf="User.avatar" [src]="createImg(User.avatar)">
+<!--                    <img *ngIf="!User.avatar" src="assets/img/placeholder.jpg">-->
+<!--                    <img *ngIf="User.avatar" [src]="createImg(User.avatar)">-->
+                    <img *ngIf="User.avatar" src="{{User.avatar | getImage}}">
                   </div>
                   <div class="fileinput-preview fileinput-exists thumbnail img-circle"></div>
                   <div>
                     <span class="btn btn-round btn-rose btn-file">
                       <span class="fileinput-new">Chọn ảnh</span>
                       <span class="fileinput-exists">Thay đổi</span>
-                      <input type="file" formControlName="avatar" />
+                      <input type="file" accept="image/*" (change)="readFileUpload($event.target.files)"/>
                     </span>
-                    <br />
+                    <br/>
                     <a href="#pablo" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput">
                       <i class="fa fa-times"></i>Xóa
                     </a>
@@ -58,33 +57,51 @@
               <div class="col-md-6">
                 <div class="form-group">
                   <label>Ngày sinh</label>
-                      <input type="text" class="form-control datepicker" formControlName="ngay_sinh">
+                  <input type="text" formControlName="ngay_sinh" [bsConfig]="datetimePicker" class="form-control" bsDatepicker>
                 </div>
+              </div>
+            </div>
+            <div class="row-md-12">
+              <div class="form-group">
+                <label>Địa chỉ cụ thể</label>
+                <input type="text" class="form-control" formControlName="dia_chi">
               </div>
             </div>
             <div class="row">
               <div class="col-md-4">
                 <div class="form-group">
-                  <label>Tỉnh, thành phố</label>
-                  <select class="selectpicker" (change)="getDistrict($event.target.value)" formControlName="city" data-style="select-with-transition" title="Chọn tỉnh, thành phố" data-size="7">
-                    <option *ngFor="let item of listProvince" value="{{item.id}}">{{item.name}} </option>
-                  </select>
+                  <mat-form-field appearance="standard" [style]="{'width': '100%'}" >
+                    <mat-label>Tỉnh, thành phố</mat-label>
+                    <mat-select formControlName="city" (selectionChange)="getDistrict($event.value)">
+                      <mat-option *ngFor="let item of listProvince" [value]="item.id">
+                        {{item.name}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
                 </div>
               </div>
               <div class="col-md-4">
                 <div class="form-group">
-                  <label>Quận, huyện</label>
-                  <select class="selectpicker"(change)="getCommune($event.target.value)" data-style="select-with-transition" title="Chọn tỉnh, thành phố" data-size="7">
-                    <option *ngFor="let item of listDistrict" value="{{item.id}}">{{item.name}} </option>
-                  </select>
+                  <mat-form-field appearance="standard" [style]="{'width': '100%'}" >
+                    <mat-label>Quận, huyện</mat-label>
+                    <mat-select formControlName="district" (selectionChange)="getCommune($event.value)">
+                      <mat-option *ngFor="let item of listDistrict" [value]="item.id">
+                        {{item.name}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
                 </div>
               </div>
               <div class="col-md-4">
                 <div class="form-group">
-                  <label>Xã, phường, thị trấn</label>
-                  <select class="selectpicker" data-style="select-with-transition" title="Chọn tỉnh, thành phố" data-size="7">
-                    <option *ngFor="let item of listCommune" value="{{item.id}}">{{item.name}} </option>
-                  </select>
+                  <mat-form-field appearance="standard" [style]="{'width': '100%'}" >
+                    <mat-label>Xã, phường, thị trấn</mat-label>
+                    <mat-select formControlName="commune">
+                      <mat-option *ngFor="let item of listCommune" [value]="item.id">
+                        {{item.name}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
                 </div>
               </div>
             </div>
@@ -97,7 +114,7 @@
     <div class="col-md-4">
       <div class="card card-profile">
         <div class="card-avatar">
-            <img class="img" [src]="createImg(User.avatar)" />
+          <img class="img" [src]="createImg(User.avatar)"/>
         </div>
         <div class="card-body">
           <h6 class="card-category text-gray" *ngIf="User.role == 1">Công dân</h6>
@@ -112,3 +129,4 @@
     </div>
   </div>
 </div>
+

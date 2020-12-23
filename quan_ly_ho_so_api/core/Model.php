@@ -41,6 +41,16 @@ class Model {
         return $this->db->delete();
     }
 
+    public function hide() {
+        $this->deleted_at = Format::timeNow();
+        return $this->save();
+    }
+
+    public function show() {
+        $this->deleted_at = null;
+        return $this->save();
+    }
+
     public function count() {
         return $this->db->count();
     }
@@ -86,6 +96,8 @@ class Model {
                     }
 
                     $override && $data[$column] = $this->{$column};
+                } else {
+                    $data[$column] = NULL;
                 }
             }
         }
@@ -98,7 +110,7 @@ class Model {
             if(count($data) == 0) {
                 return 1;
             }
-            return $this->db->update($data);
+            return $this->db->where(['id' => $this->id])->update($data);
         } else {
             // insert
             if(in_array('created_at', $this->columns)) {
@@ -107,7 +119,7 @@ class Model {
 
             $row = $this->db->insert($data);
             if($row) {
-                $this->id = $this->db->lastInsertId();
+                $this->id = DB::lastInsertId();
                 $this->updateValues();
             }
             return $row;

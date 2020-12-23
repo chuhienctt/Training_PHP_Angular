@@ -5,12 +5,15 @@ import {environment} from "../../../environments/environment";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {DatePipe} from "@angular/common";
 import {AddressService} from "../../services/address.service";
+import {MessageService} from "primeng/api";
+import {FileService} from "../../libs/file.service";
 declare var $:any;
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.css']
+  styleUrls: ['./profile.component.css'],
+  providers: [MessageService]
 })
 export class ProfileComponent extends ScriptService implements OnInit {
   pipe = new DatePipe("en-US");
@@ -18,74 +21,64 @@ export class ProfileComponent extends ScriptService implements OnInit {
   listProvince = [];
   listDistrict = [];
   listCommune = [];
-  provinceId: number;
-  districtId: number;
-  communeId: number;
+  file_avatar: File;
+  submitted = false;
+  datetimePicker = {};
 
   constructor(
     injector: Injector,
     private adminService: AdminService,
     private formBuilder: FormBuilder,
-    private addressService: AddressService
+    private addressService: AddressService,
+    private messageService: MessageService,
+    private fileService: FileService
   ) {
     super(injector)
   }
 
   ngOnInit(): void {
-    // $(".selectpicker").selectpicker();
-    $(".datepicker").datetimepicker({
-      format: "DD/MM/YYYY",
-      icons: {
-        time: "fa fa-clock-o",
-        date: "fa fa-calendar",
-        up: "fa fa-chevron-up",
-        down: "fa fa-chevron-down",
-        previous: "fa fa-chevron-left",
-        next: "fa fa-chevron-right",
-        today: "fa fa-screenshot",
-        clear: "fa fa-trash",
-        close: "fa fa-remove"
-      }
-    })
+    this.datetimePicker = {
+      dateInputFormat: 'DD-MM-YYYY',
+      adaptivePosition: true,
+      isAnimated: true,
+      maxDate: new Date(),
+      containerClass: 'theme-dark-blue'
+    }
 
     this.form = this.formBuilder.group({
-      avatar: ['', [Validators.required]],
       email: [{value: '', disabled: true}],
       ho_ten: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(100)]],
       so_dien_thoai: ['', [Validators.required, Validators.pattern('^(0)[0-9]{9}$')]],
       dia_chi: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(150)]],
       ngay_sinh: ['', [Validators.required]],
       city: ['', ],
-      district: [{value: '', disabled: true}, ],
-      commune: [{value: '', disabled: true}, ]
+      district: ['', ],
+      commune: ['', Validators.required]
     })
 
     this.addressService.getAddress(this.User.ward_id).subscribe((data:any) => {
-      // console.log(data.province.id)
       this.listProvince = data.list_province;
       this.listDistrict = data.list_district;
       this.listCommune = data.list_ward;
-      this.provinceId = data.province.id;
-      this.districtId = data.district.id;
-      this.communeId = data.ward.id;
-      // console.log(this.provinceId)
+
       this.form.patchValue({
         email: this.User.email,
         ho_ten: this.User.ho_ten,
         so_dien_thoai: this.User.so_dien_thoai,
         dia_chi: this.User.dia_chi,
-        ngay_sinh: this.pipe.transform(this.User.ngay_sinh, "dd-MM-yyyy"),
-        // city: data.province.id
-
+        ngay_sinh: new Date(Date.parse(this.User.ngay_sinh)),
+        city: data.province.id,
+        district: data.district.id,
+        commune: data.ward.id,
       })
     })
+
+    this.loadScripts();
   }
 
   getDistrict(id) {
-    console.log(id)
     this.addressService.getDistrict(id).subscribe((res:any) => {
       this.listDistrict = res;
-      console.log(this.listDistrict)
     })
   }
 
@@ -103,17 +96,46 @@ export class ProfileComponent extends ScriptService implements OnInit {
     return environment.urlImg + path;
   }
 
+  a(event) {
+    console.log(event)
+  }
+
   onSubmit() {
+    this.submitted = true;
+    if (this.form.invalid) {
+      return;
+    }
+
+    let profile = {
+      ho_ten: this.form.value.ho_ten,
+      so_dien_thoai: this.form.value.so_dien_thoai,
+      dia_chi: this.form.value.dia_chi,
+      ward_id: this.form.value.commune,
+      ngay_sinh: this.pipe.transform(this.form.value.ngay_sinh, "yyyy-MM-dd"),
+      avatar: null
+    }
+
+    this.fileService.getEncodeFromImage(this.file_avatar).subscribe(data => {
+      if (data != null) {
+        profile.avatar = data;
+      }
+
+      this.adminService.update(profile).subscribe((res:any) => {
+        localStorage.setItem("jwt", JSON.stringify(res.data));
+        this.adminService.input(res.data);
+        this.messageService.add({severity: 'success', summary: 'Thành công!', detail: "Cập nhật thông tin thành công!"});
+      }, err => {
+        console.log(err)
+        this.messageService.add({severity: 'error', summary: 'Thất bại!', detail: err.error.message});
+      })
+    })
 
   }
 
-  // a(event) {
-  //
-  //   if (!event || !event.target || !event.target.files || event.target.files.length === 0) {
-  //     return;
-  //   }
-  //
-  //   console.log(event.target.files[0].name)
-  // }
+  readFileUpload(files) {
+    if (files && files[0]) {
+      this.file_avatar = files[0];
+    }
+  }
 
 }

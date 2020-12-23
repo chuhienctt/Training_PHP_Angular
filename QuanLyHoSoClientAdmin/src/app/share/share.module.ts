@@ -4,22 +4,34 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {ToastModule} from "primeng/toast";
 import {HeaderComponent} from "./header/header.component";
 import {FooterComponent} from "./footer/footer.component";
+import {MatSelectModule} from '@angular/material/select';
+import {BsDatepickerModule} from "ngx-bootstrap/datepicker";
+import {GetImagePipe} from "../libs/get.image.pipe";
+
+
+
 @NgModule({
   declarations: [
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    GetImagePipe
   ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    ToastModule
+    MatSelectModule,
+    ToastModule,
+    BsDatepickerModule.forRoot()
   ],
   exports: [
     ReactiveFormsModule,
+    MatSelectModule,
     ToastModule,
     CommonModule,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    BsDatepickerModule,
+    GetImagePipe
   ]
 })
 export class ShareModule { }

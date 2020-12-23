@@ -63,6 +63,16 @@ Route::group([
 
         
         Route::group([
+            'prefix' => '/thu-tuc'
+        ], function () {
+
+            Route::get('/get', 'ThuTucController@get');
+            Route::get('/pagination', 'ThuTucController@pagination');
+
+        });
+
+        
+        Route::group([
             'prefix' => '/user'
         ], function () {
 
@@ -70,7 +80,8 @@ Route::group([
             Route::get('/pagination', 'UserController@pagination');
             Route::post('/create', 'UserController@create');
             Route::put('/update', 'UserController@update');
-            Route::delete('/block', 'UserController@block');
+            Route::post('/block', 'UserController@block');
+            Route::post('/unblock', 'UserController@unblock');
 
         });
 
@@ -83,16 +94,19 @@ Route::group([
             Route::get('/pagination-tinh', 'DiaChinhController@pagination_tinh');
             Route::post('/create-tinh', 'DiaChinhController@create_tinh');
             Route::put('/update-tinh', 'DiaChinhController@update_tinh');
+            // Route::delete('/delete-tinh', 'DiaChinhController@delete_tinh');
             
             Route::get('/get-huyens', 'DiaChinhController@get_huyen');
             Route::get('/pagination-huyen', 'DiaChinhController@pagination_huyen');
             Route::post('/create-huyen', 'DiaChinhController@create_huyen');
             Route::put('/update-huyen', 'DiaChinhController@update_huyen');
+            // Route::delete('/delete-huyen', 'DiaChinhController@delete_huyen');
             
             Route::get('/get-xas', 'DiaChinhController@get_xa');
             Route::get('/pagination-xa', 'DiaChinhController@pagination_xa');
             Route::post('/create-xa', 'DiaChinhController@create_xa');
             Route::put('/update-xa', 'DiaChinhController@update_xa');
+            // Route::delete('/delete-xa', 'DiaChinhController@delete_xa');
 
         });
 
