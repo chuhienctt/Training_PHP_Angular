@@ -135,10 +135,6 @@ class DiaChinhController extends Controller {
                 'required' => 'Loại tỉnh, thành phố không được để trống',
                 'max:45' => 'Loại tỉnh, thành phố không quá 45 kí tự',
             ],
-            'districts' => [
-                'required' => 'Danh sách quận, huyện không được để trống',
-                'array' => 'Quận huyện phải là một danh sách',
-            ],
         ]);
 
         $result = DB::table('province')->insert([
@@ -147,12 +143,6 @@ class DiaChinhController extends Controller {
         ]);
 
         if($result) {
-            $province_id = DB::lastInsertId();
-
-            foreach($districts as $district) {
-                DB::table('district')->where(['id' => $district])->update(['province_id' => $province_id]);
-            }
-
             return response()->success(1, 'Thêm tỉnh, thành phố thành công!');
         }
 

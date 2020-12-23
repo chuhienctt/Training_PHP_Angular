@@ -77,8 +77,8 @@ class ThuTucController extends Controller {
             ],
         ]);
 
-        if(!File::exists('/templates/'.request()->template)) {
-            
+        if(!File::exists("/templates/".request()->template)) {
+            Validator::alert("Template không tồn tại!");
         }
 
         $thu_tuc = new ThuTuc();
@@ -87,8 +87,7 @@ class ThuTucController extends Controller {
         $thu_tuc->id_linh_vuc = request()->id_linh_vuc;
         $thu_tuc->ten_thu_tuc = request()->ten_thu_tuc;
         $thu_tuc->muc_do = request()->muc_do;
-
-
+        $thu_tuc->template = "/templates/".request()->template;
 
         return response()->error(2, 'Thêm cơ quan thất bại!');
     }
