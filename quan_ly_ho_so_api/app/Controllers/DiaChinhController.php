@@ -81,6 +81,8 @@ class DiaChinhController extends Controller {
 
         if(request()->has('id')) {
             $data = DB::table('district')->find(request()->id);
+        } else if(request()->has('id_province')) {
+            $data = DB::table('district')->where(['id_province' => request()->id_province])->get();
         } else {
             $data = DB::table('district')->all();
         }
@@ -91,8 +93,13 @@ class DiaChinhController extends Controller {
     public function pagination_huyen() {
         $first = request()->first ?? 0;
         $row = request()->row ?? 10;
+        $id_province = request()->id_province ?? null;
 
-        $data = DB::table('district')->offset($first)->limit($row)->get();
+        if($id_province) {
+            $data = DB::table('district')->where(['id_province' => $id_province])->offset($first)->limit($row)->get();
+        } else {
+            $data = DB::table('district')->offset($first)->limit($row)->get();
+        }
 
         return response()->json([
             'total' => DB::table('district')->count(),
@@ -104,6 +111,8 @@ class DiaChinhController extends Controller {
 
         if(request()->has('id')) {
             $data = DB::table('ward')->find(request()->id);
+        } else if(request()->has('id_district')) {
+            $data = DB::table('ward')->where(['id_district' => request()->id_district])->get();
         } else {
             $data = DB::table('ward')->all();
         }
@@ -114,8 +123,13 @@ class DiaChinhController extends Controller {
     public function pagination_xa() {
         $first = request()->first ?? 0;
         $row = request()->row ?? 10;
+        $id_district = request()->id_district ?? null;
 
-        $data = DB::table('ward')->offset($first)->limit($row)->get();
+        if($id_district) {
+            $data = DB::table('ward')->where(['id_district' => $id_district])->offset($first)->limit($row)->get();
+        } else {
+            $data = DB::table('ward')->offset($first)->limit($row)->get();
+        }
 
         return response()->json([
             'total' => DB::table('ward')->count(),
