@@ -1,3 +1,4 @@
+
 <div id="wrapper">
     <nav class="navbar-default navbar-static-top" role="navigation">
         <div class="navbar-header">
@@ -21,7 +22,6 @@
                 </form>
                 <div class="clearfix"> </div>
             </div>
-
             <div class="drop-men">
                 <ul class=" nav_1">
 
@@ -89,13 +89,15 @@
                     </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle dropdown-at" data-toggle="dropdown"><span
-                                class=" name-caret">Rackham<i class="caret"></i></span><img
+                                class=" name-caret">Lê Văn Long<i class="caret"></i></span><img
                                 src="./assets/images//wo.jpg"></a>
                         <ul class="dropdown-menu " role="menu">
-                            <li><a href="profile.html"><i class="fa fa-user"></i>Edit Profile</a></li>
-                            <li><a href="inbox.html"><i class="fa fa-envelope"></i>Inbox</a></li>
-                            <li><a href="calendar.html"><i class="fa fa-calendar"></i>Calender</a></li>
-                            <li><a href="inbox.html"><i class="fa fa-clipboard"></i>Tasks</a></li>
+                            <li><a (click)="logout()"><i class="fa fa-user"></i>Logout</a></li>
+                            <li><a [routerLink]="['/profile']" routerLinkActive="router-link-active"><i
+                                        class="fa fa-calendar"></i>Profile</a></li>
+                            <!-- <li><a href="inbox.html"><i class="fa fa-envelope"></i>Inbox</a></li>
+                          <li><a href="calendar.html"><i class="fa fa-calendar"></i>Calender</a></li>
+                          <li><a href="inbox.html"><i class="fa fa-clipboard"></i>Tasks</a></li> -->
                         </ul>
                     </li>
                 </ul>
@@ -109,77 +111,94 @@
                     <ul class="nav" id="side-menu">
 
                         <li>
-                          <a [routerLink]="['/dashboard']" routerLinkActive="router-link-active"  class=" hvr-bounce-to-right"><i class="fa fa-dashboard nav_icon "></i><span
-                              class="nav-label">Dashboards</span> </a>
+                            <a [routerLink]="['/dashboard']" routerLinkActive="router-link-active"
+                                class=" hvr-bounce-to-right"><i class="fa fa-dashboard nav_icon "></i><span
+                                    class="nav-label">Dashboards</span> </a>
                         </li>
-            
+
                         <li>
-                          <a href="#" class=" hvr-bounce-to-right"><i class="fa fa-indent nav_icon"></i> <span class="nav-label">Hồ
-                              sơ</span><span class="fa arrow"></span></a>
-                          <ul class="nav nav-second-level">
-                            <li><a [routerLink]="['/quan-ly-ho-so']" routerLinkActive="router-link-active"  class=" hvr-bounce-to-right"><i
-                                  class="fa fa-file-text-o nav_icon"></i>Quản lý hồ sơ</a></li>
-                          </ul>
-                        </li>
-                        <li>
-                          <a href="#" class=" hvr-bounce-to-right"><i class="fa fa-indent nav_icon"></i> <span class="nav-label">Thủ
-                              tục</span><span class="fa arrow"></span></a>
-                          <ul class="nav nav-second-level">
-                            <li><a [routerLink]="['/quan-ly-thu-tuc']" routerLinkActive="router-link-active"  class=" hvr-bounce-to-right"><i
-                                  class="fa fa-file-text-o nav_icon"></i>Quản lý thủ tục</a></li>
-                          </ul>
+                            <a href="#" class=" hvr-bounce-to-right"><i class="fa fa-indent nav_icon"></i> <span
+                                    class="nav-label">Hồ
+                                    sơ</span><span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li><a [routerLink]="['/quan-ly-ho-so']" routerLinkActive="router-link-active"
+                                        class=" hvr-bounce-to-right"><i class="fa fa-file-text-o nav_icon"></i>Quản lý
+                                        hồ sơ</a></li>
+                            </ul>
                         </li>
                         <li>
-                          <a href="#" class=" hvr-bounce-to-right"><i class="fa fa-desktop nav_icon"></i> <span class="nav-label">Cơ
-                              quan</span><span class="fa arrow"></span></a>
-                          <ul class="nav nav-second-level">
-                            <li><a [routerLink]="['/quan-ly-co-quan']" routerLinkActive="router-link-active"  class=" hvr-bounce-to-right"><i class="fa fa-question-circle nav_icon"></i>Quản
-                                lý cơ quan</a></li>
-                          </ul>
+                            <a href="#" class=" hvr-bounce-to-right"><i class="fa fa-indent nav_icon"></i> <span
+                                    class="nav-label">Thủ
+                                    tục</span><span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li><a [routerLink]="['/quan-ly-thu-tuc']" routerLinkActive="router-link-active"
+                                        class=" hvr-bounce-to-right"><i class="fa fa-file-text-o nav_icon"></i>Quản lý
+                                        thủ tục</a></li>
+                            </ul>
                         </li>
                         <li>
-                          <a href="#" class=" hvr-bounce-to-right"><i class="fa fa-list nav_icon"></i> <span class="nav-label">Lĩnh
-                              vực</span><span class="fa arrow"></span></a>
-                          <ul class="nav nav-second-level">
-                            <li><a [routerLink]="['/quan-ly-linh-vuc']" routerLinkActive="router-link-active"  class=" hvr-bounce-to-right"><i class="fa fa-align-left nav_icon"></i>
-                                Quản lý lĩnh vực</a></li>
-                          </ul>
+                            <a href="#" class=" hvr-bounce-to-right"><i class="fa fa-desktop nav_icon"></i> <span
+                                    class="nav-label">Cơ
+                                    quan</span><span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li><a [routerLink]="['/quan-ly-co-quan']" routerLinkActive="router-link-active"
+                                        class=" hvr-bounce-to-right"><i class="fa fa-question-circle nav_icon"></i>Quản
+                                        lý cơ quan</a></li>
+                            </ul>
                         </li>
                         <li>
-                          <a href="#" class=" hvr-bounce-to-right"><i class="fa fa-list nav_icon"></i> <span class="nav-label">Quy
-                              trình</span><span class="fa arrow"></span></a>
-                          <ul class="nav nav-second-level">
-                            <li><a [routerLink]="['/quan-ly-quy-trinh']" routerLinkActive="router-link-active"  class=" hvr-bounce-to-right"><i class="fa fa-align-left nav_icon"></i>
-                                Quản lý quy trình</a></li>
-                          </ul>
+                            <a href="#" class=" hvr-bounce-to-right"><i class="fa fa-list nav_icon"></i> <span
+                                    class="nav-label">Lĩnh
+                                    vực</span><span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li><a [routerLink]="['/quan-ly-linh-vuc']" routerLinkActive="router-link-active"
+                                        class=" hvr-bounce-to-right"><i class="fa fa-align-left nav_icon"></i>
+                                        Quản lý lĩnh vực</a></li>
+                            </ul>
                         </li>
                         <li>
-                          <a href="#" class=" hvr-bounce-to-right"><i class="fa fa-list nav_icon"></i> <span class="nav-label">Người
-                              dùng</span><span class="fa arrow"></span></a>
-                          <ul class="nav nav-second-level">
-                            <li><a [routerLink]="['/quan-ly-nguoi-dung']" routerLinkActive="router-link-active"  class=" hvr-bounce-to-right"><i class="fa fa-align-left nav_icon"></i>
-                                Quản lý người dùng</a></li>
-                          </ul>
+                            <a href="#" class=" hvr-bounce-to-right"><i class="fa fa-list nav_icon"></i> <span
+                                    class="nav-label">Quy
+                                    trình</span><span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li><a [routerLink]="['/quan-ly-quy-trinh']" routerLinkActive="router-link-active"
+                                        class=" hvr-bounce-to-right"><i class="fa fa-align-left nav_icon"></i>
+                                        Quản lý quy trình</a></li>
+                            </ul>
                         </li>
                         <li>
-                          <a href="#" class=" hvr-bounce-to-right"><i class="fa fa-list nav_icon"></i> <span class="nav-label">Các bước
-                              </span><span class="fa arrow"></span></a>
-                          <ul class="nav nav-second-level">
-                            <li><a [routerLink]="['/quan-ly-buoc']" routerLinkActive="router-link-active"  class=" hvr-bounce-to-right"><i class="fa fa-align-left nav_icon"></i>
-                                Quản lý các bước</a></li>
-                          </ul>
+                            <a href="#" class=" hvr-bounce-to-right"><i class="fa fa-list nav_icon"></i> <span
+                                    class="nav-label">Người
+                                    dùng</span><span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li><a [routerLink]="['/quan-ly-nguoi-dung']" routerLinkActive="router-link-active"
+                                        class=" hvr-bounce-to-right"><i class="fa fa-align-left nav_icon"></i>
+                                        Quản lý người dùng</a></li>
+                            </ul>
                         </li>
                         <li>
-                          <a href="#" class=" hvr-bounce-to-right"><i class="fa fa-cog nav_icon"></i> <span
-                              class="nav-label">Settings</span><span class="fa arrow"></span></a>
-                          <ul class="nav nav-second-level">
-                            <li><a href="signin.html" class=" hvr-bounce-to-right"><i class="fa fa-sign-in nav_icon"></i>Signin</a>
-                            </li>
-                            <li><a href="signup.html" class=" hvr-bounce-to-right"><i class="fa fa-sign-in nav_icon"></i>Singup</a>
-                            </li>
-                          </ul>
+                            <a href="#" class=" hvr-bounce-to-right"><i class="fa fa-list nav_icon"></i> <span
+                                    class="nav-label">Các bước
+                                </span><span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li><a [routerLink]="['/quan-ly-buoc']" routerLinkActive="router-link-active"
+                                        class=" hvr-bounce-to-right"><i class="fa fa-align-left nav_icon"></i>
+                                        Quản lý các bước</a></li>
+                            </ul>
                         </li>
-                      </ul>
+                        <li>
+                            <a href="#" class=" hvr-bounce-to-right"><i class="fa fa-cog nav_icon"></i> <span
+                                    class="nav-label">Settings</span><span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li><a href="signin.html" class=" hvr-bounce-to-right"><i
+                                            class="fa fa-sign-in nav_icon"></i>Signin</a>
+                                </li>
+                                <li><a href="signup.html" class=" hvr-bounce-to-right"><i
+                                            class="fa fa-sign-in nav_icon"></i>Singup</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -190,168 +209,275 @@
                 <h2>
                     <a href="index.html">Home</a>
                     <i class="fa fa-angle-right"></i>
-                    <span>Quan-ly-cơ-quan</span>
+                    <span>Quan-ly-linh-vuc</span>
                 </h2>
-            </div><br/>
+            </div><br />
             <div class="banner">
                 <div>
                     <h3>Quản lý cơ quan</h3><br />
-                    <button style="margin-bottom:1%;" class="btn btn-success">Thêm
-                        +</button>
+                    <button style="margin-bottom:1%;" class="btn btn-success" (click)="showAdd()">Thêm +</button>
                     <table class="table table-bordered">
                         <thead>
                             <tr>
-                                <th style="width:5%; text-align: center">Id</th>
-                                <th style="width:20%; text-align: center">Tên cơ quan</th>
-                                <th style="width:10%; text-align: center">Địa chỉ</th>
-                                <th style="width:20%; text-align: center">Email</th>
-                                <th style="width:10%; text-align: center">Số điện thoại</th>
+                                <th style="width:15%; text-align: center">Tên cơ quan</th>
+                                <th style="width:10%; text-align: center">Hình ảnh</th>
+                                <th style="width:25%; text-align: center">Địa chỉ</th>
+                                <th style="width:10%; text-align: center">Email</th>
+                                <th style="width:20%; text-align: center">Số điện thoại</th>
                                 <th style="width:20%; text-align: center">Chức năng</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1</td>
+                            <tr *ngFor="let item of items">
                                 <td>
-                                   Ảnh
+                                    {{item.ten_co_quan}}
                                 </td>
-                                <td>H</td>
-                                <td>H</td>
-                                <td>H</td>
+                                <td><img style="width: 50px; height: 50px; vertical-align: middle" *ngIf="item.hinh_anh"
+                                        [src]="createImg(item.hinh_anh)"></td>
                                 <td>
-                                    <button style="margin-left: 2%;" class="btn btn-info"><i
-                                            class="fa fa-eye" aria-hidden="true"></i></button>
-                                    <button style="margin-left: 2%;" class="btn btn-success"><i
-                                            class="fa fa-pencil" aria-hidden="true"></i></button>
-                                    <button style="margin-left: 2%;" class="btn btn-danger"><i
-                                            class="fa fa-trash-o" aria-hidden="true"></i></button>
+                                    {{item.dia_chi}}
                                 </td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
                                 <td>
-                                   Ảnh
+                                    {{item.email}}
                                 </td>
-                                <td>H</td>
-                                <td>H</td>
-                                <td>H</td>
                                 <td>
-                                    <button style="margin-left: 2%;" class="btn btn-info"><i
-                                            class="fa fa-eye" aria-hidden="true"></i></button>
-                                    <button style="margin-left: 2%;" class="btn btn-success"><i
-                                            class="fa fa-pencil" aria-hidden="true"></i></button>
-                                    <button style="margin-left: 2%;" class="btn btn-danger"><i
-                                            class="fa fa-trash-o" aria-hidden="true"></i></button>
+                                    {{item.so_dien_thoai}}
+                                </td>
+
+                                <td>
+                                    <button style="margin-left: 2%;" class="btn btn-info"
+                                        (click)="showDetail(item.id)"><i class="fa fa-eye"
+                                            aria-hidden="true"></i></button>
+                                    <button style="margin-left: 2%;" class="btn btn-success"
+                                        (click)="showEdit(item.id)"><i class="fa fa-pencil"
+                                            aria-hidden="true"></i></button>
+                                    <button style="margin-left: 2%;" class="btn btn-danger"
+                                        (click)="deleteShow(item.id)"><i class="fa fa-trash-o"
+                                            aria-hidden="true"></i></button>
                                 </td>
                             </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>
-                                   Ảnh
-                                </td>
-                                <td>H</td>
-                                <td>H</td>
-                                <td>H</td>
-                                <td>
-                                    <button style="margin-left: 2%;" class="btn btn-info"><i
-                                            class="fa fa-eye" aria-hidden="true"></i></button>
-                                    <button style="margin-left: 2%;" class="btn btn-success"><i
-                                            class="fa fa-pencil" aria-hidden="true"></i></button>
-                                    <button style="margin-left: 2%;" class="btn btn-danger"><i
-                                            class="fa fa-trash-o" aria-hidden="true"></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>
-                                   Ảnh
-                                </td>
-                                <td>H</td>
-                                <td>H</td>
-                                <td>H</td>
-                                <td>
-                                    <button style="margin-left: 2%;" class="btn btn-info"><i
-                                            class="fa fa-eye" aria-hidden="true"></i></button>
-                                    <button style="margin-left: 2%;" class="btn btn-success"><i
-                                            class="fa fa-pencil" aria-hidden="true"></i></button>
-                                    <button style="margin-left: 2%;" class="btn btn-danger"><i
-                                            class="fa fa-trash-o" aria-hidden="true"></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>
-                                   Ảnh
-                                </td>
-                                <td>H</td>
-                                <td>H</td>
-                                <td>H</td>
-                                <td>
-                                    <button style="margin-left: 2%;" class="btn btn-info"><i
-                                            class="fa fa-eye" aria-hidden="true"></i></button>
-                                    <button style="margin-left: 2%;" class="btn btn-success"><i
-                                            class="fa fa-pencil" aria-hidden="true"></i></button>
-                                    <button style="margin-left: 2%;" class="btn btn-danger"><i
-                                            class="fa fa-trash-o" aria-hidden="true"></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>
-                                   Ảnh
-                                </td>
-                                <td>H</td>
-                                <td>H</td>
-                                <td>H</td>
-                                <td>
-                                    <button style="margin-left: 2%;" class="btn btn-info"><i
-                                            class="fa fa-eye" aria-hidden="true"></i></button>
-                                    <button style="margin-left: 2%;" class="btn btn-success"><i
-                                            class="fa fa-pencil" aria-hidden="true"></i></button>
-                                    <button style="margin-left: 2%;" class="btn btn-danger"><i
-                                            class="fa fa-trash-o" aria-hidden="true"></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>
-                                   Ảnh
-                                </td>
-                                <td>H</td>
-                                <td>H</td>
-                                <td>H</td>
-                                <td>
-                                    <button style="margin-left: 2%;" class="btn btn-info"><i
-                                            class="fa fa-eye" aria-hidden="true"></i></button>
-                                    <button style="margin-left: 2%;" class="btn btn-success"><i
-                                            class="fa fa-pencil" aria-hidden="true"></i></button>
-                                    <button style="margin-left: 2%;" class="btn btn-danger"><i
-                                            class="fa fa-trash-o" aria-hidden="true"></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>
-                                   Ảnh
-                                </td>
-                                <td>H</td>
-                                <td>H</td>
-                                <td>H</td>
-                                <td>
-                                    <button style="margin-left: 2%;" class="btn btn-info"><i
-                                            class="fa fa-eye" aria-hidden="true"></i></button>
-                                    <button style="margin-left: 2%;" class="btn btn-success"><i
-                                            class="fa fa-pencil" aria-hidden="true"></i></button>
-                                    <button style="margin-left: 2%;" class="btn btn-danger"><i
-                                            class="fa fa-trash-o" aria-hidden="true"></i></button>
-                                </td>
-                            </tr>
+
                         </tbody>
                     </table>
                 </div>
             </div>
+            <div bsModal #editAndADD="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+                aria-labelledby="dialog-sizes-name1">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <form [formGroup]="form"(ngSubmit)="SaveForm()" *ngIf="entity">
+                            <p-toast></p-toast>
+                            <div class="modal-header">
+                                <h4 id="dialog-sizes-name1" class="modal-title pull-left" style="margin-top: -1%;">Thêm
+                                    cơ quan</h4>
+                                <button type="button" class="close pull-right" (click)="editAndADD.hide()"
+                                    aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="ten_co_quan">Tên cơ quan:</label>
+                                    <input type="text" class="form-control" value="" name="ten_co_quan"
+                                    formControlName="ten_co_quan">
+                                    <div *ngIf="iSubmited && form.controls.ten_co_quan.errors">
+                                        <span class="text-danger" *ngIf="form.controls.ten_co_quan.errors.required">Tên
+                                            cơ quan không được để trống.</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="dia_chi">Địa chỉ:</label>
+                                    <input type="text" class="form-control" value="" name="dia_chi"
+                                    formControlName="dia_chi">
+                                    <div *ngIf="iSubmited && form.controls.dia_chi.errors">
+                                        <span class="text-danger" *ngIf="form.controls.dia_chi.errors.required">Địa chỉ
+                                            không được để trống.</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Email:</label>
+                                    <input type="text" class="form-control" value="" name="email"
+                                    formControlName="email">
+                                    <div *ngIf="iSubmited && form.controls.email.errors">
+                                        <span class="text-danger" *ngIf="form.controls.email.errors.required">Email
+                                            không được để trống.</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="so_dien_thoai">Số điện thoại:</label>
+                                    <input type="text" class="form-control" value="" name="so_dien_thoai"
+                                    formControlName="so_dien_thoai">
+                                    <div *ngIf="iSubmited && form.controls.so_dien_thoai.errors">
+                                        <span class="text-danger"
+                                            *ngIf="form.controls.so_dien_thoai.errors.required">Tên lĩnh vực không được
+                                            để trống.</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-4">
+                                        <label class="pl-5px">Tỉnh</label>
+                                        <div class="field">
+                                            <p-dropdown formControlName="city" (onChange)="getDistrict($event.value)"
+                                                optionLabel="name" [style]="style" [options]="listCity"
+                                                placeholder="Chọn tỉnh, thành phố" [virtualScroll]="true"
+                                                [itemSize]="31" [filter]="false"></p-dropdown>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="pl-5px">Huyện</label>
+                                        <div class="field">
+                                            <p-dropdown formControlName="district" (onChange)="getCommune($event.value)"
+                                                optionLabel="name" [style]="style" [options]="listDistrict"
+                                                placeholder="Chọn quận, huyện" [virtualScroll]="true" [itemSize]="31"
+                                                [filter]="false"></p-dropdown>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="pl-5px">Xã</label>
+                                        <div class="field">
+                                            <p-dropdown formControlName="commune" optionValue="id" optionLabel="name"
+                                                [style]="style" [options]="listCommune"
+                                                placeholder="Chọn xã, phường, thị trấn" [virtualScroll]="true"
+                                                [itemSize]="31" [filter]="false"></p-dropdown>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- <div class="form-group">
+                                    <label for="ward_id">Xã:</label> -->
+
+                                <!-- <select name="ward_id" >
+                                        <option *ngFor="let item of items" value="{{ item.id }}">
+                                            {{ item.ward_id}}
+                                        </option>
+                                    </select> -->
+                                <!-- <input type="number" class="form-control" value="" name="ward_id"
+                                        [(ngModel)]="entity.ward_id">
+                                        <div *ngIf="iSubmited && form.controls.ward_id.errors">
+                                            <span class="text-danger" *ngIf="form.controls.ward_id.errors.required">Tên lĩnh vực không được để trống.</span>
+                                        </div> -->
+                                <!-- </div> -->
+                                <div class="form-group">
+                                    <label for="hinh_anh">Hình ảnh:</label>
+                                    <p-fileUpload [multiple]="false" #file accept="image/*" maxFileSize="1000000">
+                                    </p-fileUpload>
+                                    <div *ngIf="iSubmited && form.controls.hinh_anh.errors">
+                                        <span class="text-danger" *ngIf="form.controls.hinh_anh.errors.required">Hình ảnh
+                                            không được để trống.</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-default">Submit</button>
+                                <button type="button" class="btn btn-default" (click)="editAndADD.hide()"
+                                    data-dismiss="modal">Close</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- modal sửa cơ quan -->
+            <div bsModal #editAndADD2="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+                aria-labelledby="dialog-sizes-name1">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <form [formGroup]="form"(ngSubmit)="SaveForm()" *ngIf="form">
+                            <div class="modal-header">
+                                <h4 id="dialog-sizes-name1" class="modal-title pull-left" style="margin-top: -1%;">Sửa
+                                    cơ quan</h4>
+                                <button type="button" class="close pull-right" (click)="editAndADD2.hide()"
+                                    aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="ten_co_quan">Tên cơ quan:</label>
+                                    <input type="text" class="form-control" value="" name="ten_co_quan"
+                                    formControlName="form.ten_co_quan">
+                                    <div *ngIf="iSubmited && form.controls.ten_co_quan.errors">
+                                        <span class="text-danger" *ngIf="form.controls.ten_co_quan.errors.required">Tên
+                                            cơ quan không được để trống.</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="dia_chi">Địa chỉ:</label>
+                                    <input type="text" class="form-control" value="" name="dia_chi"
+                                    formControlName="form.dia_chi">
+                                    <div *ngIf="iSubmited && form.controls.dia_chi.errors">
+                                        <span class="text-danger" *ngIf="form.controls.dia_chi.errors.required">Địa chỉ
+                                            không được để trống.</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Email:</label>
+                                    <input type="text" class="form-control" value="" name="email"
+                                    formControlName="form.email">
+                                    <div *ngIf="iSubmited && form.controls.email.errors">
+                                        <span class="text-danger" *ngIf="form.controls.email.errors.required">Email
+                                            không được để trống.</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="so_dien_thoai">Số điện thoại:</label>
+                                    <input type="text" class="form-control" value="" name="so_dien_thoai"
+                                    formControlName="form.so_dien_thoai">
+                                    <div *ngIf="iSubmited && form.controls.so_dien_thoai.errors">
+                                        <span class="text-danger"
+                                            *ngIf="form.controls.so_dien_thoai.errors.required">Tên lĩnh vực không được
+                                            để trống.</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-4">
+                                        <label class="pl-5px">Tỉnh</label>
+                                        <div class="field">
+                                            <p-dropdown formControlName="city" (onChange)="getDistrict($event.value)"
+                                                optionLabel="name" [style]="style" [options]="listCity"
+                                                placeholder="Chọn tỉnh, thành phố" [virtualScroll]="true"
+                                                [itemSize]="31" [filter]="false"></p-dropdown>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="pl-5px">Huyện</label>
+                                        <div class="field">
+                                            <p-dropdown formControlName="district" (onChange)="getCommune($event.value)"
+                                                optionLabel="name" [style]="style" [options]="listDistrict"
+                                                placeholder="Chọn quận, huyện" [virtualScroll]="true" [itemSize]="31"
+                                                [filter]="false"></p-dropdown>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="pl-5px">Xã</label>
+                                        <div class="field">
+                                            <p-dropdown formControlName="entity2.commune" optionValue="id" optionLabel="name"
+                                                [style]="style" [options]="listCommune"
+                                                placeholder="Chọn xã, phường, thị trấn" [virtualScroll]="true"
+                                                [itemSize]="31" [filter]="false"></p-dropdown>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="hinh_anh">Hình ảnh:</label>
+                                    <p-fileUpload [multiple]="false" #file accept="image/*" maxFileSize="1000000">
+                                    </p-fileUpload>
+                                    <div *ngIf="iSubmited && form.controls.hinh_anh.errors">
+                                        <span class="text-danger" *ngIf="form.controls.hinh_anh.errors.required">Hình ảnh
+                                            không được để trống.</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-default">Submit</button>
+                                <button type="button" class="btn btn-default" (click)="editAndADD2.hide()"
+                                    data-dismiss="modal">Close</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
             <div class="copy">
-                <p> &copy; 2020 Minimal. All Rights Reserved | Design by 
+                <p> &copy; 2020 Minimal. All Rights Reserved | Design by
                 </p>
             </div>
         </div>
