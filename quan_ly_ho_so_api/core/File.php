@@ -85,6 +85,11 @@ class File {
         return false;
     }
 
+    public static function exists($path) {
+        $attachment_location = __DIR__.'/../public'.$path;
+        return file_exists($attachment_location);
+    }
+
     public static function fileRender($path) {
         $attachment_location = __DIR__.'/../public'.$path;
 

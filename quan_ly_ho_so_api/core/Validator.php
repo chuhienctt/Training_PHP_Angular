@@ -47,7 +47,7 @@ class Validator {
                 }
             break;
             case 'numberic':
-                if(is_numeric($value)) {
+                if(!is_numeric($value)) {
                     return true;
                 }
             break;

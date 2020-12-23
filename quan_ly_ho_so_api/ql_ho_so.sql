@@ -19,8 +19,7 @@ SET time_zone = "+00:00";
 
 --
 -- Cơ sở dữ liệu: `ql_ho_so`
-create database ql_ho_so;
-use ql_ho_so;
+--
 
 -- --------------------------------------------------------
 

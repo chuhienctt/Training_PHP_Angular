@@ -42,11 +42,13 @@ class Model {
     }
 
     public function hide() {
-        return $this->db->hide();
+        $this->deleted_at = Format::timeNow();
+        return $this->save();
     }
 
     public function show() {
-        return $this->db->show();
+        $this->deleted_at = null;
+        return $this->save();
     }
 
     public function count() {
@@ -94,6 +96,8 @@ class Model {
                     }
 
                     $override && $data[$column] = $this->{$column};
+                } else {
+                    $data[$column] = NULL;
                 }
             }
         }
@@ -115,7 +119,7 @@ class Model {
 
             $row = $this->db->insert($data);
             if($row) {
-                $this->id = $this->db->lastInsertId();
+                $this->id = DB::lastInsertId();
                 $this->updateValues();
             }
             return $row;

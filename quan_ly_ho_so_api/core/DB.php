@@ -146,7 +146,7 @@ class DB {
         $statement->execute();
         $this->clearOption();
 
-        return $statement->rowCount();
+        return true;
     }
 
     public function delete() {
@@ -252,7 +252,7 @@ class DB {
         return $this->limit($n);
     }
 
-    public function lastInsertId() {
+    public static function lastInsertId() {
         return self::$connect->lastInsertId();
     }
 

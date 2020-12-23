@@ -3,7 +3,7 @@ import {environment} from "../../environments/environment";
 import {HttpClient} from "@angular/common/http";
 import {BehaviorSubject} from "rxjs";
 
-const baseUrl = environment.apiUrl + "auth/login"
+const baseUrl = environment.apiUrl + "auth/"
 
 @Injectable({
   providedIn: 'root'
@@ -24,10 +24,14 @@ export class AdminService {
   }
 
   login(user) {
-    return this._http.post(baseUrl, user);
+    return this._http.post(baseUrl + "login", user);
   }
 
   changePass(user) {
-    return this._http.post(environment.apiBase + "auth/change-pass", user);
+    return this._http.post(baseUrl + "change-pass", user);
+  }
+
+  update(profile) {
+    return this._http.put(baseUrl + "update", profile);
   }
 }

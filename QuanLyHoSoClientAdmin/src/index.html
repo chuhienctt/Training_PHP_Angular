@@ -69,10 +69,11 @@
 <!--  Notifications Plugin    -->
 <script src="assets/js/plugins/bootstrap-notify.js"></script>
 <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
-<!--<script src="assets/js/material-dashboard.min6c54.js" type="text/javascript"></script>-->
+<script src="assets/js/material-dashboard.min6c54.js?v=2.2.2" type="text/javascript"></script>
 <!-- Material Dashboard DEMO methods, don't include it in your project! -->
 <script>
   $(document).ready(function () {
+    $().ready(function () {
       $sidebar = $('.sidebar');
 
       $sidebar_img_container = $sidebar.find('.sidebar-background');
@@ -265,10 +266,9 @@
         }, 1000);
 
       });
+    });
   });
 </script>
 </body>
-
-
 <!-- Mirrored from demos.creative-tim.com/material-dashboard-pro/examples/dashboard.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 15 Dec 2020 22:27:46 GMT -->
 </html>

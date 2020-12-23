@@ -38,7 +38,6 @@ class Auth {
          } catch (\Exception $e) {
              return false;
          }
-         
     }
 
     public static function createPassword($password) {

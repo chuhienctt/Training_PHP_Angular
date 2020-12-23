@@ -7,6 +7,8 @@ import {OrganComponent} from "./organ/organ.component";
 import {ProfileComponent} from "./profile/profile.component";
 import {ChangepassComponent} from "./changepass/changepass.component";
 import {UserComponent} from "./user/user.component";
+import {AddressComponent} from "./address/address.component";
+import {ProcedureComponent} from "./procedure/procedure.component";
 
 const routes: Routes = [
   {
@@ -18,12 +20,14 @@ const routes: Routes = [
     path: '',
     component: MainComponent,
     children: [
-      {path:'dashboard', component:HomeComponent},
-      {path:'feild', component: FeildComponent},
+      {path: 'dashboard', component:HomeComponent},
+      {path: 'procedure', component: ProcedureComponent},
+      {path: 'feild', component: FeildComponent},
       {path: 'organ', component: OrganComponent},
       {path: 'profile', component: ProfileComponent},
       {path: 'change-password', component: ChangepassComponent},
-      {path: 'user', component: UserComponent}
+      {path: 'user', component: UserComponent},
+      {path: 'address', component: AddressComponent}
     ]
   }]
 

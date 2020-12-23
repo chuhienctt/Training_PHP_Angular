@@ -16,7 +16,7 @@ export class FeildService {
   }
 
   getData(first, rows) {
-    return this._http.get(baseUrl + "pagination?first=" + first + "&&rows=" + rows);
+    return this._http.get(baseUrl + "pagination?first=" + first + "&rows=" + rows);
   }
 
   create(feild) {

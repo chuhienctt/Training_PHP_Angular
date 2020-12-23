@@ -1,10 +1,10 @@
+<p-toast></p-toast>
 <div>
   <h4 class="card-title text-uppercase text-center">
     Quản lý người dùng
     <button type="button" (click)="create()" style="top: -12px"
-      class="float-right mr-4 btn btn-primary btn-round btn-fab">
+            class="float-right mr-4 btn btn-primary btn-round btn-fab">
       <i class="material-icons">add</i>
-      <div class="ripple-container"></div>
     </button>
   </h4>
 </div>
@@ -14,7 +14,7 @@
       <div class="card card-product">
         <div class="card-header card-header-image" data-header-animation="true">
           <a href="#pablo">
-            <img class="img" [src]="createImg(User.avatar)">
+            <img class="img" src="{{item.avatar | getImage}}">
           </a>
         </div>
         <div class="card-body">
@@ -22,13 +22,13 @@
             <button type="button" class="btn btn-danger btn-link fix-broken-card">
               <i class="material-icons">build</i> Fix Header!
             </button>
-            <button type="button" class="btn btn-default btn-link" rel="tooltip" data-placement="bottom" title="View">
+            <button type="button" class="btn btn-default btn-link">
               <i class="material-icons">art_track</i>
             </button>
-            <button type="button" class="btn btn-success btn-link" rel="tooltip" data-placement="bottom" title="Edit">
+            <button type="button" class="btn btn-success btn-link" (click)="edit(item.id)">
               <i class="material-icons">edit</i>
             </button>
-            <button type="button" class="btn btn-danger btn-link" rel="tooltip" data-placement="bottom" title="Remove">
+            <button type="button" class="btn btn-danger btn-link" (click)="block(item.id)">
               <i class="material-icons">close</i>
             </button>
           </div>
@@ -37,7 +37,7 @@
           </h4>
           <div class="card-description">
             <p class="text-muted">{{item.so_dien_thoai}}</p>
-            <p class="text-muted">{{item.email}}</p>
+            <p class="text-muted">{{convertString(item.email, 25)}}</p>
           </div>
         </div>
         <div class="card-footer">
@@ -49,7 +49,7 @@
           <div class="stats">
             <div class="togglebutton">
               <label>
-                <input type="checkbox" checked="">
+                <input type="checkbox" (change)="unblock($event)" value="{{item.id}}" [checked]="item.deleted_at == null">
                 <span class="toggle"></span>
               </label>
             </div>
@@ -58,13 +58,11 @@
       </div>
     </div>
   </div>
-  <p-paginator [rows]="10" totalRecords="{{totalRecords}}" (onPageChange)="loadData($event)"></p-paginator>
-
+  <p-paginator [rows]="rows" totalRecords="{{totalRecords}}" (onPageChange)="loadData($event)"></p-paginator>
 </div>
 
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
-      
     <!--      Wizard container        -->
     <div class="wizard-container modal-content">
       <div class="card card-wizard active" data-color="rose" id="wizardProfile" style="margin-top: 0; margin-bottom: 0;">
@@ -72,7 +70,7 @@
           <!--        You can switch " data-color="primary" "  with one of the next bright colors: "green", "orange", "red", "blue"       -->
           <div class="card-header text-center">
             <h3 class="card-title">
-              Build Your Profile
+              {{aoe ? 'Thêm mới người dùng' : 'Sửa người dùng'}}
               <button type="button" class="close" (click)="closeModal()">
                 <i class="material-icons">clear</i>
               </button>
@@ -82,17 +80,17 @@
             <ul class="nav nav-pills">
               <li class="nav-item">
                 <a class="nav-link active" href="#about" data-toggle="tab" role="tab">
-                  About
+                  Tài khoản
                 </a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="#account" data-toggle="tab" role="tab">
-                  Account
+                  Phân quyền
                 </a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="#address" data-toggle="tab" role="tab">
-                  Address
+                  Thông tin
                 </a>
               </li>
             </ul>
@@ -100,15 +98,16 @@
           <div class="card-body">
             <div class="tab-content">
               <div class="tab-pane active" id="about">
-                <h5 class="info-text">Nhập đầy đủ thông tin</h5>
+<!--                <h5 class="info-text">Nhập đầy đủ thông tin</h5>-->
                 <div class="row justify-content-center">
                   <div class="col-sm-4">
                     <div class="picture-container">
                       <div class="picture">
-                        <img src="../../assets/img/default-avatar.png" class="picture-src" id="wizardPicturePreview" title="" />
+                        <img src="{{image}}" class="picture-src" id="wizardPicturePreview" title="" />
                         <input type="file" id="wizard-picture" accept="image/*" (change)="readFileUpload($event.target.files)">
                       </div>
                       <h6 class="description">Chọn ảnh</h6>
+                      <small class="text-danger" *ngIf="submitted && !image">Chưa chọn ảnh</small>
                     </div>
                   </div>
                   <div class="col-sm-6">
@@ -121,6 +120,12 @@
                       <div class="form-group">
                         <label>Email</label>
                         <input type="text" class="form-control" formControlName="email">
+                        <div *ngIf="submitted && form.controls.email.errors">
+                          <small class="error" *ngIf="form.controls.email.errors.required">Chưa nhập email.</small>
+                          <small class="error" *ngIf="form.controls.email.errors.email">Email không đúng định dạng.</small>
+                          <small class="error" *ngIf="form.controls.email.errors.minlength">Email không được nhỏ hơn 8 ký tự.</small>
+                          <small class="error" *ngIf="form.controls.email.errors.maxlength">Email không được lớn hơn 50 ký tự.</small>
+                        </div>
                       </div>
                     </div>
                     <div class="input-group form-control-lg">
@@ -130,8 +135,14 @@
                         </span>
                       </div>
                       <div class="form-group">
-                        <label>Mật khẩu</label>
+                        <label>{{ aoe ? 'Mật khẩu' : 'Mật khẩu mới' }}</label>
                         <input type="password" class="form-control" formControlName="mat_khau">
+                        <div *ngIf="submitted && form.controls.mat_khau.errors">
+                          <small class="error" *ngIf="form.controls.mat_khau.errors.required">Chưa nhập mật khẩu.</small>
+                          <small class="error" *ngIf="form.controls.mat_khau.errors.minlength">Mật khẩu không được dưới 8 ký tự.</small>
+                          <small class="error" *ngIf="form.controls.mat_khau.errors.maxlength">Mật khẩu không được trên 50 ký tự.</small>
+                          <small class="error" *ngIf="form.controls.mat_khau.errors.pattern">Mật khẩu không đúng định dạng.</small>
+                        </div>
                       </div>
                     </div>
                     <div class="input-group form-control-lg">
@@ -141,20 +152,23 @@
                         </span>
                       </div>
                       <div class="form-group">
-                        <label>Nhập lại mật khẩu</label>
+                        <label>{{ aoe ? 'Nhập lại mật khẩu' : 'Nhập lại mật khẩu mới' }}</label>
                         <input type="password" class="form-control" formControlName="mat_khau_2">
+                        <div *ngIf="submitted && form.controls.mat_khau_2.errors">
+                          <small class="error" *ngIf="form.controls.mat_khau_2.errors.confirm_password">Mật khẩu không khớp.</small>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
               <div class="tab-pane" id="account">
-                <h5 class="info-text"> Phân quyền </h5>
+<!--                <h5 class="info-text"> Phân quyền </h5>-->
                 <div class="row justify-content-center">
                   <div class="col-lg-10">
                     <div class="row">
                       <div class="col-sm-4">
-                        <div class="choice" data-toggle="wizard-radio" (click)="choiceRole(3)">
+                        <div class="choice" data-toggle="wizard-radio" id="roleSelect3" (click)="choiceRole(3)">
                           <div class="icon">
                             <i class="material-icons">admin_panel_settings</i>
                           </div>
@@ -162,28 +176,34 @@
                         </div>
                       </div>
                       <div class="col-sm-4">
-                        <div class="choice" data-toggle="wizard-radio" (click)="choiceRole(2)">
+                        <div class="choice" data-toggle="wizard-radio" id="roleSelect2" (click)="choiceRole(2)">
                           <div class="icon">
                             <i class="material-icons">support_agent</i>
                           </div>
                           <h6>Cán bộ</h6>
                         </div>
-                        <mat-form-field appearance="fill">
+                        <mat-form-field appearance="standard" [style]="{'width': '100%'}" >
                           <mat-label>Chọn cơ quan</mat-label>
-                          <mat-select disableRipple formControlName="id_co_quan" [disabled]="roleSelect != 2">
+                          <mat-select formControlName="id_co_quan" >
                             <mat-option *ngFor="let item of listOrgan" [value]="item.id">
                               {{item.ten_co_quan}}
                             </mat-option>
                           </mat-select>
                         </mat-form-field>
+                        <div *ngIf="submitted && form.controls.id_co_quan.errors">
+                          <small class="text-danger" *ngIf="form.controls.id_co_quan.errors.required">Chưa chọn cơ quan.</small>
+                        </div>
                       </div>
                       <div class="col-sm-4">
-                        <div class="choice" data-toggle="wizard-radio" (click)="choiceRole(1)">
+                        <div class="choice" data-toggle="wizard-radio" id="roleSelect1" (click)="choiceRole(1)">
                           <div class="icon">
                             <i class="material-icons">face</i>
                           </div>
                           <h6>Công dân</h6>
                         </div>
+                      </div>
+                      <div class="col-sm-12 text-center" *ngIf="submitted && !roleSelect">
+                        <small class="text-danger ">Chưa phân quyền.</small>
                       </div>
                     </div>
                   </div>
@@ -192,36 +212,54 @@
               <div class="tab-pane" id="address">
                 <div class="row justify-content-center">
                   <div class="col-sm-12">
-                    <h5 class="info-text"> Nhập thông tin hồ sơ </h5>
+<!--                    <h5 class="info-text"> Nhập thông tin hồ sơ </h5>-->
                   </div>
                   <div class="col-sm-7">
                     <div class="form-group">
                       <label>Họ tên</label>
                       <input type="text" class="form-control" formControlName="ho_ten">
+                      <div *ngIf="submitted && form.controls.ho_ten.errors">
+                        <small class="error" *ngIf="form.controls.ho_ten.errors.required">Chưa nhập họ tên.</small>
+                        <small class="error" *ngIf="form.controls.ho_ten.errors.minlength">Họ tên không được dưới 8 ký tự.</small>
+                        <small class="error" *ngIf="form.controls.ho_ten.errors.minlength">Họ tên không được trên 50 ký tự.</small>
+                      </div>
                     </div>
                   </div>
                   <div class="col-sm-5">
                     <div class="form-group">
                       <label>Số điện thoại</label>
                       <input type="text" class="form-control" formControlName="so_dien_thoai">
+                      <div *ngIf="submitted && form.controls.so_dien_thoai.errors">
+                        <small class="error" *ngIf="form.controls.so_dien_thoai.errors.required">Chưa nhập số điện thoại.</small>
+                        <small class="error" *ngIf="form.controls.so_dien_thoai.errors.pattern">Số điện thoại không hợp lệ</small>
+                      </div>
                     </div>
                   </div>
                   <div class="col-sm-5">
                     <div class="form-group">
                       <label>Ngày sinh</label>
-                      <input type="text" class="form-control datepicker">
+                      <input type="text" formControlName="ngay_sinh" placeholder="dd-mm-yyyy" [bsConfig]="datetimePicker" class="form-control" bsDatepicker>
+                      <div *ngIf="submitted && form.controls.ngay_sinh.errors">
+                        <small class="error" *ngIf="form.controls.ngay_sinh.errors.required">Chưa nhập ngày sinh.</small>
+                        <small class="error" *ngIf="form.controls.ngay_sinh.errors.minlength">Ngày sinh không hợp lệ.</small>
+                        <small class="error" *ngIf="form.controls.ngay_sinh.errors.maxlength">Ngày sinh không hợp lệ.</small>
+                      </div>
                     </div>
                   </div>
                   <div class="col-sm-7">
                     <div class="form-group">
                       <label>Địa chỉ</label>
-                      <input type="text" class="form-control">
+                      <input type="text" class="form-control" formControlName="dia_chi">
+                      <div *ngIf="submitted && form.controls.dia_chi.errors">
+                        <small class="error" *ngIf="form.controls.dia_chi.errors.required">Chưa nhập địa chỉ.</small>
+                        <small class="error" *ngIf="form.controls.dia_chi.errors.minlength">Địa chỉ không được dưới 2 ký tự.</small>
+                        <small class="error" *ngIf="form.controls.dia_chi.errors.maxlength">Địa chỉ không được trên 150 ký tự.</small>
+                      </div>
                     </div>
                   </div>
                   <div class="col-md-4">
                     <div class="form-group">
-                      <label class="w-100">Tỉnh, thành phố</label>
-                      <mat-form-field appearance="fill">
+                      <mat-form-field appearance="standard" [style]="{'width': '100%'}">
                         <mat-label>Tỉnh, thành phố</mat-label>
                         <mat-select formControlName="city" (selectionChange)="getDistrict($event.value)">
                           <mat-option *ngFor="let item of listProvince" [value]="item.id">
@@ -229,12 +267,12 @@
                           </mat-option>
                         </mat-select>
                       </mat-form-field>
+                      <small class="error" *ngIf="submitted && form.controls.city.errors?.required">Chưa chọn thành phố.</small>
                     </div>
                   </div>
                   <div class="col-md-4">
                     <div class="form-group">
-                      <label class="w-100">Quận, huyện</label>
-                      <mat-form-field appearance="fill">
+                      <mat-form-field appearance="standard" [style]="{'width': '100%'}">
                         <mat-label>Quận, huyện</mat-label>
                         <mat-select formControlName="district" (selectionChange)="getCommune($event.value)">
                           <mat-option *ngFor="let item of listDistrict" [value]="item.id">
@@ -242,12 +280,12 @@
                           </mat-option>
                         </mat-select>
                       </mat-form-field>
+                      <small class="error" *ngIf="submitted && form.controls.district.errors?.required">Chưa chọn quận, huyện.</small>
                     </div>
                   </div>
                   <div class="col-md-4">
                     <div class="form-group">
-                      <label>Xã, phường, thị trấn</label>
-                      <mat-form-field appearance="fill">
+                      <mat-form-field appearance="standard" [style]="{'width': '100%'}">
                         <mat-label>Xã, phường, thị trấn</mat-label>
                         <mat-select formControlName="commune">
                           <mat-option *ngFor="let item of listCommune" [value]="item.id">
@@ -255,6 +293,7 @@
                           </mat-option>
                         </mat-select>
                       </mat-form-field>
+                      <small class="error" *ngIf="submitted && form.controls.commune.errors?.required">Chưa chọn xã, phường, thị trấn.</small>
                     </div>
                   </div>
                 </div>
@@ -263,10 +302,10 @@
           </div>
           <div class="card-footer">
             <div class="mr-auto">
-              <input type="button" class="btn btn-previous btn-fill btn-default btn-wd disabled" name="previous" value="Previous">
+              <input type="button" class="btn btn-previous btn-fill btn-default btn-wd disabled" name="previous" value="Trở lại">
             </div>
             <div class="ml-auto">
-              <input type="button" class="btn btn-next btn-fill btn-rose btn-wd" name="next" value="Next">
+              <input type="button" class="btn btn-next btn-fill btn-rose btn-wd" name="next" value="Tiếp theo">
               <input type="submit" class="btn btn-finish btn-fill btn-rose btn-wd" name="finish" value="Finish" style="display: none;">
             </div>
             <div class="clearfix"></div>
@@ -277,3 +316,4 @@
     <!-- wizard container -->
     </div>
 </div>
+
