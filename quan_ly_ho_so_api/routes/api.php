@@ -68,6 +68,7 @@ Route::group([
 
             Route::get('/get', 'ThuTucController@get');
             Route::get('/pagination', 'ThuTucController@pagination');
+            Route::post('/create', 'ThuTucController@create');
 
         });
 
