@@ -1,25 +1,27 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {Login1Component} from './login1.component'
+import { ChangepassComponent} from './changepass.component'
 import { RouterModule, Routes } from '@angular/router';
-import { ReactiveFormsModule } from '@angular/forms';
-import {ToastModule} from 'primeng/toast';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ToastModule } from 'primeng/toast';
 
 
 const routes: Routes = [
   {
     path: '',
-    component: Login1Component,
+    component: ChangepassComponent,
   }, 
 ];
 
 @NgModule({
-  declarations: [Login1Component],
+  declarations: [ChangepassComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
     ToastModule,
+    FormsModule,
+    //ModalModule.forRoot(),
     RouterModule.forChild(routes),
   ]
 })
-export class Login1Module { }
+export class ChangepassModule { }

@@ -88,32 +88,28 @@
             </ul>
           </li>
           <li class="dropdown">
-            <a href="#" class="dropdown-toggle dropdown-at" data-toggle="dropdown"><span class=" name-caret">Rackham<i
+            <a href="#" class="dropdown-toggle dropdown-at" data-toggle="dropdown"><span class=" name-caret">Lê Văn Long<i
                   class="caret"></i></span><img src="./assets/images//wo.jpg"></a>
             <ul class="dropdown-menu " role="menu">
-              <li><a href="profile.html"><i class="fa fa-user"></i>Edit Profile</a></li>
-              <li><a href="inbox.html"><i class="fa fa-envelope"></i>Inbox</a></li>
+              <li><a (click)="logout()"><i class="fa fa-user"></i>Logout</a></li>
+              <!-- <li><a href="inbox.html"><i class="fa fa-envelope"></i>Inbox</a></li>
               <li><a href="calendar.html"><i class="fa fa-calendar"></i>Calender</a></li>
-              <li><a href="inbox.html"><i class="fa fa-clipboard"></i>Tasks</a></li>
+              <li><a href="inbox.html"><i class="fa fa-clipboard"></i>Tasks</a></li> -->
             </ul>
           </li>
         </ul>
       </div>
       <div class="clearfix">
-
       </div>
-
       <div class="navbar-default sidebar" role="navigation">
         <div class="sidebar-nav navbar-collapse">
           <ul class="nav" id="side-menu">
-
             <li>
               <a [routerLink]="['/dashboard']" routerLinkActive="router-link-active"  class=" hvr-bounce-to-right"><i class="fa fa-dashboard nav_icon "></i><span
                   class="nav-label">Dashboards</span> </a>
             </li>
-
             <li>
-              <a href="#" class=" hvr-bounce-to-right"><i class="fa fa-indent nav_icon"></i> <span class="nav-label">Hồ
+              <a class=" hvr-bounce-to-right"><i class="fa fa-indent nav_icon"></i> <span class="nav-label">Hồ
                   sơ</span><span class="fa arrow"></span></a>
               <ul class="nav nav-second-level">
                 <li><a [routerLink]="['/quan-ly-ho-so']" routerLinkActive="router-link-active"  class=" hvr-bounce-to-right"><i
@@ -121,7 +117,7 @@
               </ul>
             </li>
             <li>
-              <a href="#" class=" hvr-bounce-to-right"><i class="fa fa-indent nav_icon"></i> <span class="nav-label">Thủ
+              <a class=" hvr-bounce-to-right"><i class="fa fa-indent nav_icon"></i> <span class="nav-label">Thủ
                   tục</span><span class="fa arrow"></span></a>
               <ul class="nav nav-second-level">
                 <li><a [routerLink]="['/quan-ly-thu-tuc']" routerLinkActive="router-link-active"  class=" hvr-bounce-to-right"><i
@@ -129,7 +125,7 @@
               </ul>
             </li>
             <li>
-              <a href="#" class=" hvr-bounce-to-right"><i class="fa fa-desktop nav_icon"></i> <span class="nav-label">Cơ
+              <a class=" hvr-bounce-to-right"><i class="fa fa-desktop nav_icon"></i> <span class="nav-label">Cơ
                   quan</span><span class="fa arrow"></span></a>
               <ul class="nav nav-second-level">
                 <li><a [routerLink]="['/quan-ly-co-quan']" routerLinkActive="router-link-active"  class=" hvr-bounce-to-right"><i class="fa fa-question-circle nav_icon"></i>Quản
@@ -137,7 +133,7 @@
               </ul>
             </li>
             <li>
-              <a href="#" class=" hvr-bounce-to-right"><i class="fa fa-list nav_icon"></i> <span class="nav-label">Lĩnh
+              <a class=" hvr-bounce-to-right"><i class="fa fa-list nav_icon"></i> <span class="nav-label">Lĩnh
                   vực</span><span class="fa arrow"></span></a>
               <ul class="nav nav-second-level">
                 <li><a [routerLink]="['/quan-ly-linh-vuc']" routerLinkActive="router-link-active"  class=" hvr-bounce-to-right"><i class="fa fa-align-left nav_icon"></i>
@@ -145,7 +141,7 @@
               </ul>
             </li>
             <li>
-              <a href="#" class=" hvr-bounce-to-right"><i class="fa fa-list nav_icon"></i> <span class="nav-label">Quy
+              <a class=" hvr-bounce-to-right"><i class="fa fa-list nav_icon"></i> <span class="nav-label">Quy
                   trình</span><span class="fa arrow"></span></a>
               <ul class="nav nav-second-level">
                 <li><a [routerLink]="['/quan-ly-quy-trinh']" routerLinkActive="router-link-active"  class=" hvr-bounce-to-right"><i class="fa fa-align-left nav_icon"></i>
@@ -153,7 +149,7 @@
               </ul>
             </li>
             <li>
-              <a href="#" class=" hvr-bounce-to-right"><i class="fa fa-list nav_icon"></i> <span class="nav-label">Người
+              <a class=" hvr-bounce-to-right"><i class="fa fa-list nav_icon"></i> <span class="nav-label">Người
                   dùng</span><span class="fa arrow"></span></a>
               <ul class="nav nav-second-level">
                 <li><a [routerLink]="['/quan-ly-nguoi-dung']" routerLinkActive="router-link-active"  class=" hvr-bounce-to-right"><i class="fa fa-align-left nav_icon"></i>
@@ -161,7 +157,7 @@
               </ul>
             </li>
             <li>
-              <a href="#" class=" hvr-bounce-to-right"><i class="fa fa-list nav_icon"></i> <span class="nav-label">Các bước
+              <a class=" hvr-bounce-to-right"><i class="fa fa-list nav_icon"></i> <span class="nav-label">Các bước
                   </span><span class="fa arrow"></span></a>
               <ul class="nav nav-second-level">
                 <li><a [routerLink]="['/quan-ly-buoc']" routerLinkActive="router-link-active"  class=" hvr-bounce-to-right"><i class="fa fa-align-left nav_icon"></i>
@@ -169,7 +165,7 @@
               </ul>
             </li>
             <li>
-              <a href="#" class=" hvr-bounce-to-right"><i class="fa fa-cog nav_icon"></i> <span
+              <a class=" hvr-bounce-to-right"><i class="fa fa-cog nav_icon"></i> <span
                   class="nav-label">Settings</span><span class="fa arrow"></span></a>
               <ul class="nav nav-second-level">
                 <li><a href="signin.html" class=" hvr-bounce-to-right"><i class="fa fa-sign-in nav_icon"></i>Signin</a>

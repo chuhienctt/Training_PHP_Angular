@@ -1,75 +1,51 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  FormGroup,
-  FormControl,
-  FormBuilder,
-  Validators,
-} from '@angular/forms';
-import { Store, State } from '@ngrx/store';
-import { Observable } from 'rxjs';
-import { User } from '../_models/user';
-import * as userLogins from '../_action/userAction';
-import { UserState } from '../_reduces/user.reducer';
-import { getLogin } from '../_reduces/index';
-import { Router, ActivatedRoute } from '@angular/router';
+import {FormBuilder,Validators} from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from '../_services/auth.service';
+import {MessageService} from 'primeng/api';
+
 @Component({
   selector: 'app-login1',
   templateUrl: './login1.component.html',
   styleUrls: ['./login1.component.css'],
+  providers: [MessageService]
 })
 export class Login1Component implements OnInit {
   title = 'Login';
   form: any;
-  isCheckLogin: boolean = false;
-  dataLogin = [
-    {
-      id: 1,
-      ho_ten: 'NGUYEN THANH HOA',
-      email: 'nguyenthanhhoa.com@gmail.com',
-      mat_khau: '12345678',
-      token: 'TYDAKSDJASLKDJASLKDJASDASD',
-    },
-    {
-      id: 2,
-      ho_ten: 'SKIPPERHOA',
-      email: 'skipperhoa2013@gmail.com',
-      mat_khau: 'hoa123',
-      token: 'TYDAKSDJASLKDJASLKDJASDASD',
-    },
-  ];
-
+  iSubmited: boolean = false;
   constructor(
     private router: Router,
-
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private authService: AuthService,
+    private messageService: MessageService,
   ) {}
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
-      email: ['', Validators.required],
-      mat_khau: ['', Validators.required],
+      email: ['',[Validators.required, Validators.email, Validators.minLength(8), Validators.maxLength(100)]],
+      mat_khau: ['',[Validators.required, Validators.minLength(8), Validators.maxLength(20), Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$')]],
+     
     });
   }
 
-  get f() { return this.form.controls; }
-
   onSubmit() {
+    this.iSubmited = true;
+    if(this.form.invalid) {
+      return;
+    }
+
+    console.log(this.form.value);
     
+    this.authService.login(this.form.value).subscribe((res: any) => {
+      localStorage.setItem("jwt", JSON.stringify(res.data));
+      this.authService.input(res.data);
+      this.router.navigate(['/dashboard']);
+    }, err => {
+      if (err.status != 1) {
+        console.log(err.error.message);
+        this.messageService.add({ severity: 'error', summary: 'Thất bại!', detail: err.error.message });
+      }
+    });
   }
 }
-
-// import { Component, OnInit } from '@angular/core';
-
-// @Component({
-//   selector: 'app-login1',
-//   templateUrl: './login1.component.html',
-//   styleUrls: ['./login1.component.css']
-// })
-// export class Login1Component implements OnInit {
-
-//   constructor() { }
-
-//   ngOnInit(): void {
-//   }
-
-// }

@@ -21,7 +21,6 @@
                 </form>
                 <div class="clearfix"> </div>
             </div>
-
             <div class="drop-men">
                 <ul class=" nav_1">
 
@@ -109,77 +108,94 @@
                     <ul class="nav" id="side-menu">
 
                         <li>
-                          <a [routerLink]="['/dashboard']" routerLinkActive="router-link-active"  class=" hvr-bounce-to-right"><i class="fa fa-dashboard nav_icon "></i><span
-                              class="nav-label">Dashboards</span> </a>
+                            <a [routerLink]="['/dashboard']" routerLinkActive="router-link-active"
+                                class=" hvr-bounce-to-right"><i class="fa fa-dashboard nav_icon "></i><span
+                                    class="nav-label">Dashboards</span> </a>
                         </li>
-            
+
                         <li>
-                          <a href="#" class=" hvr-bounce-to-right"><i class="fa fa-indent nav_icon"></i> <span class="nav-label">Hồ
-                              sơ</span><span class="fa arrow"></span></a>
-                          <ul class="nav nav-second-level">
-                            <li><a [routerLink]="['/quan-ly-ho-so']" routerLinkActive="router-link-active"  class=" hvr-bounce-to-right"><i
-                                  class="fa fa-file-text-o nav_icon"></i>Quản lý hồ sơ</a></li>
-                          </ul>
-                        </li>
-                        <li>
-                          <a href="#" class=" hvr-bounce-to-right"><i class="fa fa-indent nav_icon"></i> <span class="nav-label">Thủ
-                              tục</span><span class="fa arrow"></span></a>
-                          <ul class="nav nav-second-level">
-                            <li><a [routerLink]="['/quan-ly-thu-tuc']" routerLinkActive="router-link-active"  class=" hvr-bounce-to-right"><i
-                                  class="fa fa-file-text-o nav_icon"></i>Quản lý thủ tục</a></li>
-                          </ul>
+                            <a href="#" class=" hvr-bounce-to-right"><i class="fa fa-indent nav_icon"></i> <span
+                                    class="nav-label">Hồ
+                                    sơ</span><span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li><a [routerLink]="['/quan-ly-ho-so']" routerLinkActive="router-link-active"
+                                        class=" hvr-bounce-to-right"><i class="fa fa-file-text-o nav_icon"></i>Quản lý
+                                        hồ sơ</a></li>
+                            </ul>
                         </li>
                         <li>
-                          <a href="#" class=" hvr-bounce-to-right"><i class="fa fa-desktop nav_icon"></i> <span class="nav-label">Cơ
-                              quan</span><span class="fa arrow"></span></a>
-                          <ul class="nav nav-second-level">
-                            <li><a [routerLink]="['/quan-ly-co-quan']" routerLinkActive="router-link-active"  class=" hvr-bounce-to-right"><i class="fa fa-question-circle nav_icon"></i>Quản
-                                lý cơ quan</a></li>
-                          </ul>
+                            <a href="#" class=" hvr-bounce-to-right"><i class="fa fa-indent nav_icon"></i> <span
+                                    class="nav-label">Thủ
+                                    tục</span><span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li><a [routerLink]="['/quan-ly-thu-tuc']" routerLinkActive="router-link-active"
+                                        class=" hvr-bounce-to-right"><i class="fa fa-file-text-o nav_icon"></i>Quản lý
+                                        thủ tục</a></li>
+                            </ul>
                         </li>
                         <li>
-                          <a href="#" class=" hvr-bounce-to-right"><i class="fa fa-list nav_icon"></i> <span class="nav-label">Lĩnh
-                              vực</span><span class="fa arrow"></span></a>
-                          <ul class="nav nav-second-level">
-                            <li><a [routerLink]="['/quan-ly-linh-vuc']" routerLinkActive="router-link-active"  class=" hvr-bounce-to-right"><i class="fa fa-align-left nav_icon"></i>
-                                Quản lý lĩnh vực</a></li>
-                          </ul>
+                            <a href="#" class=" hvr-bounce-to-right"><i class="fa fa-desktop nav_icon"></i> <span
+                                    class="nav-label">Cơ
+                                    quan</span><span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li><a [routerLink]="['/quan-ly-co-quan']" routerLinkActive="router-link-active"
+                                        class=" hvr-bounce-to-right"><i class="fa fa-question-circle nav_icon"></i>Quản
+                                        lý cơ quan</a></li>
+                            </ul>
                         </li>
                         <li>
-                          <a href="#" class=" hvr-bounce-to-right"><i class="fa fa-list nav_icon"></i> <span class="nav-label">Quy
-                              trình</span><span class="fa arrow"></span></a>
-                          <ul class="nav nav-second-level">
-                            <li><a [routerLink]="['/quan-ly-quy-trinh']" routerLinkActive="router-link-active"  class=" hvr-bounce-to-right"><i class="fa fa-align-left nav_icon"></i>
-                                Quản lý quy trình</a></li>
-                          </ul>
+                            <a href="#" class=" hvr-bounce-to-right"><i class="fa fa-list nav_icon"></i> <span
+                                    class="nav-label">Lĩnh
+                                    vực</span><span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li><a [routerLink]="['/quan-ly-linh-vuc']" routerLinkActive="router-link-active"
+                                        class=" hvr-bounce-to-right"><i class="fa fa-align-left nav_icon"></i>
+                                        Quản lý lĩnh vực</a></li>
+                            </ul>
                         </li>
                         <li>
-                          <a href="#" class=" hvr-bounce-to-right"><i class="fa fa-list nav_icon"></i> <span class="nav-label">Người
-                              dùng</span><span class="fa arrow"></span></a>
-                          <ul class="nav nav-second-level">
-                            <li><a [routerLink]="['/quan-ly-nguoi-dung']" routerLinkActive="router-link-active"  class=" hvr-bounce-to-right"><i class="fa fa-align-left nav_icon"></i>
-                                Quản lý người dùng</a></li>
-                          </ul>
+                            <a href="#" class=" hvr-bounce-to-right"><i class="fa fa-list nav_icon"></i> <span
+                                    class="nav-label">Quy
+                                    trình</span><span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li><a [routerLink]="['/quan-ly-quy-trinh']" routerLinkActive="router-link-active"
+                                        class=" hvr-bounce-to-right"><i class="fa fa-align-left nav_icon"></i>
+                                        Quản lý quy trình</a></li>
+                            </ul>
                         </li>
                         <li>
-                          <a href="#" class=" hvr-bounce-to-right"><i class="fa fa-list nav_icon"></i> <span class="nav-label">Các bước
-                              </span><span class="fa arrow"></span></a>
-                          <ul class="nav nav-second-level">
-                            <li><a [routerLink]="['/quan-ly-buoc']" routerLinkActive="router-link-active"  class=" hvr-bounce-to-right"><i class="fa fa-align-left nav_icon"></i>
-                                Quản lý các bước</a></li>
-                          </ul>
+                            <a href="#" class=" hvr-bounce-to-right"><i class="fa fa-list nav_icon"></i> <span
+                                    class="nav-label">Người
+                                    dùng</span><span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li><a [routerLink]="['/quan-ly-nguoi-dung']" routerLinkActive="router-link-active"
+                                        class=" hvr-bounce-to-right"><i class="fa fa-align-left nav_icon"></i>
+                                        Quản lý người dùng</a></li>
+                            </ul>
                         </li>
                         <li>
-                          <a href="#" class=" hvr-bounce-to-right"><i class="fa fa-cog nav_icon"></i> <span
-                              class="nav-label">Settings</span><span class="fa arrow"></span></a>
-                          <ul class="nav nav-second-level">
-                            <li><a href="signin.html" class=" hvr-bounce-to-right"><i class="fa fa-sign-in nav_icon"></i>Signin</a>
-                            </li>
-                            <li><a href="signup.html" class=" hvr-bounce-to-right"><i class="fa fa-sign-in nav_icon"></i>Singup</a>
-                            </li>
-                          </ul>
+                            <a href="#" class=" hvr-bounce-to-right"><i class="fa fa-list nav_icon"></i> <span
+                                    class="nav-label">Các bước
+                                </span><span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li><a [routerLink]="['/quan-ly-buoc']" routerLinkActive="router-link-active"
+                                        class=" hvr-bounce-to-right"><i class="fa fa-align-left nav_icon"></i>
+                                        Quản lý các bước</a></li>
+                            </ul>
                         </li>
-                      </ul>
+                        <li>
+                            <a href="#" class=" hvr-bounce-to-right"><i class="fa fa-cog nav_icon"></i> <span
+                                    class="nav-label">Settings</span><span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li><a href="signin.html" class=" hvr-bounce-to-right"><i
+                                            class="fa fa-sign-in nav_icon"></i>Signin</a>
+                                </li>
+                                <li><a href="signup.html" class=" hvr-bounce-to-right"><i
+                                            class="fa fa-sign-in nav_icon"></i>Singup</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -192,12 +208,11 @@
                     <i class="fa fa-angle-right"></i>
                     <span>Quan-ly-linh-vuc</span>
                 </h2>
-            </div><br/>
+            </div><br />
             <div class="banner">
                 <div>
                     <h3>Quản lý lĩnh vực</h3><br />
-                    <button style="margin-bottom:1%;" class="btn btn-success">Thêm
-                        +</button>
+                    <button style="margin-bottom:1%;" class="btn btn-success" (click)="showAdd()">Thêm +</button>
                     <table class="table table-bordered">
                         <thead>
                             <tr>
@@ -209,109 +224,154 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- <tr >
-                                <td>7</td>
-                                <td>
-                                7
-                                </td>
-                                <td>7</td>
-                                <td>7</td>
-                                <td>
-                                    <button style="margin-left: 2%;" class="btn btn-info"><i
-                                            class="fa fa-eye" aria-hidden="true"></i></button>
-                                    <button style="margin-left: 2%;" class="btn btn-success"><i
-                                            class="fa fa-pencil" aria-hidden="true"></i></button>
-                                    <button style="margin-left: 2%;" class="btn btn-danger"><i
-                                            class="fa fa-trash-o" aria-hidden="true"></i></button>
-                                </td>
-                            </tr>
-                            <tr >
-                                <td>7</td>
-                                <td>
-                                7
-                                </td>
-                                <td>7</td>
-                                <td>7</td>
-                                <td>
-                                    <button style="margin-left: 2%;" class="btn btn-info"><i
-                                            class="fa fa-eye" aria-hidden="true"></i></button>
-                                    <button style="margin-left: 2%;" class="btn btn-success"><i
-                                            class="fa fa-pencil" aria-hidden="true"></i></button>
-                                    <button style="margin-left: 2%;" class="btn btn-danger"><i
-                                            class="fa fa-trash-o" aria-hidden="true"></i></button>
-                                </td>
-                            </tr>
-                            <tr >
-                                <td>7</td>
-                                <td>
-                                7
-                                </td>
-                                <td>7</td>
-                                <td>7</td>
-                                <td>
-                                    <button style="margin-left: 2%;" class="btn btn-info"><i
-                                            class="fa fa-eye" aria-hidden="true"></i></button>
-                                    <button style="margin-left: 2%;" class="btn btn-success"><i
-                                            class="fa fa-pencil" aria-hidden="true"></i></button>
-                                    <button style="margin-left: 2%;" class="btn btn-danger"><i
-                                            class="fa fa-trash-o" aria-hidden="true"></i></button>
-                                </td>
-                            </tr>
-                            <tr >
-                                <td>7</td>
-                                <td>
-                                7
-                                </td>
-                                <td>7</td>
-                                <td>7</td>
-                                <td>
-                                    <button style="margin-left: 2%;" class="btn btn-info"><i
-                                            class="fa fa-eye" aria-hidden="true"></i></button>
-                                    <button style="margin-left: 2%;" class="btn btn-success"><i
-                                            class="fa fa-pencil" aria-hidden="true"></i></button>
-                                    <button style="margin-left: 2%;" class="btn btn-danger"><i
-                                            class="fa fa-trash-o" aria-hidden="true"></i></button>
-                                </td>
-                            </tr>
-                            <tr >
-                                <td>7</td>
-                                <td>
-                                7
-                                </td>
-                                <td>7</td>
-                                <td>7</td>
-                                <td>
-                                    <button style="margin-left: 2%;" class="btn btn-info"><i
-                                            class="fa fa-eye" aria-hidden="true"></i></button>
-                                    <button style="margin-left: 2%;" class="btn btn-success"><i
-                                            class="fa fa-pencil" aria-hidden="true"></i></button>
-                                    <button style="margin-left: 2%;" class="btn btn-danger"><i
-                                            class="fa fa-trash-o" aria-hidden="true"></i></button>
-                                </td>
-                            </tr> -->
                             <tr *ngFor="let item of items">
                                 <td>{{item.id}}</td>
                                 <td>
                                     {{item.ten_linh_vuc}}
                                 </td>
-                                <td>{{item.hinh_anh}}</td>
+                                <td><img style="width: 50px; height: 50px; vertical-align: middle" *ngIf="item.hinh_anh" [src]="createImg(item.hinh_anh)"></td>
+                                <!-- <td>{{item.hinh_anh}}</td> -->
                                 <td>{{item.mo_ta}}</td>
                                 <td>
-                                    <button style="margin-left: 2%;" class="btn btn-info"><i
-                                            class="fa fa-eye" aria-hidden="true"></i></button>
-                                    <button style="margin-left: 2%;" class="btn btn-success"><i
-                                            class="fa fa-pencil" aria-hidden="true"></i></button>
-                                    <button style="margin-left: 2%;" class="btn btn-danger"><i
-                                            class="fa fa-trash-o" aria-hidden="true"></i></button>
+                                    <button style="margin-left: 2%;" class="btn btn-info" (click)="showDetail(item.id)"><i class="fa fa-eye"
+                                        aria-hidden="true"></i></button>
+                                    <button style="margin-left: 2%;" class="btn btn-success" (click)="showEdit(item.id)"><i class="fa fa-pencil"
+                                            aria-hidden="true"></i></button>
+                                    <button style="margin-left: 2%;" class="btn btn-danger" (click)="deleteShow(item.id)"><i
+												class="fa fa-trash-o" aria-hidden="true"></i></button>
                                 </td>
                             </tr>
-                            
+
                         </tbody>
                     </table>
                 </div>
             </div>
+            <div bsModal #editAndADD="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+                aria-labelledby="dialog-sizes-name1">
+                <div class="modal-dialog modal-content">
+                    <div class="modal-content">
+                        <form #newTypeForm="ngForm" (ngSubmit)="SaveForm(newTypeForm.value)" *ngIf="entity">
+                            <div class="modal-header">
+                                <h4 id="dialog-sizes-name1" class="modal-title pull-left" style="margin-top: -1%;">Quản lý lĩnh vực</h4>
+                                <button type="button" class="close pull-right" (click)="editAndADD.hide()"
+                                    aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="ten_linh_vuc">Tên lĩnh vực:</label>
+                                    <input type="text" class="form-control" value="" name="ten_linh_vuc"
+                                        [(ngModel)]="entity.ten_linh_vuc">
+                                </div>
+                                <div class="form-group">
+                                    <label for="mo_ta">Mô tả:</label>
+                                    <input type="text" class="form-control" value="" name="mo_ta"
+                                        [(ngModel)]="entity.mo_ta">
+                                </div>
+                                <div class="form-group">
+                                    <label for="hinh_anh">Hình ảnh:</label>
+                                    <p-fileUpload #file chooseLabel="Chọn ảnh" [multiple]="false" accept="image/*" maxFileSize="1000000">
+                                    </p-fileUpload>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-default">Submit</button>
+                                <button type="button" class="btn btn-default" (click)="editAndADD.hide()"
+                                    data-dismiss="modal">Close</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div bsModal #editAndADD1="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+                aria-labelledby="dialog-sizes-name1">
+                <div class="modal-dialog modal-content">
+                    <div class="modal-content">
+                        <form #newTypeForm="ngForm" (ngSubmit)="SaveForm(newTypeForm.value)" *ngIf="entity1">
+                            <div class="modal-header">
+                                <h4 id="dialog-sizes-name1" class="modal-title pull-left" style="margin-top: -1%;">Xem lĩnh vực</h4>
+                                <button type="button" class="close pull-right" (click)="editAndADD1.hide()"
+                                    aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="id">Id:</label>
+                                    <input type="text" class="form-control" value="" name="id"
+                                        [(ngModel)]="entity1.id">
+                                </div>
+                                <div class="form-group">
+                                    <label for="ten_linh_vuc">Tên lĩnh vực:</label>
+                                    <input type="text" class="form-control" value="" name="ten_linh_vuc"
+                                        [(ngModel)]="entity1.ten_linh_vuc">
+                                </div>
+                                <div class="form-group">
+                                    <label for="mo_ta">Mô tả:</label>
+                                    <input type="text" class="form-control" value="" name="mo_ta"
+                                        [(ngModel)]="entity1.mo_ta">
+                                </div>
+                                <div class="form-group">
+                                    <label for="hinh_anh">Hình ảnh:</label>
+                                    <img style="margin-left:2px  ; width: 50px; height: 50px; vertical-align: middle" *ngIf="entity1.hinh_anh" [src]="createImg(entity1.hinh_anh)"/>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <!-- <button type="submit" class="btn btn-default">Submit</button> -->
+                                <button type="button" class="btn btn-default" (click)="editAndADD1.hide()"
+                                    data-dismiss="modal">Close</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div bsModal #editAndADD2="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+                aria-labelledby="dialog-sizes-name1">
+                <div class="modal-dialog modal-content">
+                    <div class="modal-content">
+                        <form #newTypeForm="ngForm" (ngSubmit)="SaveForm(newTypeForm.value)" *ngIf="entity2">
+                            <div class="modal-header">
+                                <h4 id="dialog-sizes-name1" class="modal-title pull-left" style="margin-top: -1%;">Sửa lĩnh vực</h4>
+                                <button type="button" class="close pull-right" (click)="editAndADD2.hide()"
+                                    aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <!-- <div class="form-group">
+                                    <label for="id">Id:</label>
+                                    <input type="text" class="form-control" value="" name="id"
+                                        [(ngModel)]="entity2.id">
+                                </div> -->
+                                <div class="form-group">
+                                    <label for="ten_linh_vuc">Tên lĩnh vực:</label>
+                                    <input type="text" class="form-control" value="" name="ten_linh_vuc"
+                                        [(ngModel)]="entity2.ten_linh_vuc">
+                                </div>
+                                <div class="form-group">
+                                    <label for="mo_ta">Mô tả:</label>
+                                    <input type="text" class="form-control" value="" name="mo_ta"
+                                        [(ngModel)]="entity2.mo_ta">
+                                </div>
+                                <div class="form-group">
+                                    <label for="hinh_anh">Hình ảnh:</label>
+                                    <img style="margin-left:2px  ; width: 50px; height: 50px; vertical-align: middle" *ngIf="entity2.hinh_anh" [src]="createImg(entity2.hinh_anh)"/>
+                                    <p-fileUpload #file chooseLabel="Chọn ảnh" [multiple]="false" accept="image/*" maxFileSize="1000000">
+                                    </p-fileUpload>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-default">Submit</button>
+                                <button type="button" class="btn btn-default" (click)="editAndADD2.hide()"
+                                    data-dismiss="modal">Close</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
             <div class="copy">
-                <p> &copy; 2020 Minimal. All Rights Reserved | Design by 
+                <p> &copy; 2020 Minimal. All Rights Reserved | Design by
                 </p>
             </div>
         </div>
