@@ -70,7 +70,7 @@
             <div class="row">
               <div class="col-md-4">
                 <div class="form-group">
-                  <mat-form-field appearance="standard">
+                  <mat-form-field appearance="standard" [style]="{'width': '100%'}" >
                     <mat-label>Tỉnh, thành phố</mat-label>
                     <mat-select formControlName="city" (selectionChange)="getDistrict($event.value)">
                       <mat-option *ngFor="let item of listProvince" [value]="item.id">
@@ -82,7 +82,7 @@
               </div>
               <div class="col-md-4">
                 <div class="form-group">
-                  <mat-form-field appearance="standard">
+                  <mat-form-field appearance="standard" [style]="{'width': '100%'}" >
                     <mat-label>Quận, huyện</mat-label>
                     <mat-select formControlName="district" (selectionChange)="getCommune($event.value)">
                       <mat-option *ngFor="let item of listDistrict" [value]="item.id">
@@ -94,7 +94,7 @@
               </div>
               <div class="col-md-4">
                 <div class="form-group">
-                  <mat-form-field appearance="standard">
+                  <mat-form-field appearance="standard" [style]="{'width': '100%'}" >
                     <mat-label>Xã, phường, thị trấn</mat-label>
                     <mat-select formControlName="commune">
                       <mat-option *ngFor="let item of listCommune" [value]="item.id">

@@ -83,7 +83,7 @@ export class UserComponent extends ScriptService implements OnInit {
       id: [],
       email: ['', [Validators.required, Validators.email, Validators.minLength(8), Validators.maxLength(100)]],
       mat_khau: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(50), Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$')]],
-      mat_khau_2: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(50), Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$')]],
+      mat_khau_2: [''],
       ho_ten: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(100)]],
       so_dien_thoai: ['', [Validators.required, Validators.pattern('^(0)[0-9]{9}$')]],
       dia_chi: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(150)]],
@@ -135,10 +135,6 @@ export class UserComponent extends ScriptService implements OnInit {
     return this.adminService.currentUser;
   }
 
-  createImg(path) {
-    return environment.urlImg + path;
-  }
-
   loadData(event) {
     this.first = event.first;
     this.rows = event.rows;
@@ -159,11 +155,10 @@ export class UserComponent extends ScriptService implements OnInit {
   }
 
   create() {
-    this.form.controls.mat_khau.setValidators([Validators.required, Validators.minLength(8), Validators.maxLength(50), Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$')]);
-    this.form.controls.mat_khau_2.setValue('', {validator: this.confirm_password_validate('mat_khau', 'mat_khau_2')});
     this.form.controls.district.disable();
     this.form.controls.commune.disable();
     this.form.controls.email.enable();
+
     this.aoe = true;
     this.openModal();
   }
@@ -171,10 +166,12 @@ export class UserComponent extends ScriptService implements OnInit {
   edit(id) {
     this.aoe = false;
     this.openModal();
+
     this.form.controls.mat_khau.clearValidators();
-    this.form.controls.mat_khau_2.setValue('', {});
+    this.form.controls.mat_khau.updateValueAndValidity();
     this.form.controls.district.enable();
     this.form.controls.commune.enable();
+
     this.userService.get(id).subscribe((data: any) => {
       $("#roleSelect" + data.role).addClass("active");
       this.roleSelect = data.role;
@@ -208,7 +205,7 @@ export class UserComponent extends ScriptService implements OnInit {
   onSubmit() {
     this.submitted = true;
 
-    if (this.form.invalid || !this.file_avatar) {
+    if (this.form.invalid) {
       return;
     }
 
@@ -229,12 +226,11 @@ export class UserComponent extends ScriptService implements OnInit {
       if (data != null) {
         user.avatar = data;
       }
-      console.log(user)
       if (this.aoe == true) {
         this.userService.create(user).subscribe((res: any) => {
           this.submitted = false;
           this.closeModal();
-          this.loadData({first: this.first, rows: this.rows})
+          this.loadData({first: this.first, rows: this.rows});
           this.messageService.add({severity: 'success', summary: 'Thành công!', detail: "Thêm người dùng thành công!"});
         }, err => {
           console.log(err)
@@ -242,9 +238,14 @@ export class UserComponent extends ScriptService implements OnInit {
         })
       } else {
         this.userService.update(this.form.value.id, user).subscribe((res:any) => {
-          console.log(res)
+          this.submitted = false;
+          this.closeModal();
+          this.loadData({first: this.first, rows: this.rows});
+          this.messageService.add({severity: 'success', summary: 'Thành công!', detail: "Sửa người dùng thành công!"});
         }, err => {
-          console.log(err)})
+          console.log(err)
+          this.messageService.add({severity: 'success', summary: 'Thất bại!', detail: err.error.message});
+        })
       }
     })
 

@@ -155,9 +155,7 @@
                         <label>{{ aoe ? 'Nhập lại mật khẩu' : 'Nhập lại mật khẩu mới' }}</label>
                         <input type="password" class="form-control" formControlName="mat_khau_2">
                         <div *ngIf="submitted && form.controls.mat_khau_2.errors">
-                          <small class="error" *ngIf="form.controls.mat_khau_2.errors.required">Chưa xác nhận mật khẩu.</small>
                           <small class="error" *ngIf="form.controls.mat_khau_2.errors.confirm_password">Mật khẩu không khớp.</small>
-                          <small class="error" *ngIf="form.controls.mat_khau_2.errors.pattern">Mật khẩu không đúng định dạng.</small>
                         </div>
                       </div>
                     </div>
@@ -184,7 +182,7 @@
                           </div>
                           <h6>Cán bộ</h6>
                         </div>
-                        <mat-form-field appearance="standard">
+                        <mat-form-field appearance="standard" [style]="{'width': '100%'}" >
                           <mat-label>Chọn cơ quan</mat-label>
                           <mat-select formControlName="id_co_quan" >
                             <mat-option *ngFor="let item of listOrgan" [value]="item.id">
@@ -261,7 +259,7 @@
                   </div>
                   <div class="col-md-4">
                     <div class="form-group">
-                      <mat-form-field appearance="standard">
+                      <mat-form-field appearance="standard" [style]="{'width': '100%'}">
                         <mat-label>Tỉnh, thành phố</mat-label>
                         <mat-select formControlName="city" (selectionChange)="getDistrict($event.value)">
                           <mat-option *ngFor="let item of listProvince" [value]="item.id">
@@ -274,7 +272,7 @@
                   </div>
                   <div class="col-md-4">
                     <div class="form-group">
-                      <mat-form-field appearance="standard">
+                      <mat-form-field appearance="standard" [style]="{'width': '100%'}">
                         <mat-label>Quận, huyện</mat-label>
                         <mat-select formControlName="district" (selectionChange)="getCommune($event.value)">
                           <mat-option *ngFor="let item of listDistrict" [value]="item.id">
@@ -287,7 +285,7 @@
                   </div>
                   <div class="col-md-4">
                     <div class="form-group">
-                      <mat-form-field appearance="standard">
+                      <mat-form-field appearance="standard" [style]="{'width': '100%'}">
                         <mat-label>Xã, phường, thị trấn</mat-label>
                         <mat-select formControlName="commune">
                           <mat-option *ngFor="let item of listCommune" [value]="item.id">
