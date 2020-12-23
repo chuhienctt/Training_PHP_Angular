@@ -146,7 +146,7 @@ class DB {
         $statement->execute();
         $this->clearOption();
 
-        return $statement->rowCount();
+        return true;
     }
 
     public function delete() {
