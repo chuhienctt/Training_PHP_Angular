@@ -81,8 +81,8 @@ class DiaChinhController extends Controller {
 
         if(request()->has('id')) {
             $data = DB::table('district')->find(request()->id);
-        } else if(request()->has('id_province')) {
-            $data = DB::table('district')->where(['id_province' => request()->id_province])->get();
+        } else if(request()->has('province_id')) {
+            $data = DB::table('district')->where(['province_id' => request()->province_id])->get();
         } else {
             $data = DB::table('district')->all();
         }
@@ -93,16 +93,18 @@ class DiaChinhController extends Controller {
     public function pagination_huyen() {
         $first = request()->first ?? 0;
         $row = request()->row ?? 10;
-        $id_province = request()->id_province ?? null;
+        $province_id = request()->province_id ?? null;
 
-        if($id_province) {
-            $data = DB::table('district')->where(['id_province' => $id_province])->offset($first)->limit($row)->get();
+        if($province_id) {
+            $total = DB::table('district')->where(['province_id' => $province_id])->count();
+            $data = DB::table('district')->where(['province_id' => $province_id])->offset($first)->limit($row)->get();
         } else {
+            $total = DB::table('district')->count();
             $data = DB::table('district')->offset($first)->limit($row)->get();
         }
 
         return response()->json([
-            'total' => DB::table('district')->count(),
+            'total' => $total,
             'data' => $data,
         ]);
     }
@@ -111,8 +113,8 @@ class DiaChinhController extends Controller {
 
         if(request()->has('id')) {
             $data = DB::table('ward')->find(request()->id);
-        } else if(request()->has('id_district')) {
-            $data = DB::table('ward')->where(['id_district' => request()->id_district])->get();
+        } else if(request()->has('district_id')) {
+            $data = DB::table('ward')->where(['district_id' => request()->district_id])->get();
         } else {
             $data = DB::table('ward')->all();
         }
@@ -123,16 +125,18 @@ class DiaChinhController extends Controller {
     public function pagination_xa() {
         $first = request()->first ?? 0;
         $row = request()->row ?? 10;
-        $id_district = request()->id_district ?? null;
+        $district_id = request()->district_id ?? null;
 
-        if($id_district) {
-            $data = DB::table('ward')->where(['id_district' => $id_district])->offset($first)->limit($row)->get();
+        if($district_id) {
+            $total = DB::table('ward')->where(['district_id' => $district_id])->count();
+            $data = DB::table('ward')->where(['district_id' => $district_id])->offset($first)->limit($row)->get();
         } else {
+            $total = DB::table('ward')->count();
             $data = DB::table('ward')->offset($first)->limit($row)->get();
         }
 
         return response()->json([
-            'total' => DB::table('ward')->count(),
+            'total' => $total,
             'data' => $data,
         ]);
     }

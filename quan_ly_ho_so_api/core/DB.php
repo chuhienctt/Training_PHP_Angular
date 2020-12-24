@@ -178,10 +178,35 @@ class DB {
     }
 
     public function count() {
-        $sql = "SELECT COUNT(*) AS count FROM $this->table";
+        $where = $this->buildWhere();
+        $offset = $this->offset ? "OFFSET ?" : "";
+        $limit = $this->limit ? "LIMIT ?" : "";
+
+        $data = $where['values'];
+
+        if($this->limit) {
+            $data[] = $this->limit;
+        } else if($this->offset) {
+            $limit = "LIMIT ?";
+            $data[] = PHP_INT_MAX;
+        }
+        
+        if($this->offset) {
+            $data[] = $this->offset;
+        }
+
+        $sql = "SELECT COUNT(*) AS count FROM $this->table $where[where] $this->orderBy $limit $offset";
+
         $statement = self::$connect->prepare($sql);
+
+        $index = 1;
+        foreach($data as $value) {
+            $statement->bindValue($index++, $value, gettype($value) != 'string' ? PDO::PARAM_INT : PDO::PARAM_STR);
+        }
+
         $statement->execute();
         $this->clearOption();
+
         return $statement->fetchColumn();
     }
 
