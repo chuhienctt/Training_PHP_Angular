@@ -218,6 +218,8 @@ export class QuanLyCoQuanComponent implements OnInit {
           });
         },
         (err) => {
+          console.log(err);
+          
           if (err.status != 1) {
             this.messageService.add({
               severity: 'error',

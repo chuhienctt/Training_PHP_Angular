@@ -69,41 +69,11 @@ export class QuanLyLinhVucComponent implements OnInit {
     this.editAndADD1.show();
   }
 
-  // SaveForm(values: any) {
-  //   if (this.checkedid == 0) {
-  //     this.fileService.getEncodeFromImage(this.file.files[0]).subscribe((data:any) => {
-  //       if (data != null) {
-  //         values.hinh_anh = data;
-  //         this.linhvuc.postItme(values).subscribe((res) => {
-  //           if (res) {
-  //             alert('Do you want add this item?');
-  //             this.loadData();
-  //             this.editAndADD.hide();
-  //           }
-  //         });
-  //       }
-  //     })
-  //   } else {
-  //     this.fileService.getEncodeFromImage(this.file.files[0]).subscribe((data:any) => {
-  //       if (data != null) {
-  //         values.hinh_anh = data;
-  //       }
-  //       this.linhvuc.editItem(this.id, values).subscribe((res) => {
-  //         alert('Bạn có muốn sửa bản ghi này không?');
-  //         this.loadData();
-  //         this.editAndADD2.hide();
-  //       });
-  //     })
-  //   }
-  // }
   SaveForm(values: any) {
     if (this.checkedid == 0) {
-      this.fileService
-        .getEncodeFromImage(this.file.files[0])
-        .subscribe((data: any) => {
-          if (data != null) {
-            values.hinh_anh = data;
-          }
+      this.fileService.getEncodeFromImage(this.file.files[0]).subscribe((data:any) => {
+        if (data != null) {
+          values.hinh_anh = data;
           this.linhvuc.postItme(values).subscribe((res) => {
             if (res) {
               alert('Do you want add this item?');
@@ -111,40 +81,84 @@ export class QuanLyLinhVucComponent implements OnInit {
               this.editAndADD.hide();
             }
           });
-        });
+        }
+      })
     } else {
-      this.fileService
-        .getEncodeFromImage(this.file.files[0])
-        .subscribe((data: any) => {
-          if (data != null) {
-            values.hinh_anh = data;
-          }
-          if ((this.id = values.id)) {
-            this.linhvuc.editItem(this.id, values).subscribe((res) => {
-              alert('Bạn có muốn sửa bản ghi này không?');
-              this.loadData();
-              this.editAndADD2.hide();
-            });
-          }
+      this.fileService.getEncodeFromImage(this.file.files[0]).subscribe((data:any) => {
+        if (data != null) {
+          values.hinh_anh = data;
+        }
+        this.linhvuc.editItem(this.id, values).subscribe((res) => {
+          alert('Bạn có muốn sửa bản ghi này không?');
+          this.loadData();
+          this.editAndADD2.hide();
         });
+      })
     }
-    // if ((this.id = values.id)) {
-    //   this.linhvuc.editItem(this.id, values).subscribe((res) => {
-    //     alert('Bạn có muốn sửa bản ghi này không?');
-    //     this.loadData();
-    //     this.editAndADD2.hide();
-    //   });
-    // }
   }
+  // SaveForm(values: any) {
+  //   if (this.checkedid == 0) {
+  //     this.fileService
+  //       .getEncodeFromImage(this.file.files[0])
+  //       .subscribe((data: any) => {
+  //         if (data != null) {
+  //           values.hinh_anh = data;
+  //         }
+  //         this.linhvuc.postItme(values).subscribe((res) => {
+  //           if (res) {
+  //             alert('Do you want add this item?');
+  //             this.loadData();
+  //             this.editAndADD.hide();
+  //           }
+  //         });
+  //       });
+  //   } else {
+  //     this.fileService
+  //       .getEncodeFromImage(this.file.files[0])
+  //       .subscribe((data: any) => {
+  //         if (data != null) {
+  //           values.hinh_anh = data;
+  //         }
+  //         if ((this.id = values.id)) {
+  //           this.linhvuc.editItem(this.id, values).subscribe((res) => {
+  //             alert('Bạn có muốn sửa bản ghi này không?');
+  //             this.loadData();
+  //             this.editAndADD2.hide();
+  //           });
+  //         }
+  //       });
+  //   }
+  //   // if ((this.id = values.id)) {
+  //   //   this.linhvuc.editItem(this.id, values).subscribe((res) => {
+  //   //     alert('Bạn có muốn sửa bản ghi này không?');
+  //   //     this.loadData();
+  //   //     this.editAndADD2.hide();
+  //   //   });
+  //   // }
+  // }
 
   deleteShow(id) {
-    if (confirm('Are you sure delete this item?')) {
+    if (confirm('Bạn chắc chắn muốn xóa bản ghi này?.')) {
       this.linhvuc.deleteItem(id).subscribe(
         (res) => {
           this.loadData();
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Thành công!',
+            detail: 'Xoá cơ quan thành công!',
+          });
         },
-        (err) => {}
+        (err) => {
+          if (err.status != 1) {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Thất bại!',
+              detail: err.error.message,
+            });
+          }
+        }
       );
     }
   }
 }
+

@@ -358,12 +358,12 @@
                                 <!-- </div> -->
                                 <div class="form-group">
                                     <label for="hinh_anh">Hình ảnh:</label>
-                                    <p-fileUpload [multiple]="false" #file accept="image/*" maxFileSize="1000000">
-                                    </p-fileUpload>
-                                    <div *ngIf="iSubmited && form.controls.hinh_anh.errors">
-                                        <span class="text-danger" *ngIf="form.controls.hinh_anh.errors.required">Hình ảnh
-                                            không được để trống.</span>
-                                    </div>
+                                        <p-fileUpload [multiple]="false" #file accept="image/*" maxFileSize="1000000" formControlName="hinh_anh"name="hinh_anh">
+                                        </p-fileUpload>
+                                        <div *ngIf="iSubmited && form.controls.hinh_anh.errors">
+                                            <span class="text-danger" *ngIf="form.controls.hinh_anh.errors.required">Hình ảnh
+                                                không được để trống.</span>
+                                        </div>
                                 </div>
                             </div>
                             <div class="modal-footer">

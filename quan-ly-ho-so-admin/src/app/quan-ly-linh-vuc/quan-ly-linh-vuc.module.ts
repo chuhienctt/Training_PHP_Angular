@@ -5,6 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { FileUploadModule } from 'primeng/fileupload';
+import {ToastModule} from 'primeng/toast';
 
 const routes: Routes = [
   {
@@ -20,6 +21,7 @@ const routes: Routes = [
     FileUploadModule,
     ModalModule.forRoot(),
     FormsModule,
+    ToastModule,
     RouterModule.forChild(routes),
   ]
 })

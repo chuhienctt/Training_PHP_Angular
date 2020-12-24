@@ -26,25 +26,18 @@ export class QuanLyLinhVucService {
     }));
   }
   postItme(data: any): Observable<any> {
-    //debugger;
     return this._http.post<any>(this.urlAPI + "create", data, HttpOptionss).pipe(map(res => {
       return res;
     }));
   }
   editItem(id: bigint, data: any): Observable<any> {
-    //debugger;
     return this._http.put(this.urlAPI + "update?id=" + id, data,HttpOptionss).pipe(map(res => {
       return res;
     }));
   }
   deleteItem(id: bigint): Observable<any> {
-    // debugger;
-    console.log(this.urlAPI +"delete?id=" + id);
-    
     return this._http.delete<any>(this.urlAPI +"delete?id=" + id, HttpOptionss).pipe(map(res => {
-      // debugger;
       return res;
     }));
-  }
-  
+  } 
 }
