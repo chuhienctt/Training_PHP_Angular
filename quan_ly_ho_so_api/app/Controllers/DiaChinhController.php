@@ -206,7 +206,7 @@ class DiaChinhController extends Controller {
             ],
         ]);
 
-        $result = DB::table('province')->find(request()->id)->hide();
+        $result = DB::table('province')->where(['id' => request()->id])->hide();
 
         if($result) {
             return response()->success(1, 'Xóa tỉnh, thành phố thành công!');
@@ -224,7 +224,7 @@ class DiaChinhController extends Controller {
             ],
         ]);
 
-        $result = DB::table('province')->find(request()->id)->hide();
+        $result = DB::table('province')->where(['id' => request()->id])->hide();
 
         if($result) {
             return response()->success(1, 'Hủy xóa tỉnh, thành phố thành công!');
@@ -308,7 +308,7 @@ class DiaChinhController extends Controller {
             ],
         ]);
 
-        $result = DB::table('district')->find(request()->id)->hide();
+        $result = DB::table('district')->where(['id' => request()->id])->hide();
 
         if($result) {
             return response()->success(1, 'Xóa quận, huyện thành công!');
@@ -410,7 +410,7 @@ class DiaChinhController extends Controller {
             ],
         ]);
 
-        $result = DB::table('ward')->find(request()->id)->hide();
+        $result = DB::table('ward')->where(['id' => request()->id])->hide();
 
         if($result) {
             return response()->success(1, 'Xóa xã, phường thành công!');
