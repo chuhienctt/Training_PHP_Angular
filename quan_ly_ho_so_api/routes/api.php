@@ -45,6 +45,7 @@ Route::group([
             Route::post('/create', 'LinhVucController@create');
             Route::put('/update', 'LinhVucController@update');
             Route::delete('/delete', 'LinhVucController@delete');
+            Route::delete('/undelete', 'LinhVucController@undelete');
 
         });
 
@@ -58,6 +59,7 @@ Route::group([
             Route::post('/create', 'CoQuanController@create');
             Route::put('/update', 'CoQuanController@update');
             Route::delete('/delete', 'CoQuanController@delete');
+            Route::delete('/undelete', 'CoQuanController@undelete');
 
         });
 
@@ -96,18 +98,21 @@ Route::group([
             Route::post('/create-tinh', 'DiaChinhController@create_tinh');
             Route::put('/update-tinh', 'DiaChinhController@update_tinh');
             Route::delete('/delete-tinh', 'DiaChinhController@delete_tinh');
+            Route::delete('/undelete-tinh', 'DiaChinhController@undelete_tinh');
             
             Route::get('/get-huyen', 'DiaChinhController@get_huyen');
             Route::get('/pagination-huyen', 'DiaChinhController@pagination_huyen');
             Route::post('/create-huyen', 'DiaChinhController@create_huyen');
             Route::put('/update-huyen', 'DiaChinhController@update_huyen');
             Route::delete('/delete-huyen', 'DiaChinhController@delete_huyen');
+            Route::delete('/undelete-huyen', 'DiaChinhController@undelete_huyen');
             
             Route::get('/get-xa', 'DiaChinhController@get_xa');
             Route::get('/pagination-xa', 'DiaChinhController@pagination_xa');
             Route::post('/create-xa', 'DiaChinhController@create_xa');
             Route::put('/update-xa', 'DiaChinhController@update_xa');
             Route::delete('/delete-xa', 'DiaChinhController@delete_xa');
+            Route::delete('/undelete-xa', 'DiaChinhController@undelete_xa');
 
         });
 
