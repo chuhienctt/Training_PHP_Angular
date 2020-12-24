@@ -140,7 +140,6 @@ class ThuTucController extends Controller {
 
                 return response()->success(1, 'Thêm thủ tục thành công!', $thu_tuc);
             } catch(\PDOException $e) {
-                echo $e;
                 DB::rollBack();
             }
         }
@@ -230,7 +229,7 @@ class ThuTucController extends Controller {
     //     return response()->error(2, 'Sửa cơ quan thất bại!');
     // }
 
-    public function delete() {
+    public function change($type) {
         
         validator()->validate([
             'id' => [
@@ -239,30 +238,24 @@ class ThuTucController extends Controller {
             ],
         ]);
 
-        $row = model('ThuTuc')->find(request()->id)->hide();
-
-        if($row) {
-            return response()->success(1, 'Xóa thủ tục thành công!');
+        if($type == 'hide') {
+            $model = model('ThuTuc')->find(request()->id)->hide();
+        } else {
+            $model = model('ThuTuc')->find(request()->id)->show();
         }
 
-        return response()->error(2, 'Xóa thủ tục thất bại!');
+        if($model) {
+            return response()->success(1, 'Thao tác thành công!');
+        }
+
+        return response()->error(2, 'Thao tác thất bại!');
+    }
+
+    public function delete() {
+        return $this->change('hide');
     }
 
     public function undelete() {
-        
-        validator()->validate([
-            'id' => [
-                'required' => 'Thiếu id thủ tục',
-                'exists:thu_tuc' => 'Không tồn tại thủ tục',
-            ],
-        ]);
-
-        $row = model('ThuTuc')->find(request()->id)->show();
-
-        if($row) {
-            return response()->success(1, 'Hủy xóa thủ tục thành công!');
-        }
-
-        return response()->error(2, 'Hủy xóa thủ tục thất bại!');
+        return $this->change('show');
     }
 }
