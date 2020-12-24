@@ -21,6 +21,7 @@
                 <th class="text-center">#</th>
                 <th>Tên tỉnh, thành phố</th>
                 <th> Kiểu</th>
+                <th> Trạng thái</th>
                 <th class="text-right">Hành động</th>
               </tr>
               </thead>
@@ -29,6 +30,14 @@
                 <td class="text-center">{{i+1}}</td>
                 <td>{{item.name}}</td>
                 <td>{{item.type}}</td>
+                <td>
+                  <div class="togglebutton">
+                    <label>
+                      <input type="checkbox" (change)="status($event)" value="{{item.id}}" [checked]="item.deleted_at == null">
+                      <span class="toggle"></span>
+                    </label>
+                  </div>
+                </td>
                 <td class="td-actions text-right">
                   <button type="button" (click)="redirectDistrict(item.id)" class="btn btn-success mr-1">
                     <i class="material-icons">remove_red_eye</i>

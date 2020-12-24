@@ -10,6 +10,7 @@ import {UserComponent} from "./user/user.component";
 import {AddressComponent} from "./address/address.component";
 import {ProcedureComponent} from "./procedure/procedure.component";
 import {DistrictComponent} from "./address/district/district.component";
+import {CommuneComponent} from "./address/commune/commune.component";
 
 const routes: Routes = [
   {
@@ -28,8 +29,14 @@ const routes: Routes = [
       {path: 'profile', component: ProfileComponent},
       {path: 'change-password', component: ChangepassComponent},
       {path: 'user', component: UserComponent},
-      {path: 'address', component: AddressComponent},
-      {path: 'district/:id', component: DistrictComponent}
+      {
+        path: 'address',
+        children: [
+          {path: '', component:AddressComponent},
+          {path: 'district/:id', component: DistrictComponent},
+          {path: 'commune/:id', component: CommuneComponent}
+        ]
+      },
     ]
   }]
 

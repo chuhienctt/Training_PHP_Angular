@@ -1,24 +1,24 @@
 import {Component, Injector, OnInit} from '@angular/core';
-import {ActivatedRoute, ParamMap, Router} from "@angular/router";
-import {AddressService} from "../../../services/address.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {AddressService} from "../../../services/address.service";
 import {MessageService} from "primeng/api";
+import {ActivatedRoute, Router} from "@angular/router";
 import {ScriptService} from "../../../libs/script.service";
 import {Location} from "@angular/common";
 
 declare var $:any;
 
 @Component({
-  selector: 'app-district',
-  templateUrl: './district.component.html',
-  styleUrls: ['./district.component.css'],
+  selector: 'app-commune',
+  templateUrl: './commune.component.html',
+  styleUrls: ['./commune.component.css'],
   providers: [MessageService]
 })
-export class DistrictComponent extends ScriptService implements OnInit {
+export class CommuneComponent extends ScriptService implements OnInit {
   totalRecords: number;
   first = 0;
   rows = 10;
-  listDistrict = [];
+  listCommune = [];
   submitted = false;
   aoe: boolean;
   form: FormGroup;
@@ -57,8 +57,8 @@ export class DistrictComponent extends ScriptService implements OnInit {
     this.first = event.first;
     this.rows = event.rows;
     let id = this.route.snapshot.params['id'];
-    this.addressService.paginationDistrict(id, this.first, this.rows).subscribe((res: any) => {
-      this.listDistrict = res.data;
+    this.addressService.paginationCommune(id, this.first, this.rows).subscribe((res: any) => {
+      this.listCommune = res.data;
       this.totalRecords = res.total;
     })
   }
@@ -66,7 +66,7 @@ export class DistrictComponent extends ScriptService implements OnInit {
   edit(id) {
     this.aoe = false;
     $("#myModal").modal("show");
-    this.addressService.getDistrictById(id).subscribe((data: any) => {
+    this.addressService.getCommuneById(id).subscribe((data: any) => {
       this.form.patchValue({
         id: data.id,
         name: data.name,
@@ -76,10 +76,10 @@ export class DistrictComponent extends ScriptService implements OnInit {
   }
 
   delete(id) {
-    if (confirm("Bạn muốn xóa huyện này?")) {
-      this.addressService.deleteDistrict(id).subscribe((res: any) => {
+    if (confirm("Bạn muốn xóa xã này?")) {
+      this.addressService.deleteCommune(id).subscribe((res: any) => {
         this.loadData({first: this.first, rows: this.rows});
-        this.messageService.add({severity: 'success', summary: 'Thành công!', detail: "Xoá huyện thành công!"});
+        this.messageService.add({severity: 'success', summary: 'Thành công!', detail: "Xoá xã thành công!"});
       }, err => {
         console.log(err)
         this.messageService.add({severity: 'error', summary: 'Thất bại!', detail: err.error.message});
@@ -98,27 +98,27 @@ export class DistrictComponent extends ScriptService implements OnInit {
       return;
     }
 
-    let district = {
+    let commune = {
       name: this.form.value.name,
       type: this.form.value.type,
-      province_id: this.route.snapshot.params['id']
+      district_id: this.route.snapshot.params['id']
     }
     if (this.aoe == true) {
-      this.addressService.createDistrict(district).subscribe((res: any) => {
+      this.addressService.createCommune(commune).subscribe((res: any) => {
         this.submitted = false;
         this.loadData({first: this.first, rows: this.rows});
         $("#myModal").modal("hide");
-        this.messageService.add({severity: 'success', summary: 'Thành công!', detail: "Thêm huyện thành công!"});
+        this.messageService.add({severity: 'success', summary: 'Thành công!', detail: "Thêm xã thành công!"});
       }, err => {
         console.log(err)
         this.messageService.add({severity: 'error', summary: 'Thất bại!', detail: err.error.message});
       })
     } else {
-      this.addressService.updateDistrict(this.form.value.id, district).subscribe((res: any) => {
+      this.addressService.updateCommune(this.form.value.id, commune).subscribe((res: any) => {
         this.submitted = false;
         this.loadData({first: this.first, rows: this.rows});
         $("#myModal").modal("hide");
-        this.messageService.add({severity: 'success', summary: 'Thành công!', detail: "Sửa huyện thành công!"});
+        this.messageService.add({severity: 'success', summary: 'Thành công!', detail: "Sửa xã thành công!"});
       }, err => {
         console.log(err)
         this.messageService.add({severity: 'error', summary: 'Thất bại!', detail: err.error.message});
@@ -126,20 +126,16 @@ export class DistrictComponent extends ScriptService implements OnInit {
     }
   }
 
-  redirectCommune(id) {
-    this.router.navigate(["/admin/address/commune/", id]);
-  }
-
-  redirectCity() {
+  redirectDistrict() {
     this.location.back();
   }
 
   status(event) {
     if (event.target.checked == true) {
-      if (confirm("Bạn muốn hiện huyện này?")) {
-        this.addressService.unDeleteDistrict(event.target.value).subscribe((res:any) => {
+      if (confirm("Bạn muốn hiện xã này?")) {
+        this.addressService.unDeleteCommune(event.target.value).subscribe((res:any) => {
           // this.loadData({first: this.first, rows: this.rows});
-          this.messageService.add({severity: 'success', summary: 'Thành công!', detail: "Hiển thị huyện thành công!"});
+          this.messageService.add({severity: 'success', summary: 'Thành công!', detail: "Hiển thị xã thành công!"});
         }, err => {
           console.log(err);
           this.loadData({first: this.first, rows: this.rows});
@@ -149,10 +145,10 @@ export class DistrictComponent extends ScriptService implements OnInit {
         this.loadData({first: this.first, rows: this.rows});
       }
     } else {
-      if (confirm("Bạn muốn ẩn huyện này?")) {
-        this.addressService.deleteDistrict(event.target.value).subscribe((res:any) => {
+      if (confirm("Bạn muốn ẩn xã này?")) {
+        this.addressService.deleteCommune(event.target.value).subscribe((res:any) => {
           // this.loadData({first: this.first, rows: this.rows});
-          this.messageService.add({severity: 'success', summary: 'Thành công!', detail: "Ẩn huyện thành công!"});
+          this.messageService.add({severity: 'success', summary: 'Thành công!', detail: "Ẩn xã thành công!"});
         }, err => {
           this.loadData({first: this.first, rows: this.rows});
           this.messageService.add({severity: 'error', summary: 'Thất bại!', detail: err.error.message});

@@ -25,6 +25,7 @@
                 <th>Số điện thoại</th>
                 <th>Email</th>
                 <th>Địa chỉ</th>
+                <th>Trạng thái</th>
                 <th class="text-right">Hành động</th>
               </tr>
               </thead>
@@ -38,6 +39,14 @@
                 <td>{{item.so_dien_thoai}}</td>
                 <td>{{item.email}}</td>
                 <td>{{item.dia_chi}}</td>
+                <td>
+                  <div class="togglebutton">
+                    <label>
+                      <input type="checkbox" (change)="status($event)" value="{{item.id}}" [checked]="item.deleted_at == null">
+                      <span class="toggle"></span>
+                    </label>
+                  </div>
+                </td>
                 <td class="td-actions text-right">
                   <button type="button" (click)="edit(item.id)" class="btn btn-warning mr-1">
                     <i class="material-icons">edit</i>

@@ -54,9 +54,7 @@ export class AddressComponent extends ScriptService implements OnInit {
     this.first = event.first;
     this.rows = event.rows;
     this.addressService.paginationCity(this.first, this.rows).subscribe((res: any) => {
-      this.listCity = res.data.filter(e => {
-        return e.deleted_at == null
-      });
+      this.listCity = res.data;
       this.totalRecords = res.total;
     })
   }
@@ -119,6 +117,35 @@ export class AddressComponent extends ScriptService implements OnInit {
   }
 
   redirectDistrict(id) {
-    this.router.navigate(["/admin/district/", id]);
+    this.router.navigate(["/admin/address/district/", id]);
+  }
+
+  status(event) {
+    if (event.target.checked == true) {
+      if (confirm("Bạn muốn hiện tỉnh này?")) {
+        this.addressService.unDeleteCity(event.target.value).subscribe((res:any) => {
+          // this.loadData({first: this.first, rows: this.rows});
+          this.messageService.add({severity: 'success', summary: 'Thành công!', detail: "Hiển thị tỉnh thành công!"});
+        }, err => {
+          console.log(err);
+          this.loadData({first: this.first, rows: this.rows});
+          this.messageService.add({severity: 'error', summary: 'Thất bại!', detail: err.error.message});
+        })
+      } else {
+        this.loadData({first: this.first, rows: this.rows});
+      }
+    } else {
+      if (confirm("Bạn muốn ẩn tỉnh này?")) {
+        this.addressService.deleteCity(event.target.value).subscribe((res:any) => {
+          // this.loadData({first: this.first, rows: this.rows});
+          this.messageService.add({severity: 'success', summary: 'Thành công!', detail: "Ẩn tỉnh thành công!"});
+        }, err => {
+          this.loadData({first: this.first, rows: this.rows});
+          this.messageService.add({severity: 'error', summary: 'Thất bại!', detail: err.error.message});
+        })
+      } else {
+        this.loadData({first: this.first, rows: this.rows});
+      }
+    }
   }
 }
