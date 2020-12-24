@@ -57,7 +57,12 @@ class ThuTucController extends Controller {
     public function get_templates() {
         $temps = getFiles(_ROOT.'/../public/templates/', 'json');
 
-        return response()->json($temps);
+        $data = [];
+        foreach($temps as $tm) {
+            $data[] = $tm;
+        }
+
+        return response()->json($data);
     }
 
     public function create() {
