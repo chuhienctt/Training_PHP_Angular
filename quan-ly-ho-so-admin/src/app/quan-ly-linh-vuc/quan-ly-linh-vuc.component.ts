@@ -5,16 +5,19 @@ import { FileService } from '../lib/file.service';
 import { ScriptService } from '../lib/script.service';
 import { FileUpload } from 'primeng/fileupload';
 import { environment } from '../../environments/environment';
+import {MessageService} from 'primeng/api';
 
 @Component({
   selector: 'app-quan-ly-linh-vuc',
   templateUrl: './quan-ly-linh-vuc.component.html',
   styleUrls: ['./quan-ly-linh-vuc.component.css'],
+  providers: [MessageService],
 })
 export class QuanLyLinhVucComponent implements OnInit {
   constructor(
     private linhvuc: QuanLyLinhVucService,
-    private fileService: FileService
+    private fileService: FileService,
+    private messageService: MessageService,
   ) {}
   [x: string]: any;
 
