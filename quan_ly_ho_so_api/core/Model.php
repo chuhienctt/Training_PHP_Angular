@@ -101,6 +101,8 @@ class Model {
                 }
             }
         }
+
+        // var_dump($data);
         
         if(isset($this->id)) {
             // update

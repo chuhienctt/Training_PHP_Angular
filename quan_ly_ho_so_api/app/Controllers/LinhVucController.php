@@ -186,12 +186,30 @@ class LinhVucController extends Controller {
             ],
         ]);
 
-        $row = model('LinhVuc')->where(['id' => request()->id])->hide();
+        $row = model('LinhVuc')->find(request()->id)->hide();
 
         if($row) {
             return response()->success(1, 'Xóa lĩnh vực thành công!');
         }
 
         return response()->error(2, 'Xóa lĩnh vực thất bại!');
+    }
+
+    public function undelete() {
+        
+        validator()->validate([
+            'id' => [
+                'required' => 'Thiếu id lĩnh vực',
+                'exists:linh_vuc' => 'Không tồn tại lĩnh vực',
+            ],
+        ]);
+
+        $row = model('LinhVuc')->find(request()->id)->show();
+
+        if($row) {
+            return response()->success(1, 'Hủy xóa lĩnh vực thành công!');
+        }
+
+        return response()->error(2, 'Hủy xóa lĩnh vực thất bại!');
     }
 }

@@ -148,7 +148,6 @@ class CoQuanController extends Controller {
                 'required' => 'Số điện thoại không được để trống',
                 'max:10' => 'Số điện thoại không quá 10 kí tự',
                 'phone_number' => 'Số điện thoại không đúng định dạng',
-                'unique:co_quan' => 'Số điện thoại này đã tồn tại',
             ],
             'ward_id' => [
                 'required' => 'Xã, phường không được để trống',
@@ -221,12 +220,30 @@ class CoQuanController extends Controller {
             ],
         ]);
 
-        $row = model('CoQuan')->where(['id' => request()->id])->hide();
+        $row = model('CoQuan')->find(request()->id)->hide();
 
         if($row) {
             return response()->success(1, 'Xóa cơ quan thành công!');
         }
 
         return response()->error(2, 'Xóa cơ quan thất bại!');
+    }
+
+    public function undelete() {
+        
+        validator()->validate([
+            'id' => [
+                'required' => 'Thiếu id cơ quan',
+                'exists:co_quan' => 'Không tồn tại cơ quan',
+            ],
+        ]);
+
+        $row = model('CoQuan')->find(request()->id)->show();
+
+        if($row) {
+            return response()->success(1, 'Hủy xóa cơ quan thành công!');
+        }
+
+        return response()->error(2, 'Hủy xóa cơ quan thất bại!');
     }
 }
