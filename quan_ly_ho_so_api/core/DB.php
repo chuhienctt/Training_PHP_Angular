@@ -174,7 +174,7 @@ class DB {
     }
 
     public function show() {
-        return $this->update(['deleted_at' => 'null']);
+        return $this->update(['deleted_at' => null]);
     }
 
     public function count() {
