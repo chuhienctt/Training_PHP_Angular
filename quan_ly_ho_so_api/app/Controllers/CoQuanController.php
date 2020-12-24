@@ -184,8 +184,13 @@ class CoQuanController extends Controller {
 
             if(request()->has('linh_vuc') && is_array(request()->linh_vuc)) {
 
-                // remove referenced
                 try {
+                    // remove referenced
+                    model('CoQuanLinhVuc')->where([
+                        'id_co_quan' => $co_quan->id
+                    ])->delete();
+
+                    // add referenced
                     foreach(request()->linh_vuc as $option) {
                         if(model('LinhVuc')->find($option)) {
                             $result = model('CoQuanLinhVuc')->insert([
@@ -213,7 +218,7 @@ class CoQuanController extends Controller {
         return response()->error(2, 'Sửa cơ quan thất bại!');
     }
 
-    public function delete() {
+    public function change($type) {
         
         validator()->validate([
             'id' => [
@@ -222,30 +227,24 @@ class CoQuanController extends Controller {
             ],
         ]);
 
-        $row = model('CoQuan')->find(request()->id)->hide();
-
-        if($row) {
-            return response()->success(1, 'Xóa cơ quan thành công!');
+        if($type == 'hide') {
+            $model = model('CoQuan')->find(request()->id)->hide();
+        } else {
+            $model = model('CoQuan')->find(request()->id)->show();
         }
 
-        return response()->error(2, 'Xóa cơ quan thất bại!');
+        if($model) {
+            return response()->success(1, 'Thao tác thành công!');
+        }
+
+        return response()->error(2, 'Thao tác thất bại!');
+    }
+
+    public function delete() {
+        return $this->change('hide');
     }
 
     public function undelete() {
-        
-        validator()->validate([
-            'id' => [
-                'required' => 'Thiếu id cơ quan',
-                'exists:co_quan' => 'Không tồn tại cơ quan',
-            ],
-        ]);
-
-        $row = model('CoQuan')->find(request()->id)->show();
-
-        if($row) {
-            return response()->success(1, 'Hủy xóa cơ quan thành công!');
-        }
-
-        return response()->error(2, 'Hủy xóa cơ quan thất bại!');
+        return $this->change('show');
     }
 }

@@ -146,10 +146,15 @@ class LinhVucController extends Controller {
         
         if($linh_vuc->save()) {
 
-            // add referenced
             if(request()->has('co_quan') && is_array(request()->co_quan)) {
 
                 try {
+                    // remove referenced
+                    model('CoQuanLinhVuc')->where([
+                        'id_linh_vuc' => $linh_vuc->id
+                    ])->delete();
+
+                    // add referenced
                     foreach(request()->co_quan as $option) {
                         if(model('CoQuan')->find($option)) {
 
@@ -179,7 +184,7 @@ class LinhVucController extends Controller {
         return response()->error(2, 'Sửa lĩnh vực thất bại!');
     }
 
-    public function delete() {
+    public function change($type) {
         
         validator()->validate([
             'id' => [
@@ -188,30 +193,24 @@ class LinhVucController extends Controller {
             ],
         ]);
 
-        $row = model('LinhVuc')->find(request()->id)->hide();
-
-        if($row) {
-            return response()->success(1, 'Xóa lĩnh vực thành công!');
+        if($type == 'hide') {
+            $model = model('LinhVuc')->find(request()->id)->hide();
+        } else {
+            $model = model('LinhVuc')->find(request()->id)->show();
         }
 
-        return response()->error(2, 'Xóa lĩnh vực thất bại!');
+        if($model) {
+            return response()->success(1, 'Thao tác thành công!');
+        }
+
+        return response()->error(2, 'Thao tác thất bại!');
+    }
+
+    public function delete() {
+        return $this->change('hide');
     }
 
     public function undelete() {
-        
-        validator()->validate([
-            'id' => [
-                'required' => 'Thiếu id lĩnh vực',
-                'exists:linh_vuc' => 'Không tồn tại lĩnh vực',
-            ],
-        ]);
-
-        $row = model('LinhVuc')->find(request()->id)->show();
-
-        if($row) {
-            return response()->success(1, 'Hủy xóa lĩnh vực thành công!');
-        }
-
-        return response()->error(2, 'Hủy xóa lĩnh vực thất bại!');
+        return $this->change('show');
     }
 }
