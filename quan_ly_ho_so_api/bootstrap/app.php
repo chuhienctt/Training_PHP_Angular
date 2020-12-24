@@ -22,20 +22,22 @@ if($config['app']['debug']) {
     set_error_handler('errorHandler');
 }
 
+define('_ROOT', __DIR__);
+
 // autoload core
-$files = getFiles(__DIR__.'/../core/');
+$files = getFiles(_ROOT.'/../core/', 'php');
 
 foreach($files as $file) {
-    require_once __DIR__.'/../core/'.$file;
+    require_once _ROOT.'/../core/'.$file;
 }
 
 // autoload models
-$files = getFiles(__DIR__.'/../app/Models/');
+$files = getFiles(_ROOT.'/../app/Models/', 'php');
 
 
 $models = [];
 foreach($files as $file) {
-    require_once __DIR__.'/../app/Models/'.$file;
+    require_once _ROOT.'/../app/Models/'.$file;
 
     // init model
     $modelName = explode('.', $file)[0];
@@ -52,14 +54,15 @@ require_once "static.php";
 // run the application
 $app = new Core\App();
 
-function getFiles($path) {
-    return array_filter(scandir($path), function($file) {
-        return strpos(strtolower($file), '.php') > 0;
+function getFiles($path, $ext) {
+    return array_filter(scandir($path), function($file) use($ext) {
+        return strpos(strtolower($file), '.'.$ext) > 0;
     });
 }
 
 function errorHandler($errno, $errstr, $errfile, $errline) {
-    response()->code(417, [
+    header($_SERVER["SERVER_PROTOCOL"]." 417 Expectation Failed");
+    echo json_encode([
         'status' => 99,
         'message' => 'Lỗi hệ thống',
         'data' => [
@@ -69,5 +72,4 @@ function errorHandler($errno, $errstr, $errfile, $errline) {
             'file' => $errfile,
         ]
     ]);
-    exit;
 }

@@ -9,6 +9,8 @@ use Core\Format;
 use Core\DB;
 use Core\File;
 use App\Models\ThuTuc;
+use App\Models\QuyTrinh;
+use App\Models\Buoc;
 
 class ThuTucController extends Controller {
 
@@ -52,13 +54,18 @@ class ThuTucController extends Controller {
         ]);
     }
 
+    public function get_templates() {
+        $temps = getFiles(_ROOT.'/../public/templates/', 'json');
+
+        return response()->json($temps);
+    }
+
     public function create() {
         
         validator()->validate([
             'ten_thu_tuc' => [
                 'required' => 'Tên thủ tục không được để trống',
                 'max:255' => 'Tên thủ tục  không quá 255 kí tự',
-                'unique:thu_tuc' => 'Tên thủ tục đã tồn tại',
             ],
             'muc_do' => [
                 'required' => 'Mức độ không được để trống',
@@ -75,10 +82,16 @@ class ThuTucController extends Controller {
                 'required' => 'Lĩnh vực không được để trống',
                 'exists:linh_vuc' => 'Lĩnh vực không tồn tại',
             ],
+            'quy_trinh' => [
+                'required' => 'Quy trình không được để trống',
+                'array' => 'Quy trình phải là một mảng',
+            ],
         ]);
 
         if(!File::exists("/templates/".request()->template)) {
             Validator::alert("Template không tồn tại!");
+        } else if(!DB::table('co_quan_linh_vuc')->where(['id_co_quan' => request()->id_co_quan, 'id_linh_vuc' => request()->id_linh_vuc])->first()) {
+            Validator::alert("Lĩnh vực không thuộc cơ quan đã chọn!");
         }
 
         $thu_tuc = new ThuTuc();
@@ -89,7 +102,50 @@ class ThuTucController extends Controller {
         $thu_tuc->muc_do = request()->muc_do;
         $thu_tuc->template = "/templates/".request()->template;
 
-        return response()->error(2, 'Thêm cơ quan thất bại!');
+        DB::beginTransaction();
+        if($thu_tuc->save()) {
+            try {
+                // insert quy trinh
+                foreach(request()->quy_trinh as $qt) {
+                    if(!isset($qt['buoc']) || gettype($qt['buoc']) != 'array') {
+                        throw new \PDOException("buoc is not array");
+                    }
+
+                    $qt_new = new QuyTrinh();
+
+                    $qt_new->id_thu_tuc = $thu_tuc->id;
+                    $qt_new->ten_quy_trinh = $qt['ten_quy_trinh'];
+                    $qt_new->ghi_chu = $qt['ghi_chu'];
+
+                    if($qt_new->save()) {
+
+                        // insert buoc
+                        foreach($qt['buoc'] as $bc) {
+                            $bc_new = new Buoc();
+
+                            $bc_new->id_quy_trinh = $qt_new->id;
+                            $bc_new->ten_buoc = $bc['ten_buoc'];
+                            $bc_new->ghi_chu = $bc['ghi_chu'];
+
+                            if(!$bc_new->save()) {
+                                throw new \PDOException("can not save buoc");
+                            }
+                        }
+                    } else {
+                        throw new \PDOException("can not save quy trinh");
+                    }
+                }
+
+                DB::commit();
+
+                return response()->success(1, 'Thêm thủ tục thành công!', $thu_tuc);
+            } catch(\PDOException $e) {
+                echo $e;
+                DB::rollBack();
+            }
+        }
+
+        return response()->error(2, 'Thêm thủ tục thất bại!');
     }
 
     // public function update() {
@@ -174,21 +230,39 @@ class ThuTucController extends Controller {
     //     return response()->error(2, 'Sửa cơ quan thất bại!');
     // }
 
-    // public function delete() {
+    public function delete() {
         
-    //     validator()->validate([
-    //         'id' => [
-    //             'required' => 'Thiếu id cơ quan',
-    //             'exists:co_quan' => 'Không tồn tại cơ quan',
-    //         ],
-    //     ]);
+        validator()->validate([
+            'id' => [
+                'required' => 'Thiếu id thủ tục',
+                'exists:thu_tuc' => 'Không tồn tại thủ tục',
+            ],
+        ]);
 
-    //     $row = model('CoQuan')->where(['id' => request()->id])->hide();
+        $row = model('ThuTuc')->find(request()->id)->hide();
 
-    //     if($row) {
-    //         return response()->success(1, 'Xóa cơ quan thành công!');
-    //     }
+        if($row) {
+            return response()->success(1, 'Xóa thủ tục thành công!');
+        }
 
-    //     return response()->error(2, 'Xóa cơ quan thất bại!');
-    // }
+        return response()->error(2, 'Xóa thủ tục thất bại!');
+    }
+
+    public function undelete() {
+        
+        validator()->validate([
+            'id' => [
+                'required' => 'Thiếu id thủ tục',
+                'exists:thu_tuc' => 'Không tồn tại thủ tục',
+            ],
+        ]);
+
+        $row = model('ThuTuc')->find(request()->id)->show();
+
+        if($row) {
+            return response()->success(1, 'Hủy xóa thủ tục thành công!');
+        }
+
+        return response()->error(2, 'Hủy xóa thủ tục thất bại!');
+    }
 }

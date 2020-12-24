@@ -52,7 +52,7 @@ class Validator {
                 }
             break;
             case 'array':
-                if(gettype($value) == 'array') {
+                if(gettype($value) != 'array') {
                     return true;
                 }
             break;
