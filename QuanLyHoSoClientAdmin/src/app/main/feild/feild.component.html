@@ -107,9 +107,6 @@
                       <mat-option *ngFor="let item of listOrgan" [value]="item.id">{{item.ten_co_quan}}</mat-option>
                     </mat-select>
                   </mat-form-field>
-                  <div *ngIf="submitted && form.controls.co_quan.errors">
-                    <small class="error" *ngIf="form.controls.co_quan.errors.required">Chưa chọn cơ quan.</small>
-                  </div>
                 </div>
               </div>
             </div>
