@@ -57,7 +57,7 @@ export class FeildComponent extends ScriptService implements OnInit {
       id: [''],
       ten_linh_vuc: ['',[Validators.required, Validators.maxLength(200)]],
       mo_ta: ['',[Validators.maxLength(250)]],
-      co_quan: ['', Validators.required]
+      co_quan: ['']
     })
 
     this.organService.getAll().subscribe((res:any) => {
