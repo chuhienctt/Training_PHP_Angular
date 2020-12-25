@@ -299,8 +299,11 @@ export class UserComponent extends ScriptService implements OnInit {
     if (event.target.checked) {
       if (confirm("Bạn muốn mở khóa người dùng này?")) {
         this.userService.unblock(event.target.value).subscribe((res:any) => {
-          this.loadData({first: this.first, rows: this.rows});
+          // this.loadData({first: this.first, rows: this.rows});
           this.messageService.add({severity: 'success', summary: 'Thành công!', detail: "Mở khóa người dùng thành công!"});
+        }, err => {
+          this.loadData({first: this.first, rows: this.rows});
+          this.messageService.add({severity: 'error', summary: 'Thất bại!', detail: err.error.message});
         })
       } else {
         this.loadData({first: this.first, rows: this.rows});
@@ -308,8 +311,11 @@ export class UserComponent extends ScriptService implements OnInit {
     } else {
       if (confirm("Bạn muốn khóa người dùng này?")) {
         this.userService.block(event.target.value).subscribe((res:any) => {
-          this.loadData({first: this.first, rows: this.rows});
+          // this.loadData({first: this.first, rows: this.rows});
           this.messageService.add({severity: 'success', summary: 'Thành công!', detail: "Khóa người dùng thành công!"});
+        }, err => {
+          this.loadData({first: this.first, rows: this.rows});
+          this.messageService.add({severity: 'error', summary: 'Thất bại!', detail: err.error.message});
         })
       } else {
         this.loadData({first: this.first, rows: this.rows});

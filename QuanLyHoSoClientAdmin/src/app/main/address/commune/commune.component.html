@@ -11,6 +11,9 @@
             <button type="button" (click)="create()" class="btn btn-primary btn-add float-right">
               <i class="material-icons">add</i>
             </button>
+            <button type="button" (click)="redirectDistrict()" class="btn btn-primary btn-add float-right">
+              <i class="material-icons">arrow_back</i>
+            </button>
           </h4>
         </div>
         <div class="card-body">
@@ -19,14 +22,14 @@
               <thead>
               <tr>
                 <th class="text-center">#</th>
-                <th>Tên tỉnh, thành phố</th>
+                <th>Tên xã, phường, thị trấn</th>
                 <th> Kiểu</th>
                 <th> Trạng thái</th>
                 <th class="text-right">Hành động</th>
               </tr>
               </thead>
               <tbody>
-              <tr *ngFor="let item of listCity; index as i">
+              <tr *ngFor="let item of listCommune; index as i">
                 <td class="text-center">{{i+1}}</td>
                 <td>{{item.name}}</td>
                 <td>{{item.type}}</td>
@@ -39,9 +42,6 @@
                   </div>
                 </td>
                 <td class="td-actions text-right">
-                  <button type="button" (click)="redirectDistrict(item.id)" class="btn btn-success mr-1">
-                    <i class="material-icons">remove_red_eye</i>
-                  </button>
                   <button type="button" (click)="edit(item.id)" class="btn btn-warning mr-1">
                     <i class="material-icons">edit</i>
                   </button>
@@ -66,7 +66,7 @@
       <form [formGroup]="form" (ngSubmit)="onSubmit()">
         <div class="modal-header pb-0">
           <h4 class="modal-title card-title"
-              style="text-transform: uppercase">{{ aoe ? "Thêm tỉnh" : "Sửa tỉnh" }}</h4>
+              style="text-transform: uppercase">{{ aoe ? "Thêm xã" : "Sửa xã" }}</h4>
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
             <i class="material-icons">clear</i>
           </button>
@@ -74,13 +74,13 @@
         <div class="modal-body">
           <div class="card-body ">
             <div class="row">
-              <label class="col-sm-4 col-form-label">Tên tỉnh</label>
+              <label class="col-sm-4 col-form-label">Tên huyện</label>
               <div class="col-sm-8">
                 <div class="form-group bmd-form-group">
                   <input class="form-control" type="text" formControlName="name">
                   <div *ngIf="submitted && form.controls.name.errors">
-                    <small class="error" *ngIf="form.controls.name.errors.required">Chưa nhập tên tỉnh.</small>
-                    <small class="error" *ngIf="form.controls.name.errors.maxlength">Tên tỉnh không được lớn hơn 45 ký tự.</small>
+                    <small class="error" *ngIf="form.controls.name.errors.required">Chưa nhập tên xã.</small>
+                    <small class="error" *ngIf="form.controls.name.errors.maxlength">Tên xã không được lớn hơn 45 ký tự.</small>
                   </div>
                 </div>
               </div>
@@ -92,8 +92,9 @@
                   <mat-form-field appearance="standard" [style]="{'width': '100%'}">
                     <mat-label>Chọn kiểu</mat-label>
                     <mat-select formControlName="type">
-                      <mat-option value="Thành phố Trung ương">Thành phố Trung ương</mat-option>
-                      <mat-option value="Tỉnh">Tỉnh</mat-option>
+                      <mat-option value="Thị xã">Thị xã</mat-option>
+                      <mat-option value="Quận">Quận</mat-option>
+                      <mat-option value="Huyện">Huyện</mat-option>
                     </mat-select>
                   </mat-form-field>
                   <div *ngIf="submitted && form.controls.type.errors">
