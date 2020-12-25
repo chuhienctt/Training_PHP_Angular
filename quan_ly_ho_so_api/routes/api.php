@@ -79,6 +79,26 @@ Route::group([
 
         
         Route::group([
+            'prefix' => '/quy-trinh'
+        ], function () {
+
+            Route::delete('/delete', 'QuyTrinhController@delete');
+            Route::delete('/undelete', 'QuyTrinhController@undelete');
+
+        });
+
+        
+        Route::group([
+            'prefix' => '/buoc'
+        ], function () {
+
+            Route::delete('/delete', 'BuocController@delete');
+            Route::delete('/undelete', 'BuocController@undelete');
+
+        });
+
+        
+        Route::group([
             'prefix' => '/user'
         ], function () {
 

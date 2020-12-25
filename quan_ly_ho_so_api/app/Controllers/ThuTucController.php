@@ -113,7 +113,11 @@ class ThuTucController extends Controller {
                 // insert quy trinh
                 foreach(request()->quy_trinh as $qt) {
                     if(!isset($qt['buoc']) || gettype($qt['buoc']) != 'array') {
-                        throw new \PDOException("buoc is not array");
+                        throw new \PDOException("Bước phải là một mảng");
+                    } else if(Validator::check('required', $qt['ten_quy_trinh'] ?? NULL)) {
+                        throw new \PDOException("Tên quy trình không được để trống");
+                    } else if(Validator::check('required', $qt['ghi_chu'] ?? NULL)) {
+                        throw new \PDOException("Ghi chú không được để trống");
                     }
 
                     $qt_new = new QuyTrinh();
@@ -126,6 +130,12 @@ class ThuTucController extends Controller {
 
                         // insert buoc
                         foreach($qt['buoc'] as $bc) {
+                            if(Validator::check('required', $bc['ten_buoc'] ?? NULL)) {
+                                throw new \PDOException("Tên bước không được để trống");
+                            } else if(Validator::check('required', $bc['ghi_chu'] ?? NULL)) {
+                                throw new \PDOException("Ghi chú không được để trống");
+                            }
+
                             $bc_new = new Buoc();
 
                             $bc_new->id_quy_trinh = $qt_new->id;
@@ -133,11 +143,11 @@ class ThuTucController extends Controller {
                             $bc_new->ghi_chu = $bc['ghi_chu'];
 
                             if(!$bc_new->save()) {
-                                throw new \PDOException("can not save buoc");
+                                throw new \PDOException("Không thể thêm bước");
                             }
                         }
                     } else {
-                        throw new \PDOException("can not save quy trinh");
+                        throw new \PDOException("Không thể thêm quy trình");
                     }
                 }
 
@@ -146,6 +156,7 @@ class ThuTucController extends Controller {
                 return response()->success(1, 'Thêm thủ tục thành công!', $thu_tuc);
             } catch(\PDOException $e) {
                 DB::rollBack();
+                Validator::alert($e);
             }
         }
 
