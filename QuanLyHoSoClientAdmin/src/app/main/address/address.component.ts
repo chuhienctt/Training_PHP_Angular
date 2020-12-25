@@ -117,7 +117,7 @@ export class AddressComponent extends ScriptService implements OnInit {
   }
 
   redirectDistrict(id) {
-    this.router.navigate(["/admin/address/district/", id]);
+    this.router.navigate(["/address/district/", id]);
   }
 
   status(event) {

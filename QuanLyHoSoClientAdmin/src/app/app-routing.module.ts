@@ -10,12 +10,12 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'admin',
+    path: '',
     canActivate: [AuthGuard],
     loadChildren: () => import("./main/main.module").then(m => m.MainModule)
   },
   {
-    path: 'admin/auth/login',
+    path: 'auth/login',
     component: LoginComponent
   }
 ];
