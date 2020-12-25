@@ -127,7 +127,7 @@ export class DistrictComponent extends ScriptService implements OnInit {
   }
 
   redirectCommune(id) {
-    this.router.navigate(["/admin/address/commune/", id]);
+    this.router.navigate(["/address/commune/", id]);
   }
 
   redirectCity() {

@@ -34,7 +34,7 @@ export class SibarComponent implements OnInit {
   logOut = () => {
     if(confirm("Bạn muốn đăng xuất?")) {
       localStorage.removeItem("jwt");
-      this.router.navigate(['/admin/auth/login']);
+      this.router.navigate(['/auth/login']);
     }
   }
 
