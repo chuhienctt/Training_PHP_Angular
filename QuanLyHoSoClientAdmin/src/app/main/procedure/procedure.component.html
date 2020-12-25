@@ -1,4 +1,4 @@
-
+<p-toast></p-toast>
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-12">
@@ -59,7 +59,136 @@
 </div>
 <!-- Classic Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="modal-header pb-0">
+          <h4 class="modal-title card-title"
+              style="text-transform: uppercase">{{ aoe ? "Thêm thủ tục" : "Sửa thủ tục" }}</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+            <i class="material-icons">clear</i>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="card-body ">
+            <div class="form-group">
+              <label>Tên thủ tục</label>
+              <input class="form-control" type="text" formControlName="ten_thu_tuc">
+              <div *ngIf="submitted && form.controls.ten_thu_tuc.errors">
+                <small class="error" *ngIf="form.controls.ten_thu_tuc.errors.required">Chưa nhập tên thủ tục.</small>
+                <small class="error" *ngIf="form.controls.ten_thu_tuc.errors.maxlength">Tên thủ tục không được lớn hơn 255 ký tự.</small>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <mat-form-field appearance="standard" [style]="{'width': '100%'}">
+                  <mat-label>Chọn cơ quan</mat-label>
+                  <mat-select formControlName="id_co_quan" (selectionChange)="getFeild($event)">
+                    <mat-option *ngFor="let item of listOrgan" [value]="item.id">{{item.ten_co_quan}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <div *ngIf="submitted && form.controls.co_quan.errors">
+                  <small class="error" *ngIf="form.controls.co_quan.errors.required">Chưa chọn cơ quan.</small>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <mat-form-field appearance="standard" [style]="{'width': '100%'}">
+                  <mat-label>Chọn lĩnh vực</mat-label>
+                  <mat-select formControlName="id_linh_vuc">
+                    <mat-option *ngFor="let item of listFeild" [value]="item.id">{{item.ten_linh_vuc}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <div *ngIf="submitted && form.controls.id_linh_vuc.errors">
+                  <small class="error" *ngIf="form.controls.id_linh_vuc.errors.required">Chưa chọn lĩnh vực.</small>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <mat-form-field appearance="standard" [style]="{'width': '100%'}">
+                  <mat-label>Chọn mức độ</mat-label>
+                  <mat-select formControlName="muc_do">
+                    <mat-option [value]="1">1</mat-option>
+                    <mat-option [value]="2">2</mat-option>
+                    <mat-option [value]="3">3</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <div *ngIf="submitted && form.controls.muc_do.errors">
+                  <small class="error" *ngIf="form.controls.muc_do.errors.required">Chưa chọn mức độ.</small>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <mat-form-field appearance="standard" [style]="{'width': '100%'}">
+                  <mat-label>Chọn template</mat-label>
+                  <mat-select formControlName="template">
+                    <mat-option *ngFor="let item of listTemplate" [value]="item">{{item}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <div *ngIf="submitted && form.controls.item.errors">
+                  <small class="error" *ngIf="form.controls.item.errors.required">Chưa chọn template.</small>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <button (click)="createProcedure()" type="button" class="btn btn-primary">Thêm quy trình</button>
+            </div>
+          </div>
+          <div class="modal-footer pt-0">
+            <button type="button" class="btn btn-danger mr-2" data-dismiss="modal">Đóng</button>
+            <button type="submit" class="btn btn-primary">Cập nhật</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!--  End Modal -->
+</div>
+
+<div class="modal fade" id="modalProcedure" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <form [formGroup]="formProcedure" (ngSubmit)="onSubmit()">
+        <div class="modal-header pb-0">
+          <h4 class="modal-title card-title"
+              style="text-transform: uppercase">{{ aoe ? "Thêm quy trình" : "Sửa quy trình" }}</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+            <i class="material-icons">clear</i>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="card-body ">
+            <div class="form-group">
+              <label>Tên quy trình</label>
+              <input class="form-control" type="text" formControlName="ten_quy_trinh">
+              <div *ngIf="submitted && form.controls.ten_quy_trinh.errors">
+                <small class="error" *ngIf="form.controls.ten_quy_trinh.errors.required">Chưa nhập tên quy trình.</small>
+                <small class="error" *ngIf="form.controls.ten_quy_trinh.errors.maxlength">Tên quy trình không được lớn hơn 255 ký tự.</small>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Ghi chú</label>
+              <ckeditor [editor]="Editor" [style]="{'height': '320px'}"></ckeditor>
+              <div *ngIf="submitted && form.controls.ghi_chu.errors">
+                <small class="error" *ngIf="form.controls.ghi_chu.errors.required">Chưa nhập ghi chú.</small>
+              </div>
+            </div>
+            <div class="row">
+              <button (click)="createStep()" type="button" class="btn btn-primary">Thêm bước</button>
+            </div>
+          </div>
+          <div class="modal-footer pt-0">
+            <button type="button" class="btn btn-danger mr-2" data-dismiss="modal">Đóng</button>
+            <button type="submit" class="btn btn-primary">Cập nhật</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!--  End Modal -->
+</div>
+
+<div class="modal fade" id="modalStep" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <form [formGroup]="form" (ngSubmit)="onSubmit()">
         <div class="modal-header pb-0">

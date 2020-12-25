@@ -28,10 +28,14 @@ export class ProcedureService {
   }
 
   delete(id) {
-
+    return this._http.delete(baseUrl + "delete?id=" + id);
   }
 
   unDelete(id) {
+    return this._http.delete(baseUrl + "undelete?id=" + id);
+  }
 
+  getTemplate() {
+    return this._http.get(baseUrl + "templates");
   }
 }
