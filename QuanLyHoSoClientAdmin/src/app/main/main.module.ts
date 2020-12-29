@@ -26,7 +26,7 @@ import { CommuneComponent } from './address/commune/commune.component';
     AddressComponent,
     ProcedureComponent,
     DistrictComponent,
-    CommuneComponent,
+    CommuneComponent
   ],
   imports: [
     CommonModule,

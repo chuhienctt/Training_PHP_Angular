@@ -16,8 +16,8 @@ import { LoginComponent } from './auth/login/login.component';
 import { MainComponent } from './main/main.component';
 import { AuthComponent } from './auth/auth.component';
 import {ShareModule} from "./share/share.module";
-import {SibarComponent} from "./share/sibar/sibar.component";
 import {ErrorInterceptor} from "./libs/error.interceptor";
+import {SidebarComponent} from "./share/sidebar/sidebar.component";
 
 @NgModule({
   declarations: [
@@ -25,7 +25,7 @@ import {ErrorInterceptor} from "./libs/error.interceptor";
     LoginComponent,
     MainComponent,
     AuthComponent,
-    SibarComponent
+    SidebarComponent
   ],
   imports: [
     BrowserModule,

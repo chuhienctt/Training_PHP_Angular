@@ -16,7 +16,7 @@ export class ProcedureService {
   }
 
   create(procedure) {
-
+    return this._http.post(baseUrl + "create", procedure);
   }
 
   edit(id) {

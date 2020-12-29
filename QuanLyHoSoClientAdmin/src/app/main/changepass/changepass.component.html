@@ -23,6 +23,9 @@
               <div class="col-sm-7">
                 <div class="form-group bmd-form-group">
                   <input class="form-control" type="password" formControlName="mat_khau_cu" placeholder="Mật khẩu cũ">
+                  <div *ngIf="submitted && form.controls.mat_khau_cu.errors">
+                    <small class="error" *ngIf="form.controls.mat_khau_cu.errors.required">Chưa nhập mật khẩu.</small>
+                  </div>
                 </div>
               </div>
               <label class="col-sm-3 label-on-right">
@@ -32,7 +35,13 @@
               <label class="col-sm-2 col-form-label">Mật khẩu mới</label>
               <div class="col-sm-7">
                 <div class="form-group bmd-form-group">
-                  <input class="form-control" type="password" formControlName="mat_khau_moi" placeholder="Nhập lại mật khẩu">
+                  <input class="form-control" type="password" formControlName="mat_khau_moi" placeholder="Nhập mật khẩu mới">
+                  <div *ngIf="submitted && form.controls.mat_khau_moi.errors">
+                    <small class="error" *ngIf="form.controls.mat_khau_moi.errors.required">Chưa nhập mật khẩu.</small>
+                    <small class="error" *ngIf="form.controls.mat_khau_moi.errors.minlength">Mật khẩu không được dưới 8 ký tự.</small>
+                    <small class="error" *ngIf="form.controls.mat_khau_moi.errors.maxlength">Mật khẩu không được trên 50 ký tự.</small>
+                    <small class="error" *ngIf="form.controls.mat_khau_moi.errors.pattern">Mật khẩu không đúng định dạng.</small>
+                  </div>
                 </div>
               </div>
               <label class="col-sm-3 label-on-right">
@@ -43,6 +52,10 @@
               <div class="col-sm-7">
                 <div class="form-group bmd-form-group">
                   <input class="form-control" type="password" formControlName="mat_khau_2" placeholder="Nhập lại mật khẩu">
+                  <div *ngIf="submitted && form.controls.mat_khau_2.errors">
+                    <small class="error" *ngIf="form.controls.mat_khau_2.errors.required">Chưa nhập mật khẩu.</small>
+                    <div class="text-danger" *ngIf="form.controls.mat_khau_2.errors.confirm_password">Mật khẩu không khớp.</div>
+                  </div>
                 </div>
               </div>
               <label class="col-sm-3 label-on-right">
