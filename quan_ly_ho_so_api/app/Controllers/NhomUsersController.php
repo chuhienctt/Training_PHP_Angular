@@ -122,10 +122,6 @@ class NhomUsersController extends Controller {
                 'required' => 'Tên nhóm không được để trống',
                 'max:255' => 'Tên nhóm không quá 255 kí tự',
             ],
-            'id_co_quan' => [
-                'required' => 'Cơ quan không được để trống',
-                'exists:co_quan' => 'Cơ quan không tồn tại',
-            ],
             'users' => [
                 'required' => 'Thành viên nhóm không được để trống',
                 'array' => 'Thành viên nhóm phải là một mảng',
@@ -134,7 +130,6 @@ class NhomUsersController extends Controller {
 
         $nhom = model('Nhom')->find(request()->id);
 
-        $nhom->id_co_quan = request()->id_co_quan;
         $nhom->ten_nhom = request()->ten_nhom;
 
         DB::beginTransaction();
