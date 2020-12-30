@@ -61,7 +61,9 @@ export class OrganComponent extends ScriptService implements OnInit {
     this.loadScripts();
 
     this.addressService.getProvince().subscribe((res: any) => {
-      this.listCity = res;
+      this.listCity = res.filter(e => {
+        return e.deleted_at == null;
+      });
     });
 
     this.form = this.formBuilder.group({
@@ -195,7 +197,9 @@ export class OrganComponent extends ScriptService implements OnInit {
     this.listDistrict = [];
     this.listCommune = [];
     this.addressService.getDistrict(id).subscribe((res:any) => {
-      this.listDistrict = res;
+      this.listDistrict = res.filter(e => {
+        return e.deleted_at == null;
+      });
       if (this.listDistrict.length != 0) {
         this.form.controls.district.enable();
       }
@@ -205,7 +209,9 @@ export class OrganComponent extends ScriptService implements OnInit {
   getCommune(id) {
     this.listCommune = [];
     this.addressService.getCommune(id).subscribe((res:any) => {
-      this.listCommune = res;
+      this.listCommune = res.filter(e => {
+        return e.deleted_at == null;
+      });
       if (this.listCommune.length != 0) {
         this.form.controls.commune.enable();
       }

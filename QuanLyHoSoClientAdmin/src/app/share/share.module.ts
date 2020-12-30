@@ -9,6 +9,7 @@ import {BsDatepickerModule} from "ngx-bootstrap/datepicker";
 import {GetImagePipe} from "../libs/get.image.pipe";
 import {CKEditorModule} from "@ckeditor/ckeditor5-angular";
 import {TableModule} from "primeng/table";
+import {PickListModule} from "primeng/picklist";
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import {TableModule} from "primeng/table";
     ToastModule,
     CKEditorModule,
     TableModule,
+    PickListModule,
     BsDatepickerModule.forRoot(),
   ],
   exports: [
@@ -35,7 +37,8 @@ import {TableModule} from "primeng/table";
     GetImagePipe,
     CKEditorModule,
     BsDatepickerModule,
-    TableModule
+    TableModule,
+    PickListModule
   ]
 })
 export class ShareModule { }

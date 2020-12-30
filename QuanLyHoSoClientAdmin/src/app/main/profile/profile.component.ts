@@ -57,9 +57,15 @@ export class ProfileComponent extends ScriptService implements OnInit {
     })
 
     this.addressService.getAddress(this.User.ward_id).subscribe((data:any) => {
-      this.listProvince = data.list_province;
-      this.listDistrict = data.list_district;
-      this.listCommune = data.list_ward;
+      this.listProvince = data.list_province.filter(e => {
+        return e.deleted_at == null;
+      });
+      this.listDistrict = data.list_district.filter(e => {
+        return e.deleted_at == null;
+      });
+      this.listCommune = data.list_ward.filter(e => {
+        return e.deleted_at == null;
+      });
 
       this.form.patchValue({
         email: this.User.email,
@@ -78,13 +84,17 @@ export class ProfileComponent extends ScriptService implements OnInit {
 
   getDistrict(id) {
     this.addressService.getDistrict(id).subscribe((res:any) => {
-      this.listDistrict = res;
+      this.listDistrict = res.filter(e => {
+        return e.deleted_at == null;
+      });
     })
   }
 
   getCommune(id) {
     this.addressService.getCommune(id).subscribe((res:any) => {
-      this.listCommune = res;
+      this.listCommune = res.filter(e => {
+        return e.deleted_at == null;
+      });
     })
   }
 

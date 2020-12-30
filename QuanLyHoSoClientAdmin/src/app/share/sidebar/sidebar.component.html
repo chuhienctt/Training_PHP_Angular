@@ -71,14 +71,33 @@
           <p> Cơ quan </p>
         </a>
       </li>
-      <li class="nav-item" routerLinkActive="active">
-        <a class="nav-link" routerLink="/user">
+
+      <li class="nav-item ">
+        <a class="nav-link" data-toggle="collapse" href="#pagesExamples">
           <i class="material-icons">account_box</i>
-          <p> Người dùng </p>
+          <p> Người dùng
+            <b class="caret"></b>
+          </p>
         </a>
+        <div class="collapse" id="pagesExamples">
+          <ul class="nav">
+            <li class="nav-item " routerLinkActive="active">
+              <a class="nav-link" routerLink="/user/account">
+                <span class="sidebar-mini"> U </span>
+                <span class="sidebar-normal"> Tài khoản </span>
+              </a>
+            </li>
+            <li class="nav-item "  routerLinkActive="active">
+              <a class="nav-link" routerLink="/user/group">
+                <span class="sidebar-mini"> G </span>
+                <span class="sidebar-normal"> Nhóm người dùng </span>
+              </a>
+            </li>
+          </ul>
+        </div>
       </li>
       <li class="nav-item" routerLinkActive="active">
-        <a class="nav-link" routerLink="/address">
+        <a class="nav-link" routerLink="/address/city">
           <i class="material-icons">map</i>
           <p> Địa chính </p>
         </a>
