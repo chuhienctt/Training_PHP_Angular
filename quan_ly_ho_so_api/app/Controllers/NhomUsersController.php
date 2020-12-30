@@ -116,7 +116,7 @@ class NhomUsersController extends Controller {
         validator()->validate([
             'id' => [
                 'required' => 'Thiếu id nhóm',
-                'exists:nhom_users' => 'Không tồn tại nhóm',
+                'exists:nhom' => 'Không tồn tại nhóm',
             ],
             'ten_nhom' => [
                 'required' => 'Tên nhóm không được để trống',
@@ -132,7 +132,7 @@ class NhomUsersController extends Controller {
             ],
         ]);
 
-        $nhom = model('NhomUsers')->find(request()->id);
+        $nhom = model('Nhom')->find(request()->id);
 
         $nhom->id_co_quan = request()->id_co_quan;
         $nhom->ten_nhom = request()->ten_nhom;
@@ -184,7 +184,7 @@ class NhomUsersController extends Controller {
         validator()->validate([
             'id' => [
                 'required' => 'Thiếu id nhóm',
-                'exists:nhom_users' => 'Không tồn tại nhóm',
+                'exists:nhom' => 'Không tồn tại nhóm',
             ],
         ]);
 
