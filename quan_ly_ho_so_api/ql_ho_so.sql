@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th12 30, 2020 lúc 02:33 AM
+-- Thời gian đã tạo: Th12 30, 2020 lúc 08:29 AM
 -- Phiên bản máy phục vụ: 10.4.14-MariaDB
 -- Phiên bản PHP: 7.4.11
 
@@ -877,7 +877,7 @@ CREATE TABLE `nhom` (
 --
 
 INSERT INTO `nhom` (`id`, `id_co_quan`, `ten_nhom`, `created_at`, `deleted_at`) VALUES
-(10, 4, 'nhom 1', '2020-12-30 01:12:41', NULL);
+(10, 4, 'nhom 1x', '2020-12-30 01:12:41', NULL);
 
 -- --------------------------------------------------------
 
@@ -896,9 +896,9 @@ CREATE TABLE `nhom_users` (
 --
 
 INSERT INTO `nhom_users` (`id`, `id_nhom`, `id_users`) VALUES
-(1, 10, 19),
-(2, 10, 21),
-(3, 10, 29);
+(10, 10, 19),
+(11, 10, 21),
+(12, 10, 29);
 
 -- --------------------------------------------------------
 
@@ -994,6 +994,9 @@ CREATE TABLE `quy_trinh` (
   `id_thu_tuc` bigint(20) UNSIGNED NOT NULL,
   `ten_quy_trinh` varchar(255) NOT NULL,
   `ghi_chu` varchar(255) DEFAULT NULL,
+  `template` varchar(255) NOT NULL,
+  `ngay_bat_dau` timestamp NULL DEFAULT NULL,
+  `ngay_ket_thuc` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -1010,7 +1013,6 @@ CREATE TABLE `thu_tuc` (
   `id_linh_vuc` bigint(20) UNSIGNED NOT NULL,
   `ten_thu_tuc` varchar(255) NOT NULL,
   `muc_do` tinyint(4) NOT NULL,
-  `template` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -1019,8 +1021,8 @@ CREATE TABLE `thu_tuc` (
 -- Đang đổ dữ liệu cho bảng `thu_tuc`
 --
 
-INSERT INTO `thu_tuc` (`id`, `id_co_quan`, `id_linh_vuc`, `ten_thu_tuc`, `muc_do`, `template`, `created_at`, `deleted_at`) VALUES
-(25, 5, 21, 'ten thu tuc 1', 3, '/templates//temp_1.json', '2020-12-24 07:14:59', NULL);
+INSERT INTO `thu_tuc` (`id`, `id_co_quan`, `id_linh_vuc`, `ten_thu_tuc`, `muc_do`, `created_at`, `deleted_at`) VALUES
+(25, 5, 21, 'ten thu tuc 1', 3, '2020-12-24 07:14:59', NULL);
 
 -- --------------------------------------------------------
 
@@ -12389,7 +12391,7 @@ ALTER TABLE `nhom`
 -- AUTO_INCREMENT cho bảng `nhom_users`
 --
 ALTER TABLE `nhom_users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT cho bảng `province`
