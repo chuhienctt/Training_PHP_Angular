@@ -15,6 +15,8 @@ class UserController extends Controller {
         
         if(request()->has('id')) {
             $data = model('Users')->find(request()->id);
+        } if(request()->has('id_co_quan')) {
+            $data = model('Users')->where(['id_co_quan' => request()->id_co_quan])->get();
         } else {
             $data = model('Users')->all();
         }
@@ -214,15 +216,17 @@ class UserController extends Controller {
             ],
         ]);
 
+        $user = model('Users')->find(request()->id);
+
         // k cho khóa admin khác
         if($user->role == 3) {
             Validator::alert("Không thể thao tác với người dùng này!");
         }
 
         if($type == 'hide') {
-            $model = model('Users')->find(request()->id)->hide();
+            $model = $user->hide();
         } else {
-            $model = model('Users')->find(request()->id)->show();
+            $model = $user->show();
         }
 
         if($model) {

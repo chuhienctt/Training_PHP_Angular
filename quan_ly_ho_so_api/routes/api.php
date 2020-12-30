@@ -111,6 +111,19 @@ Route::group([
 
         });
 
+        Route::group([
+            'prefix' => '/nhom'
+        ], function () {
+
+            Route::get('/get', 'NhomUsersController@get');
+            Route::get('/pagination', 'NhomUsersController@pagination');
+            Route::post('/create', 'NhomUsersController@create');
+            Route::put('/update', 'NhomUsersController@update');
+            Route::delete('/delete', 'NhomUsersController@delete');
+            Route::delete('/undelete', 'NhomUsersController@undelete');
+
+        });
+
         
         Route::group([
             'prefix' => '/dia-chinh'

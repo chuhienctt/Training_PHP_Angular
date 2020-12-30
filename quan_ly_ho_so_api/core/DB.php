@@ -244,7 +244,7 @@ class DB {
                 $fields[] = "$key $value[0] ?";
                 $values[] = $value[1];
             } else {
-                $fields[] = "$key = ?";
+                $fields[] = "$key ".($value ? "=" : "is")." ?";
                 $values[] = $value;
             }
         }
