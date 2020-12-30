@@ -13,6 +13,10 @@ class Model {
         $this->columns = $this->db->columns();
     }
 
+    public function getHidden() {
+        return $this->hidden ?? [];
+    }
+
     public function all() {
         return $this->cast($this->db->all());
     }

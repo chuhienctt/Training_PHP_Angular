@@ -15,7 +15,7 @@ class UserController extends Controller {
         
         if(request()->has('id')) {
             $data = model('Users')->find(request()->id);
-        } if(request()->has('id_co_quan')) {
+        } else if(request()->has('id_co_quan')) {
             $data = model('Users')->where(['id_co_quan' => request()->id_co_quan])->get();
         } else {
             $data = model('Users')->all();
