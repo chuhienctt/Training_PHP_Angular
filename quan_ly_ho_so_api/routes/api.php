@@ -79,6 +79,26 @@ Route::group([
 
         
         Route::group([
+            'prefix' => '/quy-trinh'
+        ], function () {
+
+            Route::delete('/delete', 'QuyTrinhController@delete');
+            Route::delete('/undelete', 'QuyTrinhController@undelete');
+
+        });
+
+        
+        Route::group([
+            'prefix' => '/buoc'
+        ], function () {
+
+            Route::delete('/delete', 'BuocController@delete');
+            Route::delete('/undelete', 'BuocController@undelete');
+
+        });
+
+        
+        Route::group([
             'prefix' => '/user'
         ], function () {
 
@@ -88,6 +108,19 @@ Route::group([
             Route::put('/update', 'UserController@update');
             Route::post('/block', 'UserController@block');
             Route::post('/unblock', 'UserController@unblock');
+
+        });
+
+        Route::group([
+            'prefix' => '/nhom'
+        ], function () {
+
+            Route::get('/get', 'NhomUsersController@get');
+            Route::get('/pagination', 'NhomUsersController@pagination');
+            Route::post('/create', 'NhomUsersController@create');
+            Route::put('/update', 'NhomUsersController@update');
+            Route::delete('/delete', 'NhomUsersController@delete');
+            Route::delete('/undelete', 'NhomUsersController@undelete');
 
         });
 

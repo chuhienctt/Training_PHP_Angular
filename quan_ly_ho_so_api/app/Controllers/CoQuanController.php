@@ -93,31 +93,31 @@ class CoQuanController extends Controller {
         DB::beginTransaction();
 
         if($co_quan->save()) {
+            
+            $linh_vucs = request()->linh_vuc ?? [];
 
             // add referenced
-            if(request()->has('linh_vuc') && is_array(request()->linh_vuc)) {
-                try {
-                    foreach(request()->linh_vuc as $option) {
-                        if(model('LinhVuc')->find($option)) {
-                            $result = model('CoQuanLinhVuc')->insert([
-                                'id_linh_vuc' => $option,
-                                'id_co_quan' => $co_quan->id,
-                            ]);
+            try {
+                foreach($linh_vucs as $option) {
+                    if(model('LinhVuc')->find($option)) {
+                        $result = model('CoQuanLinhVuc')->insert([
+                            'id_linh_vuc' => $option,
+                            'id_co_quan' => $co_quan->id,
+                        ]);
 
-                            if(!$result) {
-                                throw new \PDOException();
-                            }
-                        } else {
+                        if(!$result) {
                             throw new \PDOException();
                         }
+                    } else {
+                        throw new \PDOException();
                     }
-
-                    DB::commit();
-
-                    return response()->success(1, 'Thêm cơ quan thành công!', $co_quan);
-                } catch(\PDOException $e) {
-                    DB::rollBack();
                 }
+
+                DB::commit();
+
+                return response()->success(1, 'Thêm cơ quan thành công!', $co_quan);
+            } catch(\PDOException $e) {
+                DB::rollBack();
             }
         }
 
@@ -182,36 +182,35 @@ class CoQuanController extends Controller {
 
         if($co_quan->save()) {
 
-            if(request()->has('linh_vuc') && is_array(request()->linh_vuc)) {
+            $linh_vucs = request()->linh_vuc ?? [];
 
-                try {
-                    // remove referenced
-                    model('CoQuanLinhVuc')->where([
-                        'id_co_quan' => $co_quan->id
-                    ])->delete();
+            try {
+                // remove referenced
+                model('CoQuanLinhVuc')->where([
+                    'id_co_quan' => $co_quan->id
+                ])->delete();
 
-                    // add referenced
-                    foreach(request()->linh_vuc as $option) {
-                        if(model('LinhVuc')->find($option)) {
-                            $result = model('CoQuanLinhVuc')->insert([
-                                'id_linh_vuc' => $option,
-                                'id_co_quan' => $co_quan->id,
-                            ]);
+                // add referenced
+                foreach($linh_vucs as $option) {
+                    if(model('LinhVuc')->find($option)) {
+                        $result = model('CoQuanLinhVuc')->insert([
+                            'id_linh_vuc' => $option,
+                            'id_co_quan' => $co_quan->id,
+                        ]);
 
-                            if(!$result) {
-                                throw new \PDOException();
-                            }
-                        } else {
+                        if(!$result) {
                             throw new \PDOException();
                         }
+                    } else {
+                        throw new \PDOException();
                     }
-
-                    DB::commit();
-
-                    return response()->success(1, 'Sửa cơ quan thành công!', $co_quan);
-                } catch(\PDOException $e) {
-                    DB::rollBack();
                 }
+
+                DB::commit();
+
+                return response()->success(1, 'Sửa cơ quan thành công!', $co_quan);
+            } catch(\PDOException $e) {
+                DB::rollBack();
             }
         }
 

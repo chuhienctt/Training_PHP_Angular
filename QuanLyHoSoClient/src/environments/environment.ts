@@ -3,12 +3,13 @@
 // The list of file replacements can be found in `angular.json`.
 import {HttpHeaders} from "@angular/common/http";
 
-const Domain = 'localhost:8200';
+const Method = 'https://';
+const Domain = 'api.ndtpro.xyz';
 export const environment = {
   production: false,
   domain: Domain,
-  urlImg: "http://"+Domain+"/storage",
-  apiUrl: "http://"+Domain+"/api/"
+  urlImg: Method+Domain+"/storage",
+  apiUrl: Method+Domain+"/api/"
 };
 
 /*

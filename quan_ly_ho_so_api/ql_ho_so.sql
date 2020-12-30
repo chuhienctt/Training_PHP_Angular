@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th12 23, 2020 lúc 09:45 AM
+-- Thời gian đã tạo: Th12 30, 2020 lúc 02:33 AM
 -- Phiên bản máy phục vụ: 10.4.14-MariaDB
 -- Phiên bản PHP: 7.4.11
 
@@ -30,6 +30,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `buoc` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `id_quy_trinh` bigint(20) UNSIGNED NOT NULL,
+  `id_nhom` bigint(20) UNSIGNED NOT NULL,
   `ten_buoc` varchar(255) NOT NULL,
   `ghi_chu` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -812,7 +813,8 @@ INSERT INTO `district` (`id`, `name`, `type`, `province_id`, `deleted_at`) VALUE
 (970, 'Huyện Đầm Dơi', 'Huyện', 96, NULL),
 (971, 'Huyện Năm Căn', 'Huyện', 96, NULL),
 (972, 'Huyện Phú Tân', 'Huyện', 96, NULL),
-(973, 'Huyện Ngọc Hiển', 'Huyện', 96, NULL);
+(973, 'Huyện Ngọc Hiển', 'Huyện', 96, NULL),
+(974, 'aaaaaa', 'aaaaa', 96, NULL);
 
 -- --------------------------------------------------------
 
@@ -855,6 +857,48 @@ INSERT INTO `linh_vuc` (`id`, `ten_linh_vuc`, `hinh_anh`, `mo_ta`, `created_at`,
 (20, 'lĩnh vực 1', '/linh-vuc-images/22d8c5edbf57a03198be66e302da7ac2866ffc3c.jpg', 'mo ta', '2020-12-23 07:37:46', NULL),
 (21, 'lĩnh vực 2', '/linh-vuc-images/d58fbee5da2ed0ca94c3123e3cbffd6d38984138.jpg', 'mo ta', '2020-12-23 07:39:44', NULL),
 (24, 'lĩnh vực 3', '/linh-vuc-images/ee7ab087486244ed1d374e14b9cb78a6b143d5ed.jpg', 'mo ta', '2020-12-23 07:41:27', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `nhom`
+--
+
+CREATE TABLE `nhom` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `id_co_quan` bigint(20) UNSIGNED NOT NULL,
+  `ten_nhom` varchar(255) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Đang đổ dữ liệu cho bảng `nhom`
+--
+
+INSERT INTO `nhom` (`id`, `id_co_quan`, `ten_nhom`, `created_at`, `deleted_at`) VALUES
+(10, 4, 'nhom 1', '2020-12-30 01:12:41', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `nhom_users`
+--
+
+CREATE TABLE `nhom_users` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `id_nhom` bigint(20) UNSIGNED NOT NULL,
+  `id_users` bigint(20) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Đang đổ dữ liệu cho bảng `nhom_users`
+--
+
+INSERT INTO `nhom_users` (`id`, `id_nhom`, `id_users`) VALUES
+(1, 10, 19),
+(2, 10, 21),
+(3, 10, 29);
 
 -- --------------------------------------------------------
 
@@ -954,15 +998,6 @@ CREATE TABLE `quy_trinh` (
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Đang đổ dữ liệu cho bảng `quy_trinh`
---
-
-INSERT INTO `quy_trinh` (`id`, `id_thu_tuc`, `ten_quy_trinh`, `ghi_chu`, `created_at`, `deleted_at`) VALUES
-(1, 1, 'quy trinh 1', 'x', '2020-12-23 02:10:06', '2020-12-23 02:10:09'),
-(2, 1, 'quy trinh 2', 'x', '2020-12-23 02:10:25', '2020-12-23 02:10:28'),
-(3, 1, 'quy trinh 3', 'x', '2020-12-23 02:10:40', '2020-12-23 02:10:43');
-
 -- --------------------------------------------------------
 
 --
@@ -985,7 +1020,7 @@ CREATE TABLE `thu_tuc` (
 --
 
 INSERT INTO `thu_tuc` (`id`, `id_co_quan`, `id_linh_vuc`, `ten_thu_tuc`, `muc_do`, `template`, `created_at`, `deleted_at`) VALUES
-(1, 4, 18, 'thu tuc 1', 1, '/temp_1.json', '2020-12-23 02:09:15', '2020-12-23 02:09:17');
+(25, 5, 21, 'ten thu tuc 1', 3, '/templates//temp_1.json', '2020-12-24 07:14:59', NULL);
 
 -- --------------------------------------------------------
 
@@ -1014,11 +1049,11 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `id_co_quan`, `mat_khau`, `ho_ten`, `email`, `so_dien_thoai`, `dia_chi`, `ward_id`, `ngay_sinh`, `avatar`, `role`, `token`, `deleted_at`) VALUES
-(19, NULL, '$2y$10$JYCdH8pHvihQ8urEcpIxj.o9XizbXa4Whebfe.IqlI0aFWv8cFXne', 'Nguyễn Đức Toàn', 'toannguyen@gmail.com', '386420313', 'thôn Minh Khai, xã Đại Tập, huyện Khoái Châu, tỉnh Hưng Yên', NULL, '1999-01-08', '/avatar/no-avatar.jpg', 2, 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MDg1MTUzMzIsImV4cCI6MTYwODYwMTczMiwiZGF0YSI6IjMxIn0.tKXKcq-C3hFYtj5wv4kU8JuS-VrbW1fWkmTQ5jtayxc', NULL),
-(21, NULL, '$2y$10$Md9AGnyz.Aha7C5d4B4wX.WzaEbPYKVv.MtZEqHM1TUxR5SspA0vC', 'Nguyễn Đức Toàn', 'toannguyen1@gmail.com', '386420310', 'thôn Minh Khai, xã Đại Tập, huyện Khoái Châu, tỉnh Hưng Yên', NULL, '1999-01-08', '/avatar/no-avatar.jpg', 1, 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MDg1MTUzMzIsImV4cCI6MTYwODYwMTczMiwiZGF0YSI6IjMxIn0.tKXKcq-C3hFYtj5wv4kU8JuS-VrbW1fWkmTQ5jtayxc', NULL),
-(29, NULL, '$2y$10$1xeIQVYcQ5xj6tJDIwMeS.WF5naLB31SOFiqRN3sX7NbyvGDyGBRe', 'Nguyễn Đức Toàn', 'toannguyen2@gmail.com', '0386420311', 'thôn Minh Khai, xã Đại Tập, huyện Khoái Châu, tỉnh Hưng Yên', NULL, '1999-01-08', '/avatar/no-avatar.jpg', 1, 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MDg1MTUzMzIsImV4cCI6MTYwODYwMTczMiwiZGF0YSI6IjMxIn0.tKXKcq-C3hFYtj5wv4kU8JuS-VrbW1fWkmTQ5jtayxc', NULL),
+(19, 4, '$2y$10$JYCdH8pHvihQ8urEcpIxj.o9XizbXa4Whebfe.IqlI0aFWv8cFXne', 'Nguyễn Đức Toàn', 'toannguyen@gmail.com', '386420313', 'thôn Minh Khai, xã Đại Tập, huyện Khoái Châu, tỉnh Hưng Yên', NULL, '1999-01-08', '/avatar/no-avatar.jpg', 2, 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MDg1MTUzMzIsImV4cCI6MTYwODYwMTczMiwiZGF0YSI6IjMxIn0.tKXKcq-C3hFYtj5wv4kU8JuS-VrbW1fWkmTQ5jtayxc', NULL),
+(21, 4, '$2y$10$Md9AGnyz.Aha7C5d4B4wX.WzaEbPYKVv.MtZEqHM1TUxR5SspA0vC', 'Nguyễn Đức Toàn', 'toannguyen1@gmail.com', '386420310', 'thôn Minh Khai, xã Đại Tập, huyện Khoái Châu, tỉnh Hưng Yên', NULL, '1999-01-08', '/avatar/no-avatar.jpg', 2, 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MDg1MTUzMzIsImV4cCI6MTYwODYwMTczMiwiZGF0YSI6IjMxIn0.tKXKcq-C3hFYtj5wv4kU8JuS-VrbW1fWkmTQ5jtayxc', NULL),
+(29, 4, '$2y$10$1xeIQVYcQ5xj6tJDIwMeS.WF5naLB31SOFiqRN3sX7NbyvGDyGBRe', 'Nguyễn Đức Toàn', 'toannguyen2@gmail.com', '0386420311', 'thôn Minh Khai, xã Đại Tập, huyện Khoái Châu, tỉnh Hưng Yên', NULL, '1999-01-08', '/avatar/no-avatar.jpg', 2, 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MDg1MTUzMzIsImV4cCI6MTYwODYwMTczMiwiZGF0YSI6IjMxIn0.tKXKcq-C3hFYtj5wv4kU8JuS-VrbW1fWkmTQ5jtayxc', NULL),
 (30, NULL, '$2y$10$omYyXxmrejfkKC2bQGuzd.znAZMveKuZ6/mj8JAylHjyIaBYDsBPy', 'Nguyễn Đức Toàn', 'toannguyen3@gmail.com', '0386420310', 'đội 9', 12262, '1999-01-08', '/avatar/ad95168f5819eb99289d1f739f687c96bc8002d3.jpeg', 1, 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MDg1MTUzMzIsImV4cCI6MTYwODYwMTczMiwiZGF0YSI6IjMxIn0.tKXKcq-C3hFYtj5wv4kU8JuS-VrbW1fWkmTQ5jtayxc', NULL),
-(31, NULL, '$2y$10$3uwMSXNadaoTybnQLurOpOtyvIzpBVnB15k.9Zw0rEIWfBCszr5UC', 'Nguyễn Đức Toàn', 'toannguyen080199@gmail.com', '0987654322', 'Xóm 9', 12262, '1999-01-08', '/avatar/65e6ec2ca66cfbcb488ebfe51fa0e61f9bd74fec.jpg', 3, 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MDg2ODczNDUsImV4cCI6MTYwODc3Mzc0NSwiZGF0YSI6IjMxIn0.Yri7uXT6lfXojgPvWRrMHvUnt3i70qqNhVVHaL_wR-8', NULL);
+(31, NULL, '$2y$10$3uwMSXNadaoTybnQLurOpOtyvIzpBVnB15k.9Zw0rEIWfBCszr5UC', 'Nguyễn Đức Toàn', 'toannguyen080199@gmail.com', '0987654322', 'Xóm 9', 12262, '1999-01-08', '/avatar/65e6ec2ca66cfbcb488ebfe51fa0e61f9bd74fec.jpg', 3, 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MDkyOTA3MTAsImV4cCI6MTYwOTM3NzExMCwiZGF0YSI6IjMxIn0.qHGilLezp9vyZJDudRjEF4JamiwevzJNyPEZEqSR1Go', NULL);
 
 -- --------------------------------------------------------
 
@@ -12220,7 +12255,8 @@ INSERT INTO `ward` (`id`, `name`, `type`, `district_id`, `deleted_at`) VALUES
 --
 ALTER TABLE `buoc`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `id_quy_trinh` (`id_quy_trinh`);
+  ADD KEY `id_quy_trinh` (`id_quy_trinh`),
+  ADD KEY `id_nhom` (`id_nhom`);
 
 --
 -- Chỉ mục cho bảng `co_quan`
@@ -12254,6 +12290,21 @@ ALTER TABLE `ho_so`
 --
 ALTER TABLE `linh_vuc`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Chỉ mục cho bảng `nhom`
+--
+ALTER TABLE `nhom`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_co_quan` (`id_co_quan`);
+
+--
+-- Chỉ mục cho bảng `nhom_users`
+--
+ALTER TABLE `nhom_users`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_nhom` (`id_nhom`),
+  ADD KEY `id_users` (`id_users`);
 
 --
 -- Chỉ mục cho bảng `province`
@@ -12296,7 +12347,7 @@ ALTER TABLE `ward`
 -- AUTO_INCREMENT cho bảng `buoc`
 --
 ALTER TABLE `buoc`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT cho bảng `co_quan`
@@ -12314,7 +12365,7 @@ ALTER TABLE `co_quan_linh_vuc`
 -- AUTO_INCREMENT cho bảng `district`
 --
 ALTER TABLE `district`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=974;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=975;
 
 --
 -- AUTO_INCREMENT cho bảng `ho_so`
@@ -12329,6 +12380,18 @@ ALTER TABLE `linh_vuc`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
+-- AUTO_INCREMENT cho bảng `nhom`
+--
+ALTER TABLE `nhom`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT cho bảng `nhom_users`
+--
+ALTER TABLE `nhom_users`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT cho bảng `province`
 --
 ALTER TABLE `province`
@@ -12338,13 +12401,13 @@ ALTER TABLE `province`
 -- AUTO_INCREMENT cho bảng `quy_trinh`
 --
 ALTER TABLE `quy_trinh`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT cho bảng `thu_tuc`
 --
 ALTER TABLE `thu_tuc`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT cho bảng `users`
@@ -12366,7 +12429,8 @@ ALTER TABLE `ward`
 -- Các ràng buộc cho bảng `buoc`
 --
 ALTER TABLE `buoc`
-  ADD CONSTRAINT `buoc_ibfk_1` FOREIGN KEY (`id_quy_trinh`) REFERENCES `quy_trinh` (`id`);
+  ADD CONSTRAINT `buoc_ibfk_1` FOREIGN KEY (`id_quy_trinh`) REFERENCES `quy_trinh` (`id`),
+  ADD CONSTRAINT `buoc_ibfk_2` FOREIGN KEY (`id_nhom`) REFERENCES `nhom` (`id`);
 
 --
 -- Các ràng buộc cho bảng `co_quan_linh_vuc`
@@ -12380,6 +12444,19 @@ ALTER TABLE `co_quan_linh_vuc`
 --
 ALTER TABLE `ho_so`
   ADD CONSTRAINT `ho_so_ibfk_1` FOREIGN KEY (`id_thu_tuc`) REFERENCES `thu_tuc` (`id`);
+
+--
+-- Các ràng buộc cho bảng `nhom`
+--
+ALTER TABLE `nhom`
+  ADD CONSTRAINT `nhom_ibfk_1` FOREIGN KEY (`id_co_quan`) REFERENCES `co_quan` (`id`);
+
+--
+-- Các ràng buộc cho bảng `nhom_users`
+--
+ALTER TABLE `nhom_users`
+  ADD CONSTRAINT `nhom_users_ibfk_1` FOREIGN KEY (`id_nhom`) REFERENCES `nhom` (`id`),
+  ADD CONSTRAINT `nhom_users_ibfk_2` FOREIGN KEY (`id_users`) REFERENCES `users` (`id`);
 
 --
 -- Các ràng buộc cho bảng `quy_trinh`
