@@ -80,9 +80,6 @@ class ThuTucController extends Controller {
                 'required' => 'Mức độ không được để trống',
                 'numberic' => 'Mức độ không đúng định dạng',
             ],
-            'template' => [
-                'required' => 'Template không được để trống',
-            ],
             'id_co_quan' => [
                 'required' => 'Cơ quan không được để trống',
                 'exists:co_quan' => 'Cơ quan không tồn tại',
@@ -97,9 +94,7 @@ class ThuTucController extends Controller {
             ],
         ]);
 
-        if(!File::exists("/templates/".request()->template)) {
-            Validator::alert("Template không tồn tại!");
-        } else if(!DB::table('co_quan_linh_vuc')->where(['id_co_quan' => request()->id_co_quan, 'id_linh_vuc' => request()->id_linh_vuc])->first()) {
+        if(!DB::table('co_quan_linh_vuc')->where(['id_co_quan' => request()->id_co_quan, 'id_linh_vuc' => request()->id_linh_vuc])->first()) {
             Validator::alert("Lĩnh vực không thuộc cơ quan đã chọn!");
         }
 
@@ -109,7 +104,6 @@ class ThuTucController extends Controller {
         $thu_tuc->id_linh_vuc = request()->id_linh_vuc;
         $thu_tuc->ten_thu_tuc = request()->ten_thu_tuc;
         $thu_tuc->muc_do = request()->muc_do;
-        $thu_tuc->template = request()->template;
 
         DB::beginTransaction();
         if($thu_tuc->save()) {
@@ -121,12 +115,21 @@ class ThuTucController extends Controller {
 
                 // insert quy trinh
                 foreach(request()->quy_trinh as $qt) {
+                    // validate
                     if(!isset($qt['buoc']) || gettype($qt['buoc']) != 'array') {
                         throw new \PDOException("Bước phải là một mảng");
                     } else if(Validator::check('required', $qt['ten_quy_trinh'] ?? NULL)) {
                         throw new \PDOException("Tên quy trình không được để trống");
                     } else if(Validator::check('required', $qt['ghi_chu'] ?? NULL)) {
                         throw new \PDOException("Ghi chú không được để trống");
+                    } else if(!issets($qt['template']) || !File::exists("/templates/".$qt['template'])) {
+                        Validator::alert("Template không tồn tại!");
+                    } else if(Validator::check('date', $qt['ngay_bat_dau'] ?? NULL)) {
+                        throw new \PDOException("Ngày bắt đầu không đúng định dạng");
+                    } else if(Validator::check('date', $qt['ngay_ket_thuc'] ?? NULL)) {
+                        throw new \PDOException("Ngày kết thúc không đúng định dạng");
+                    } else if(Format::compareTime($qt['ngay_bat_dau'], $qt['ngay_ket_thuc']) == -1) {
+                        throw new \PDOException("Ngày bắt đầu không được lớn hơn ngày kết thúc");
                     }
 
                     $qt_new = new QuyTrinh();
@@ -134,6 +137,9 @@ class ThuTucController extends Controller {
                     $qt_new->id_thu_tuc = $thu_tuc->id;
                     $qt_new->ten_quy_trinh = $qt['ten_quy_trinh'];
                     $qt_new->ghi_chu = $qt['ghi_chu'];
+                    $qt_new->template = $qt['template'];
+                    $qt_new->ngay_bat_dau = Format::toDate($qt['ngay_bat_dau']);
+                    $qt_new->ngay_ket_thuc = Format::toDate($qt['ngay_ket_thuc']);
 
                     if($qt_new->save()) {
 
@@ -193,9 +199,6 @@ class ThuTucController extends Controller {
                 'required' => 'Mức độ không được để trống',
                 'numberic' => 'Mức độ không đúng định dạng',
             ],
-            'template' => [
-                'required' => 'Template không được để trống',
-            ],
             'id_co_quan' => [
                 'required' => 'Cơ quan không được để trống',
                 'exists:co_quan' => 'Cơ quan không tồn tại',
@@ -210,9 +213,7 @@ class ThuTucController extends Controller {
             ],
         ]);
 
-        if(!File::exists("/templates/".request()->template)) {
-            Validator::alert("Template không tồn tại!");
-        } else if(!DB::table('co_quan_linh_vuc')->where(['id_co_quan' => request()->id_co_quan, 'id_linh_vuc' => request()->id_linh_vuc])->first()) {
+        if(!DB::table('co_quan_linh_vuc')->where(['id_co_quan' => request()->id_co_quan, 'id_linh_vuc' => request()->id_linh_vuc])->first()) {
             Validator::alert("Lĩnh vực không thuộc cơ quan đã chọn!");
         }
 
@@ -222,7 +223,6 @@ class ThuTucController extends Controller {
         $thu_tuc->id_linh_vuc = request()->id_linh_vuc;
         $thu_tuc->ten_thu_tuc = request()->ten_thu_tuc;
         $thu_tuc->muc_do = request()->muc_do;
-        $thu_tuc->template = request()->template;
 
         DB::beginTransaction();
         if($thu_tuc->save()) {
@@ -240,12 +240,23 @@ class ThuTucController extends Controller {
                         throw new \PDOException("Tên quy trình không được để trống");
                     } else if(Validator::check('required', $qt['ghi_chu'] ?? NULL)) {
                         throw new \PDOException("Ghi chú không được để trống");
+                    } else if(!issets($qt['template']) || !File::exists("/templates/".$qt['template'])) {
+                        Validator::alert("Template không tồn tại!");
+                    } else if(Validator::check('date', $qt['ngay_bat_dau'] ?? NULL)) {
+                        throw new \PDOException("Ngày bắt đầu không đúng định dạng");
+                    } else if(Validator::check('date', $qt['ngay_ket_thuc'] ?? NULL)) {
+                        throw new \PDOException("Ngày kết thúc không đúng định dạng");
+                    } else if(Format::compareTime($qt['ngay_bat_dau'], $qt['ngay_ket_thuc']) == -1) {
+                        throw new \PDOException("Ngày bắt đầu không được lớn hơn ngày kết thúc");
                     }
 
                     $qt_new = model('QuyTrinh')->find($qt['id']);
 
                     $qt_new->ten_quy_trinh = $qt['ten_quy_trinh'];
                     $qt_new->ghi_chu = $qt['ghi_chu'];
+                    $qt_new->template = $qt['template'];
+                    $qt_new->ngay_bat_dau = Format::toDate($qt['ngay_bat_dau']);
+                    $qt_new->ngay_ket_thuc = Format::toDate($qt['ngay_ket_thuc']);
                     $qt_new->deleted_at = $qt['hide'] ? Format::timeNow() : null;
 
                     if($qt_new->save()) {
