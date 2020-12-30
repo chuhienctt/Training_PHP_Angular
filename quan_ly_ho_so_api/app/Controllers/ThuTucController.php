@@ -122,7 +122,7 @@ class ThuTucController extends Controller {
                         throw new \PDOException("Tên quy trình không được để trống");
                     } else if(Validator::check('required', $qt['ghi_chu'] ?? NULL)) {
                         throw new \PDOException("Ghi chú không được để trống");
-                    } else if(!issets($qt['template']) || !File::exists("/templates/".$qt['template'])) {
+                    } else if(!isset($qt['template']) || !File::exists("/templates/".$qt['template'])) {
                         Validator::alert("Template không tồn tại!");
                     } else if(Validator::check('date', $qt['ngay_bat_dau'] ?? NULL)) {
                         throw new \PDOException("Ngày bắt đầu không đúng định dạng");
@@ -175,7 +175,7 @@ class ThuTucController extends Controller {
                 return response()->success(1, 'Thêm thủ tục thành công!', $thu_tuc);
             } catch(\PDOException $e) {
                 DB::rollBack();
-                Validator::alert($e);
+                Validator::alert($e->getMessage());
             }
         }
 

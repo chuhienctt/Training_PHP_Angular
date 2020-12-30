@@ -30,7 +30,7 @@ class Format {
         $start_time = strtotime($start_time);
         $end_time = strtotime($end_time);
 
-        return $end_time > $start_time ? 1 : $end_time == $start_time ? 0 : -1;
+        return $end_time > $start_time ? 1 : ($end_time == $start_time ? 0 : -1);
     }
 
 }
