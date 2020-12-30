@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th12 30, 2020 lúc 08:29 AM
+-- Thời gian đã tạo: Th12 30, 2020 lúc 10:58 AM
 -- Phiên bản máy phục vụ: 10.4.14-MariaDB
 -- Phiên bản PHP: 7.4.11
 
@@ -36,6 +36,13 @@ CREATE TABLE `buoc` (
   `created_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Đang đổ dữ liệu cho bảng `buoc`
+--
+
+INSERT INTO `buoc` (`id`, `id_quy_trinh`, `id_nhom`, `ten_buoc`, `ghi_chu`, `created_at`, `deleted_at`) VALUES
+(24, 15, 10, 'buoc 1', '<p>as</p>', '2020-12-30 09:54:29', NULL);
 
 -- --------------------------------------------------------
 
@@ -1001,6 +1008,13 @@ CREATE TABLE `quy_trinh` (
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Đang đổ dữ liệu cho bảng `quy_trinh`
+--
+
+INSERT INTO `quy_trinh` (`id`, `id_thu_tuc`, `ten_quy_trinh`, `ghi_chu`, `template`, `ngay_bat_dau`, `ngay_ket_thuc`, `created_at`, `deleted_at`) VALUES
+(15, 33, 'quy trinh 1', '<p>a</p>', 'temp_1.json', '2020-12-15 17:00:00', '2020-12-24 17:00:00', '2020-12-30 09:54:29', NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -1022,7 +1036,8 @@ CREATE TABLE `thu_tuc` (
 --
 
 INSERT INTO `thu_tuc` (`id`, `id_co_quan`, `id_linh_vuc`, `ten_thu_tuc`, `muc_do`, `created_at`, `deleted_at`) VALUES
-(25, 5, 21, 'ten thu tuc 1', 3, '2020-12-24 07:14:59', NULL);
+(25, 5, 21, 'ten thu tuc 1', 3, '2020-12-24 07:14:59', NULL),
+(33, 5, 21, 'thu tuc 3', 2, '2020-12-30 09:54:29', NULL);
 
 -- --------------------------------------------------------
 
@@ -12349,7 +12364,7 @@ ALTER TABLE `ward`
 -- AUTO_INCREMENT cho bảng `buoc`
 --
 ALTER TABLE `buoc`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT cho bảng `co_quan`
@@ -12403,13 +12418,13 @@ ALTER TABLE `province`
 -- AUTO_INCREMENT cho bảng `quy_trinh`
 --
 ALTER TABLE `quy_trinh`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT cho bảng `thu_tuc`
 --
 ALTER TABLE `thu_tuc`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT cho bảng `users`
