@@ -161,6 +161,7 @@ export class FeildComponent extends ScriptService implements OnInit {
   }
 
   openModal() {
+    this.submitted = false;
     $("[data-dismiss=\"fileinput\"]").click();
     this.form.reset();
     $("#myModal").modal("show");

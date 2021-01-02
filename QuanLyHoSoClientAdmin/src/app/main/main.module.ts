@@ -34,7 +34,7 @@ import { CityComponent } from './address/city/city.component';
     CommonModule,
     ShareModule,
     MainRoutingModule,
-    PaginatorModule,
+    PaginatorModule
   ]
 })
 export class MainModule { }

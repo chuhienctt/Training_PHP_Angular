@@ -10,6 +10,8 @@ import {GetImagePipe} from "../libs/get.image.pipe";
 import {CKEditorModule} from "@ckeditor/ckeditor5-angular";
 import {TableModule} from "primeng/table";
 import {PickListModule} from "primeng/picklist";
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import {MatNativeDateModule} from "@angular/material/core";
 
 @NgModule({
   declarations: [
@@ -26,6 +28,8 @@ import {PickListModule} from "primeng/picklist";
     TableModule,
     PickListModule,
     BsDatepickerModule.forRoot(),
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   exports: [
     ReactiveFormsModule,
@@ -38,7 +42,9 @@ import {PickListModule} from "primeng/picklist";
     CKEditorModule,
     BsDatepickerModule,
     TableModule,
-    PickListModule
+    PickListModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
   ]
 })
 export class ShareModule { }

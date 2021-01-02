@@ -225,6 +225,7 @@ export class OrganComponent extends ScriptService implements OnInit {
   }
 
   openModal() {
+    this.submitted = false;
     $("[data-dismiss=\"fileinput\"]").click();
     $("#myModal").modal("show");
     this.form.reset();

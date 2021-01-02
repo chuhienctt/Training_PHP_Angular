@@ -64,6 +64,7 @@ export class DistrictComponent extends ScriptService implements OnInit {
   }
 
   edit(id) {
+    this.submitted = false;
     this.aoe = false;
     $("#myModal").modal("show");
     this.addressService.getDistrictById(id).subscribe((data: any) => {
@@ -88,6 +89,8 @@ export class DistrictComponent extends ScriptService implements OnInit {
   }
 
   create() {
+    this.submitted = false;
+    this.form.reset();
     this.aoe = true;
     $("#myModal").modal("show");
   }

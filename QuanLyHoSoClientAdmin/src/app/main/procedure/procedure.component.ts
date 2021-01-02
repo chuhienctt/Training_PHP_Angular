@@ -5,6 +5,8 @@ import {Form, FormArray, FormBuilder, FormControl, FormGroup, Validators} from "
 import {MessageService} from "primeng/api";
 import {OrganService} from "../../services/organ.service";
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import {GroupService} from "../../services/group.service";
+import {DatePipe} from "@angular/common";
 
 declare var $: any;
 
@@ -21,9 +23,10 @@ export class ProcedureComponent extends ScriptService implements OnInit {
   totalRecords: number;
   form: FormGroup;
   formProcedure: FormGroup;
+  formStep: FormGroup;
   submitted: boolean;
   aoe: boolean;
-  aoePro: number;
+  aoeProcedure: boolean;
   listProcedure = [];
   listOrgan = [];
   listFeild = [];
@@ -34,13 +37,18 @@ export class ProcedureComponent extends ScriptService implements OnInit {
   itemEditStep: any;
   listStep = [];
   submittedPro: boolean;
+  listGroup = [];
+  aoeStep: boolean;
+  submittedST: boolean;
+  pipe = new DatePipe("en-US");
 
   constructor(
     injector: Injector,
     private procedureService: ProcedureService,
     private messageService: MessageService,
     private formBuilder: FormBuilder,
-    private organService: OrganService
+    private organService: OrganService,
+    private groupService: GroupService
   ) {
     super(injector)
   }
@@ -57,16 +65,25 @@ export class ProcedureComponent extends ScriptService implements OnInit {
     this.loadData({first: this.first, rows: this.rows});
 
     this.form = this.formBuilder.group({
+      id: [''],
       ten_thu_tuc: ['', [Validators.required, Validators.maxLength(255)]],
       id_co_quan: ['', [Validators.required]],
       id_linh_vuc: [{value: '', disabled: true}, [Validators.required]],
       muc_do: ['', [Validators.required]],
-      template: ['', [Validators.required]],
     })
 
     this.formProcedure = this.formBuilder.group({
-      ten: ['', [Validators.required, Validators.maxLength(255)]],
+      ten_quy_trinh: ['', [Validators.required, Validators.maxLength(255)]],
       ghi_chu: ['', [Validators.required]],
+      template: ['', [Validators.required]],
+      ngay_bat_dau: ['', [Validators.required]],
+      ngay_ket_thuc: ['']
+    })
+
+    this.formStep = this.formBuilder.group({
+      ten_buoc: ['', [Validators.required, Validators.maxLength(255)]],
+      ghi_chu: ['', [Validators.required]],
+      id_nhom: ['', [Validators.required]]
     })
 
     this.organService.getAll().subscribe((res: any) => {
@@ -77,17 +94,8 @@ export class ProcedureComponent extends ScriptService implements OnInit {
       this.listTemplate = res;
     })
 
-
-    $('#myModal').on('show.bs.modal', e => {
-      if (this.aoePro == 4) {
-        this.hideModalStep();
-      }
-    });
-
-    $('#myModal').on('hide.bs.modal', e => {
-      if (this.aoePro == 4) {
-        this.showModalStep(this.itemStep);
-      }
+    $('#modalStep2').on('show.bs.modal', function (e) {
+      $("#modalStep").modal("hide");
     });
   }
 
@@ -100,11 +108,17 @@ export class ProcedureComponent extends ScriptService implements OnInit {
     })
   }
 
-  getFeild(event) {
+  getOrther(id) {
     this.form.controls.id_linh_vuc.enable();
     this.listFeild = [];
-    this.organService.edit(event.value).subscribe((res: any) => {
+    this.organService.edit(id).subscribe((res: any) => {
       this.listFeild = res.linh_vuc;
+    })
+    this.listGroup = [];
+    this.groupService.getGroup(id).subscribe((res: any) => {
+      this.listGroup = res.filter(e => {
+        return e.deleted_at == null;
+      });
     })
   }
 
@@ -142,12 +156,27 @@ export class ProcedureComponent extends ScriptService implements OnInit {
 
   create() {
     this.aoe = true;
+    this.form.controls.id_linh_vuc.disable();
     this.showModal();
   }
 
   edit(id) {
     this.aoe = false;
-    // $("#myModal").modal("show");
+    this.procedure = [];
+    this.listStep = [];
+    this.showModal();
+    this.form.controls.id_linh_vuc.enable();
+    this.procedureService.edit(id).subscribe((data: any) => {
+      this.form.patchValue({
+        id: data.id,
+        ten_thu_tuc: data.ten_thu_tuc,
+        id_co_quan: data.id_co_quan,
+        muc_do: data.muc_do,
+        id_linh_vuc: data.id_linh_vuc,
+      })
+      this.procedure = data.quy_trinh;
+      this.getOrther(data.id_co_quan);
+    })
   }
 
   onSubmit() {
@@ -162,19 +191,183 @@ export class ProcedureComponent extends ScriptService implements OnInit {
     }
     this.form.value.quy_trinh = this.procedure;
     if (this.aoe == true) {
-      this.procedureService.create(this.form.value).subscribe((res:any) => {
+      this.procedureService.create(this.form.value).subscribe((res: any) => {
         this.submitted = false;
-        this.messageService.add({severity: 'success', summary: 'Thành công!', detail: "Thêm thủ tục thành công!"});
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Thành công!',
+          detail: "Thêm thủ tục thành công!"
+        });
         this.hideModal();
         this.loadData({first: this.first, rows: this.rows});
+      }, err => {
+        console.log(err);
+        this.messageService.add({severity: 'error', summary: 'Thất bại!', detail: err.error.message});
+      })
+    } else {
+      console.log(this.form.value)
+      this.procedureService.update(this.form.value.id, this.form.value).subscribe((res: any) => {
+        this.submitted = false;
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Thành công!',
+          detail: "Cập nhật thủ tục thành công!"
+        });
+        this.hideModal();
+        this.loadData({first: this.first, rows: this.rows});
+      }, err => {
+        console.log(err);
+        this.messageService.add({severity: 'error', summary: 'Thất bại!', detail: err.error.message});
       })
     }
   }
 
   delete(id) {
+    if (confirm("Bạn muốn xóa thủ tục này?")) {
+      this.procedureService.delete(id).subscribe((res: any) => {
+        this.loadData({first: this.first, rows: this.rows});
+        this.messageService.add({severity: 'success', summary: 'Thành công!', detail: "Xóa thủ tục thành công!"});
+      }, err => {
+        console.log(err)
+        this.messageService.add({severity: 'error', summary: 'Thất bại!', detail: err.error.message});
+      })
+    }
+  }
+
+  createProcedure() {
+    this.aoeProcedure = true;
+    this.showModalProdure();
+  }
+
+  editProcedure(item) {
+    this.itemEditProcedure = item;
+    this.aoeProcedure = false;
+    this.showModalProdure();
+    console.log(item)
+    this.formProcedure.patchValue({
+      ten_quy_trinh: item.ten_quy_trinh,
+      ghi_chu: item.ghi_chu,
+      template: item.template,
+      ngay_bat_dau: new Date(item.ngay_bat_dau),
+      ngay_ket_thuc: new Date(item.ngay_ket_thuc)
+    })
+  }
+
+  deleteProcedure(item) {
+    this.procedure.splice(this.procedure.indexOf(item), 1);
+  }
+
+  submitProcedure() {
+    this.submittedPro = true;
+    if (this.formProcedure.invalid) {
+      return;
+    }
+    if (this.aoeProcedure == true) {
+      let name = this.procedure.filter(e => {
+        return e.ten_quy_trinh == this.formProcedure.value.ten;
+      })
+
+      if (name.length == 0) {
+        this.procedure.push({
+          ten_quy_trinh: this.formProcedure.value.ten_quy_trinh,
+          ghi_chu: this.formProcedure.value.ghi_chu,
+          template: this.formProcedure.value.template,
+          ngay_bat_dau: this.pipe.transform(this.formProcedure.value.ngay_bat_dau, "yyyy-MM-dd"),
+          ngay_ket_thuc: this.pipe.transform(this.formProcedure.value.ngay_ket_thuc, "yyyy-MM-dd")
+        })
+        this.hideModalProcedure();
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Thành công!',
+          detail: "Thêm quy trình thành công!"
+        });
+        this.submittedPro = false;
+      } else {
+        this.formProcedure.controls.ten_quy_trinh.setErrors({unique: true});
+      }
+    } else if (this.aoeProcedure == false) {
+      this.itemEditProcedure.ten_quy_trinh = this.formProcedure.value.ten_quy_trinh;
+      this.itemEditProcedure.ghi_chu = this.formProcedure.value.ghi_chu;
+      this.itemEditProcedure.template = this.formProcedure.value.template;
+      this.itemEditProcedure.ngay_bat_dau = this.pipe.transform(this.formProcedure.value.ngay_bat_dau, "yyyy-MM-dd");
+      this.itemEditProcedure.ngay_ket_thuc = this.pipe.transform(this.formProcedure.value.ngay_bat_dau, "yyyy-MM-dd");
+      this.hideModalProcedure();
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Thành công!',
+        detail: "Cập nhật quy trình thành công!"
+      });
+      this.submittedPro = false;
+    }
+  }
+
+  createStep(item) {
+    this.aoeStep = true;
+    this.showModalStep();
+    this.itemStep = item;
+  }
+
+  editStep(item) {
+    this.aoeStep = false;
+    this.itemEditStep = item;
+    this.showModalStep();
+    this.formStep.patchValue({
+      ten_buoc: item.ten_buoc,
+      ghi_chu: item.ghi_chu,
+      id_nhom: item.id_nhom
+    })
+  }
+
+  deleteStep(item) {
+    this.itemStep.buoc.splice(this.itemStep.buoc.indexOf(item), 1);
+  }
+
+  submitStep() {
+    this.submittedST = true;
+    if (this.formStep.invalid) {
+      return;
+    }
+    if (this.aoeStep == true) {
+      if (!Array.isArray(this.itemStep.buoc)) {
+        this.itemStep.buoc = [];
+      }
+
+      let nameStep = this.itemStep.buoc.filter(e => {
+        return e.ten_buoc == this.formStep.value.ten_buoc;
+      })
+
+      if (nameStep.length == 0) {
+        this.itemStep.buoc.push({
+          ten_buoc: this.formStep.value.ten_buoc,
+          ghi_chu: this.formStep.value.ghi_chu,
+          id_nhom: this.formStep.value.id_nhom
+        })
+        this.hideModalStep();
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Thành công!',
+          detail: "Thêm bước thành công!"
+        });
+        this.submittedST = false;
+      } else {
+        this.formStep.controls.ten_buoc.setErrors({unique: true});
+      }
+    } else if (this.aoeStep == false) {
+      this.itemEditStep.ten_buoc = this.formStep.value.ten_buoc;
+      this.itemEditStep.ghi_chu = this.formStep.value.ghi_chu;
+      this.itemEditStep.id_nhom = this.formStep.value.id_nhom;
+      this.hideModalStep();
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Thành công!',
+        detail: "Cập nhật bước thành công!"
+      });
+      this.submittedST = false;
+    }
   }
 
   showModal() {
+    this.submitted = false;
     this.procedure = [];
     this.form.reset();
     $("#exampleModalPreview").modal("show");
@@ -185,6 +378,7 @@ export class ProcedureComponent extends ScriptService implements OnInit {
   }
 
   showModalProdure() {
+    this.submittedPro = false;
     this.formProcedure.reset();
     $("#myModal").modal("show");
   }
@@ -193,105 +387,23 @@ export class ProcedureComponent extends ScriptService implements OnInit {
     $("#myModal").modal("hide");
   }
 
-  createProcedure() {
-    this.aoePro = 1;
-    this.showModalProdure();
-  }
-
-  editProcedure(item) {
-    this.itemEditProcedure = item;
-    this.aoePro = 2;
-    this.showModalProdure();
-    this.formProcedure.patchValue({
-      ten: item.ten_quy_trinh,
-      ghi_chu: item.ghi_chu
-    })
-  }
-
-  deleteProcedure(item) {
-    this.procedure.splice(this.procedure.indexOf(item), 1);
-  }
-
-  createStep(item) {
-    this.aoePro = 3;
-    this.showModalProdure();
-    this.itemStep = item;
-  }
-
-  editStep(item) {
-    this.aoePro = 4;
-    this.itemEditStep = item;
-    this.showModalProdure();
-    this.formProcedure.patchValue({
-      ten: item.ten_buoc,
-      ghi_chu: item.ghi_chu
-    })
-  }
-
-  deleteStep(item) {
-    this.itemStep.buoc.splice(this.itemStep.buoc.indexOf(item), 1);
-  }
-
-  showModalStep(item) {
+  showStep(item) {
     $("#modalStep").modal("show");
     this.listStep = item.buoc ?? [];
   }
 
-  hideModalStep() {
+  hideStep() {
     $("#modalStep").modal("hide");
   }
 
-  submitProcedure() {
-    this.submittedPro = true;
-    if (this.formProcedure.invalid) {
-      return;
-    }
-    if (this.aoePro == 1) {
-      let name = this.procedure.filter(e => {
-        return e.ten_quy_trinh == this.formProcedure.value.ten;
-      })
+  showModalStep() {
+    this.formStep.reset();
+    this.submittedST = false;
+    $("#modalStep2").modal("show");
+  }
 
-      if (name.length == 0) {
-        this.procedure.push({
-          ten_quy_trinh: this.formProcedure.value.ten,
-          ghi_chu: this.formProcedure.value.ghi_chu
-        })
-        this.hideModalProcedure();
-        this.submittedPro = false;
-      } else {
-        this.formProcedure.controls.ten.setErrors({unique: true});
-      }
-    } else if (this.aoePro == 2) {
-      this.itemEditProcedure.ten_quy_trinh = this.formProcedure.value.ten;
-      this.itemEditProcedure.ghi_chu = this.formProcedure.value.ghi_chu;
-      this.hideModalProcedure();
-      this.submittedPro = false;
-    } else if (this.aoePro == 3) {
-      if (!Array.isArray(this.itemStep.buoc)) {
-        this.itemStep.buoc = [];
-      }
-
-      let nameStep = this.itemStep.buoc.filter(e => {
-        return e.ten_buoc == this.formProcedure.value.ten;
-      })
-
-      if (nameStep.length == 0) {
-        this.itemStep.buoc.push({
-          ten_buoc: this.formProcedure.value.ten,
-          ghi_chu: this.formProcedure.value.ghi_chu
-        })
-        this.hideModalProcedure();
-        this.submittedPro = false;
-        console.log(this.procedure)
-      } else {
-        this.formProcedure.controls.ten.setErrors({unique: true});
-      }
-    } else if (this.aoePro == 4) {
-      this.itemEditStep.ten_buoc = this.formProcedure.value.ten;
-      this.itemEditStep.ghi_chu = this.formProcedure.value.ghi_chu;
-      this.hideModalProcedure();
-      this.submittedPro = false;
-    }
+  hideModalStep() {
+    $("#modalStep2").modal("hide");
   }
 }
 

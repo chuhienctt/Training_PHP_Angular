@@ -20,11 +20,11 @@ export class ProcedureService {
   }
 
   edit(id) {
-
+    return this._http.get(baseUrl + "get?id=" + id);
   }
 
   update(id, procedure) {
-
+    return this._http.put(baseUrl + "update?id=" + id, procedure);
   }
 
   delete(id) {

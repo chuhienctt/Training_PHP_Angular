@@ -49,6 +49,7 @@ export class LoginComponent implements OnInit {
       location.replace("/");
       // this.router.navigate(["/admin"]);
     }, err => {
+      console.log(err)
       this.messageService.add({ severity: 'error', summary: 'Thất bại!', detail: err.error.message });
     });
   }
