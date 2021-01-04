@@ -234,8 +234,6 @@ class ThuTucController extends Controller {
                 foreach(request()->quy_trinh as $qt) {
                     if(!isset($qt['buoc']) || gettype($qt['buoc']) != 'array') {
                         throw new \PDOException("Bước phải là một mảng");
-                    } else if(Validator::check('exists:quy_trinh', $qt['id'] ?? NULL)) {
-                        throw new \PDOException("Quy trình không tồn tại");
                     } else if(Validator::check('required', $qt['ten_quy_trinh'] ?? NULL)) {
                         throw new \PDOException("Tên quy trình không được để trống");
                     } else if(Validator::check('required', $qt['ghi_chu'] ?? NULL)) {
@@ -248,16 +246,35 @@ class ThuTucController extends Controller {
                         throw new \PDOException("Ngày bắt đầu không được lớn hơn ngày kết thúc");
                     }
 
-                    $qt_new = model('QuyTrinh')->find($qt['id']);
+                    if(isset($qt['id'])) {
+                        // update
 
-                    // var_dump($qt_new);
+                        if(Validator::check('exists:quy_trinh', $qt['id'] ?? NULL)) {
+                            throw new \PDOException("Quy trình không tồn tại");
+                        }
 
-                    $qt_new->ten_quy_trinh = $qt['ten_quy_trinh'];
-                    $qt_new->ghi_chu = $qt['ghi_chu'];
-                    $qt_new->template = $qt['template'];
-                    $qt_new->ngay_bat_dau = Format::toDate($qt['ngay_bat_dau']);
-                    $qt_new->ngay_ket_thuc = isset($qt['ngay_ket_thuc']) ? Format::toDate($qt['ngay_ket_thuc']) : NULL;
-                    $qt_new->deleted_at = isset($qt['hide']) && $qt['hide'] ? Format::timeNow() : NULL;
+                        $qt_new = model('QuyTrinh')->find($qt['id']);
+    
+                        $qt_new->ten_quy_trinh = $qt['ten_quy_trinh'];
+                        $qt_new->ghi_chu = $qt['ghi_chu'];
+                        $qt_new->template = $qt['template'];
+                        $qt_new->ngay_bat_dau = Format::toDate($qt['ngay_bat_dau']);
+                        $qt_new->ngay_ket_thuc = isset($qt['ngay_ket_thuc']) ? Format::toDate($qt['ngay_ket_thuc']) : NULL;
+                        $qt_new->deleted_at = isset($qt['hide']) && $qt['hide'] ? Format::timeNow() : NULL;
+
+                    } else {
+                        // insert
+
+                        $qt_new = new QuyTrinh();
+
+                        $qt_new->id_thu_tuc = $thu_tuc->id;
+                        $qt_new->ten_quy_trinh = $qt['ten_quy_trinh'];
+                        $qt_new->ghi_chu = $qt['ghi_chu'];
+                        $qt_new->template = $qt['template'];
+                        $qt_new->ngay_bat_dau = Format::toDate($qt['ngay_bat_dau']);
+                        $qt_new->ngay_ket_thuc = isset($qt['ngay_ket_thuc']) ? Format::toDate($qt['ngay_ket_thuc']) : NULL;
+
+                    }
 
                     if($qt_new->save()) {
 
@@ -268,27 +285,44 @@ class ThuTucController extends Controller {
 
                         // insert buoc
                         foreach($qt['buoc'] as $bc) {
-                            if(Validator::check('exists:buoc', $bc['id'] ?? NULL)) {
-                                throw new \PDOException("Bước không tồn tại");
-                            } else if(Validator::check('required', $bc['ten_buoc'] ?? NULL)) {
+                            if(Validator::check('required', $bc['ten_buoc'] ?? NULL)) {
                                 throw new \PDOException("Tên bước không được để trống");
                             } else if(Validator::check('required', $bc['ghi_chu'] ?? NULL)) {
                                 throw new \PDOException("Ghi chú không được để trống");
                             }
 
-                            $bc_new = model('Buoc')->find($bc['id']);
+                            if(isset($bc['id'])) {
+                                // update
 
-                            $bc_new->id_nhom = $bc['id_nhom'];
-                            $bc_new->ten_buoc = $bc['ten_buoc'];
-                            $bc_new->ghi_chu = $bc['ghi_chu'];
-                            $bc_new->deleted_at = isset($bc['hide']) && $bc['hide'] ? Format::timeNow() : NULL;
+                                if(Validator::check('exists:buoc', $bc['id'] ?? NULL)) {
+                                    throw new \PDOException("Bước không tồn tại");
+                                }
+
+                                $bc_new = model('Buoc')->find($bc['id']);
+
+                                $bc_new->id_nhom = $bc['id_nhom'];
+                                $bc_new->ten_buoc = $bc['ten_buoc'];
+                                $bc_new->ghi_chu = $bc['ghi_chu'];
+                                $bc_new->deleted_at = isset($bc['hide']) && $bc['hide'] ? Format::timeNow() : NULL;
+
+                            } else {
+                                // insert
+                                
+                                $bc_new = new Buoc();
+
+                                $bc_new->id_quy_trinh = $qt_new->id;
+                                $bc_new->id_nhom = $bc['id_nhom'];
+                                $bc_new->ten_buoc = $bc['ten_buoc'];
+                                $bc_new->ghi_chu = $bc['ghi_chu'];
+
+                            }
 
                             if(!$bc_new->save()) {
-                                throw new \PDOException("Không thể sửa bước");
+                                throw new \PDOException("Không thể lưu bước");
                             }
                         }
                     } else {
-                        throw new \PDOException("Không thể sửa quy trình");
+                        throw new \PDOException("Không thể lưu quy trình");
                     }
                 }
 
