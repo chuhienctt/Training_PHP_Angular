@@ -175,7 +175,7 @@
                           <td class="td-actions text-right">
                             <button type="button" (click)="createStep(item); $event.stopPropagation()"
                                     class="btn btn-success mr-1">
-                              <i class="material-icons">add</i>
+                              Thêm bước
                             </button>
                             <button type="button" (click)="editProcedure(item); $event.stopPropagation()"
                                     class="btn btn-warning mr-1">
@@ -188,12 +188,12 @@
                           </td>
                         </tr>
                         <tr *ngIf="submitted && (!item.buoc || item.buoc.length == 0)">
-                          <td class="text-center text-danger" colspan="5">Chưa thêm bước cho quy
+                          <td class="text-center text-danger" colspan="6">Chưa thêm bước cho quy
                             trình {{item.ten_quy_trinh}}</td>
                         </tr>
                       </ng-container>
                       <tr *ngIf="procedure.length == 0">
-                        <td class="text-center text-danger" colspan="5">Chưa thêm quy trình</td>
+                        <td class="text-center text-danger" colspan="6">Chưa thêm quy trình</td>
                       </tr>
                       </tbody>
                     </table>
@@ -368,8 +368,8 @@
                   <div class="togglebutton" (click)="$event.stopPropagation()">
                     <label>
                       <input type="checkbox" (change)="statusStep($event, item)" value="{{item.id}}"
-                             [checked]="item.deleted_at == null">
-                      <span class="toggle"></span>"
+                             [checked]="item.deleted_at == null"  [disabled]="!item.id">
+                      <span class="toggle"></span>
                     </label>
                   </div>
                 </td>
@@ -377,13 +377,13 @@
                   <button type="button" (click)="editStep(item)" class="btn btn-warning mr-1">
                     <i class="material-icons">edit</i>
                   </button>
-                  <button type="button" (click)="deleteStep(item)" class="btn btn-danger">
+                  <button type="button" [disabled]="item.id" (click)="deleteStep(item)" class="btn btn-danger">
                     <i class="material-icons">close</i>
                   </button>
                 </td>
               </tr>
               <tr *ngIf="listStep.length == 0">
-                <td class="text-center text-danger">Chưa thêm bước</td>
+                <td class="text-center text-danger" colspan="4">Chưa thêm bước</td>
               </tr>
               </tbody>
             </table>
