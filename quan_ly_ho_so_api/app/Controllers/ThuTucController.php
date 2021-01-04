@@ -260,7 +260,7 @@ class ThuTucController extends Controller {
                         $qt_new->template = $qt['template'];
                         $qt_new->ngay_bat_dau = Format::toDate($qt['ngay_bat_dau']);
                         $qt_new->ngay_ket_thuc = isset($qt['ngay_ket_thuc']) ? Format::toDate($qt['ngay_ket_thuc']) : NULL;
-                        $qt_new->deleted_at = isset($qt['hide']) && $qt['hide'] ? Format::timeNow() : NULL;
+                        $qt_new->deleted_at = isset($qt['deleted_at']) && $qt['deleted_at'] ? Format::timeNow() : NULL;
 
                     } else {
                         // insert
@@ -303,7 +303,7 @@ class ThuTucController extends Controller {
                                 $bc_new->id_nhom = $bc['id_nhom'];
                                 $bc_new->ten_buoc = $bc['ten_buoc'];
                                 $bc_new->ghi_chu = $bc['ghi_chu'];
-                                $bc_new->deleted_at = isset($bc['hide']) && $bc['hide'] ? Format::timeNow() : NULL;
+                                $bc_new->deleted_at = isset($bc['deleted_at']) && $bc['deleted_at'] ? Format::timeNow() : NULL;
 
                             } else {
                                 // insert
