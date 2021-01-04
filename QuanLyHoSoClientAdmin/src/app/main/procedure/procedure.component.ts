@@ -175,7 +175,6 @@ export class ProcedureComponent extends ScriptService implements OnInit {
         id_linh_vuc: data.id_linh_vuc,
       })
       this.procedure = data.quy_trinh;
-      console.log(data.quy_trinh)
       this.getOrther(data.id_co_quan);
     })
   }
@@ -206,7 +205,6 @@ export class ProcedureComponent extends ScriptService implements OnInit {
         this.messageService.add({severity: 'error', summary: 'Thất bại!', detail: err.error.message});
       })
     } else {
-      console.log(this.form.value)
       this.procedureService.update(this.form.value.id, this.form.value).subscribe((res: any) => {
         this.submitted = false;
         this.messageService.add({
