@@ -72,6 +72,7 @@ Route::group([
             Route::get('/pagination', 'ThuTucController@pagination');
             Route::get('/templates', 'ThuTucController@get_templates');
             Route::post('/create', 'ThuTucController@create');
+            Route::put('/update', 'ThuTucController@update');
             Route::delete('/delete', 'ThuTucController@delete');
             Route::delete('/undelete', 'ThuTucController@undelete');
 
