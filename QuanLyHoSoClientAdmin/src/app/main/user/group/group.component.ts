@@ -76,7 +76,7 @@ export class GroupComponent extends ScriptService implements OnInit {
   getUser(id_co_quan) {
     this.userService.getUser(id_co_quan).subscribe((res:any) => {
       this.listUser1 = res.filter(e => {
-        return e.deleted_at == null && this.listUser2.filter(x => { return x.id == e.id}).length == 0;
+        return e.deleted_at == null && e.role == 2 && this.listUser2.filter(x => { return x.id == e.id}).length == 0;
       });
     })
   }
