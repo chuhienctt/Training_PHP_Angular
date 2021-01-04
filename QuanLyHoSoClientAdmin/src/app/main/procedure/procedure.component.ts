@@ -175,6 +175,7 @@ export class ProcedureComponent extends ScriptService implements OnInit {
         id_linh_vuc: data.id_linh_vuc,
       })
       this.procedure = data.quy_trinh;
+      console.log(data.quy_trinh)
       this.getOrther(data.id_co_quan);
     })
   }
@@ -243,13 +244,12 @@ export class ProcedureComponent extends ScriptService implements OnInit {
     this.itemEditProcedure = item;
     this.aoeProcedure = false;
     this.showModalProdure();
-    console.log(item)
     this.formProcedure.patchValue({
       ten_quy_trinh: item.ten_quy_trinh,
       ghi_chu: item.ghi_chu,
       template: item.template,
-      ngay_bat_dau: new Date(item.ngay_bat_dau),
-      ngay_ket_thuc: new Date(item.ngay_ket_thuc)
+      ngay_bat_dau: this.pipe.transform(item.ngay_bat_dau, "yyyy-MM-dd"),
+      ngay_ket_thuc: this.pipe.transform(item.ngay_ket_thuc, "yyyy-MM-dd")
     })
   }
 
@@ -404,6 +404,24 @@ export class ProcedureComponent extends ScriptService implements OnInit {
 
   hideModalStep() {
     $("#modalStep2").modal("hide");
+  }
+
+  statusProcedure(event, item) {
+    item.deleted_at = !event.target.checked;
+    this.messageService.add({
+      severity: 'success',
+      summary: 'Thành công!',
+      detail: "Cập nhật trạng thái quy trình thành công!"
+    });
+  }
+
+  statusStep(event, item) {
+    item.deleted_at = !event.target.checked;
+    this.messageService.add({
+      severity: 'success',
+      summary: 'Thành công!',
+      detail: "Cập nhật trạng thái bước thành công!"
+    });
   }
 }
 
