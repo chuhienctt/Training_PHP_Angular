@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th12 30, 2020 lúc 10:58 AM
+-- Thời gian đã tạo: Th1 04, 2021 lúc 03:48 AM
 -- Phiên bản máy phục vụ: 10.4.14-MariaDB
 -- Phiên bản PHP: 7.4.11
 
@@ -36,13 +36,6 @@ CREATE TABLE `buoc` (
   `created_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Đang đổ dữ liệu cho bảng `buoc`
---
-
-INSERT INTO `buoc` (`id`, `id_quy_trinh`, `id_nhom`, `ten_buoc`, `ghi_chu`, `created_at`, `deleted_at`) VALUES
-(24, 15, 10, 'buoc 1', '<p>as</p>', '2020-12-30 09:54:29', NULL);
 
 -- --------------------------------------------------------
 
@@ -1002,18 +995,11 @@ CREATE TABLE `quy_trinh` (
   `ten_quy_trinh` varchar(255) NOT NULL,
   `ghi_chu` varchar(255) DEFAULT NULL,
   `template` varchar(255) NOT NULL,
-  `ngay_bat_dau` timestamp NULL DEFAULT NULL,
-  `ngay_ket_thuc` timestamp NULL DEFAULT NULL,
+  `ngay_bat_dau` date DEFAULT NULL,
+  `ngay_ket_thuc` date DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Đang đổ dữ liệu cho bảng `quy_trinh`
---
-
-INSERT INTO `quy_trinh` (`id`, `id_thu_tuc`, `ten_quy_trinh`, `ghi_chu`, `template`, `ngay_bat_dau`, `ngay_ket_thuc`, `created_at`, `deleted_at`) VALUES
-(15, 33, 'quy trinh 1', '<p>a</p>', 'temp_1.json', '2020-12-15 17:00:00', '2020-12-24 17:00:00', '2020-12-30 09:54:29', NULL);
 
 -- --------------------------------------------------------
 
@@ -1037,7 +1023,7 @@ CREATE TABLE `thu_tuc` (
 
 INSERT INTO `thu_tuc` (`id`, `id_co_quan`, `id_linh_vuc`, `ten_thu_tuc`, `muc_do`, `created_at`, `deleted_at`) VALUES
 (25, 5, 21, 'ten thu tuc 1', 3, '2020-12-24 07:14:59', NULL),
-(33, 5, 21, 'thu tuc 3', 2, '2020-12-30 09:54:29', NULL);
+(33, 4, 21, 'quy trinh 6', 2, '2020-12-30 09:54:29', NULL);
 
 -- --------------------------------------------------------
 
@@ -1070,7 +1056,7 @@ INSERT INTO `users` (`id`, `id_co_quan`, `mat_khau`, `ho_ten`, `email`, `so_dien
 (21, 4, '$2y$10$Md9AGnyz.Aha7C5d4B4wX.WzaEbPYKVv.MtZEqHM1TUxR5SspA0vC', 'Nguyễn Đức Toàn', 'toannguyen1@gmail.com', '386420310', 'thôn Minh Khai, xã Đại Tập, huyện Khoái Châu, tỉnh Hưng Yên', NULL, '1999-01-08', '/avatar/no-avatar.jpg', 2, 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MDg1MTUzMzIsImV4cCI6MTYwODYwMTczMiwiZGF0YSI6IjMxIn0.tKXKcq-C3hFYtj5wv4kU8JuS-VrbW1fWkmTQ5jtayxc', NULL),
 (29, 4, '$2y$10$1xeIQVYcQ5xj6tJDIwMeS.WF5naLB31SOFiqRN3sX7NbyvGDyGBRe', 'Nguyễn Đức Toàn', 'toannguyen2@gmail.com', '0386420311', 'thôn Minh Khai, xã Đại Tập, huyện Khoái Châu, tỉnh Hưng Yên', NULL, '1999-01-08', '/avatar/no-avatar.jpg', 2, 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MDg1MTUzMzIsImV4cCI6MTYwODYwMTczMiwiZGF0YSI6IjMxIn0.tKXKcq-C3hFYtj5wv4kU8JuS-VrbW1fWkmTQ5jtayxc', NULL),
 (30, NULL, '$2y$10$omYyXxmrejfkKC2bQGuzd.znAZMveKuZ6/mj8JAylHjyIaBYDsBPy', 'Nguyễn Đức Toàn', 'toannguyen3@gmail.com', '0386420310', 'đội 9', 12262, '1999-01-08', '/avatar/ad95168f5819eb99289d1f739f687c96bc8002d3.jpeg', 1, 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MDg1MTUzMzIsImV4cCI6MTYwODYwMTczMiwiZGF0YSI6IjMxIn0.tKXKcq-C3hFYtj5wv4kU8JuS-VrbW1fWkmTQ5jtayxc', NULL),
-(31, NULL, '$2y$10$3uwMSXNadaoTybnQLurOpOtyvIzpBVnB15k.9Zw0rEIWfBCszr5UC', 'Nguyễn Đức Toàn', 'toannguyen080199@gmail.com', '0987654322', 'Xóm 9', 12262, '1999-01-08', '/avatar/65e6ec2ca66cfbcb488ebfe51fa0e61f9bd74fec.jpg', 3, 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MDkyOTA3MTAsImV4cCI6MTYwOTM3NzExMCwiZGF0YSI6IjMxIn0.qHGilLezp9vyZJDudRjEF4JamiwevzJNyPEZEqSR1Go', NULL);
+(31, NULL, '$2y$10$3uwMSXNadaoTybnQLurOpOtyvIzpBVnB15k.9Zw0rEIWfBCszr5UC', 'Nguyễn Đức Toàn', 'toannguyen080199@gmail.com', '0987654322', 'Xóm 9', 12262, '1999-01-08', '/avatar/65e6ec2ca66cfbcb488ebfe51fa0e61f9bd74fec.jpg', 3, 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MDk3MjY5ODIsImV4cCI6MTYwOTgxMzM4MiwiZGF0YSI6IjMxIn0.RdiUZlz2pFfnDKZQ4yw2HogrddARxV7uqYP5a7s7tsA', NULL);
 
 -- --------------------------------------------------------
 
