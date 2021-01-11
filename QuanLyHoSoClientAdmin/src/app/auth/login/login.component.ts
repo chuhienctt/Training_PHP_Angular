@@ -46,9 +46,10 @@ export class LoginComponent implements OnInit {
     this.adminService.login(user).subscribe((res: any) => {
       localStorage.setItem("jwt", JSON.stringify(res.data));
       this.adminService.input(res.data);
-      location.replace("/admin");
+      location.replace("/");
       // this.router.navigate(["/admin"]);
     }, err => {
+      console.log(err)
       this.messageService.add({ severity: 'error', summary: 'Thất bại!', detail: err.error.message });
     });
   }

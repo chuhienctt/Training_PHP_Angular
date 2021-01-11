@@ -7,8 +7,11 @@ import {FooterComponent} from "./footer/footer.component";
 import {MatSelectModule} from '@angular/material/select';
 import {BsDatepickerModule} from "ngx-bootstrap/datepicker";
 import {GetImagePipe} from "../libs/get.image.pipe";
-
-
+import {CKEditorModule} from "@ckeditor/ckeditor5-angular";
+import {TableModule} from "primeng/table";
+import {PickListModule} from "primeng/picklist";
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import {MatNativeDateModule} from "@angular/material/core";
 
 @NgModule({
   declarations: [
@@ -21,7 +24,12 @@ import {GetImagePipe} from "../libs/get.image.pipe";
     ReactiveFormsModule,
     MatSelectModule,
     ToastModule,
-    BsDatepickerModule.forRoot()
+    CKEditorModule,
+    TableModule,
+    PickListModule,
+    BsDatepickerModule.forRoot(),
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   exports: [
     ReactiveFormsModule,
@@ -30,8 +38,13 @@ import {GetImagePipe} from "../libs/get.image.pipe";
     CommonModule,
     HeaderComponent,
     FooterComponent,
+    GetImagePipe,
+    CKEditorModule,
     BsDatepickerModule,
-    GetImagePipe
+    TableModule,
+    PickListModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
   ]
 })
 export class ShareModule { }

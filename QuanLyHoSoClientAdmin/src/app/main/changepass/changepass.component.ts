@@ -13,6 +13,7 @@ declare var md:any;
 })
 export class ChangepassComponent implements OnInit {
   form: FormGroup;
+  submitted: boolean;
 
   constructor(
     private adminService: AdminService,
@@ -52,7 +53,12 @@ export class ChangepassComponent implements OnInit {
   }
 
   onSubmit() {
+    this.submitted = true;
+    if (this.form.invalid) {
+      return;
+    }
     this.adminService.changePass(this.form.value).subscribe((res:any) => {
+      this.submitted = false;
       this.messageService.add({ severity: 'success', summary: 'Thành công!', detail: "Cập nhật mật khẩu thành công." });
       this.form.reset();
     }, err => {

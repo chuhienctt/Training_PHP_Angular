@@ -8,7 +8,7 @@ class App {
         $route = new Route();
         $route->URLProcess();
 
-        require_once __DIR__.'/../routes/api.php';
+        require_once _ROOT.'/../routes/api.php';
 
         $result = $route->RouteProcess();
         if(!$result) {

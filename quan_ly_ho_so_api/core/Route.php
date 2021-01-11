@@ -63,7 +63,7 @@ class Route {
         $controllerName = $funcs[0];
         $methodName = $funcs[1];
 
-        $file = __DIR__."/../app/Controllers/{$controllerName}.php";
+        $file = _ROOT."/../app/Controllers/{$controllerName}.php";
         if(!file_exists($file)) {
             throw new Exception("{$controllerName} not found");
         }
@@ -112,7 +112,7 @@ class Route {
     public static function group($config, $callback) {
         if(isset($config['middleware'])) {
             $middlewareName = $config['middleware'];
-            $file = __DIR__."/../app/Middlewares/{$middlewareName}.php";
+            $file = _ROOT."/../app/Middlewares/{$middlewareName}.php";
 
             if(!file_exists($file)) {
                 echo "Caught exception: {$middlewareName} not found\n";

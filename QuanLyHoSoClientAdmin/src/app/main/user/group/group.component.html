@@ -1,0 +1,120 @@
+<p-toast></p-toast>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header card-header-rose card-header-icon">
+          <div class="card-icon">
+            <i class="material-icons">map</i>
+          </div>
+          <h4 class="card-title text-uppercase">Quản lý nhóm người dùng
+            <button type="button" (click)="create()" class="btn btn-primary btn-add float-right">
+              <i class="material-icons">add</i>
+            </button>
+          </h4>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+              <tr>
+                <th class="text-center">#</th>
+                <th>Tên nhóm</th>
+                <th> Thuộc cơ quan</th>
+                <th> Trạng thái</th>
+                <th class="text-right">Hành động</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let item of listGroup; index as i">
+                <td class="text-center">{{i+1}}</td>
+                <td>{{item.ten_nhom}}</td>
+                <td>{{item.co_quan.ten_co_quan}}</td>
+                <td>
+                  <div class="togglebutton">
+                    <label>
+                      <input type="checkbox" (change)="status($event)" value="{{item.id}}" [checked]="item.deleted_at == null">
+                      <span class="toggle"></span>
+                    </label>
+                  </div>
+                </td>
+                <td class="td-actions text-right">
+                  <button type="button" (click)="edit(item.id)" class="btn btn-warning mr-1">
+                    <i class="material-icons">edit</i>
+                  </button>
+                  <button type="button" (click)="delete(item.id)" class="btn btn-danger">
+                    <i class="material-icons">close</i>
+                  </button>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+            <p-paginator [rows]="rows" totalRecords="{{totalRecords}}" (onPageChange)="loadData($event)"></p-paginator>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Classic Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="modal-header pb-0">
+          <h4 class="modal-title card-title text-uppercase">{{ aoe ? "Thêm nhóm" : "Sửa nhóm" }}</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+            <i class="material-icons">clear</i>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="card-body ">
+            <div class="row">
+              <label class="col-sm-4 col-form-label">Tên nhóm</label>
+              <div class="col-sm-8">
+                <div class="form-group bmd-form-group">
+                  <input class="form-control" type="text" formControlName="ten_nhom">
+                  <div *ngIf="submitted && form.controls.ten_nhom.errors">
+                    <small class="error" *ngIf="form.controls.ten_nhom.errors.required">Chưa nhập tên nhóm.</small>
+                    <small class="error" *ngIf="form.controls.ten_nhom.errors.maxlength">Tên nhóm không được lớn hơn 255 ký tự.</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <label class="col-sm-4 col-form-label">Cơ quan</label>
+              <div class="col-sm-8">
+                <div class="form-group bmd-form-group">
+                  <mat-form-field appearance="standard" [style]="{'width': '100%'}">
+                    <mat-label>Chọn cơ quan</mat-label>
+                    <mat-select formControlName="id_co_quan" (selectionChange)="getUser($event.value)">
+                      <mat-option *ngFor="let item of listOrgan" [value]="item.id">{{item.ten_co_quan}}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <div *ngIf="submitted && form.controls.id_co_quan.errors">
+                    <small class="error" *ngIf="form.controls.id_co_quan.errors.required">Chưa chọn kiểu.</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <p-pickList  [ngStyle]="{'width': '100%'}" [showTargetControls]="false" dragdrop="true" [showSourceControls]="false" sourceHeader="Danh sách cán bộ" targetHeader="Cán bộ được chọn" [responsive]="true" [source]="listUser1" [target]="listUser2" filterBy="ho_ten">
+                <ng-template let-item pTemplate="item">
+                  <div>{{item.ho_ten}} <span class="float-right">{{ item.ngay_sinh | date: 'dd-MM-yyyy' }}</span> </div>
+                </ng-template>
+              </p-pickList>
+              <div *ngIf="submitted && this.listUser2.length == 0">
+                <small class="text-danger">Chưa chọn cán bộ.</small>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer pt-0">
+            <button type="button" class="btn btn-danger mr-2" data-dismiss="modal">Đóng</button>
+            <button type="submit" class="btn btn-primary">Cập nhật</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!--  End Modal -->
+</div>

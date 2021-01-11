@@ -22,6 +22,7 @@
                 <th class="text-center">#</th>
                 <th>Tên lĩnh vực</th>
                 <th>Hình ảnh</th>
+                <th>Trạng thái</th>
                 <th class="text-right">Hành động</th>
               </tr>
               </thead>
@@ -31,6 +32,14 @@
                 <td>{{item.ten_linh_vuc}}</td>
                 <td>
                   <img style="height: 40px" *ngIf="item.hinh_anh" src="{{item.hinh_anh | getImage}}" alt="">
+                </td>
+                <td>
+                  <div class="togglebutton">
+                    <label>
+                      <input type="checkbox" (change)="status($event)" value="{{item.id}}" [checked]="item.deleted_at == null">
+                      <span class="toggle"></span>
+                    </label>
+                  </div>
                 </td>
                 <td class="td-actions text-right">
                   <button type="button" (click)="edit(item.id)" class="btn btn-warning mr-1">
@@ -43,7 +52,7 @@
               </tr>
               </tbody>
             </table>
-            <p-paginator [rows]="10" totalRecords="{{totalRecords}}" (onPageChange)="loadData($event)"></p-paginator>
+            <p-paginator [rows]="rows" totalRecords="{{totalRecords}}" (onPageChange)="loadData($event)"></p-paginator>
           </div>
         </div>
       </div>
@@ -98,9 +107,6 @@
                       <mat-option *ngFor="let item of listOrgan" [value]="item.id">{{item.ten_co_quan}}</mat-option>
                     </mat-select>
                   </mat-form-field>
-                  <div *ngIf="submitted && form.controls.co_quan.errors">
-                    <small class="error" *ngIf="form.controls.co_quan.errors.required">Chưa chọn cơ quan.</small>
-                  </div>
                 </div>
               </div>
             </div>

@@ -57,7 +57,7 @@ export class FeildComponent extends ScriptService implements OnInit {
       id: [''],
       ten_linh_vuc: ['',[Validators.required, Validators.maxLength(200)]],
       mo_ta: ['',[Validators.maxLength(250)]],
-      co_quan: ['', Validators.required]
+      co_quan: ['']
     })
 
     this.organService.getAll().subscribe((res:any) => {
@@ -71,7 +71,7 @@ export class FeildComponent extends ScriptService implements OnInit {
     this.first = event.first;
     this.rows = event.rows;
     this.feildService.getData(this.first, this.rows).subscribe((res: any) => {
-      this.listFeild = res.data.filter(e => {return e.deleted_at == null});
+      this.listFeild = res.data;
       this.totalRecords = res.total;
     })
   }
@@ -161,6 +161,8 @@ export class FeildComponent extends ScriptService implements OnInit {
   }
 
   openModal() {
+    this.submitted = false;
+    $("[data-dismiss=\"fileinput\"]").click();
     this.form.reset();
     $("#myModal").modal("show");
   }
@@ -169,4 +171,32 @@ export class FeildComponent extends ScriptService implements OnInit {
     $("#myModal").modal("hide");
   }
 
+  status(event) {
+    if (event.target.checked == true) {
+      if (confirm("Bạn muốn hiện lĩnh vực này?")) {
+        this.feildService.unDelete(event.target.value).subscribe((res:any) => {
+          // this.loadData({first: this.first, rows: this.rows});
+          this.messageService.add({severity: 'success', summary: 'Thành công!', detail: "Hiển thị lĩnh vực thành công!"});
+        }, err => {
+          console.log(err);
+          this.loadData({first: this.first, rows: this.rows});
+          this.messageService.add({severity: 'error', summary: 'Thất bại!', detail: err.error.message});
+        })
+      } else {
+        this.loadData({first: this.first, rows: this.rows});
+      }
+    } else {
+      if (confirm("Bạn muốn ẩn lĩnh vực này?")) {
+        this.feildService.delete(event.target.value).subscribe((res:any) => {
+          // this.loadData({first: this.first, rows: this.rows});
+          this.messageService.add({severity: 'success', summary: 'Thành công!', detail: "Ẩn lĩnh vực thành công!"});
+        }, err => {
+          this.loadData({first: this.first, rows: this.rows});
+          this.messageService.add({severity: 'error', summary: 'Thất bại!', detail: err.error.message});
+        })
+      } else {
+        this.loadData({first: this.first, rows: this.rows});
+      }
+    }
+  }
 }

@@ -9,9 +9,12 @@ import { OrganComponent } from './organ/organ.component';
 import {PaginatorModule} from 'primeng/paginator';
 import { ProfileComponent } from './profile/profile.component';
 import { ChangepassComponent } from './changepass/changepass.component';
-import { UserComponent } from './user/user.component';
-import { AddressComponent } from './address/address.component';
 import { ProcedureComponent } from './procedure/procedure.component';
+import { DistrictComponent } from './address/district/district.component';
+import { CommuneComponent } from './address/commune/commune.component';
+import { GroupComponent } from './user/group/group.component';
+import { AccountComponent } from './user/account/account.component';
+import { CityComponent } from './address/city/city.component';
 
 @NgModule({
   declarations: [
@@ -20,15 +23,18 @@ import { ProcedureComponent } from './procedure/procedure.component';
     OrganComponent,
     ProfileComponent,
     ChangepassComponent,
-    UserComponent,
-    AddressComponent,
     ProcedureComponent,
+    DistrictComponent,
+    CommuneComponent,
+    GroupComponent,
+    AccountComponent,
+    CityComponent
   ],
   imports: [
     CommonModule,
     ShareModule,
     MainRoutingModule,
-    PaginatorModule,
+    PaginatorModule
   ]
 })
 export class MainModule { }

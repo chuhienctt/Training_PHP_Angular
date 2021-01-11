@@ -62,7 +62,7 @@ class File {
     }
 
     public function save($dir = '/') {
-        $path = __DIR__."/../".CONFIG['storage'].$dir;
+        $path = _ROOT."/../".CONFIG['storage'].$dir;
 
         try {
             if(!is_dir($path)) {
@@ -86,12 +86,12 @@ class File {
     }
 
     public static function exists($path) {
-        $attachment_location = __DIR__.'/../public'.$path;
+        $attachment_location = _ROOT.'/../public'.$path;
         return file_exists($attachment_location);
     }
 
     public static function fileRender($path) {
-        $attachment_location = __DIR__.'/../public'.$path;
+        $attachment_location = _ROOT.'/../public'.$path;
 
         if (file_exists($attachment_location)) {
             $filetype = mime_content_type($attachment_location);

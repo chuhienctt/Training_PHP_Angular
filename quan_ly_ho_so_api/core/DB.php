@@ -67,6 +67,10 @@ class DB {
 
         $sql = "SELECT $select FROM $this->table $where[where] $this->orderBy $limit $offset";
 
+        // if($this->table == 'co_quan_linh_vuc') {
+        //     var_dump($sql, $data);
+        // }
+
         $statement = self::$connect->prepare($sql);
 
         $index = 1;
@@ -174,7 +178,7 @@ class DB {
     }
 
     public function show() {
-        return $this->update(['deleted_at' => 'null']);
+        return $this->update(['deleted_at' => null]);
     }
 
     public function count() {
@@ -240,13 +244,13 @@ class DB {
                 $fields[] = "$key $value[0] ?";
                 $values[] = $value[1];
             } else {
-                $fields[] = "$key = ?";
+                $fields[] = "$key ".($value ? "=" : "is")." ?";
                 $values[] = $value;
             }
         }
 
         return [
-            'where' => count($fields) ? "WHERE ".implode('AND ', $fields) : '',
+            'where' => count($fields) ? "WHERE ".implode(' AND ', $fields) : '',
             'values' => $values,
         ];
     }

@@ -16,10 +16,10 @@ export class ErrorInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(catchError(err => {
       if ([401, 403].indexOf(err.status) !== -1) {
         localStorage.removeItem("jwt");
-        this.router.navigate(['admin/auth/login']);
+        this.router.navigate(['auth/login']);
       }
 
-      const error = err.error || err.statusText;
+      const error = err || err.statusText;
       return throwError(error);
     }))
   }

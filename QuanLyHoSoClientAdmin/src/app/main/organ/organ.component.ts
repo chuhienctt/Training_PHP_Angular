@@ -61,7 +61,9 @@ export class OrganComponent extends ScriptService implements OnInit {
     this.loadScripts();
 
     this.addressService.getProvince().subscribe((res: any) => {
-      this.listCity = res;
+      this.listCity = res.filter(e => {
+        return e.deleted_at == null;
+      });
     });
 
     this.form = this.formBuilder.group({
@@ -87,9 +89,7 @@ export class OrganComponent extends ScriptService implements OnInit {
     this.first = event.first;
     this.rows = event.rows;
     this.organService.getData(this.first, this.rows).subscribe((res: any) => {
-      this.listOrgan = res.data.filter(e => {
-        return e.deleted_at == null
-      });
+      this.listOrgan = res.data;
       this.totalRecords = res.total;
     })
   }
@@ -110,22 +110,24 @@ export class OrganComponent extends ScriptService implements OnInit {
     this.form.controls.commune.enable();
 
     this.organService.edit(id).subscribe((res: any) => {
+      this.form.patchValue({
+        id: res.id,
+        ten_co_quan: res.ten_co_quan,
+        email: res.email,
+        dia_chi: res.dia_chi,
+        so_dien_thoai: res.so_dien_thoai,
+        linh_vuc: res.linh_vuc.map(e => {return e.id})
+      })
+      this.image = new GetImagePipe().transform(res.hinh_anh);
       this.addressService.getAddress(res.ward_id).subscribe((data:any) => {
         this.listCity = data.list_province;
         this.listDistrict = data.list_district;
         this.listCommune = data.list_ward;
         this.form.patchValue({
-          id: res.id,
-          ten_co_quan: res.ten_co_quan,
-          email: res.email,
-          dia_chi: res.dia_chi,
-          so_dien_thoai: res.so_dien_thoai,
           city: data.province.id,
           district: data.district.id,
           commune: data.ward.id,
-          linh_vuc: res.linh_vuc.map(e => {return e.id})
         })
-        this.image = new GetImagePipe().transform(res.hinh_anh);
       })
     })
   }
@@ -195,7 +197,9 @@ export class OrganComponent extends ScriptService implements OnInit {
     this.listDistrict = [];
     this.listCommune = [];
     this.addressService.getDistrict(id).subscribe((res:any) => {
-      this.listDistrict = res;
+      this.listDistrict = res.filter(e => {
+        return e.deleted_at == null;
+      });
       if (this.listDistrict.length != 0) {
         this.form.controls.district.enable();
       }
@@ -205,7 +209,9 @@ export class OrganComponent extends ScriptService implements OnInit {
   getCommune(id) {
     this.listCommune = [];
     this.addressService.getCommune(id).subscribe((res:any) => {
-      this.listCommune = res;
+      this.listCommune = res.filter(e => {
+        return e.deleted_at == null;
+      });
       if (this.listCommune.length != 0) {
         this.form.controls.commune.enable();
       }
@@ -219,11 +225,42 @@ export class OrganComponent extends ScriptService implements OnInit {
   }
 
   openModal() {
+    this.submitted = false;
+    $("[data-dismiss=\"fileinput\"]").click();
     $("#myModal").modal("show");
     this.form.reset();
   }
 
   closeModal() {
     $("#myModal").modal("hide");
+  }
+
+  status(event) {
+    if (event.target.checked == true) {
+      if (confirm("Bạn muốn hiện cơ quan này?")) {
+        this.organService.unDelete(event.target.value).subscribe((res:any) => {
+          // this.loadData({first: this.first, rows: this.rows});
+          this.messageService.add({severity: 'success', summary: 'Thành công!', detail: "Hiển thị cơ quan thành công!"});
+        }, err => {
+          console.log(err);
+          this.loadData({first: this.first, rows: this.rows});
+          this.messageService.add({severity: 'error', summary: 'Thất bại!', detail: err.error.message});
+        })
+      } else {
+        this.loadData({first: this.first, rows: this.rows});
+      }
+    } else {
+      if (confirm("Bạn muốn ẩn cơ quan này?")) {
+        this.organService.delete(event.target.value).subscribe((res:any) => {
+          // this.loadData({first: this.first, rows: this.rows});
+          this.messageService.add({severity: 'success', summary: 'Thành công!', detail: "Ẩn cơ quan thành công!"});
+        }, err => {
+          this.loadData({first: this.first, rows: this.rows});
+          this.messageService.add({severity: 'error', summary: 'Thất bại!', detail: err.error.message});
+        })
+      } else {
+        this.loadData({first: this.first, rows: this.rows});
+      }
+    }
   }
 }
