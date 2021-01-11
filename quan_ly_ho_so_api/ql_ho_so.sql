@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th1 11, 2021 lúc 02:42 AM
+-- Thời gian đã tạo: Th1 11, 2021 lúc 08:00 AM
 -- Phiên bản máy phục vụ: 10.4.14-MariaDB
 -- Phiên bản PHP: 7.4.11
 
@@ -854,8 +854,8 @@ CREATE TABLE `linh_vuc` (
 --
 
 INSERT INTO `linh_vuc` (`id`, `code`, `ten_linh_vuc`, `hinh_anh`, `mo_ta`, `created_at`, `deleted_at`) VALUES
-(17, '', 'lĩnh vực đã sửax', '/linh-vuc-images/c79cd4295b7ce8300dd1eff9103d92f13eb41430.png', 'mô tả đã sửa', '2020-12-10 08:57:35', '2020-12-10 15:29:31'),
-(18, '', 'lĩnh vực đã sửa', '/linh-vuc-images/5e1f76ffee5ca090bbd9cff7448ac6b8efa41f9c.png', 'mô tả đã sửa', '2020-12-10 15:19:42', NULL),
+(17, 'LV0001', 'lĩnh vực đã sửax', '/linh-vuc-images/c79cd4295b7ce8300dd1eff9103d92f13eb41430.png', 'mô tả đã sửa', '2020-12-10 08:57:35', '2020-12-10 15:29:31'),
+(18, 'LV0002', 'lĩnh vực 4', '/linh-vuc-images/5e1f76ffee5ca090bbd9cff7448ac6b8efa41f9c.png', 'mô tả đã sửa', '2020-12-10 15:19:42', NULL),
 (20, '', 'lĩnh vực 1', '/linh-vuc-images/22d8c5edbf57a03198be66e302da7ac2866ffc3c.jpg', 'mo ta', '2020-12-23 07:37:46', NULL),
 (21, '', 'lĩnh vực 2', '/linh-vuc-images/d58fbee5da2ed0ca94c3123e3cbffd6d38984138.jpg', 'mo ta', '2020-12-23 07:39:44', NULL),
 (24, '', 'lĩnh vực 3', '/linh-vuc-images/ee7ab087486244ed1d374e14b9cb78a6b143d5ed.jpg', 'mo ta', '2020-12-23 07:41:27', NULL);
@@ -997,8 +997,7 @@ CREATE TABLE `quy_trinh` (
   `ten_quy_trinh` varchar(255) NOT NULL,
   `ghi_chu` varchar(255) DEFAULT NULL,
   `template` varchar(255) NOT NULL,
-  `ngay_bat_dau` date DEFAULT NULL,
-  `ngay_ket_thuc` date DEFAULT NULL,
+  `thoi_gian_xu_ly` bigint(20) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -1059,7 +1058,8 @@ INSERT INTO `users` (`id`, `id_co_quan`, `mat_khau`, `ho_ten`, `email`, `so_dien
 (21, 4, '$2y$10$Md9AGnyz.Aha7C5d4B4wX.WzaEbPYKVv.MtZEqHM1TUxR5SspA0vC', 'Nguyễn Đức Toàn', 'toannguyen1@gmail.com', '386420310', 'thôn Minh Khai, xã Đại Tập, huyện Khoái Châu, tỉnh Hưng Yên', NULL, '1999-01-08', '/avatar/no-avatar.jpg', 2, 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MDg1MTUzMzIsImV4cCI6MTYwODYwMTczMiwiZGF0YSI6IjMxIn0.tKXKcq-C3hFYtj5wv4kU8JuS-VrbW1fWkmTQ5jtayxc', NULL),
 (29, 4, '$2y$10$1xeIQVYcQ5xj6tJDIwMeS.WF5naLB31SOFiqRN3sX7NbyvGDyGBRe', 'Nguyễn Đức Toàn', 'toannguyen2@gmail.com', '0386420311', 'thôn Minh Khai, xã Đại Tập, huyện Khoái Châu, tỉnh Hưng Yên', NULL, '1999-01-08', '/avatar/no-avatar.jpg', 2, 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MDg1MTUzMzIsImV4cCI6MTYwODYwMTczMiwiZGF0YSI6IjMxIn0.tKXKcq-C3hFYtj5wv4kU8JuS-VrbW1fWkmTQ5jtayxc', NULL),
 (30, NULL, '$2y$10$omYyXxmrejfkKC2bQGuzd.znAZMveKuZ6/mj8JAylHjyIaBYDsBPy', 'Nguyễn Đức Toàn', 'toannguyen3@gmail.com', '0386420310', 'đội 9', 12262, '1999-01-08', '/avatar/ad95168f5819eb99289d1f739f687c96bc8002d3.jpeg', 1, 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MDg1MTUzMzIsImV4cCI6MTYwODYwMTczMiwiZGF0YSI6IjMxIn0.tKXKcq-C3hFYtj5wv4kU8JuS-VrbW1fWkmTQ5jtayxc', NULL),
-(31, NULL, '$2y$10$3uwMSXNadaoTybnQLurOpOtyvIzpBVnB15k.9Zw0rEIWfBCszr5UC', 'Nguyễn Đức Toàn', 'toannguyen080199@gmail.com', '0987654322', 'Xóm 9', 12262, '1999-01-08', '/avatar/65e6ec2ca66cfbcb488ebfe51fa0e61f9bd74fec.jpg', 3, 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MDk3MjY5ODIsImV4cCI6MTYwOTgxMzM4MiwiZGF0YSI6IjMxIn0.RdiUZlz2pFfnDKZQ4yw2HogrddARxV7uqYP5a7s7tsA', NULL);
+(31, NULL, '$2y$10$3uwMSXNadaoTybnQLurOpOtyvIzpBVnB15k.9Zw0rEIWfBCszr5UC', 'Nguyễn Đức Toàn', 'toannguyen080199@gmail.com', '0987654322', 'Xóm 9', 12262, '1999-01-08', '/avatar/65e6ec2ca66cfbcb488ebfe51fa0e61f9bd74fec.jpg', 3, 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTAzMzA3MDksImV4cCI6MTYxMDQxNzEwOSwiZGF0YSI6IjMxIn0.QnR1vEpbdI-vJ2Lq45bw4bj8aSnADYV3qAxIE0XMTLE', NULL),
+(32, NULL, '$2y$10$3uwMSXNadaoTybnQLurOpOtyvIzpBVnB15k.9Zw0rEIWfBCszr5UC', 'Đào Xuân Vũ', 'vu140999@gmail.com', '0987654321', 'x', 12262, '2021-01-11', '/avatar/65e6ec2ca66cfbcb488ebfe51fa0e61f9bd74fec.jpg', 3, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -12419,7 +12419,7 @@ ALTER TABLE `thu_tuc`
 -- AUTO_INCREMENT cho bảng `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT cho bảng `ward`

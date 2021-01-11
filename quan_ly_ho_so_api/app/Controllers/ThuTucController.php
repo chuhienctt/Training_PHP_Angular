@@ -130,10 +130,8 @@ class ThuTucController extends Controller {
                         throw new \PDOException("Ghi chú không được để trống");
                     } else if(!isset($qt['template']) || !File::exists("/templates/".$qt['template'])) {
                         Validator::alert("Template không tồn tại!");
-                    } else if(Validator::check('date', $qt['ngay_bat_dau'] ?? NULL)) {
-                        throw new \PDOException("Ngày bắt đầu không đúng định dạng");
-                    } else if(isset($qt['ngay_ket_thuc']) && Format::compareTime($qt['ngay_bat_dau'], $qt['ngay_ket_thuc']) == -1) {
-                        throw new \PDOException("Ngày bắt đầu không được lớn hơn ngày kết thúc");
+                    } else if(Validator::check('required', $qt['thoi_gian_xu_ly'] ?? NULL)) {
+                        throw new \PDOException("Thời gian xử lý không được để trống");
                     }
 
                     $qt_new = new QuyTrinh();
@@ -142,8 +140,7 @@ class ThuTucController extends Controller {
                     $qt_new->ten_quy_trinh = $qt['ten_quy_trinh'];
                     $qt_new->ghi_chu = $qt['ghi_chu'];
                     $qt_new->template = $qt['template'];
-                    $qt_new->ngay_bat_dau = Format::toDate($qt['ngay_bat_dau']);
-                    $qt_new->ngay_ket_thuc = isset($qt['ngay_ket_thuc']) ? Format::toDate($qt['ngay_ket_thuc']) : NULL;
+                    $qt_new->thoi_gian_xu_ly = $qt['thoi_gian_xu_ly'];
 
                     if($qt_new->save()) {
 
@@ -252,10 +249,8 @@ class ThuTucController extends Controller {
                         throw new \PDOException("Ghi chú không được để trống");
                     } else if(!isset($qt['template']) || !File::exists("/templates/".$qt['template'])) {
                         Validator::alert("Template không tồn tại!");
-                    } else if(Validator::check('date', $qt['ngay_bat_dau'] ?? NULL)) {
-                        throw new \PDOException("Ngày bắt đầu không đúng định dạng");
-                    } else if(isset($qt['ngay_ket_thuc']) && Format::compareTime($qt['ngay_bat_dau'], $qt['ngay_ket_thuc']) == -1) {
-                        throw new \PDOException("Ngày bắt đầu không được lớn hơn ngày kết thúc");
+                    } else if(Validator::check('required', $qt['thoi_gian_xu_ly'] ?? NULL)) {
+                        throw new \PDOException("Thời gian xử lý không được để trống");
                     }
 
                     if(isset($qt['id'])) {
@@ -270,8 +265,7 @@ class ThuTucController extends Controller {
                         $qt_new->ten_quy_trinh = $qt['ten_quy_trinh'];
                         $qt_new->ghi_chu = $qt['ghi_chu'];
                         $qt_new->template = $qt['template'];
-                        $qt_new->ngay_bat_dau = Format::toDate($qt['ngay_bat_dau']);
-                        $qt_new->ngay_ket_thuc = isset($qt['ngay_ket_thuc']) ? Format::toDate($qt['ngay_ket_thuc']) : NULL;
+                        $qt_new->thoi_gian_xu_ly = $qt['thoi_gian_xu_ly'];
                         $qt_new->deleted_at = isset($qt['deleted_at']) && $qt['deleted_at'] ? Format::timeNow() : NULL;
 
                     } else {
@@ -283,8 +277,7 @@ class ThuTucController extends Controller {
                         $qt_new->ten_quy_trinh = $qt['ten_quy_trinh'];
                         $qt_new->ghi_chu = $qt['ghi_chu'];
                         $qt_new->template = $qt['template'];
-                        $qt_new->ngay_bat_dau = Format::toDate($qt['ngay_bat_dau']);
-                        $qt_new->ngay_ket_thuc = isset($qt['ngay_ket_thuc']) ? Format::toDate($qt['ngay_ket_thuc']) : NULL;
+                        $qt_new->thoi_gian_xu_ly = $qt['thoi_gian_xu_ly'];
 
                     }
 
