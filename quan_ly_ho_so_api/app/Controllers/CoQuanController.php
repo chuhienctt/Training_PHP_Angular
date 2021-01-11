@@ -41,6 +41,11 @@ class CoQuanController extends Controller {
     public function create() {
         
         validator()->validate([
+            'code' => [
+                'required' => 'Mã cơ quan không được để trống',
+                'max:255' => 'Mã cơ quan không quá 255 kí tự',
+                'unique:co_quan' => 'Mã cơ quan đã tồn tại',
+            ],
             'ten_co_quan' => [
                 'required' => 'Tên cơ quan không được để trống',
                 'max:255' => 'Tên cơ quan không quá 255 kí tự',
@@ -130,6 +135,11 @@ class CoQuanController extends Controller {
             'id' => [
                 'required' => 'Thiếu id cơ quan',
                 'exists:co_quan' => 'Không tồn tại cơ quan',
+            ],
+            'code' => [
+                'required' => 'Mã cơ quan không được để trống',
+                'max:255' => 'Mã cơ quan không quá 255 kí tự',
+                'unique:co_quan' => 'Mã cơ quan đã tồn tại',
             ],
             'ten_co_quan' => [
                 'required' => 'Tên cơ quan không được để trống',

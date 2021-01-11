@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th1 04, 2021 lúc 03:48 AM
+-- Thời gian đã tạo: Th1 11, 2021 lúc 02:42 AM
 -- Phiên bản máy phục vụ: 10.4.14-MariaDB
 -- Phiên bản PHP: 7.4.11
 
@@ -45,6 +45,7 @@ CREATE TABLE `buoc` (
 
 CREATE TABLE `co_quan` (
   `id` bigint(20) UNSIGNED NOT NULL,
+  `code` char(255) NOT NULL,
   `ten_co_quan` varchar(255) NOT NULL,
   `dia_chi` varchar(255) DEFAULT '',
   `email` varchar(100) NOT NULL,
@@ -59,9 +60,9 @@ CREATE TABLE `co_quan` (
 -- Đang đổ dữ liệu cho bảng `co_quan`
 --
 
-INSERT INTO `co_quan` (`id`, `ten_co_quan`, `dia_chi`, `email`, `so_dien_thoai`, `hinh_anh`, `ward_id`, `created_at`, `deleted_at`) VALUES
-(4, 'ten co quan 1', 'xom 1', 'coquan1@gmail.com', '0987654321', '/', 1, '2020-12-23 02:06:58', NULL),
-(5, 'ten co quan 2', 'xom 2', 'coquan2@gmail.com', '0987654321', '/', 2, '2020-12-23 07:39:03', NULL);
+INSERT INTO `co_quan` (`id`, `code`, `ten_co_quan`, `dia_chi`, `email`, `so_dien_thoai`, `hinh_anh`, `ward_id`, `created_at`, `deleted_at`) VALUES
+(4, '', 'ten co quan 1', 'xom 1', 'coquan1@gmail.com', '0987654321', '/', 1, '2020-12-23 02:06:58', NULL),
+(5, '', 'ten co quan 2', 'xom 2', 'coquan2@gmail.com', '0987654321', '/', 2, '2020-12-23 07:39:03', NULL);
 
 -- --------------------------------------------------------
 
@@ -840,6 +841,7 @@ CREATE TABLE `ho_so` (
 
 CREATE TABLE `linh_vuc` (
   `id` bigint(20) UNSIGNED NOT NULL,
+  `code` char(255) NOT NULL,
   `ten_linh_vuc` varchar(200) NOT NULL,
   `hinh_anh` varchar(255) NOT NULL,
   `mo_ta` varchar(255) DEFAULT '',
@@ -851,12 +853,12 @@ CREATE TABLE `linh_vuc` (
 -- Đang đổ dữ liệu cho bảng `linh_vuc`
 --
 
-INSERT INTO `linh_vuc` (`id`, `ten_linh_vuc`, `hinh_anh`, `mo_ta`, `created_at`, `deleted_at`) VALUES
-(17, 'lĩnh vực đã sửax', '/linh-vuc-images/c79cd4295b7ce8300dd1eff9103d92f13eb41430.png', 'mô tả đã sửa', '2020-12-10 08:57:35', '2020-12-10 15:29:31'),
-(18, 'lĩnh vực đã sửa', '/linh-vuc-images/5e1f76ffee5ca090bbd9cff7448ac6b8efa41f9c.png', 'mô tả đã sửa', '2020-12-10 15:19:42', NULL),
-(20, 'lĩnh vực 1', '/linh-vuc-images/22d8c5edbf57a03198be66e302da7ac2866ffc3c.jpg', 'mo ta', '2020-12-23 07:37:46', NULL),
-(21, 'lĩnh vực 2', '/linh-vuc-images/d58fbee5da2ed0ca94c3123e3cbffd6d38984138.jpg', 'mo ta', '2020-12-23 07:39:44', NULL),
-(24, 'lĩnh vực 3', '/linh-vuc-images/ee7ab087486244ed1d374e14b9cb78a6b143d5ed.jpg', 'mo ta', '2020-12-23 07:41:27', NULL);
+INSERT INTO `linh_vuc` (`id`, `code`, `ten_linh_vuc`, `hinh_anh`, `mo_ta`, `created_at`, `deleted_at`) VALUES
+(17, '', 'lĩnh vực đã sửax', '/linh-vuc-images/c79cd4295b7ce8300dd1eff9103d92f13eb41430.png', 'mô tả đã sửa', '2020-12-10 08:57:35', '2020-12-10 15:29:31'),
+(18, '', 'lĩnh vực đã sửa', '/linh-vuc-images/5e1f76ffee5ca090bbd9cff7448ac6b8efa41f9c.png', 'mô tả đã sửa', '2020-12-10 15:19:42', NULL),
+(20, '', 'lĩnh vực 1', '/linh-vuc-images/22d8c5edbf57a03198be66e302da7ac2866ffc3c.jpg', 'mo ta', '2020-12-23 07:37:46', NULL),
+(21, '', 'lĩnh vực 2', '/linh-vuc-images/d58fbee5da2ed0ca94c3123e3cbffd6d38984138.jpg', 'mo ta', '2020-12-23 07:39:44', NULL),
+(24, '', 'lĩnh vực 3', '/linh-vuc-images/ee7ab087486244ed1d374e14b9cb78a6b143d5ed.jpg', 'mo ta', '2020-12-23 07:41:27', NULL);
 
 -- --------------------------------------------------------
 
@@ -1009,6 +1011,7 @@ CREATE TABLE `quy_trinh` (
 
 CREATE TABLE `thu_tuc` (
   `id` bigint(20) UNSIGNED NOT NULL,
+  `code` char(255) NOT NULL,
   `id_co_quan` bigint(20) UNSIGNED NOT NULL,
   `id_linh_vuc` bigint(20) UNSIGNED NOT NULL,
   `ten_thu_tuc` varchar(255) NOT NULL,
@@ -1021,9 +1024,9 @@ CREATE TABLE `thu_tuc` (
 -- Đang đổ dữ liệu cho bảng `thu_tuc`
 --
 
-INSERT INTO `thu_tuc` (`id`, `id_co_quan`, `id_linh_vuc`, `ten_thu_tuc`, `muc_do`, `created_at`, `deleted_at`) VALUES
-(25, 5, 21, 'ten thu tuc 1', 3, '2020-12-24 07:14:59', NULL),
-(33, 4, 21, 'quy trinh 6', 2, '2020-12-30 09:54:29', NULL);
+INSERT INTO `thu_tuc` (`id`, `code`, `id_co_quan`, `id_linh_vuc`, `ten_thu_tuc`, `muc_do`, `created_at`, `deleted_at`) VALUES
+(25, '', 5, 21, 'ten thu tuc 1', 3, '2020-12-24 07:14:59', NULL),
+(33, '', 4, 21, 'quy trinh 6', 2, '2020-12-30 09:54:29', NULL);
 
 -- --------------------------------------------------------
 

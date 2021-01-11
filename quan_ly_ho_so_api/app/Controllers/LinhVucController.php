@@ -41,6 +41,11 @@ class LinhVucController extends Controller {
     public function create() {
         
         validator()->validate([
+            'code' => [
+                'required' => 'Mã lĩnh vực không được để trống',
+                'max:255' => 'Mã lĩnh vực không quá 255 kí tự',
+                'unique:linh_vuc' => 'Mã lĩnh vực đã tồn tại',
+            ],
             'ten_linh_vuc' => [
                 'required' => 'Tên lĩnh vực không được để trống',
                 'max:200' => 'Tên lĩnh vực không quá 200 kí tự',
@@ -112,6 +117,11 @@ class LinhVucController extends Controller {
             'id' => [
                 'required' => 'Thiếu id lĩnh vực',
                 'exists:linh_vuc' => 'Không tồn tại lĩnh vực',
+            ],
+            'code' => [
+                'required' => 'Mã lĩnh vực không được để trống',
+                'max:255' => 'Mã lĩnh vực không quá 255 kí tự',
+                'unique:linh_vuc' => 'Mã lĩnh vực đã tồn tại',
             ],
             'ten_linh_vuc' => [
                 'required' => 'Tên lĩnh vực không được để trống',

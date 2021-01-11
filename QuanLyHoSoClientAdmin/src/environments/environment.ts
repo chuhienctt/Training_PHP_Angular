@@ -4,8 +4,8 @@
 
 import { HttpHeaders } from '@angular/common/http';
 
-const Method = "http://";
-const Domain = "localhost:8200";
+const Method = "https://";
+const Domain = "api.ndtpro.xyz";
 
 export const environment = {
   production: false,

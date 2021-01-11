@@ -72,6 +72,11 @@ class ThuTucController extends Controller {
     public function create() {
         
         validator()->validate([
+            'code' => [
+                'required' => 'Mã thủ tục không được để trống',
+                'max:255' => 'Mã thủ tục không quá 255 kí tự',
+                'unique:thu_tuc' => 'Mã thủ tục đã tồn tại',
+            ],
             'ten_thu_tuc' => [
                 'required' => 'Tên thủ tục không được để trống',
                 'max:255' => 'Tên thủ tục  không quá 255 kí tự',
@@ -188,6 +193,11 @@ class ThuTucController extends Controller {
             'id' => [
                 'required' => 'Thiếu id thủ tục',
                 'exists:thu_tuc' => 'Không tồn tại thủ tục',
+            ],
+            'code' => [
+                'required' => 'Mã thủ tục không được để trống',
+                'max:255' => 'Mã thủ tục không quá 255 kí tự',
+                'unique:thu_tuc' => 'Mã thủ tục đã tồn tại',
             ],
             'ten_thu_tuc' => [
                 'required' => 'Tên thủ tục không được để trống',
