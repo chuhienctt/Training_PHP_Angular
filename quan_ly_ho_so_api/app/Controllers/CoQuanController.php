@@ -88,6 +88,7 @@ class CoQuanController extends Controller {
 
         $co_quan = new CoQuan();
 
+        $co_quan->code = request()->code;
         $co_quan->ten_co_quan = request()->ten_co_quan;
         $co_quan->dia_chi = request()->dia_chi;
         $co_quan->email = request()->email;
@@ -182,6 +183,7 @@ class CoQuanController extends Controller {
             $co_quan->hinh_anh = '/co-quan-images/'.$file->getFileName();
         }
 
+        $co_quan->code = request()->code;
         $co_quan->ten_co_quan = request()->ten_co_quan;
         $co_quan->dia_chi = request()->dia_chi;
         $co_quan->email = request()->email;

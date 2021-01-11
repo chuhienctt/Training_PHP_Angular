@@ -105,6 +105,7 @@ class ThuTucController extends Controller {
 
         $thu_tuc = new ThuTuc();
 
+        $thu_tuc->code = request()->code;
         $thu_tuc->id_co_quan = request()->id_co_quan;
         $thu_tuc->id_linh_vuc = request()->id_linh_vuc;
         $thu_tuc->ten_thu_tuc = request()->ten_thu_tuc;
@@ -227,6 +228,7 @@ class ThuTucController extends Controller {
 
         $thu_tuc = model('ThuTuc')->find(request()->id);
 
+        $thu_tuc->code = request()->code;
         $thu_tuc->id_co_quan = request()->id_co_quan;
         $thu_tuc->id_linh_vuc = request()->id_linh_vuc;
         $thu_tuc->ten_thu_tuc = request()->ten_thu_tuc;
