@@ -40,7 +40,7 @@
                 </td>
                 <td class="td-actions text-right">
                   <button type="button" (click)="redirectDistrict(item.id)" class="btn btn-success mr-1">
-                    <i class="material-icons">remove_red_eye</i>
+                    Xem huyện
                   </button>
                   <button type="button" (click)="edit(item.id)" class="btn btn-warning mr-1">
                     <i class="material-icons">edit</i>
@@ -74,7 +74,7 @@
         <div class="modal-body">
           <div class="card-body ">
             <div class="row">
-              <label class="col-sm-4 col-form-label">Tên tỉnh</label>
+              <label class="col-sm-4 col-form-label">Tên tỉnh <span class="text-danger">*</span></label>
               <div class="col-sm-8">
                 <div class="form-group bmd-form-group">
                   <input class="form-control" type="text" formControlName="name">
@@ -86,7 +86,7 @@
               </div>
             </div>
             <div class="row">
-              <label class="col-sm-4 col-form-label">Kiểu</label>
+              <label class="col-sm-4 col-form-label">Kiểu <span class="text-danger">*</span></label>
               <div class="col-sm-8">
                 <div class="form-group bmd-form-group">
                   <mat-form-field appearance="standard" [style]="{'width': '100%'}">

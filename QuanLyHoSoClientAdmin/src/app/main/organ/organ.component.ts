@@ -69,6 +69,7 @@ export class OrganComponent extends ScriptService implements OnInit {
     this.form = this.formBuilder.group({
       id: [''],
       ten_co_quan: ['', [Validators.required, Validators.maxLength(255)]],
+      code: ['',[Validators.required, Validators.maxLength(255)]],
       dia_chi: ['', [Validators.maxLength(255)]],
       email: ['', [Validators.maxLength(100), Validators.required, Validators.email]],
       so_dien_thoai: ['', [Validators.required, Validators.pattern('^(0)[0-9]{9}$')]],
@@ -113,6 +114,7 @@ export class OrganComponent extends ScriptService implements OnInit {
       this.form.patchValue({
         id: res.id,
         ten_co_quan: res.ten_co_quan,
+        code: res.code,
         email: res.email,
         dia_chi: res.dia_chi,
         so_dien_thoai: res.so_dien_thoai,
@@ -137,22 +139,13 @@ export class OrganComponent extends ScriptService implements OnInit {
     if (this.form.invalid) {
       return;
     }
-    let organ = {
-      id: this.form.value.id,
-      ten_co_quan: this.form.value.ten_co_quan,
-      email: this.form.value.email,
-      dia_chi: this.form.value.dia_chi,
-      so_dien_thoai: this.form.value.so_dien_thoai,
-      linh_vuc: this.form.value.linh_vuc,
-      hinh_anh: null,
-      ward_id: this.form.value.commune
-    }
+    this.form.value.ward_id = this.form.value.commune;
     if (this.aoe == true) {
       this.fileService.getEncodeFromImage(this.file_img).subscribe(data => {
         if (data != null) {
-          organ.hinh_anh = data;
+          this.form.value.hinh_anh = data;
         }
-        this.organService.create(organ).subscribe((res: any) => {
+        this.organService.create(this.form.value).subscribe((res: any) => {
           this.submitted = false;
           this.loadData({first: this.first, rows: this.rows});
           this.closeModal();
@@ -165,10 +158,9 @@ export class OrganComponent extends ScriptService implements OnInit {
     } else {
       this.fileService.getEncodeFromImage(this.file_img).subscribe(data => {
         if (data != null) {
-          organ.hinh_anh = data;
+          this.form.value.hinh_anh = data;
         }
-        console.log(organ)
-        this.organService.update(organ).subscribe((res: any) => {
+        this.organService.update(this.form.value).subscribe((res: any) => {
           this.submitted = false;
           this.loadData({first: this.first, rows: this.rows});
           this.closeModal();

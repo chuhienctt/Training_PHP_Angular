@@ -20,6 +20,7 @@
               <thead>
               <tr>
                 <th class="text-center">#</th>
+                <th>Code</th>
                 <th>Tên cơ quan</th>
                 <th>Hình ảnh</th>
                 <th>Số điện thoại</th>
@@ -32,7 +33,9 @@
               <tbody>
               <tr *ngFor="let item of listOrgan; index as i">
                 <td class="text-center">{{i+1}}</td>
+                <td>{{item.code}}</td>
                 <td>{{item.ten_co_quan}}</td>
+                <td>{{item.code}}</td>
                 <td>
                   <img style="height: 40px" *ngIf="item.hinh_anh" src="{{item.hinh_anh | getImage}}" alt="">
                 </td>
@@ -81,7 +84,7 @@
         <div class="modal-body">
           <div class="card-body ">
             <div class="row">
-              <label class="col-sm-4 col-form-label">Tên cơ quan</label>
+              <label class="col-sm-4 col-form-label">Tên cơ quan <span class="text-danger">*</span></label>
               <div class="col-sm-8">
                 <div class="form-group bmd-form-group">
                   <input class="form-control" type="text" formControlName="ten_co_quan">
@@ -93,7 +96,19 @@
               </div>
             </div>
             <div class="row">
-              <label class="col-sm-4 col-form-label">Email</label>
+              <label class="col-sm-4 col-form-label">Mã code <span class="text-danger">*</span></label>
+              <div class="col-sm-8">
+                <div class="form-group bmd-form-group">
+                  <input class="form-control" type="text" formControlName="code">
+                  <div *ngIf="submitted && form.controls.code.errors">
+                    <small class="error" *ngIf="form.controls.code.errors.required">Chưa nhập mã code.</small>
+                    <small class="error" *ngIf="form.controls.code.errors.maxlength">Mã code không được lớn hơn 255 ký tự.</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <label class="col-sm-4 col-form-label">Email <span class="text-danger">*</span></label>
               <div class="col-sm-8">
                 <div class="form-group bmd-form-group">
                   <input class="form-control" type="text" formControlName="email">
@@ -106,7 +121,7 @@
               </div>
             </div>
             <div class="row">
-              <label class="col-sm-4 col-form-label">Số điện thoại</label>
+              <label class="col-sm-4 col-form-label">Số điện thoại <span class="text-danger">*</span></label>
               <div class="col-sm-8">
                 <div class="form-group bmd-form-group">
                   <input class="form-control" type="text" formControlName="so_dien_thoai">
@@ -118,7 +133,7 @@
               </div>
             </div>
             <div class="row">
-              <label class="col-sm-4 col-form-label">Địa chỉ cụ thể</label>
+              <label class="col-sm-4 col-form-label">Địa chỉ cụ thể <span class="text-danger">*</span></label>
               <div class="col-sm-8">
                 <div class="form-group bmd-form-group">
                   <input class="form-control" type="text" formControlName="dia_chi">
@@ -132,7 +147,7 @@
               <div class="col-md-4">
                 <div class="form-group">
                   <mat-form-field appearance="standard">
-                    <mat-label>Tỉnh, thành phố</mat-label>
+                    <mat-label>Tỉnh, thành phố <span class="text-danger">*</span></mat-label>
                     <mat-select formControlName="city" (selectionChange)="getDistrict($event.value)">
                       <mat-option *ngFor="let item of listCity" [value]="item.id">
                         {{item.name}}
@@ -144,7 +159,7 @@
               <div class="col-md-4">
                 <div class="form-group">
                   <mat-form-field appearance="standard" [style]="{'width': '100%'}">
-                    <mat-label>Quận, huyện</mat-label>
+                    <mat-label>Quận, huyện <span class="text-danger">*</span></mat-label>
                     <mat-select formControlName="district" (selectionChange)="getCommune($event.value)">
                       <mat-option *ngFor="let item of listDistrict" [value]="item.id">
                         {{item.name}}
@@ -156,7 +171,7 @@
               <div class="col-md-4">
                 <div class="form-group">
                   <mat-form-field appearance="standard" [style]="{'width': '100%'}">
-                    <mat-label>Xã, phường, thị trấn</mat-label>
+                    <mat-label>Xã, phường, thị trấn <span class="text-danger">*</span></mat-label>
                     <mat-select formControlName="commune">
                       <mat-option *ngFor="let item of listCommune" [value]="item.id">
                         {{item.name}}
@@ -167,7 +182,7 @@
               </div>
             </div>
             <div class="row">
-              <label class="col-sm-4 col-form-label">Lĩnh vực</label>
+              <label class="col-sm-4 col-form-label">Lĩnh vực <span class="text-danger">*</span></label>
               <div class="col-sm-8">
                 <div class="form-group bmd-form-group">
                   <mat-form-field appearance="standard" [style]="{'width': '100%'}">

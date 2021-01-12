@@ -256,7 +256,7 @@ export class AccountComponent extends ScriptService implements OnInit {
           this.messageService.add({severity: 'success', summary: 'Thành công!', detail: "Sửa người dùng thành công!"});
         }, err => {
           console.log(err)
-          this.messageService.add({severity: 'success', summary: 'Thất bại!', detail: err.error.message});
+          this.messageService.add({severity: 'error', summary: 'Thất bại!', detail: err.error.message});
         })
       }
     })

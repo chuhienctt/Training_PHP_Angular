@@ -19,6 +19,7 @@
               <thead>
               <tr>
                 <th class="text-center">#</th>
+                <th>Code</th>
                 <th>Tên thủ tục</th>
                 <th>Mức độ</th>
                 <th>Thuộc cơ quan</th>
@@ -29,6 +30,7 @@
               <tbody>
               <tr *ngFor="let item of listProcedure; index as i">
                 <td class="text-center">{{i + 1}}</td>
+                <td>{{item.code}}</td>
                 <td>{{item.ten_thu_tuc}}</td>
                 <td>{{item.muc_do}}</td>
                 <td>{{item.co_quan.ten_co_quan}}</td>
@@ -59,158 +61,163 @@
   </div>
 </div>
 
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
-  <div class="modal fade right" style="z-index: 990" id="exampleModalPreview" tabindex="-1" role="dialog"
-       aria-labelledby="exampleModalPreviewLabel" aria-hidden="true">
-    <div class="modal-dialog-full-width modal-dialog momodel modal-fluid" role="document">
-      <div class="modal-content-full-width modal-content ">
-        <div class=" modal-header-full-width  modal-header text-center">
-          <h5 class="modal-title w-100 text-uppercase"
-              id="exampleModalPreviewLabel">{{aoe ? 'Thêm thủ tục' : 'Sửa thủ tục'}}</h5>
-          <button type="button" class="close " data-dismiss="modal" aria-label="Close">
-            <span style="font-size: 1.3em;" aria-hidden="true">&times;</span>
+<div class="modal fade" id="exampleModalPreview" style="z-index: 990; background: #6666" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="modal-header pb-0">
+          <h4 class="modal-title card-title text-uppercase">{{aoe ? 'Thêm thủ tục' : 'Sửa thủ tục'}}</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+            <i class="material-icons">clear</i>
           </button>
         </div>
         <div class="modal-body">
-          <div class="row">
-            <div class="col-md-4">
-              <div class="card">
-                <div class="card-header">
-                  <h4 class="card-title text-center text-uppercase">Thông tin thủ tục</h4>
-                </div>
-                <div class="card-body">
-                  <div class="form-group">
-                    <label>Tên thủ tục</label>
-                    <input class="form-control" type="text" formControlName="ten_thu_tuc">
-                    <div *ngIf="submitted && form.controls.ten_thu_tuc.errors">
-                      <small class="error" *ngIf="form.controls.ten_thu_tuc.errors.required">Chưa nhập tên thủ
-                        tục.</small>
-                      <small class="error" *ngIf="form.controls.ten_thu_tuc.errors.maxlength">Tên thủ tục không được lớn
-                        hơn 255 ký tự.</small>
-                    </div>
+          <div class="card-body ">
+            <div class="row">
+              <div class="col-md-8">
+                <div class="form-group">
+                  <label>Tên thủ tục <span class="text-danger">*</span></label>
+                  <input class="form-control" type="text" formControlName="ten_thu_tuc">
+                  <div *ngIf="submitted && form.controls.ten_thu_tuc.errors">
+                    <small class="error" *ngIf="form.controls.ten_thu_tuc.errors.required">Chưa nhập tên thủ
+                      tục.</small>
+                    <small class="error" *ngIf="form.controls.ten_thu_tuc.errors.maxlength">Tên thủ tục không được lớn
+                      hơn 255 ký tự.</small>
                   </div>
-                  <div class="row">
-                    <div class="col-md-12">
-                      <mat-form-field appearance="standard" [style]="{'width': '100%'}">
-                        <mat-label>Chọn cơ quan</mat-label>
-                        <mat-select formControlName="id_co_quan" (selectionChange)="getOrther($event.value)">
-                          <mat-option *ngFor="let item of listOrgan" [value]="item.id">{{item.ten_co_quan}}</mat-option>
-                        </mat-select>
-                      </mat-form-field>
-                      <div *ngIf="submitted && form.controls.id_co_quan.errors">
-                        <small class="text-danger" *ngIf="form.controls.id_co_quan.errors.required">Chưa chọn cơ
-                          quan.</small>
-                      </div>
-                    </div>
-                    <div class="col-md-12">
-                      <mat-form-field appearance="standard" [style]="{'width': '100%'}">
-                        <mat-label>Chọn lĩnh vực</mat-label>
-                        <mat-select formControlName="id_linh_vuc">
-                          <mat-option *ngFor="let item of listFeild"
-                                      [value]="item.id">{{item.ten_linh_vuc}}</mat-option>
-                        </mat-select>
-                      </mat-form-field>
-                      <div *ngIf="submitted && form.controls.id_linh_vuc.errors">
-                        <small class="text-danger" *ngIf="form.controls.id_linh_vuc.errors.required">Chưa chọn lĩnh
-                          vực.</small>
-                      </div>
-                    </div>
-                    <div class="col-md-12">
-                      <mat-form-field appearance="standard" [style]="{'width': '100%'}">
-                        <mat-label>Chọn mức độ</mat-label>
-                        <mat-select formControlName="muc_do">
-                          <mat-option value="1">Mức độ 1</mat-option>
-                          <mat-option value="2">Mức độ 2</mat-option>
-                          <mat-option value="3">Mức độ 3</mat-option>
-                        </mat-select>
-                      </mat-form-field>
-                      <div *ngIf="submitted && form.controls.muc_do.errors">
-                        <small class="text-danger" *ngIf="form.controls.muc_do.errors.required">Chưa chọn mức
-                          độ.</small>
-                      </div>
-                    </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label>Code <span class="text-danger">*</span></label>
+                  <input class="form-control" type="text" formControlName="code">
+                  <div *ngIf="submitted && form.controls.ten_thu_tuc.errors">
+                    <small class="error" *ngIf="form.controls.code.errors.required">Chưa nhập mã code.</small>
+                    <small class="error" *ngIf="form.controls.code.errors.maxlength">Mã code không được lớn
+                      hơn 255 ký tự.</small>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="col-md-8">
-              <div class="card">
-                <div class="card-header card-header-rose card-header-icon">
-                  <h4 class="card-title text-center text-uppercase">Danh sách quy trình
-                    <button type="button" [disabled]="form.value.id_co_quan == null" (click)="createProcedure()"
-                            class="btn btn-primary btn-add float-right">
-                      <i class="material-icons">add</i>
-                    </button>
-                  </h4>
+            <div class="row">
+              <div class="col-md-4">
+                <mat-form-field appearance="standard" [style]="{'width': '100%'}">
+                  <mat-label>Chọn cơ quan <span class="text-danger">*</span></mat-label>
+                  <mat-select formControlName="id_co_quan" (selectionChange)="getOrther($event.value)">
+                    <mat-option *ngFor="let item of listOrgan" [value]="item.id">{{item.ten_co_quan}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <div *ngIf="submitted && form.controls.id_co_quan.errors">
+                  <small class="text-danger" *ngIf="form.controls.id_co_quan.errors.required">Chưa chọn cơ
+                    quan.</small>
                 </div>
-                <div class="card-body table-scroll">
-                  <div class="table-responsive">
-                    <table class="table table-hover">
-                      <thead>
-                      <tr>
-                        <th>#</th>
-                        <th>Tên quy trình</th>
-                        <th>Ngày bắt đầu</th>
-                        <th>Ngày kết thúc</th>
-                        <th>Trạng thái</th>
-                        <th class="text-right">Hành động</th>
+              </div>
+              <div class="col-md-4">
+                <mat-form-field appearance="standard" [style]="{'width': '100%'}">
+                  <mat-label>Chọn lĩnh vực <span class="text-danger">*</span></mat-label>
+                  <mat-select formControlName="id_linh_vuc">
+                    <mat-option *ngFor="let item of listFeild"
+                                [value]="item.id">{{item.ten_linh_vuc}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <div *ngIf="submitted && form.controls.id_linh_vuc.errors">
+                  <small class="text-danger" *ngIf="form.controls.id_linh_vuc.errors.required">Chưa chọn lĩnh
+                    vực.</small>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <mat-form-field appearance="standard" [style]="{'width': '100%'}">
+                  <mat-label>Chọn mức độ <span class="text-danger">*</span></mat-label>
+                  <mat-select formControlName="muc_do">
+                    <mat-option value="1">Mức độ 1</mat-option>
+                    <mat-option value="2">Mức độ 2</mat-option>
+                    <mat-option value="3">Mức độ 3</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <div *ngIf="submitted && form.controls.muc_do.errors">
+                  <small class="text-danger" *ngIf="form.controls.muc_do.errors.required">Chưa chọn mức
+                    độ.</small>
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="card">
+                  <div class="card-header card-header-rose card-header-icon">
+                    <h4 class="card-title text-center text-uppercase">Danh sách quy trình
+                      <button type="button" [disabled]="form.value.id_co_quan == null" (click)="createProcedure()"
+                              class="btn btn-primary btn-add float-right">
+                        <i class="material-icons">add</i>
+                      </button>
+                    </h4>
+                  </div>
+                  <div class="card-body table-scroll">
+                    <div class="table-responsive">
+                      <table class="table table-hover">
+                        <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>Tên quy trình</th>
+                          <th>Thời gian xử lý</th>
+                          <th>Trạng thái</th>
+                          <th class="text-right">Hành động</th>
                         </tr>
-                      </thead>
-                      <tbody>
-                      <ng-container *ngFor="let item of procedure; index as i">
-                        <tr (click)="showStep(item)" class="cursor-pointer">
-                          <td class="text-center">{{i + 1}}</td>
-                          <td>{{item.ten_quy_trinh}}</td>
-                          <td>{{item.ngay_bat_dau | date: 'dd-MM-yyyy'}}</td>
-                          <td>{{item.ngay_ket_thuc | date: 'dd-MM-yyyy'}}</td>
-                          <td>
-                            <div class="togglebutton" (click)="$event.stopPropagation()">
-                              <label>
-                                <input type="checkbox" (change)="statusProcedure($event, item)" value="{{item.id}}"
-                                       [checked]="item.deleted_at == null">
-                                <span class="toggle"></span>
-                              </label>
-                            </div>
-                          </td>
-                          <td class="td-actions text-right">
-                            <button type="button" (click)="createStep(item); $event.stopPropagation()"
-                                    class="btn btn-success mr-1">
-                              Thêm bước
-                            </button>
-                            <button type="button" (click)="editProcedure(item); $event.stopPropagation()"
-                                    class="btn btn-warning mr-1">
-                              <i class="material-icons">edit</i>
-                            </button>
-                            <button type="button" (click)="deleteProcedure(item); $event.stopPropagation()"
-                                    class="btn btn-danger">
-                              <i class="material-icons">close</i>
-                            </button>
-                          </td>
+                        </thead>
+                        <tbody>
+                        <ng-container *ngFor="let item of procedure; index as i">
+                          <tr (click)="showStep(item)" class="cursor-pointer">
+                            <td class="text-center">{{i + 1}}</td>
+                            <td>{{item.ten_quy_trinh}}</td>
+                            <td>{{getDay(item.thoi_gian_xu_ly).day}} ngày {{getDay(item.thoi_gian_xu_ly).hour}} giờ</td>
+                            <td>
+                              <div class="togglebutton" (click)="$event.stopPropagation()">
+                                <label>
+                                  <input type="checkbox" (change)="statusProcedure($event, item)" value="{{item.id}}"
+                                         [checked]="item.deleted_at == null">
+                                  <span class="toggle"></span>
+                                </label>
+                              </div>
+                            </td>
+                            <td class="td-actions text-right">
+                              <button type="button" (click)="createStep(item); $event.stopPropagation()"
+                                      class="btn btn-success mr-1">
+                                Thêm bước
+                              </button>
+                              <button type="button" (click)="editProcedure(item); $event.stopPropagation()"
+                                      class="btn btn-warning mr-1">
+                                <i class="material-icons">edit</i>
+                              </button>
+                              <button type="button" (click)="deleteProcedure(item); $event.stopPropagation()"
+                                      class="btn btn-danger">
+                                <i class="material-icons">close</i>
+                              </button>
+                            </td>
+                          </tr>
+                          <tr *ngIf="submitted && (!item.buoc || item.buoc.length == 0)">
+                            <td class="text-center text-danger" colspan="6">Chưa thêm bước cho quy
+                              trình {{item.ten_quy_trinh}}</td>
+                          </tr>
+                        </ng-container>
+                        <tr *ngIf="procedure.length == 0">
+                          <td class="text-center text-danger" colspan="6">Chưa thêm quy trình</td>
                         </tr>
-                        <tr *ngIf="submitted && (!item.buoc || item.buoc.length == 0)">
-                          <td class="text-center text-danger" colspan="6">Chưa thêm bước cho quy
-                            trình {{item.ten_quy_trinh}}</td>
-                        </tr>
-                      </ng-container>
-                      <tr *ngIf="procedure.length == 0">
-                        <td class="text-center text-danger" colspan="6">Chưa thêm quy trình</td>
-                      </tr>
-                      </tbody>
-                    </table>
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+          <div class="modal-footer pt-0">
+            <button type="button" class="btn btn-danger mr-2" data-dismiss="modal">Đóng</button>
+            <button type="submit" class="btn btn-primary">Cập nhật</button>
+          </div>
         </div>
-        <div class="modal-footer-full-width modal-footer">
-          <button type="button" class="btn btn-danger btn-md btn-rounded mr-1" data-dismiss="modal">Đóng</button>
-          <button type="submit" class="btn btn-primary btn-md btn-rounded">Cập nhật</button>
-        </div>
-      </div>
+      </form>
     </div>
   </div>
-</form>
+  <!--  End Modal -->
+</div>
+
 
 <div class="modal fade" id="myModal" style="z-index: 995; background: #6666" tabindex="-1" role="dialog"
      aria-labelledby="myModalLabel" aria-hidden="true">
@@ -226,7 +233,7 @@
         <div class="modal-body">
           <div class="card-body ">
             <div class="form-group">
-              <label>Tên quy trình</label>
+              <label>Tên quy trình <span class="text-danger">*</span></label>
               <input class="form-control" type="text" formControlName="ten_quy_trinh">
               <div *ngIf="submittedPro && formProcedure.controls.ten_quy_trinh.errors">
                 <small class="error" *ngIf="formProcedure.controls.ten_quy_trinh.errors.required">Chưa nhập tên quy
@@ -239,37 +246,47 @@
               </div>
             </div>
             <div class="form-group">
-              <label>Ghi chú</label>
+              <label>Ghi chú <span class="text-danger">*</span></label>
               <ckeditor [editor]="Editor" formControlName="ghi_chu"></ckeditor>
               <div *ngIf="submittedPro && formProcedure.controls.ghi_chu.errors">
                 <small class="error" *ngIf="formProcedure.controls.ghi_chu.errors.required">Chưa nhập ghi chú.</small>
               </div>
             </div>
-            <div class="form-group">
+            <div class="row">
               <div class="col-md-12">
                 <mat-form-field appearance="standard" [style]="{'width': '100%'}">
-                  <mat-label>Chọn template</mat-label>
+                  <mat-label>Chọn template <span class="text-danger">*</span></mat-label>
                   <mat-select formControlName="template">
                     <mat-option *ngFor="let item of listTemplate" [value]="item">{{item}}</mat-option>
                   </mat-select>
                 </mat-form-field>
                 <div *ngIf="submittedPro && formProcedure.controls.template.errors">
-                  <small class="text-danger" *ngIf="formProcedure.controls.template.errors.required">Chưa chọn template.</small>
+                  <small class="text-danger" *ngIf="formProcedure.controls.template.errors.required">Chưa chọn
+                    template.</small>
                 </div>
               </div>
-            </div>
-            <div class="col-md-12">
-              <mat-form-field appearance="standard" [style]="{'width': '100%'}">
-                <mat-label>Chọn thời gian thực hiện</mat-label>
-                <mat-date-range-input [rangePicker]="picker">
-                  <input formControlName="ngay_bat_dau" matStartDate placeholder="Ngày bắt đầu">
-                  <input formControlName="ngay_ket_thuc" matEndDate placeholder="Ngày kết thúc">
-                </mat-date-range-input>
-                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-date-range-picker #picker></mat-date-range-picker>
-              </mat-form-field>
-              <div *ngIf="submittedPro && formProcedure.controls.ngay_bat_dau.errors">
-                <small class="text-danger" *ngIf="formProcedure.controls.ngay_bat_dau.errors.required">Chưa chọn ngày.</small>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <mat-form-field appearance="standard" [style]="{'width': '100%'}">
+                    <mat-label>Số ngày xử lý <span class="text-danger">*</span></mat-label>
+                    <mat-select formControlName="day">
+                      <mat-option *ngFor="let item of listDays" [value]="item+1">{{item+1}}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <div *ngIf="submittedPro && formProcedure.controls.day.errors">
+                    <small class="text-danger" *ngIf="formProcedure.controls.day.errors.required">Chưa chọn số ngày.</small>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <mat-form-field appearance="standard" [style]="{'width': '100%'}">
+                    <mat-label>Số giờ xử lý</mat-label>
+                    <mat-select formControlName="hour">
+                      <mat-option *ngFor="let item of listHours" [value]="item">{{item}}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
               </div>
             </div>
           </div>
@@ -298,7 +315,7 @@
         <div class="modal-body">
           <div class="card-body ">
             <div class="form-group">
-              <label>Tên bước</label>
+              <label>Tên bước <span class="text-danger">*</span></label>
               <input class="form-control" type="text" formControlName="ten_buoc">
               <div *ngIf="submittedST && formStep.controls.ten_buoc.errors">
                 <small class="error" *ngIf="formStep.controls.ten_buoc.errors.required">Chưa nhập tên bước.</small>
@@ -308,15 +325,15 @@
               </div>
             </div>
             <div class="form-group">
-              <label>Ghi chú</label>
+              <label>Ghi chú <span class="text-danger">*</span></label>
               <ckeditor [editor]="Editor" formControlName="ghi_chu"></ckeditor>
               <div *ngIf="submittedST && formStep.controls.ghi_chu.errors">
                 <small class="error" *ngIf="formStep.controls.ghi_chu.errors.required">Chưa nhập ghi chú.</small>
               </div>
             </div>
-            <div class="form-group"å>
+            <div class="form-group" å>
               <mat-form-field appearance="standard" [style]="{'width': '100%'}">
-                <mat-label>Chọn nhóm</mat-label>
+                <mat-label>Chọn nhóm <span class="text-danger">*</span></mat-label>
                 <mat-select formControlName="id_nhom">
                   <mat-option *ngFor="let item of listGroup" [value]="item.id">{{item.ten_nhom}}</mat-option>
                 </mat-select>
@@ -368,7 +385,7 @@
                   <div class="togglebutton" (click)="$event.stopPropagation()">
                     <label>
                       <input type="checkbox" (change)="statusStep($event, item)" value="{{item.id}}"
-                             [checked]="item.deleted_at == null"  [disabled]="!item.id">
+                             [checked]="item.deleted_at == null" [disabled]="!item.id">
                       <span class="toggle"></span>
                     </label>
                   </div>

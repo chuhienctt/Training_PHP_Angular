@@ -26,5 +26,17 @@
 }
 
 .modal {
-  padding-right: 0px !important;
+  /*padding-right: 0px !important;*/
+}
+
+body {padding-right: 0! Important}
+
+.modal-open {
+  padding-right: 0 !important;
+}
+
+.modal { overflow-y: auto !important; }
+
+.modal-title {
+  font-weight: 700;
 }

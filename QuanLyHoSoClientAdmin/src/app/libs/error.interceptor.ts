@@ -3,13 +3,11 @@ import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/c
 import { Observable, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 import { catchError } from 'rxjs/operators';
-import {AdminService} from "../services/admin.service";
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
   constructor(
-    private router: Router,
-    private adminService: AdminService
+    private router: Router
   ) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
