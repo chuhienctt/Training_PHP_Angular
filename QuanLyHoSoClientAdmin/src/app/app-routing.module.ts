@@ -3,6 +3,7 @@ import {Routes, RouterModule} from '@angular/router';
 import {LoginComponent} from "./auth/login/login.component";
 import {AuthGuard} from "./guards/auth.guard";
 import {IsLoginGuard} from "./guards/is-login.guard";
+import {NotFoundComponent} from "./auth/not-found/not-found.component";
 
 const routes: Routes = [
   {
@@ -14,6 +15,10 @@ const routes: Routes = [
     path: 'auth/login',
     component: LoginComponent,
     canActivate: [IsLoginGuard]
+  },
+  {
+    path: '**',
+    component: NotFoundComponent
   }
 ];
 
