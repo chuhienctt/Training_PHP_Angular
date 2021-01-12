@@ -2,6 +2,7 @@ import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 import {LoginComponent} from "./auth/login/login.component";
 import {AuthGuard} from "./guards/auth.guard";
+import {IsLoginGuard} from "./guards/is-login.guard";
 
 const routes: Routes = [
   {
@@ -11,7 +12,8 @@ const routes: Routes = [
   },
   {
     path: 'auth/login',
-    component: LoginComponent
+    component: LoginComponent,
+    canActivate: [IsLoginGuard]
   }
 ];
 
@@ -20,7 +22,7 @@ const routes: Routes = [
     RouterModule.forRoot(routes)
   ],
   exports: [RouterModule],
-  providers: [AuthGuard]
+  providers: [AuthGuard, IsLoginGuard]
 })
 export class AppRoutingModule {
 }

@@ -46,7 +46,7 @@
         </div>
       </div>
     </div>
-    <ul class="nav">
+    <ul class="nav" *ngIf="User.role == 3">
       <li class="nav-item" routerLinkActive="active">
         <a class="nav-link" routerLink="/dashboard">
           <i class="material-icons">dashboard</i>
