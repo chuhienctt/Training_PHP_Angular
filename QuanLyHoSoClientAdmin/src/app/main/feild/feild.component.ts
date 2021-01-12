@@ -56,6 +56,7 @@ export class FeildComponent extends ScriptService implements OnInit {
     this.form = this.formBuilder.group({
       id: [''],
       ten_linh_vuc: ['',[Validators.required, Validators.maxLength(200)]],
+      code: ['',[Validators.required, Validators.maxLength(255)]],
       mo_ta: ['',[Validators.maxLength(250)]],
       co_quan: ['']
     })
@@ -90,6 +91,7 @@ export class FeildComponent extends ScriptService implements OnInit {
       this.form.patchValue({
         id: res.id,
         ten_linh_vuc: res.ten_linh_vuc,
+        code: res.code,
         mo_ta: res.mo_ta,
         co_quan: res.co_quan.map(e => {return e.id})
       })
@@ -103,19 +105,12 @@ export class FeildComponent extends ScriptService implements OnInit {
     if (this.form.invalid && !this.file_img) {
       return;
     }
-    let feild = {
-      id: this.form.value.id,
-      ten_linh_vuc: this.form.value.ten_linh_vuc,
-      mo_ta: this.form.value.mo_ta,
-      co_quan: this.form.value.co_quan,
-      hinh_anh: null
-    }
     if (this.aoe == true) {
       this.fileService.getEncodeFromImage(this.file_img).subscribe((data:any) => {
         if (data != null) {
-          feild.hinh_anh = data;
+          this.form.value.hinh_anh = data;
         }
-        this.feildService.create(feild).subscribe((res:any) => {
+        this.feildService.create(this.form.value).subscribe((res:any) => {
           this.submitted = false;
           this.loadData({first: this.first, rows: this.rows});
           this.closeModal();
@@ -128,9 +123,9 @@ export class FeildComponent extends ScriptService implements OnInit {
     } else {
       this.fileService.getEncodeFromImage(this.file_img).subscribe((data:any) => {
         if (data != null) {
-          feild.hinh_anh = data;
+          this.form.value.hinh_anh = data;
         }
-        this.feildService.update(feild).subscribe((res:any) => {
+        this.feildService.update(this.form.value).subscribe((res:any) => {
           this.submitted = false;
           this.loadData({first: this.first, rows: this.rows});
           this.closeModal();

@@ -92,7 +92,9 @@ export class GroupComponent extends ScriptService implements OnInit {
         ten_nhom: data.ten_nhom,
         id_co_quan: data.id_co_quan,
       })
-      this.listUser2 = data.users;
+      this.listUser2 = data.users.filter(e => {
+        return e.deleted_at == null;
+      });
       this.getUser(data.id_co_quan);
     })
   }

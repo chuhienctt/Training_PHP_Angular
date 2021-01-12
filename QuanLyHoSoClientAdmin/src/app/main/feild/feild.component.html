@@ -20,6 +20,7 @@
               <thead>
               <tr>
                 <th class="text-center">#</th>
+                <th>Code</th>
                 <th>Tên lĩnh vực</th>
                 <th>Hình ảnh</th>
                 <th>Trạng thái</th>
@@ -29,6 +30,7 @@
               <tbody>
               <tr *ngFor="let item of listFeild; index as i">
                 <td class="text-center">{{i+1}}</td>
+                <td>{{item.code}}</td>
                 <td>{{item.ten_linh_vuc}}</td>
                 <td>
                   <img style="height: 40px" *ngIf="item.hinh_anh" src="{{item.hinh_anh | getImage}}" alt="">
@@ -75,13 +77,25 @@
         <div class="modal-body">
           <div class="card-body ">
             <div class="row">
-              <label class="col-sm-4 col-form-label">Tên lĩnh vực</label>
+              <label class="col-sm-4 col-form-label">Tên lĩnh vực <span class="text-danger">*</span></label>
               <div class="col-sm-8">
                 <div class="form-group bmd-form-group">
                   <input class="form-control" type="text" formControlName="ten_linh_vuc">
                   <div *ngIf="submitted && form.controls.ten_linh_vuc.errors">
                     <small class="error" *ngIf="form.controls.ten_linh_vuc.errors.required">Chưa nhập tên lĩnh vực.</small>
                     <small class="error" *ngIf="form.controls.ten_linh_vuc.errors.maxlength">Tên lĩnh vực không được lớn hơn 200 ký tự.</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <label class="col-sm-4 col-form-label">Mã code <span class="text-danger">*</span></label>
+              <div class="col-sm-8">
+                <div class="form-group bmd-form-group">
+                  <input class="form-control" type="text" formControlName="code">
+                  <div *ngIf="submitted && form.controls.code.errors">
+                    <small class="error" *ngIf="form.controls.code.errors.required">Chưa nhập mã code.</small>
+                    <small class="error" *ngIf="form.controls.code.errors.maxlength">Mã code không được lớn hơn 255 ký tự.</small>
                   </div>
                 </div>
               </div>
@@ -98,7 +112,7 @@
               </div>
             </div>
             <div class="row">
-              <label class="col-sm-4 col-form-label">Cơ quan</label>
+              <label class="col-sm-4 col-form-label">Cơ quan <span class="text-danger">*</span></label>
               <div class="col-sm-8">
                 <div class="form-group bmd-form-group">
                   <mat-form-field appearance="standard" [style]="{'width': '100%'}">
@@ -111,7 +125,7 @@
               </div>
             </div>
             <div class="row">
-              <label class="col-sm-4 col-form-label">Hình ảnh</label>
+              <label class="col-sm-4 col-form-label">Hình ảnh <span class="text-danger">*</span></label>
               <div class="col-sm-8">
                 <div class="fileinput fileinput-new text-center" data-provides="fileinput">
                   <div class="fileinput-new thumbnail">

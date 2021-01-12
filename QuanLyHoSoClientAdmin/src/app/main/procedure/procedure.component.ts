@@ -41,6 +41,8 @@ export class ProcedureComponent extends ScriptService implements OnInit {
   aoeStep: boolean;
   submittedST: boolean;
   pipe = new DatePipe("en-US");
+  listDays = Array.from(Array(30).keys());
+  listHours = Array.from(Array(24).keys());
 
   constructor(
     injector: Injector,
@@ -67,6 +69,7 @@ export class ProcedureComponent extends ScriptService implements OnInit {
     this.form = this.formBuilder.group({
       id: [''],
       ten_thu_tuc: ['', [Validators.required, Validators.maxLength(255)]],
+      code: ['', [Validators.required, Validators.maxLength(255)]],
       id_co_quan: ['', [Validators.required]],
       id_linh_vuc: [{value: '', disabled: true}, [Validators.required]],
       muc_do: ['', [Validators.required]],
@@ -76,8 +79,8 @@ export class ProcedureComponent extends ScriptService implements OnInit {
       ten_quy_trinh: ['', [Validators.required, Validators.maxLength(255)]],
       ghi_chu: ['', [Validators.required]],
       template: ['', [Validators.required]],
-      ngay_bat_dau: ['', [Validators.required]],
-      ngay_ket_thuc: ['']
+      day: ['', [Validators.required]],
+      hour: ['']
     })
 
     this.formStep = this.formBuilder.group({
@@ -170,6 +173,7 @@ export class ProcedureComponent extends ScriptService implements OnInit {
       this.form.patchValue({
         id: data.id,
         ten_thu_tuc: data.ten_thu_tuc,
+        code: data.code,
         id_co_quan: data.id_co_quan,
         muc_do: data.muc_do,
         id_linh_vuc: data.id_linh_vuc,
@@ -242,12 +246,13 @@ export class ProcedureComponent extends ScriptService implements OnInit {
     this.itemEditProcedure = item;
     this.aoeProcedure = false;
     this.showModalProdure();
+
     this.formProcedure.patchValue({
       ten_quy_trinh: item.ten_quy_trinh,
       ghi_chu: item.ghi_chu,
       template: item.template,
-      ngay_bat_dau: this.pipe.transform(item.ngay_bat_dau, "yyyy-MM-dd"),
-      ngay_ket_thuc: this.pipe.transform(item.ngay_ket_thuc, "yyyy-MM-dd")
+      day: this.getDay(item.thoi_gian_xu_ly).day,
+      hour: this.getDay(item.thoi_gian_xu_ly).hour
     })
   }
 
@@ -270,9 +275,11 @@ export class ProcedureComponent extends ScriptService implements OnInit {
           ten_quy_trinh: this.formProcedure.value.ten_quy_trinh,
           ghi_chu: this.formProcedure.value.ghi_chu,
           template: this.formProcedure.value.template,
-          ngay_bat_dau: this.pipe.transform(this.formProcedure.value.ngay_bat_dau, "yyyy-MM-dd"),
-          ngay_ket_thuc: this.pipe.transform(this.formProcedure.value.ngay_ket_thuc, "yyyy-MM-dd")
+          // day: this.formProcedure.value.day,
+          // hour: this.formProcedure.value.hour,
+          thoi_gian_xu_ly: this.getTime(this.formProcedure.value.day, this.formProcedure.value.hour)
         })
+
         this.hideModalProcedure();
         this.messageService.add({
           severity: 'success',
@@ -287,8 +294,9 @@ export class ProcedureComponent extends ScriptService implements OnInit {
       this.itemEditProcedure.ten_quy_trinh = this.formProcedure.value.ten_quy_trinh;
       this.itemEditProcedure.ghi_chu = this.formProcedure.value.ghi_chu;
       this.itemEditProcedure.template = this.formProcedure.value.template;
-      this.itemEditProcedure.ngay_bat_dau = this.pipe.transform(this.formProcedure.value.ngay_bat_dau, "yyyy-MM-dd");
-      this.itemEditProcedure.ngay_ket_thuc = this.pipe.transform(this.formProcedure.value.ngay_bat_dau, "yyyy-MM-dd");
+      // this.itemEditProcedure.day = this.formProcedure.value.day;
+      // this.itemEditProcedure.hour = this.formProcedure.value.hour;
+      this.itemEditProcedure.thoi_gian_xu_ly = this.getTime(this.formProcedure.value.day, this.formProcedure.value.hour)
       this.hideModalProcedure();
       this.messageService.add({
         severity: 'success',
@@ -420,6 +428,16 @@ export class ProcedureComponent extends ScriptService implements OnInit {
       summary: 'Thành công!',
       detail: "Cập nhật trạng thái bước thành công!"
     });
+  }
+
+  getTime(day, hour) {
+    return Number(day) * 86400 + Number(hour) * 3600;
+  }
+
+  getDay(time) {
+    let day = Math.floor(time/86400);
+    let hour = time % 86400 / 3600;
+    return {day : day, hour: hour};
   }
 }
 
