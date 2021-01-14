@@ -63,9 +63,11 @@ class Route {
         $controllerName = $funcs[0];
         $methodName = $funcs[1];
 
-        $file = _ROOT."/../app/Controllers/{$controllerName}.php";
+        $fileName = str_replace('\\', '/', $controllerName);
+
+        $file = _ROOT."/../app/Controllers/{$fileName}.php";
         if(!file_exists($file)) {
-            throw new Exception("{$controllerName} not found");
+            throw new Exception("{$fileName} not found");
         }
 
         require_once $file;
