@@ -90,6 +90,11 @@ class File {
         return file_exists($attachment_location);
     }
 
+    public static function get_file($path) {
+        $attachment_location = _ROOT.'/../public'.$path;
+        return file_get_contents($attachment_location);
+    }
+
     public static function fileRender($path) {
         $attachment_location = _ROOT.'/../public'.$path;
 
