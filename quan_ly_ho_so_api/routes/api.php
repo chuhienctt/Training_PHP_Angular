@@ -32,6 +32,15 @@ Route::group([
         Route::get('/get', 'User\LinhVucController@get');
 
     });
+
+    
+    Route::group([
+        'prefix' => '/ho-so'
+    ], function () {
+
+        Route::get('/get-template', 'User\HoSoController@get_template');
+
+    });
     
 
     Route::post('/admin/auth/login', 'Admin\AdminController@login');
