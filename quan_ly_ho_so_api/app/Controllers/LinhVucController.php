@@ -58,6 +58,9 @@ class LinhVucController extends Controller {
                 'required' => 'Vui lòng chọn một hình ảnh',
                 'base64' => 'File không đúng định dạng base64',
             ],
+            'icon' => [
+                'required' => 'Vui lòng chọn một hình ảnh',
+            ],
         ]);
         
         $file = File::createBase64(request()->hinh_anh);
@@ -74,6 +77,7 @@ class LinhVucController extends Controller {
         $linh_vuc->code = request()->code;
         $linh_vuc->ten_linh_vuc = request()->ten_linh_vuc;
         $linh_vuc->mo_ta = request()->mo_ta ?? null;
+        $linh_vuc->icon = request()->icon;
         $linh_vuc->hinh_anh = '/linh-vuc-images/'.$file->getFileName();
 
         DB::beginTransaction();
@@ -132,6 +136,9 @@ class LinhVucController extends Controller {
             'mo_ta' => [
                 'max:255' => 'Mô tả không quá 255 kí tự',
             ],
+            'icon' => [
+                'required' => 'Vui lòng chọn một hình ảnh',
+            ],
         ]);
 
         $linh_vuc = model('LinhVuc')->find(request()->id);
@@ -152,6 +159,7 @@ class LinhVucController extends Controller {
         $linh_vuc->code = request()->code;
         $linh_vuc->ten_linh_vuc = request()->ten_linh_vuc;
         $linh_vuc->mo_ta = request()->mo_ta ?? null;
+        $linh_vuc->icon = request()->icon;
 
         DB::beginTransaction();
         
