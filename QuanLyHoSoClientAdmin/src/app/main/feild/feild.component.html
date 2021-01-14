@@ -112,6 +112,18 @@
               </div>
             </div>
             <div class="row">
+              <label class="col-sm-4 col-form-label">Tên icon</label>
+              <div class="col-sm-8">
+                <div class="form-group bmd-form-group">
+                  <input class="form-control" type="text" formControlName="icon">
+                  <div *ngIf="submitted && form.controls.icon.errors">
+                    <small class="error" *ngIf="form.controls.icon.errors.required">Icon không được lớn hơn 250 ký tự.</small>
+                    <small class="error" *ngIf="form.controls.icon.errors.maxlength">Chưa nhập tên icon.</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
               <label class="col-sm-4 col-form-label">Cơ quan <span class="text-danger">*</span></label>
               <div class="col-sm-8">
                 <div class="form-group bmd-form-group">
@@ -129,7 +141,7 @@
               <div class="col-sm-8">
                 <div class="fileinput fileinput-new text-center" data-provides="fileinput">
                   <div class="fileinput-new thumbnail">
-                    <img [src]="image" id="#img_demo" alt="...">
+                    <img src="{{ image }}" id="#img_demo" alt="...">
                   </div>
                   <div class="fileinput-preview fileinput-exists thumbnail"></div>
                   <div>

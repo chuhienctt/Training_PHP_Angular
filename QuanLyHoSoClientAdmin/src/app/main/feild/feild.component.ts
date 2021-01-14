@@ -58,6 +58,7 @@ export class FeildComponent extends ScriptService implements OnInit {
     this.form = this.formBuilder.group({
       id: [''],
       ten_linh_vuc: ['', [Validators.required, Validators.maxLength(200)]],
+      icon: ['', [Validators.required, Validators.maxLength(255)]],
       code: ['', [Validators.required, Validators.maxLength(255)]],
       mo_ta: ['', [Validators.maxLength(250)]],
       co_quan: ['']
@@ -95,6 +96,7 @@ export class FeildComponent extends ScriptService implements OnInit {
         ten_linh_vuc: res.ten_linh_vuc,
         code: res.code,
         mo_ta: res.mo_ta,
+        icon: res.icon,
         co_quan: res.co_quan.map(e => { return e.id })
       })
       this.image = new GetImagePipe().transform(res.hinh_anh);
