@@ -1,15 +1,16 @@
-import {Component, Injector, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {AddressService} from "../../../services/address.service";
-import {MessageService} from "primeng/api";
-import {ActivatedRoute, Router} from "@angular/router";
-import {Location} from "@angular/common";
-import {ScriptService} from "../../../libs/script.service";
-import {OrganService} from "../../../services/organ.service";
-import {GroupService} from "../../../services/group.service";
-import {UserService} from "../../../services/user.service";
+import { Component, Injector, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { AddressService } from "../../../services/address.service";
+import { MessageService } from "primeng/api";
+import { ActivatedRoute, Router } from "@angular/router";
+import { Location } from "@angular/common";
+import { ScriptService } from "../../../libs/script.service";
+import { OrganService } from "../../../services/organ.service";
+import { GroupService } from "../../../services/group.service";
+import { UserService } from "../../../services/user.service";
+import { ShareService } from 'src/app/services/share.service';
 
-declare var $:any;
+declare var $: any;
 
 @Component({
   selector: 'app-group',
@@ -35,7 +36,8 @@ export class GroupComponent extends ScriptService implements OnInit {
     private formBuilder: FormBuilder,
     private messageService: MessageService,
     private groupService: GroupService,
-    private userService: UserService
+    private userService: UserService,
+    private shareService: ShareService
   ) {
     super(injector)
   }
@@ -49,7 +51,7 @@ export class GroupComponent extends ScriptService implements OnInit {
     }
     this.loadScripts();
 
-    this.loadData({first: this.first, rows: this.rows});
+    this.loadData({ first: this.first, rows: this.rows });
 
     this.form = this.formBuilder.group({
       id: [''],
@@ -57,7 +59,7 @@ export class GroupComponent extends ScriptService implements OnInit {
       id_co_quan: ['', [Validators.required]]
     })
 
-    this.organService.getAll().subscribe((res:any) => {
+    this.organService.getAll().subscribe((res: any) => {
       this.listOrgan = res.filter(e => {
         return e.deleted_at == null;
       });
@@ -74,9 +76,9 @@ export class GroupComponent extends ScriptService implements OnInit {
   }
 
   getUser(id_co_quan) {
-    this.userService.getUser(id_co_quan).subscribe((res:any) => {
+    this.userService.getUser(id_co_quan).subscribe((res: any) => {
       this.listUser1 = res.filter(e => {
-        return e.deleted_at == null && e.role == 2 && this.listUser2.filter(x => { return x.id == e.id}).length == 0;
+        return e.deleted_at == null && e.role == 2 && this.listUser2.filter(x => { return x.id == e.id }).length == 0;
       });
     })
   }
@@ -86,7 +88,7 @@ export class GroupComponent extends ScriptService implements OnInit {
     this.form.controls.id_co_quan.disable();
     this.aoe = false;
     $("#myModal").modal("show");
-    this.groupService.get(id).subscribe((data:any) => {
+    this.groupService.get(id).subscribe((data: any) => {
       this.form.patchValue({
         id: data.id,
         ten_nhom: data.ten_nhom,
@@ -101,12 +103,14 @@ export class GroupComponent extends ScriptService implements OnInit {
 
   delete(id) {
     if (confirm("Bạn muốn xóa nhóm này?")) {
+      this.shareService.openLoading();
       this.groupService.delete(id).subscribe((res: any) => {
-        this.loadData({first: this.first, rows: this.rows});
-        this.messageService.add({severity: 'success', summary: 'Thành công!', detail: "Xoá nhóm thành công!"});
+        this.shareService.closeLoading();
+        this.loadData({ first: this.first, rows: this.rows });
+        this.messageService.add({ severity: 'success', summary: 'Thành công!', detail: "Xoá nhóm thành công!" });
       }, err => {
-        console.log(err)
-        this.messageService.add({severity: 'error', summary: 'Thất bại!', detail: err.error.message});
+        this.shareService.closeLoading();
+        this.messageService.add({ severity: 'error', summary: 'Thất bại!', detail: err.error.message });
       })
     }
   }
@@ -129,23 +133,28 @@ export class GroupComponent extends ScriptService implements OnInit {
       return e.id;
     });
     if (this.aoe == true) {
+      this.shareService.openLoading();
       this.groupService.create(this.form.value).subscribe((res: any) => {
+        this.shareService.closeLoading();
         this.submitted = false;
-        this.loadData({first: this.first, rows: this.rows});
+        this.loadData({ first: this.first, rows: this.rows });
         $("#myModal").modal("hide");
-        this.messageService.add({severity: 'success', summary: 'Thành công!', detail: "Thêm nhóm thành công!"});
+        this.messageService.add({ severity: 'success', summary: 'Thành công!', detail: "Thêm nhóm thành công!" });
       }, err => {
-        this.messageService.add({severity: 'error', summary: 'Thất bại!', detail: err.error.message});
+        this.shareService.closeLoading();
+        this.messageService.add({ severity: 'error', summary: 'Thất bại!', detail: err.error.message });
       })
     } else {
+      this.shareService.openLoading();
       this.groupService.update(this.form.value).subscribe((res: any) => {
+        this.shareService.closeLoading();
         this.submitted = false;
-        this.loadData({first: this.first, rows: this.rows});
+        this.loadData({ first: this.first, rows: this.rows });
         $("#myModal").modal("hide");
-        this.messageService.add({severity: 'success', summary: 'Thành công!', detail: "Sửa nhóm thành công!"});
+        this.messageService.add({ severity: 'success', summary: 'Thành công!', detail: "Sửa nhóm thành công!" });
       }, err => {
-        console.log(err)
-        this.messageService.add({severity: 'error', summary: 'Thất bại!', detail: err.error.message});
+        this.shareService.closeLoading();
+        this.messageService.add({ severity: 'error', summary: 'Thất bại!', detail: err.error.message });
       })
     }
   }
@@ -153,28 +162,33 @@ export class GroupComponent extends ScriptService implements OnInit {
   status(event) {
     if (event.target.checked == true) {
       if (confirm("Bạn muốn hiện nhóm này?")) {
-        this.groupService.unDelete(event.target.value).subscribe((res:any) => {
+        this.shareService.openLoading();
+        this.groupService.unDelete(event.target.value).subscribe((res: any) => {
+          this.shareService.closeLoading();
           // this.loadData({first: this.first, rows: this.rows});
-          this.messageService.add({severity: 'success', summary: 'Thành công!', detail: "Hiển thị nhóm thành công!"});
+          this.messageService.add({ severity: 'success', summary: 'Thành công!', detail: "Hiển thị nhóm thành công!" });
         }, err => {
-          console.log(err);
-          this.loadData({first: this.first, rows: this.rows});
-          this.messageService.add({severity: 'error', summary: 'Thất bại!', detail: err.error.message});
+          this.shareService.closeLoading();
+          this.loadData({ first: this.first, rows: this.rows });
+          this.messageService.add({ severity: 'error', summary: 'Thất bại!', detail: err.error.message });
         })
       } else {
-        this.loadData({first: this.first, rows: this.rows});
+        this.loadData({ first: this.first, rows: this.rows });
       }
     } else {
       if (confirm("Bạn muốn ẩn nhóm này?")) {
-        this.groupService.delete(event.target.value).subscribe((res:any) => {
+        this.shareService.openLoading();
+        this.groupService.delete(event.target.value).subscribe((res: any) => {
+          this.shareService.closeLoading();
           // this.loadData({first: this.first, rows: this.rows});
-          this.messageService.add({severity: 'success', summary: 'Thành công!', detail: "Ẩn nhóm thành công!"});
+          this.messageService.add({ severity: 'success', summary: 'Thành công!', detail: "Ẩn nhóm thành công!" });
         }, err => {
-          this.loadData({first: this.first, rows: this.rows});
-          this.messageService.add({severity: 'error', summary: 'Thất bại!', detail: err.error.message});
+          this.shareService.closeLoading();
+          this.loadData({ first: this.first, rows: this.rows });
+          this.messageService.add({ severity: 'error', summary: 'Thất bại!', detail: err.error.message });
         })
       } else {
-        this.loadData({first: this.first, rows: this.rows});
+        this.loadData({ first: this.first, rows: this.rows });
       }
     }
   }
