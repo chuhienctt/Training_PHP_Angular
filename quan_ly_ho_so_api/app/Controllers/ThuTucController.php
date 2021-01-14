@@ -140,6 +140,7 @@ class ThuTucController extends Controller {
                     $qt_new->ten_quy_trinh = $qt['ten_quy_trinh'];
                     $qt_new->ghi_chu = $qt['ghi_chu'];
                     $qt_new->template = $qt['template'];
+                    $qt_new->icon = $qt['icon'];
                     $qt_new->thoi_gian_xu_ly = $qt['thoi_gian_xu_ly'];
 
                     if($qt_new->save()) {
@@ -266,6 +267,7 @@ class ThuTucController extends Controller {
                         $qt_new->ten_quy_trinh = $qt['ten_quy_trinh'];
                         $qt_new->ghi_chu = $qt['ghi_chu'];
                         $qt_new->template = $qt['template'];
+                        $qt_new->icon = $qt['icon'];
                         $qt_new->thoi_gian_xu_ly = $qt['thoi_gian_xu_ly'];
                         $qt_new->deleted_at = isset($qt['deleted_at']) && $qt['deleted_at'] ? Format::timeNow() : NULL;
 
@@ -278,6 +280,7 @@ class ThuTucController extends Controller {
                         $qt_new->ten_quy_trinh = $qt['ten_quy_trinh'];
                         $qt_new->ghi_chu = $qt['ghi_chu'];
                         $qt_new->template = $qt['template'];
+                        $qt_new->icon = $qt['icon'];
                         $qt_new->thoi_gian_xu_ly = $qt['thoi_gian_xu_ly'];
 
                     }

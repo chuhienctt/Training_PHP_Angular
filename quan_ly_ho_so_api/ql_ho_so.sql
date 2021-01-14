@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th1 11, 2021 lúc 08:00 AM
+-- Thời gian đã tạo: Th1 14, 2021 lúc 04:58 AM
 -- Phiên bản máy phục vụ: 10.4.14-MariaDB
 -- Phiên bản PHP: 7.4.11
 
@@ -61,8 +61,8 @@ CREATE TABLE `co_quan` (
 --
 
 INSERT INTO `co_quan` (`id`, `code`, `ten_co_quan`, `dia_chi`, `email`, `so_dien_thoai`, `hinh_anh`, `ward_id`, `created_at`, `deleted_at`) VALUES
-(4, '', 'ten co quan 1', 'xom 1', 'coquan1@gmail.com', '0987654321', '/', 1, '2020-12-23 02:06:58', NULL),
-(5, '', 'ten co quan 2', 'xom 2', 'coquan2@gmail.com', '0987654321', '/', 2, '2020-12-23 07:39:03', NULL);
+(4, 'CQ0001', 'ten co quan 1', 'xom 1', 'coquan1@gmail.com', '0987654321', '/co-quan-images/7b00b17aabcedc694433b768e8488076d79ff876.jpg', 1, '2020-12-23 02:06:58', NULL),
+(5, 'CQ0002', 'ten co quan 2', 'xom 2', 'coquan2@gmail.com', '0987654321', '/co-quan-images/56515ff5b230be2cce2a2bec43bf78ca3ebfb05a.jpg', 775, '2020-12-23 07:39:03', NULL);
 
 -- --------------------------------------------------------
 
@@ -81,11 +81,14 @@ CREATE TABLE `co_quan_linh_vuc` (
 --
 
 INSERT INTO `co_quan_linh_vuc` (`id`, `id_co_quan`, `id_linh_vuc`) VALUES
-(29, 4, 20),
-(30, 4, 21),
-(31, 5, 21),
-(36, 4, 24),
-(37, 5, 24);
+(41, 4, 20),
+(42, 4, 21),
+(43, 4, 24),
+(46, 5, 21),
+(47, 5, 24),
+(52, 4, 17),
+(53, 4, 18),
+(54, 5, 18);
 
 -- --------------------------------------------------------
 
@@ -825,10 +828,13 @@ INSERT INTO `district` (`id`, `name`, `type`, `province_id`, `deleted_at`) VALUE
 
 CREATE TABLE `ho_so` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `id_thu_tuc` bigint(20) UNSIGNED NOT NULL,
+  `id_quy_trinh` bigint(20) UNSIGNED NOT NULL,
+  `id_buoc` bigint(20) DEFAULT NULL,
+  `code` char(255) DEFAULT NULL,
   `thong_tin` longtext NOT NULL,
   `trang_thai` tinyint(4) NOT NULL,
   `ghi_chu` varchar(255) DEFAULT NULL,
+  `thoi_han_xu_ly` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
   `created_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -845,6 +851,7 @@ CREATE TABLE `linh_vuc` (
   `ten_linh_vuc` varchar(200) NOT NULL,
   `hinh_anh` varchar(255) NOT NULL,
   `mo_ta` varchar(255) DEFAULT '',
+  `icon` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -853,12 +860,12 @@ CREATE TABLE `linh_vuc` (
 -- Đang đổ dữ liệu cho bảng `linh_vuc`
 --
 
-INSERT INTO `linh_vuc` (`id`, `code`, `ten_linh_vuc`, `hinh_anh`, `mo_ta`, `created_at`, `deleted_at`) VALUES
-(17, 'LV0001', 'lĩnh vực đã sửax', '/linh-vuc-images/c79cd4295b7ce8300dd1eff9103d92f13eb41430.png', 'mô tả đã sửa', '2020-12-10 08:57:35', '2020-12-10 15:29:31'),
-(18, 'LV0002', 'lĩnh vực 4', '/linh-vuc-images/5e1f76ffee5ca090bbd9cff7448ac6b8efa41f9c.png', 'mô tả đã sửa', '2020-12-10 15:19:42', NULL),
-(20, '', 'lĩnh vực 1', '/linh-vuc-images/22d8c5edbf57a03198be66e302da7ac2866ffc3c.jpg', 'mo ta', '2020-12-23 07:37:46', NULL),
-(21, '', 'lĩnh vực 2', '/linh-vuc-images/d58fbee5da2ed0ca94c3123e3cbffd6d38984138.jpg', 'mo ta', '2020-12-23 07:39:44', NULL),
-(24, '', 'lĩnh vực 3', '/linh-vuc-images/ee7ab087486244ed1d374e14b9cb78a6b143d5ed.jpg', 'mo ta', '2020-12-23 07:41:27', NULL);
+INSERT INTO `linh_vuc` (`id`, `code`, `ten_linh_vuc`, `hinh_anh`, `mo_ta`, `icon`, `created_at`, `deleted_at`) VALUES
+(17, 'LV0001', 'lĩnh vực đã sửax', '/linh-vuc-images/b831f3967560080e284baddad3e734903a9afa80.jpg', 'mô tả đã sửa', NULL, '2020-12-10 08:57:35', NULL),
+(18, 'LV0002', 'lĩnh vực 4', '/linh-vuc-images/6de0bf728e06c8b6523be6f4c86c7f37c4a90d8f.jpg', 'mô tả đã sửa', NULL, '2020-12-10 15:19:42', NULL),
+(20, '', 'lĩnh vực 1', '/linh-vuc-images/22d8c5edbf57a03198be66e302da7ac2866ffc3c.jpg', 'mo ta', NULL, '2020-12-23 07:37:46', NULL),
+(21, '', 'lĩnh vực 2', '/linh-vuc-images/d58fbee5da2ed0ca94c3123e3cbffd6d38984138.jpg', 'mo ta', NULL, '2020-12-23 07:39:44', NULL),
+(24, '', 'lĩnh vực 3', '/linh-vuc-images/ee7ab087486244ed1d374e14b9cb78a6b143d5ed.jpg', 'mo ta', NULL, '2020-12-23 07:41:27', NULL);
 
 -- --------------------------------------------------------
 
@@ -1055,11 +1062,11 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `id_co_quan`, `mat_khau`, `ho_ten`, `email`, `so_dien_thoai`, `dia_chi`, `ward_id`, `ngay_sinh`, `avatar`, `role`, `token`, `deleted_at`) VALUES
 (19, 4, '$2y$10$JYCdH8pHvihQ8urEcpIxj.o9XizbXa4Whebfe.IqlI0aFWv8cFXne', 'Nguyễn Đức Toàn', 'toannguyen@gmail.com', '386420313', 'thôn Minh Khai, xã Đại Tập, huyện Khoái Châu, tỉnh Hưng Yên', NULL, '1999-01-08', '/avatar/no-avatar.jpg', 2, 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MDg1MTUzMzIsImV4cCI6MTYwODYwMTczMiwiZGF0YSI6IjMxIn0.tKXKcq-C3hFYtj5wv4kU8JuS-VrbW1fWkmTQ5jtayxc', NULL),
-(21, 4, '$2y$10$Md9AGnyz.Aha7C5d4B4wX.WzaEbPYKVv.MtZEqHM1TUxR5SspA0vC', 'Nguyễn Đức Toàn', 'toannguyen1@gmail.com', '386420310', 'thôn Minh Khai, xã Đại Tập, huyện Khoái Châu, tỉnh Hưng Yên', NULL, '1999-01-08', '/avatar/no-avatar.jpg', 2, 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MDg1MTUzMzIsImV4cCI6MTYwODYwMTczMiwiZGF0YSI6IjMxIn0.tKXKcq-C3hFYtj5wv4kU8JuS-VrbW1fWkmTQ5jtayxc', NULL),
+(21, 4, '$2y$10$FeYuEgIU0uHcb9dEL7AaBuCaDncxZPLzzbFi73rQHM4mWQvVK7AHq', 'Nguyễn Đức Toàn', 'toannguyen1@gmail.com', '386420310', 'thôn Minh Khai, xã Đại Tập, huyện Khoái Châu, tỉnh Hưng Yên', 1396, '1999-01-08', '/avatar/no-avatar.jpg', 2, 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MDg1MTUzMzIsImV4cCI6MTYwODYwMTczMiwiZGF0YSI6IjMxIn0.tKXKcq-C3hFYtj5wv4kU8JuS-VrbW1fWkmTQ5jtayxc', NULL),
 (29, 4, '$2y$10$1xeIQVYcQ5xj6tJDIwMeS.WF5naLB31SOFiqRN3sX7NbyvGDyGBRe', 'Nguyễn Đức Toàn', 'toannguyen2@gmail.com', '0386420311', 'thôn Minh Khai, xã Đại Tập, huyện Khoái Châu, tỉnh Hưng Yên', NULL, '1999-01-08', '/avatar/no-avatar.jpg', 2, 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MDg1MTUzMzIsImV4cCI6MTYwODYwMTczMiwiZGF0YSI6IjMxIn0.tKXKcq-C3hFYtj5wv4kU8JuS-VrbW1fWkmTQ5jtayxc', NULL),
 (30, NULL, '$2y$10$omYyXxmrejfkKC2bQGuzd.znAZMveKuZ6/mj8JAylHjyIaBYDsBPy', 'Nguyễn Đức Toàn', 'toannguyen3@gmail.com', '0386420310', 'đội 9', 12262, '1999-01-08', '/avatar/ad95168f5819eb99289d1f739f687c96bc8002d3.jpeg', 1, 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MDg1MTUzMzIsImV4cCI6MTYwODYwMTczMiwiZGF0YSI6IjMxIn0.tKXKcq-C3hFYtj5wv4kU8JuS-VrbW1fWkmTQ5jtayxc', NULL),
-(31, NULL, '$2y$10$3uwMSXNadaoTybnQLurOpOtyvIzpBVnB15k.9Zw0rEIWfBCszr5UC', 'Nguyễn Đức Toàn', 'toannguyen080199@gmail.com', '0987654322', 'Xóm 9', 12262, '1999-01-08', '/avatar/65e6ec2ca66cfbcb488ebfe51fa0e61f9bd74fec.jpg', 3, 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTAzMzA3MDksImV4cCI6MTYxMDQxNzEwOSwiZGF0YSI6IjMxIn0.QnR1vEpbdI-vJ2Lq45bw4bj8aSnADYV3qAxIE0XMTLE', NULL),
-(32, NULL, '$2y$10$3uwMSXNadaoTybnQLurOpOtyvIzpBVnB15k.9Zw0rEIWfBCszr5UC', 'Đào Xuân Vũ', 'vu140999@gmail.com', '0987654321', 'x', 12262, '2021-01-11', '/avatar/65e6ec2ca66cfbcb488ebfe51fa0e61f9bd74fec.jpg', 3, NULL, NULL);
+(31, NULL, '$2y$10$3uwMSXNadaoTybnQLurOpOtyvIzpBVnB15k.9Zw0rEIWfBCszr5UC', 'Nguyễn Đức Toàn', 'toannguyen080199@gmail.com', '0987654322', 'Xóm 9', 12262, '1999-01-08', '/avatar/4e315d1323caaa93a7b51be907b74dc674621862.jpg', 3, NULL, NULL),
+(32, NULL, '$2y$10$dI3rxZ38B3nOelUpMK/H6.ErS6dIxThULCVIqcATVFo4Dq5lEWZ6S', 'Đào Xuân Vũ', 'vu140999@gmail.com', '0987654321', 'x', 12262, '2021-01-11', '/avatar/65e6ec2ca66cfbcb488ebfe51fa0e61f9bd74fec.jpg', 3, 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTA1OTY1MDEsImV4cCI6MTYxMDY4MjkwMSwiZGF0YSI6IjMyIn0.n9Gx9n_9tp6T1Pv6Sd8OTs5ChTspH1T1lUvKVo0RpR4', NULL);
 
 -- --------------------------------------------------------
 
@@ -12289,7 +12296,7 @@ ALTER TABLE `district`
 --
 ALTER TABLE `ho_so`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `id_thu_tuc` (`id_thu_tuc`);
+  ADD KEY `id_quy_trinh` (`id_quy_trinh`);
 
 --
 -- Chỉ mục cho bảng `linh_vuc`
@@ -12365,7 +12372,7 @@ ALTER TABLE `co_quan`
 -- AUTO_INCREMENT cho bảng `co_quan_linh_vuc`
 --
 ALTER TABLE `co_quan_linh_vuc`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
 
 --
 -- AUTO_INCREMENT cho bảng `district`
@@ -12449,7 +12456,7 @@ ALTER TABLE `co_quan_linh_vuc`
 -- Các ràng buộc cho bảng `ho_so`
 --
 ALTER TABLE `ho_so`
-  ADD CONSTRAINT `ho_so_ibfk_1` FOREIGN KEY (`id_thu_tuc`) REFERENCES `thu_tuc` (`id`);
+  ADD CONSTRAINT `ho_so_ibfk_1` FOREIGN KEY (`id_quy_trinh`) REFERENCES `quy_trinh` (`id`);
 
 --
 -- Các ràng buộc cho bảng `nhom`
