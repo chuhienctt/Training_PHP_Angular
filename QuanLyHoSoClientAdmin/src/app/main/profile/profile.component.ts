@@ -1,13 +1,14 @@
-import {Component, Injector, OnInit} from '@angular/core';
-import {ScriptService} from "../../libs/script.service";
-import {AdminService} from "../../services/admin.service";
-import {environment} from "../../../environments/environment";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {DatePipe} from "@angular/common";
-import {AddressService} from "../../services/address.service";
-import {MessageService} from "primeng/api";
-import {FileService} from "../../libs/file.service";
-declare var $:any;
+import { Component, Injector, OnInit } from '@angular/core';
+import { ScriptService } from "../../libs/script.service";
+import { AdminService } from "../../services/admin.service";
+import { environment } from "../../../environments/environment";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { DatePipe } from "@angular/common";
+import { AddressService } from "../../services/address.service";
+import { MessageService } from "primeng/api";
+import { FileService } from "../../libs/file.service";
+import { ShareService } from 'src/app/services/share.service';
+declare var $: any;
 
 @Component({
   selector: 'app-profile',
@@ -31,7 +32,8 @@ export class ProfileComponent extends ScriptService implements OnInit {
     private formBuilder: FormBuilder,
     private addressService: AddressService,
     private messageService: MessageService,
-    private fileService: FileService
+    private fileService: FileService,
+    private shareService: ShareService
   ) {
     super(injector)
   }
@@ -46,17 +48,17 @@ export class ProfileComponent extends ScriptService implements OnInit {
     }
 
     this.form = this.formBuilder.group({
-      email: [{value: '', disabled: true}],
+      email: [{ value: '', disabled: true }],
       ho_ten: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(100)]],
       so_dien_thoai: ['', [Validators.required, Validators.pattern('^(0)[0-9]{9}$')]],
       dia_chi: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(150)]],
       ngay_sinh: ['', [Validators.required]],
-      city: ['', ],
-      district: ['', ],
+      city: ['',],
+      district: ['',],
       commune: ['', Validators.required]
     })
 
-    this.addressService.getAddress(this.User.ward_id).subscribe((data:any) => {
+    this.addressService.getAddress(this.User.ward_id).subscribe((data: any) => {
       this.listProvince = data.list_province.filter(e => {
         return e.deleted_at == null;
       });
@@ -83,7 +85,7 @@ export class ProfileComponent extends ScriptService implements OnInit {
   }
 
   getDistrict(id) {
-    this.addressService.getDistrict(id).subscribe((res:any) => {
+    this.addressService.getDistrict(id).subscribe((res: any) => {
       this.listDistrict = res.filter(e => {
         return e.deleted_at == null;
       });
@@ -91,7 +93,7 @@ export class ProfileComponent extends ScriptService implements OnInit {
   }
 
   getCommune(id) {
-    this.addressService.getCommune(id).subscribe((res:any) => {
+    this.addressService.getCommune(id).subscribe((res: any) => {
       this.listCommune = res.filter(e => {
         return e.deleted_at == null;
       });
@@ -129,14 +131,15 @@ export class ProfileComponent extends ScriptService implements OnInit {
       if (data != null) {
         profile.avatar = data;
       }
-
-      this.adminService.update(profile).subscribe((res:any) => {
+      this.shareService.openLoading();
+      this.adminService.update(profile).subscribe((res: any) => {
+        this.shareService.closeLoading();
         localStorage.setItem("jwt", JSON.stringify(res.data));
         this.adminService.input(res.data);
-        this.messageService.add({severity: 'success', summary: 'Thành công!', detail: "Cập nhật thông tin thành công!"});
+        this.messageService.add({ severity: 'success', summary: 'Thành công!', detail: "Cập nhật thông tin thành công!" });
       }, err => {
-        console.log(err)
-        this.messageService.add({severity: 'error', summary: 'Thất bại!', detail: err.error.message});
+        this.shareService.closeLoading();
+        this.messageService.add({ severity: 'error', summary: 'Thất bại!', detail: err.error.message });
       })
     })
 

@@ -5,6 +5,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {MessageService} from "primeng/api";
 import {ScriptService} from "../../../libs/script.service";
 import {Location} from "@angular/common";
+import { ShareService } from 'src/app/services/share.service';
 
 declare var $:any;
 
@@ -30,7 +31,8 @@ export class DistrictComponent extends ScriptService implements OnInit {
     private messageService: MessageService,
     private router: Router,
     private route: ActivatedRoute,
-    private location: Location
+    private location: Location,
+    private shareService: ShareService
   ) {
     super(injector)
   }
@@ -78,11 +80,12 @@ export class DistrictComponent extends ScriptService implements OnInit {
 
   delete(id) {
     if (confirm("Bạn muốn xóa huyện này?")) {
+      this.shareService.openLoading();
       this.addressService.deleteDistrict(id).subscribe((res: any) => {
         this.loadData({first: this.first, rows: this.rows});
         this.messageService.add({severity: 'success', summary: 'Thành công!', detail: "Xoá huyện thành công!"});
       }, err => {
-        console.log(err)
+        this.shareService.closeLoading();
         this.messageService.add({severity: 'error', summary: 'Thất bại!', detail: err.error.message});
       })
     }
@@ -107,23 +110,27 @@ export class DistrictComponent extends ScriptService implements OnInit {
       province_id: this.route.snapshot.params['id']
     }
     if (this.aoe == true) {
+      this.shareService.openLoading();
       this.addressService.createDistrict(district).subscribe((res: any) => {
+        this.shareService.closeLoading();
         this.submitted = false;
         this.loadData({first: this.first, rows: this.rows});
         $("#myModal").modal("hide");
         this.messageService.add({severity: 'success', summary: 'Thành công!', detail: "Thêm huyện thành công!"});
       }, err => {
-        console.log(err)
+        this.shareService.closeLoading();
         this.messageService.add({severity: 'error', summary: 'Thất bại!', detail: err.error.message});
       })
     } else {
+      this.shareService.openLoading();
       this.addressService.updateDistrict(this.form.value.id, district).subscribe((res: any) => {
+        this.shareService.closeLoading();
         this.submitted = false;
         this.loadData({first: this.first, rows: this.rows});
         $("#myModal").modal("hide");
         this.messageService.add({severity: 'success', summary: 'Thành công!', detail: "Sửa huyện thành công!"});
       }, err => {
-        console.log(err)
+        this.shareService.closeLoading();
         this.messageService.add({severity: 'error', summary: 'Thất bại!', detail: err.error.message});
       })
     }
@@ -140,11 +147,13 @@ export class DistrictComponent extends ScriptService implements OnInit {
   status(event) {
     if (event.target.checked == true) {
       if (confirm("Bạn muốn hiện huyện này?")) {
+      this.shareService.openLoading();
         this.addressService.unDeleteDistrict(event.target.value).subscribe((res:any) => {
+        this.shareService.closeLoading();
           // this.loadData({first: this.first, rows: this.rows});
           this.messageService.add({severity: 'success', summary: 'Thành công!', detail: "Hiển thị huyện thành công!"});
         }, err => {
-          console.log(err);
+        this.shareService.closeLoading();
           this.loadData({first: this.first, rows: this.rows});
           this.messageService.add({severity: 'error', summary: 'Thất bại!', detail: err.error.message});
         })
@@ -153,10 +162,13 @@ export class DistrictComponent extends ScriptService implements OnInit {
       }
     } else {
       if (confirm("Bạn muốn ẩn huyện này?")) {
+      this.shareService.openLoading();
         this.addressService.deleteDistrict(event.target.value).subscribe((res:any) => {
+        this.shareService.closeLoading();
           // this.loadData({first: this.first, rows: this.rows});
           this.messageService.add({severity: 'success', summary: 'Thành công!', detail: "Ẩn huyện thành công!"});
         }, err => {
+        this.shareService.closeLoading();
           this.loadData({first: this.first, rows: this.rows});
           this.messageService.add({severity: 'error', summary: 'Thất bại!', detail: err.error.message});
         })
