@@ -16,11 +16,11 @@ if($_SERVER["REQUEST_METHOD"] == 'OPTIONS') {
     exit;
 }
 
-if($config['app']['debug']) {
-    error_reporting(E_ALL);
-    ini_set('display_errors', 1);
-    set_error_handler('errorHandler');
-}
+// if($config['app']['debug']) {
+//     error_reporting(E_ALL);
+//     ini_set('display_errors', 1);
+//     set_error_handler('errorHandler');
+// }
 
 define('_ROOT', __DIR__);
 
@@ -60,16 +60,16 @@ function getFiles($path, $ext) {
     });
 }
 
-function errorHandler($errno, $errstr, $errfile, $errline) {
-    header($_SERVER["SERVER_PROTOCOL"]." 417 Expectation Failed");
-    echo json_encode([
-        'status' => 99,
-        'message' => 'Lỗi hệ thống',
-        'data' => [
-            'level' => $errno,
-            'line' => $errline,
-            'error' => $errstr,
-            'file' => $errfile,
-        ]
-    ]);
-}
+// function errorHandler($errno, $errstr, $errfile, $errline) {
+//     header($_SERVER["SERVER_PROTOCOL"]." 417 Expectation Failed");
+//     echo json_encode([
+//         'status' => 99,
+//         'message' => 'Lỗi hệ thống',
+//         'data' => [
+//             'level' => $errno,
+//             'line' => $errline,
+//             'error' => $errstr,
+//             'file' => $errfile,
+//         ]
+//     ]);
+// }

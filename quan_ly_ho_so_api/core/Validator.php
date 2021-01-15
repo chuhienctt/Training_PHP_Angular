@@ -151,19 +151,25 @@ class Validator {
                         self::alert($field->name." không đúng định dạng");
                     }
                     break;
-                case 'file':
+                // case 'file':
 
-                    $check = false;
+                //     $check = false;
 
-                    if(gettype($value) === 'array') {
-                        foreach ($value as $file) {
-                            if(!self::check('base64', $file)) {
-                                $check = true;
-                            }
-                        }
-                    }
+                //     if(gettype($value) === 'array') {
+                //         foreach ($value as $file) {
+                //             if(!self::check('base64', $file)) {
+                //                 $check = true;
+                //             }
+                //         }
+                //     } else {
+                //         $check = true;
+                //     }
 
-                    break;
+                //     if($check) {
+                //         self::alert("Tệp đính kèm không đúng định dạng");
+                //     }
+
+                //     break;
             }
         }
     }

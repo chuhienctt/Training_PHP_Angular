@@ -38,6 +38,7 @@ Route::group([
     ], function () {
 
         Route::get('/get', 'User\ThuTucController@get');
+        Route::get('/pagination', 'User\ThuTucController@pagination');
 
     });
 
@@ -47,6 +48,7 @@ Route::group([
     ], function () {
 
         Route::get('/get-template', 'User\HoSoController@get_template');
+        Route::post('/create', 'User\HoSoController@create');
 
     });
     

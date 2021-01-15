@@ -25,8 +25,8 @@ class HoSoController extends Controller {
 
     public function get_template_object($name) {
         $data = [];
-        if(File::exists("/templates/".request()->name)) {
-            $file = File::get_file("/templates/".request()->name);
+        if(File::exists("/templates/".$name)) {
+            $file = File::get_file("/templates/".$name);
             $data = json_decode($file);
         }
         return $data;
@@ -45,6 +45,10 @@ class HoSoController extends Controller {
 
         $temp_object = $this->get_template_object($quy_trinh->template);
 
-        
+        Validator::template_validate($temp_object, request()->all());
+
+        // foreach ($temp_object as $key => $value) {
+        //     if()
+        // }
     }
 }
