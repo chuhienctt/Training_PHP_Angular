@@ -5,7 +5,7 @@ namespace App\Controller\User;
 use Core\Controller;
 use Core\Auth;
 use Core\Validator;
-use Core\Format;
+use App\Helpers\Format;
 use Core\File;
 use App\Models\Users;
 
