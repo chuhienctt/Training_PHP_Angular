@@ -55,9 +55,7 @@
                                             <li><a [routerLink]="['/']">Trang chủ</a></li>
                                             <li><a class="pages" href="#">Lĩnh vực</a>
                                                 <ul class="sub-menu">
-                                                    <li><a href="team.html">team</a></li>
-                                                    <li><a href="faq.html">FAQ</a></li>
-                                                    <li><a href="pricing.html">Pricing</a></li>
+                                                    <li><a [routerLink]="['/list', item.id]" *ngFor="let item of listFeild">{{item.ten_linh_vuc}}</a></li>
                                                 </ul>
                                             </li>
                                             <li><a >Liên hệ</a></li>

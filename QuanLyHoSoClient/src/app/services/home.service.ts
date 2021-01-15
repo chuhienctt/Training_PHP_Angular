@@ -3,7 +3,8 @@ import {HttpClient} from '@angular/common/http';
 import {environment} from "../../environments/environment";
 import {BehaviorSubject} from "rxjs";
 
-const baseUrl = environment.apiUrl + "auth/";
+const apiAuth = environment.apiUrl + "auth/";
+const baseUrl = environment.apiUrl;
 
 @Injectable({
   providedIn: 'root'
@@ -25,18 +26,22 @@ export class HomeService {
   }
 
   register(user) {
-    return this._http.post(baseUrl + "register", user);
+    return this._http.post(apiAuth + "register", user);
   }
 
   login(user) {
-    return this._http.post(baseUrl + "login", user);
+    return this._http.post(apiAuth + "login", user);
   }
 
   changePass(user) {
-    return this._http.post(baseUrl + "change-pass", user);
+    return this._http.post(apiAuth + "change-pass", user);
   }
 
   update(profile) {
-    return this._http.put(baseUrl + "update", profile);
+    return this._http.put(apiAuth + "update", profile);
+  }
+
+  getFeild() {
+    return this._http.get(baseUrl + "linh-vuc/get");
   }
 }

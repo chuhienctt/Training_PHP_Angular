@@ -12,6 +12,7 @@ declare var $: any;
 })
 export class HeaderComponent implements OnInit {
   isLogin = false;
+  listFeild = [];
 
   constructor(
     private jwtHelper: JwtHelperService,
@@ -25,6 +26,8 @@ export class HeaderComponent implements OnInit {
         this.homeService.currentUser = data;
       }
     })
+
+    this.getFeild();
   }
 
   get user() {
@@ -35,6 +38,12 @@ export class HeaderComponent implements OnInit {
     localStorage.removeItem("jwt");
     this.homeService.currentUser = null;
     this.router.navigate(["/login"]);
+  }
+
+  getFeild() {
+    this.homeService.getFeild().subscribe((res:any) => {
+      this.listFeild = res;
+    })
   }
 
 }

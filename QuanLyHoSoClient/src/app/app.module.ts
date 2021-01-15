@@ -12,19 +12,17 @@ import {HttpClientModule} from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {DropdownModule} from 'primeng/dropdown';
 import {CalendarModule} from 'primeng/calendar';
-import { ProcedureComponent } from './main/procedure/procedure.component';
-import { DetailComponent } from './main/detail/detail.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {ToastModule} from 'primeng/toast';
 import { JwtModule } from "@auth0/angular-jwt";
 import {environment} from "../environments/environment";
-import { MainComponent } from './main/main.component';
 import { ProfileComponent } from './main/profile/profile.component';
 import {FileUploadModule} from "primeng/fileupload";
 import { RegisterComponent } from './main/register/register.component';
 import { GetImagePipe } from './libs/get.image.pipe';
 import { NiceSelectModule } from "ng-nice-select";
 import { ChangepassComponent } from './main/changepass/changepass.component';
+import { ListComponent } from './main/list/list.component';
 
 export function tokenGetter() {
   let user = JSON.parse(localStorage.getItem("jwt"));
@@ -40,12 +38,10 @@ export function tokenGetter() {
     HeaderComponent,
     FooterComponent,
     MenuComponent,
-    ProcedureComponent,
-    DetailComponent,
-    MainComponent,
     ProfileComponent,
     RegisterComponent,
-    ChangepassComponent
+    ChangepassComponent,
+    ListComponent
   ],
   imports: [
     BrowserModule,

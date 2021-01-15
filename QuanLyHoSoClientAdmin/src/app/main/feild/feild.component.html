@@ -116,9 +116,10 @@
               <div class="col-sm-8">
                 <div class="form-group bmd-form-group">
                   <input class="form-control" type="text" formControlName="icon">
+                  <small>Hỗ trợ: <a href="https://fontawesome.com/icons?d=gallery" target="_blank">Font Awesome</a>, <a href="https://www.flaticon.com/" target="_blank">Flaticon</a>, <a href="https://themify.me/themify-icons" target="_blank">Themify</a></small>
                   <div *ngIf="submitted && form.controls.icon.errors">
-                    <small class="error" *ngIf="form.controls.icon.errors.required">Icon không được lớn hơn 250 ký tự.</small>
-                    <small class="error" *ngIf="form.controls.icon.errors.maxlength">Chưa nhập tên icon.</small>
+                    <small class="error" *ngIf="form.controls.icon.errors.required">Chưa nhập tên icon.</small>
+                    <small class="error" *ngIf="form.controls.icon.errors.maxlength">Icon không được lớn hơn 250 ký tự.</small>
                   </div>
                 </div>
               </div>

@@ -38,7 +38,6 @@
                 <div class="form-group">
                   <label>Họ tên</label>
                   <input type="text" class="form-control" formControlName="ho_ten">
-                  <input type="text" class="form-control" formControlName="ho_ten">
                   <div *ngIf="submitted && form.controls.ho_ten.errors">
                     <small class="error" *ngIf="form.controls.ho_ten.errors.required">Chưa nhập họ tên.</small>
                     <small class="error" *ngIf="form.controls.ho_ten.errors.minlength">Họ tên không được dưới 8 ký tự.</small>
