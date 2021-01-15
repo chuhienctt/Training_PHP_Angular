@@ -46,9 +46,6 @@ class HoSoController extends Controller {
         $temp_object = $this->get_template_object($quy_trinh->template);
 
         Validator::template_validate($temp_object, request()->all());
-
-        // foreach ($temp_object as $key => $value) {
-        //     if()
-        // }
+        
     }
 }

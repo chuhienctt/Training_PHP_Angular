@@ -46,6 +46,13 @@ foreach($files as $file) {
     $models[$modelName] =  new $class();
 }
 
+// autoload helpers
+$files = getFiles(_ROOT.'/../app/Helpers/', 'php');
+
+foreach($files as $file) {
+    require_once _ROOT.'/../app/Helpers/'.$file;
+}
+
 
 require_once "static.php";
 
