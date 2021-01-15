@@ -8,6 +8,7 @@ use Core\Validator;
 use Core\Format;
 use Core\DB;
 use Core\File;
+use App\Helpers\Pagination;
 use App\Models\ThuTuc;
 use App\Models\QuyTrinh;
 use App\Models\Buoc;
@@ -53,8 +54,8 @@ class ThuTucController extends Controller {
     }
 
     public function pagination() {
-        $first = request()->first ?? 0;
-        $row = request()->row ?? 10;
+        $page = request()->page ?? 1;
+        $pageSize = request()->pageSize ?? 10;
 
         $where = [
             'deleted_at' => NULL
@@ -64,17 +65,19 @@ class ThuTucController extends Controller {
             $where['id_linh_vuc'] = request()->id_linh_vuc;
         }
 
-        $data = model('ThuTuc')->where($where)->offset($first)->limit($row)->get();
+        $model = model('ThuTuc')->where($where);
 
-        // foreach($data as $tt) {
-        //     $tt->co_quan = $tt->co_quan();
-        //     $tt->linh_vuc = $tt->linh_vuc();
-        //     $tt->quy_trinh = $tt->quy_trinh();
-        // }
+        $paging = Pagination::create($model, $page, $pageSize);
+
+        foreach($paging['data'] as $tt) {
+            $tt->co_quan = $tt->co_quan();
+            $tt->linh_vuc = $tt->linh_vuc();
+            $tt->quy_trinh = $tt->quy_trinh();
+        }
 
         return response()->json([
-            'total' => model('ThuTuc')->where($where)->count(),
-            'data' => $data,
+            'total' => $paging['total_records'],
+            'data' => $paging['data'],
         ]);
     }
 }
