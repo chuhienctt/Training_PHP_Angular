@@ -33,6 +33,14 @@ Route::group([
 
     });
 
+    Route::group([
+        'prefix' => '/thu-tuc'
+    ], function () {
+
+        Route::get('/get', 'User\ThuTucController@get');
+
+    });
+
     
     Route::group([
         'prefix' => '/ho-so'

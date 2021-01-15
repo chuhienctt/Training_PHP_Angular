@@ -123,6 +123,51 @@ class Validator {
         return false;
     }
 
+    public static function template_validate($templates, $data) {
+        foreach ($templates as $key => $field) {
+            $value = $data[$field->name] ?? null;
+
+            switch ($field->type) {
+                case 'text':
+                    if(self::check('required', $value)) {
+                        self::alert($field->name." là bắt buộc");
+                    }
+                    if(self::check('max:255', $value)) {
+                        self::alert($field->name." quá 255 kí tự");
+                    }
+                    break;
+                case 'date':
+                    if(self::check('date', $value)) {
+                        self::alert($field->name." không đúng định dạng");
+                    }
+                    break;
+                case 'email':
+                    if(self::check('email', $value)) {
+                        self::alert($field->name." không đúng định dạng");
+                    }
+                    break;
+                case 'phone_number':
+                    if(self::check('phone_number', $value)) {
+                        self::alert($field->name." không đúng định dạng");
+                    }
+                    break;
+                case 'file':
+
+                    $check = false;
+
+                    if(gettype($value) === 'array') {
+                        foreach ($value as $file) {
+                            if(!self::check('base64', $file)) {
+                                $check = true;
+                            }
+                        }
+                    }
+
+                    break;
+            }
+        }
+    }
+
     public static function alert($text) {
         response()->error(0, $text, 422);
     }

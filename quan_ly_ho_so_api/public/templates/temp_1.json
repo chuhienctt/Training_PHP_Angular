@@ -1,9 +1,30 @@
-{
-    "ho_ten": "text",
-    "ngay_sinh": "date",
-    "dia_chi": "text",
-    "email": "email",
-    "so_dien_thoai": "phone_number",
-    "ly_do": "text",
-    "dinh_kem": "file"
-}
+[
+    {
+        "name": "ho_ten",
+        "type": "text"
+    },
+    {
+        "name": "ngay_sinh",
+        "type": "date"
+    },
+    {
+        "name": "dia_chi",
+        "type": "text"
+    },
+    {
+        "name": "email",
+        "type": "email"
+    },
+    {
+        "name": "so_dien_thoai",
+        "type": "phone_number"
+    },
+    {
+        "name": "ly_do",
+        "type": "text"
+    },
+    {
+        "name": "dinh_kem",
+        "type": "file"
+    }
+]
