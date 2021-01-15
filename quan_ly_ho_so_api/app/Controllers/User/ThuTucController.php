@@ -63,19 +63,16 @@ class ThuTucController extends Controller {
 
         if(request()->has('id_linh_vuc')) {
             $where['id_linh_vuc'] = request()->id_linh_vuc;
+
+            $linh_vuc = model('LinhVuc')->find(request()->id_linh_vuc);
         }
 
         $model = model('ThuTuc')->where($where);
 
         $paging = Pagination::create($model, $page, $pageSize);
 
-        foreach($paging['data'] as $tt) {
-            $tt->co_quan = $tt->co_quan();
-            $tt->linh_vuc = $tt->linh_vuc();
-            $tt->quy_trinh = $tt->quy_trinh();
-        }
-
         return response()->json([
+            'linh_vuc' => $linh_vuc,
             'total' => $paging['total_records'],
             'data' => $paging['data'],
         ]);
