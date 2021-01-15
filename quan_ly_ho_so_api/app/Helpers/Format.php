@@ -1,6 +1,6 @@
 <?php
 
-namespace Core;
+namespace App\Helpers;
 
 class Format {
     public static $dateFormat = "Y-m-d";
