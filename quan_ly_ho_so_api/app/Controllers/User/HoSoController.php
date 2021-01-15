@@ -8,6 +8,7 @@ use Core\Validator;
 use Core\Format;
 use Core\File;
 use Core\DB;
+use App\Helpers\Template;
 use App\Models\HoSo;
 use App\Models\QuyTrinh;
 
@@ -45,7 +46,7 @@ class HoSoController extends Controller {
 
         $temp_object = $this->get_template_object($quy_trinh->template);
 
-        Validator::template_validate($temp_object, request()->all());
-        
+        Template::validate($temp_object, request()->all());
+
     }
 }
