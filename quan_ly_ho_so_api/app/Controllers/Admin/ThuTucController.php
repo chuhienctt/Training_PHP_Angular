@@ -5,7 +5,7 @@ namespace App\Controller\Admin;
 use Core\Controller;
 use Core\Auth;
 use Core\Validator;
-use Core\Format;
+use App\Helpers\Format;
 use Core\DB;
 use Core\File;
 use App\Models\ThuTuc;
@@ -110,6 +110,7 @@ class ThuTucController extends Controller {
         $thu_tuc->id_linh_vuc = request()->id_linh_vuc;
         $thu_tuc->ten_thu_tuc = request()->ten_thu_tuc;
         $thu_tuc->muc_do = request()->muc_do;
+        $thu_tuc->mo_ta = request()->mo_ta;
 
         DB::beginTransaction();
         if($thu_tuc->save()) {
@@ -230,6 +231,7 @@ class ThuTucController extends Controller {
         $thu_tuc->id_linh_vuc = request()->id_linh_vuc;
         $thu_tuc->ten_thu_tuc = request()->ten_thu_tuc;
         $thu_tuc->muc_do = request()->muc_do;
+        $thu_tuc->mo_ta = request()->mo_ta;
 
         DB::beginTransaction();
         if($thu_tuc->save()) {

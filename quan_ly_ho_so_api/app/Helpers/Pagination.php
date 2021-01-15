@@ -3,8 +3,6 @@
 namespace App\Helpers;
 
 use Core\Validator;
-use Core\Format;
-use Core\File;
 
 class Pagination {
     public static function create($model, $page, $pageSize) {
