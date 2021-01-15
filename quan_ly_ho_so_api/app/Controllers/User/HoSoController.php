@@ -48,5 +48,8 @@ class HoSoController extends Controller {
 
         Template::validate($temp_object, request()->all());
 
+        $data = Template::get_data($temp_object, request()->all());
+
+        return response()->json($data);
     }
 }
