@@ -51,4 +51,30 @@ class ThuTucController extends Controller {
         
         return response()->json($data);
     }
+
+    public function pagination() {
+        $first = request()->first ?? 0;
+        $row = request()->row ?? 10;
+
+        $where = [
+            'deleted_at' => NULL
+        ];
+
+        if(request()->has('id_linh_vuc')) {
+            $where['id_linh_vuc'] = request()->id_linh_vuc;
+        }
+
+        $data = model('ThuTuc')->where($where)->offset($first)->limit($row)->get();
+
+        // foreach($data as $tt) {
+        //     $tt->co_quan = $tt->co_quan();
+        //     $tt->linh_vuc = $tt->linh_vuc();
+        //     $tt->quy_trinh = $tt->quy_trinh();
+        // }
+
+        return response()->json([
+            'total' => model('ThuTuc')->where($where)->count(),
+            'data' => $data,
+        ]);
+    }
 }
