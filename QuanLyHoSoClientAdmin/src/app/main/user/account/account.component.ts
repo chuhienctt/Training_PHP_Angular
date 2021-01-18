@@ -1,14 +1,15 @@
-import {Component, Injector, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {DatePipe} from "@angular/common";
-import {AdminService} from "../../../services/admin.service";
-import {UserService} from "../../../services/user.service";
-import {OrganService} from "../../../services/organ.service";
-import {AddressService} from "../../../services/address.service";
-import {MessageService} from "primeng/api";
-import {FileService} from "../../../libs/file.service";
-import {GetImagePipe} from "../../../libs/get.image.pipe";
-import {ScriptService} from "../../../libs/script.service";
+import { Component, Injector, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { DatePipe } from "@angular/common";
+import { AdminService } from "../../../services/admin.service";
+import { UserService } from "../../../services/user.service";
+import { OrganService } from "../../../services/organ.service";
+import { AddressService } from "../../../services/address.service";
+import { MessageService } from "primeng/api";
+import { FileService } from "../../../libs/file.service";
+import { GetImagePipe } from "../../../libs/get.image.pipe";
+import { ScriptService } from "../../../libs/script.service";
+import { ShareService } from 'src/app/services/share.service';
 
 declare var $: any;
 declare var demo: any;
@@ -45,7 +46,8 @@ export class AccountComponent extends ScriptService implements OnInit {
     private organService: OrganService,
     private addressService: AddressService,
     private messageService: MessageService,
-    private fileService: FileService
+    private fileService: FileService,
+    private shareService: ShareService
   ) {
     super(injector)
   }
@@ -79,7 +81,7 @@ export class AccountComponent extends ScriptService implements OnInit {
       });
     });
 
-    this.loadData({first: this.first, rows: this.rows});
+    this.loadData({ first: this.first, rows: this.rows });
 
 
     this.form = this.formBuilder.group({
@@ -91,7 +93,7 @@ export class AccountComponent extends ScriptService implements OnInit {
       so_dien_thoai: ['', [Validators.required, Validators.pattern('^(0)[0-9]{9}$')]],
       dia_chi: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(150)]],
       ngay_sinh: ['', [Validators.required]],
-      id_co_quan: [{value: '', disabled: true}],
+      id_co_quan: [{ value: '', disabled: true }],
       city: ['', [Validators.required]],
       district: ['', [Validators.required]],
       commune: ['', [Validators.required]]
@@ -111,7 +113,7 @@ export class AccountComponent extends ScriptService implements OnInit {
       }
 
       if (control.value !== matchingControl.value) {
-        matchingControl.setErrors({confirm_password: true});
+        matchingControl.setErrors({ confirm_password: true });
       } else {
         matchingControl.setErrors(null);
       }
@@ -183,7 +185,7 @@ export class AccountComponent extends ScriptService implements OnInit {
       this.roleSelect = data.role;
       if (data.role == 2) {
         this.form.controls.id_co_quan.enable();
-        this.form.patchValue({id_co_quan: data.id_co_quan})
+        this.form.patchValue({ id_co_quan: data.id_co_quan })
       }
       this.image = new GetImagePipe().transform(data.avatar);
       this.form.controls.email.disable();
@@ -239,24 +241,28 @@ export class AccountComponent extends ScriptService implements OnInit {
         user.avatar = data;
       }
       if (this.aoe == true) {
+        this.shareService.openLoading();
         this.userService.create(user).subscribe((res: any) => {
+          this.shareService.closeLoading();
           this.submitted = false;
           this.closeModal();
-          this.loadData({first: this.first, rows: this.rows});
-          this.messageService.add({severity: 'success', summary: 'Thành công!', detail: "Thêm người dùng thành công!"});
+          this.loadData({ first: this.first, rows: this.rows });
+          this.messageService.add({ severity: 'success', summary: 'Thành công!', detail: "Thêm người dùng thành công!" });
         }, err => {
-          console.log(err)
-          this.messageService.add({severity: 'error', summary: 'Thất bại!', detail: err.error.message});
+          this.shareService.closeLoading();
+          this.messageService.add({ severity: 'error', summary: 'Thất bại!', detail: err.error.message });
         })
       } else {
-        this.userService.update(this.form.value.id, user).subscribe((res:any) => {
+        this.shareService.openLoading();
+        this.userService.update(this.form.value.id, user).subscribe((res: any) => {
+          this.shareService.closeLoading();
           this.submitted = false;
           this.closeModal();
-          this.loadData({first: this.first, rows: this.rows});
-          this.messageService.add({severity: 'success', summary: 'Thành công!', detail: "Sửa người dùng thành công!"});
+          this.loadData({ first: this.first, rows: this.rows });
+          this.messageService.add({ severity: 'success', summary: 'Thành công!', detail: "Sửa người dùng thành công!" });
         }, err => {
-          console.log(err)
-          this.messageService.add({severity: 'error', summary: 'Thất bại!', detail: err.error.message});
+          this.shareService.closeLoading();
+          this.messageService.add({ severity: 'error', summary: 'Thất bại!', detail: err.error.message });
         })
       }
     })
@@ -298,12 +304,14 @@ export class AccountComponent extends ScriptService implements OnInit {
 
   block(id) {
     if (confirm("Bạn muốn khóa người dùng này?")) {
+      this.shareService.openLoading();
       this.userService.block(id).subscribe(res => {
-        this.loadData({first: this.first, rows: this.rows});
-        this.messageService.add({severity: 'success', summary: 'Thành công!', detail: "Khóa người dùng thành công!"});
+        this.shareService.closeLoading();
+        this.loadData({ first: this.first, rows: this.rows });
+        this.messageService.add({ severity: 'success', summary: 'Thành công!', detail: "Khóa người dùng thành công!" });
       }, err => {
-        console.log(err)
-        this.messageService.add({severity: 'error', summary: 'Thất bại!', detail: err.error.message});
+        this.shareService.closeLoading();
+        this.messageService.add({ severity: 'error', summary: 'Thất bại!', detail: err.error.message });
       })
     }
   }
@@ -311,29 +319,33 @@ export class AccountComponent extends ScriptService implements OnInit {
   unblock(event) {
     if (event.target.checked) {
       if (confirm("Bạn muốn mở khóa người dùng này?")) {
-        this.userService.unblock(event.target.value).subscribe((res:any) => {
+        this.shareService.openLoading();
+        this.userService.unblock(event.target.value).subscribe((res: any) => {
+          this.shareService.closeLoading();
           // this.loadData({first: this.first, rows: this.rows});
-          this.messageService.add({severity: 'success', summary: 'Thành công!', detail: "Mở khóa người dùng thành công!"});
+          this.messageService.add({ severity: 'success', summary: 'Thành công!', detail: "Mở khóa người dùng thành công!" });
         }, err => {
-          console.log(err);
-          this.loadData({first: this.first, rows: this.rows});
-          this.messageService.add({severity: 'error', summary: 'Thất bại!', detail: err.error.message});
+          this.shareService.closeLoading();
+          this.loadData({ first: this.first, rows: this.rows });
+          this.messageService.add({ severity: 'error', summary: 'Thất bại!', detail: err.error.message });
         })
       } else {
-        this.loadData({first: this.first, rows: this.rows});
+        this.loadData({ first: this.first, rows: this.rows });
       }
     } else {
       if (confirm("Bạn muốn khóa người dùng này?")) {
-        this.userService.block(event.target.value).subscribe((res:any) => {
+        this.shareService.openLoading();
+        this.userService.block(event.target.value).subscribe((res: any) => {
+          this.shareService.closeLoading();
           // this.loadData({first: this.first, rows: this.rows});
-          this.messageService.add({severity: 'success', summary: 'Thành công!', detail: "Khóa người dùng thành công!"});
+          this.messageService.add({ severity: 'success', summary: 'Thành công!', detail: "Khóa người dùng thành công!" });
         }, err => {
-          console.log(err);
-          this.loadData({first: this.first, rows: this.rows});
-          this.messageService.add({severity: 'error', summary: 'Thất bại!', detail: err.error.message});
+          this.shareService.closeLoading();
+          this.loadData({ first: this.first, rows: this.rows });
+          this.messageService.add({ severity: 'error', summary: 'Thất bại!', detail: err.error.message });
         })
       } else {
-        this.loadData({first: this.first, rows: this.rows});
+        this.loadData({ first: this.first, rows: this.rows });
       }
     }
   }

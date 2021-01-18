@@ -1,12 +1,13 @@
-import {Component, Injector, OnInit} from '@angular/core';
-import {ScriptService} from "../../libs/script.service";
-import {ProcedureService} from "../../services/procedure.service";
-import {Form, FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {MessageService} from "primeng/api";
-import {OrganService} from "../../services/organ.service";
+import { Component, Injector, OnInit } from '@angular/core';
+import { ScriptService } from "../../libs/script.service";
+import { ProcedureService } from "../../services/procedure.service";
+import { Form, FormArray, FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
+import { MessageService } from "primeng/api";
+import { OrganService } from "../../services/organ.service";
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import {GroupService} from "../../services/group.service";
-import {DatePipe} from "@angular/common";
+import { GroupService } from "../../services/group.service";
+import { DatePipe } from "@angular/common";
+import { ShareService } from 'src/app/services/share.service';
 
 declare var $: any;
 
@@ -50,7 +51,8 @@ export class ProcedureComponent extends ScriptService implements OnInit {
     private messageService: MessageService,
     private formBuilder: FormBuilder,
     private organService: OrganService,
-    private groupService: GroupService
+    private groupService: GroupService,
+    private shareService: ShareService
   ) {
     super(injector)
   }
@@ -64,14 +66,14 @@ export class ProcedureComponent extends ScriptService implements OnInit {
     }
     this.loadScripts();
 
-    this.loadData({first: this.first, rows: this.rows});
+    this.loadData({ first: this.first, rows: this.rows });
 
     this.form = this.formBuilder.group({
       id: [''],
       ten_thu_tuc: ['', [Validators.required, Validators.maxLength(255)]],
       code: ['', [Validators.required, Validators.maxLength(255)]],
       id_co_quan: ['', [Validators.required]],
-      id_linh_vuc: [{value: '', disabled: true}, [Validators.required]],
+      id_linh_vuc: [{ value: '', disabled: true }, [Validators.required]],
       muc_do: ['', [Validators.required]],
     })
 
@@ -128,31 +130,36 @@ export class ProcedureComponent extends ScriptService implements OnInit {
   status(event) {
     if (event.target.checked == true) {
       if (confirm("Bạn muốn hiện thủ tục này?")) {
+        this.shareService.openLoading();
         this.procedureService.unDelete(event.target.value).subscribe((res: any) => {
-          this.loadData({first: this.first, rows: this.rows});
+          this.shareService.closeLoading();
+          this.loadData({ first: this.first, rows: this.rows });
           this.messageService.add({
             severity: 'success',
             summary: 'Thành công!',
             detail: "Hiển thị thủ tục thành công!"
           });
         }, err => {
-          console.log(err);
-          this.messageService.add({severity: 'error', summary: 'Thất bại!', detail: err.error.message});
+          this.shareService.closeLoading();
+          this.messageService.add({ severity: 'error', summary: 'Thất bại!', detail: err.error.message });
         })
       } else {
-        this.loadData({first: this.first, rows: this.rows});
+        this.loadData({ first: this.first, rows: this.rows });
       }
     } else {
       if (confirm("Bạn muốn ẩn thủ tục này?")) {
+        this.shareService.openLoading();
         this.procedureService.delete(event.target.value).subscribe((res: any) => {
-          this.loadData({first: this.first, rows: this.rows});
-          this.messageService.add({severity: 'success', summary: 'Thành công!', detail: "Ẩn thủ tục thành công!"});
+          this.shareService.closeLoading();
+          this.loadData({ first: this.first, rows: this.rows });
+          this.messageService.add({ severity: 'success', summary: 'Thành công!', detail: "Ẩn thủ tục thành công!" });
         }, err => {
-          this.loadData({first: this.first, rows: this.rows});
-          this.messageService.add({severity: 'error', summary: 'Thất bại!', detail: err.error.message});
+          this.shareService.closeLoading();
+          this.loadData({ first: this.first, rows: this.rows });
+          this.messageService.add({ severity: 'error', summary: 'Thất bại!', detail: err.error.message });
         })
       } else {
-        this.loadData({first: this.first, rows: this.rows});
+        this.loadData({ first: this.first, rows: this.rows });
       }
     }
   }
@@ -195,7 +202,9 @@ export class ProcedureComponent extends ScriptService implements OnInit {
     }
     this.form.value.quy_trinh = this.procedure;
     if (this.aoe == true) {
+      this.shareService.openLoading();
       this.procedureService.create(this.form.value).subscribe((res: any) => {
+        this.shareService.closeLoading();
         this.submitted = false;
         this.messageService.add({
           severity: 'success',
@@ -203,13 +212,15 @@ export class ProcedureComponent extends ScriptService implements OnInit {
           detail: "Thêm thủ tục thành công!"
         });
         this.hideModal();
-        this.loadData({first: this.first, rows: this.rows});
+        this.loadData({ first: this.first, rows: this.rows });
       }, err => {
-        console.log(err);
-        this.messageService.add({severity: 'error', summary: 'Thất bại!', detail: err.error.message});
+        this.shareService.closeLoading();
+        this.messageService.add({ severity: 'error', summary: 'Thất bại!', detail: err.error.message });
       })
     } else {
+      this.shareService.openLoading();
       this.procedureService.update(this.form.value.id, this.form.value).subscribe((res: any) => {
+        this.shareService.closeLoading();
         this.submitted = false;
         this.messageService.add({
           severity: 'success',
@@ -217,22 +228,24 @@ export class ProcedureComponent extends ScriptService implements OnInit {
           detail: "Cập nhật thủ tục thành công!"
         });
         this.hideModal();
-        this.loadData({first: this.first, rows: this.rows});
+        this.loadData({ first: this.first, rows: this.rows });
       }, err => {
-        console.log(err);
-        this.messageService.add({severity: 'error', summary: 'Thất bại!', detail: err.error.message});
+        this.shareService.closeLoading();
+        this.messageService.add({ severity: 'error', summary: 'Thất bại!', detail: err.error.message });
       })
     }
   }
 
   delete(id) {
     if (confirm("Bạn muốn xóa thủ tục này?")) {
+      this.shareService.openLoading();
       this.procedureService.delete(id).subscribe((res: any) => {
-        this.loadData({first: this.first, rows: this.rows});
-        this.messageService.add({severity: 'success', summary: 'Thành công!', detail: "Xóa thủ tục thành công!"});
+        this.shareService.closeLoading();
+        this.loadData({ first: this.first, rows: this.rows });
+        this.messageService.add({ severity: 'success', summary: 'Thành công!', detail: "Xóa thủ tục thành công!" });
       }, err => {
-        console.log(err)
-        this.messageService.add({severity: 'error', summary: 'Thất bại!', detail: err.error.message});
+        this.shareService.closeLoading();
+        this.messageService.add({ severity: 'error', summary: 'Thất bại!', detail: err.error.message });
       })
     }
   }
@@ -288,7 +301,7 @@ export class ProcedureComponent extends ScriptService implements OnInit {
         });
         this.submittedPro = false;
       } else {
-        this.formProcedure.controls.ten_quy_trinh.setErrors({unique: true});
+        this.formProcedure.controls.ten_quy_trinh.setErrors({ unique: true });
       }
     } else if (this.aoeProcedure == false) {
       this.itemEditProcedure.ten_quy_trinh = this.formProcedure.value.ten_quy_trinh;
@@ -356,7 +369,7 @@ export class ProcedureComponent extends ScriptService implements OnInit {
         });
         this.submittedST = false;
       } else {
-        this.formStep.controls.ten_buoc.setErrors({unique: true});
+        this.formStep.controls.ten_buoc.setErrors({ unique: true });
       }
     } else if (this.aoeStep == false) {
       this.itemEditStep.ten_buoc = this.formStep.value.ten_buoc;
@@ -435,11 +448,8 @@ export class ProcedureComponent extends ScriptService implements OnInit {
   }
 
   getDay(time) {
-    let day = Math.floor(time/86400);
+    let day = Math.floor(time / 86400);
     let hour = time % 86400 / 3600;
-    return {day : day, hour: hour};
+    return { day: day, hour: hour };
   }
 }
-
-
-

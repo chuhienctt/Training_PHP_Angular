@@ -29,7 +29,8 @@
               "node_modules/primeicons/primeicons.css",
               "node_modules/primeng/resources/themes/md-light-deeppurple/theme.css",
               "node_modules/primeng/resources/primeng.min.css",
-              "node_modules/ngx-bootstrap/datepicker/bs-datepicker.css"
+              "node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",
+              "node_modules/sweetalert2/src/sweetalert2.scss"
             ],
             "scripts": []
           },

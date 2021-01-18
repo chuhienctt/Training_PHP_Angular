@@ -10,6 +10,7 @@ import {FileUpload} from "primeng/fileupload";
 import {FileService} from "../../libs/file.service";
 import {AddressService} from "../../services/address.service";
 import {GetImagePipe} from "../../libs/get.image.pipe";
+import { ShareService } from 'src/app/services/share.service';
 
 declare var $: any;
 
@@ -46,7 +47,8 @@ export class OrganComponent extends ScriptService implements OnInit {
     private organService: OrganService,
     private messageService: MessageService,
     private fileService: FileService,
-    private addressService: AddressService
+    private addressService: AddressService,
+    private shareService: ShareService
   ) {
     super(injetor)
   }
@@ -145,13 +147,15 @@ export class OrganComponent extends ScriptService implements OnInit {
         if (data != null) {
           this.form.value.hinh_anh = data;
         }
+        this.shareService.openLoading();
         this.organService.create(this.form.value).subscribe((res: any) => {
+          this.shareService.closeLoading();
           this.submitted = false;
           this.loadData({first: this.first, rows: this.rows});
           this.closeModal();
           this.messageService.add({severity: 'success', summary: 'Thành công!', detail: "Thêm cơ quan thành công!"});
         }, err => {
-          console.log(err)
+          this.shareService.closeLoading();
           this.messageService.add({severity: 'error', summary: 'Thất bại!', detail: err.error.message});
         })
       })
@@ -160,13 +164,15 @@ export class OrganComponent extends ScriptService implements OnInit {
         if (data != null) {
           this.form.value.hinh_anh = data;
         }
+        this.shareService.openLoading();
         this.organService.update(this.form.value).subscribe((res: any) => {
+          this.shareService.closeLoading();
           this.submitted = false;
           this.loadData({first: this.first, rows: this.rows});
           this.closeModal();
           this.messageService.add({severity: 'success', summary: 'Thành công!', detail: "Cập nhật cơ quan thành công!"});
         }, err => {
-          console.log(err)
+          this.shareService.closeLoading();
           this.messageService.add({severity: 'error', summary: 'Thất bại!', detail: err.error.message});
         })
       })
@@ -175,11 +181,13 @@ export class OrganComponent extends ScriptService implements OnInit {
 
   delete(id) {
     if (confirm("Bạn muốn xóa cơ quan này?")) {
+        this.shareService.openLoading();
       this.organService.delete(id).subscribe((res: any) => {
+          this.shareService.closeLoading();
         this.loadData({first: this.first, rows: this.rows});
         this.messageService.add({severity: 'success', summary: 'Thành công!', detail: "Xoá cơ quan thành công!"});
       }, err => {
-        console.log(err)
+          this.shareService.closeLoading();
         this.messageService.add({severity: 'error', summary: 'Thất bại!', detail: err.error.message});
       })
     }
@@ -230,11 +238,13 @@ export class OrganComponent extends ScriptService implements OnInit {
   status(event) {
     if (event.target.checked == true) {
       if (confirm("Bạn muốn hiện cơ quan này?")) {
+        this.shareService.openLoading();
         this.organService.unDelete(event.target.value).subscribe((res:any) => {
+          this.shareService.closeLoading();
           // this.loadData({first: this.first, rows: this.rows});
           this.messageService.add({severity: 'success', summary: 'Thành công!', detail: "Hiển thị cơ quan thành công!"});
         }, err => {
-          console.log(err);
+          this.shareService.closeLoading();
           this.loadData({first: this.first, rows: this.rows});
           this.messageService.add({severity: 'error', summary: 'Thất bại!', detail: err.error.message});
         })
@@ -243,10 +253,13 @@ export class OrganComponent extends ScriptService implements OnInit {
       }
     } else {
       if (confirm("Bạn muốn ẩn cơ quan này?")) {
+        this.shareService.openLoading();
         this.organService.delete(event.target.value).subscribe((res:any) => {
+          this.shareService.closeLoading();
           // this.loadData({first: this.first, rows: this.rows});
           this.messageService.add({severity: 'success', summary: 'Thành công!', detail: "Ẩn cơ quan thành công!"});
         }, err => {
+          this.shareService.closeLoading();
           this.loadData({first: this.first, rows: this.rows});
           this.messageService.add({severity: 'error', summary: 'Thất bại!', detail: err.error.message});
         })

@@ -241,6 +241,7 @@ class ThuTucController extends Controller {
 
                 // insert quy trinh
                 foreach(request()->quy_trinh as $qt) {
+                    
                     if(!isset($qt['buoc']) || gettype($qt['buoc']) != 'array') {
                         throw new \PDOException("Bước phải là một mảng");
                     } else if(Validator::check('required', $qt['ten_quy_trinh'] ?? NULL)) {
@@ -290,6 +291,7 @@ class ThuTucController extends Controller {
 
                         // insert buoc
                         foreach($qt['buoc'] as $bc) {
+
                             if(Validator::check('required', $bc['ten_buoc'] ?? NULL)) {
                                 throw new \PDOException("Tên bước không được để trống");
                             } else if(Validator::check('required', $bc['ghi_chu'] ?? NULL)) {

@@ -69,3 +69,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; } */
 .p-component {
   font-size: 1.4rem !important;
 }
+
+.p-toast {
+  width: 30rem !important;
+}
