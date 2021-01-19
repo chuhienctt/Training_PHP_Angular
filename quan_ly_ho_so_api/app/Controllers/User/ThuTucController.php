@@ -61,23 +61,25 @@ class ThuTucController extends Controller {
             'deleted_at' => NULL
         ];
 
-        $linh_vuc = NULL;
-        $co_quan = NULL;
+        $co_quan = model('CoQuan')->where($where)->get();
 
         if(request()->has('id_linh_vuc')) {
             $where['id_linh_vuc'] = request()->id_linh_vuc;
-
-            $linh_vuc = model('LinhVuc')->find(request()->id_linh_vuc);
-
-            $co_quan = $linh_vuc->all_co_quan();
         }
 
         $model = model('ThuTuc')->where($where);
 
+        if(request()->has('keyword')) {
+            $model = $model->orWhere([
+                'ten_thu_tuc' => ['LIKE', '%'.request()->keyword.'%']
+            ])->orWhere([
+                'mo_ta' => ['LIKE', '%'.request()->keyword.'%']
+            ]);
+        }
+
         $paging = Pagination::create($model, $page, $pageSize);
 
         return response()->json([
-            'linh_vuc' => $linh_vuc,
             'co_quan' => $co_quan,
             'total' => $paging['total_records'],
             'data' => $paging['data'],

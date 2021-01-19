@@ -4,6 +4,7 @@ namespace Core;
 
 use PDO;
 use PDOException;
+use App\Helpers\Format;
 
 class DB {
     private static $connect = null;
@@ -67,9 +68,7 @@ class DB {
 
         $sql = "SELECT $select FROM $this->table $where[where] $this->orderBy $limit $offset";
 
-        // if($this->table == 'co_quan_linh_vuc') {
-        //     var_dump($sql, $data);
-        // }
+        // var_dump($sql, $data);
 
         $statement = self::$connect->prepare($sql);
 
@@ -209,7 +208,7 @@ class DB {
         }
 
         $statement->execute();
-        $this->clearOption();
+        // $this->clearOption();
 
         return $statement->fetchColumn();
     }
@@ -228,29 +227,50 @@ class DB {
     }
 
     public function where($data = [], $instance = null) {
-        $this->where = $data;
+        array_push($this->where, [
+            'type' => 'AND',
+            'data' => $data,
+        ]);
 
-        // var_dump($data);
+        return $instance ?? $this;
+    }
+
+    public function orWhere($data = [], $instance = null) {
+        array_push($this->where, [
+            'type' => 'OR',
+            'data' => $data,
+        ]);
 
         return $instance ?? $this;
     }
 
     private function buildWhere() {
-        $fields = [];
-
         $values = [];
-        foreach($this->where as $key => $value) {
-            if(gettype($value) == 'array') {
-                $fields[] = "$key $value[0] ?";
-                $values[] = $value[1];
-            } else {
-                $fields[] = "$key ".($value ? "=" : "is")." ?";
-                $values[] = $value;
+
+        $ws = "";
+        $i = 0;
+
+        foreach($this->where as $value) {
+
+            $fields = [];
+            foreach ($value['data'] as $key => $w) {
+
+                if(gettype($w) == 'array') {
+                    $fields[] = "$key $w[0] ?";
+                    $values[] = $w[1];
+                } else {
+                    $fields[] = "$key ".($w ? "=" : "is")." ?";
+                    $values[] = $w;
+                }
+
             }
+
+            $ws .= count($fields) ? implode(' AND ', $fields).($i < count($this->where) - 1 ? " {$value['type']} " : "") : '';
+            $i++;
         }
 
         return [
-            'where' => count($fields) ? "WHERE ".implode(' AND ', $fields) : '',
+            'where' => !empty($ws) ? "WHERE ".$ws : "",
             'values' => $values,
         ];
     }
