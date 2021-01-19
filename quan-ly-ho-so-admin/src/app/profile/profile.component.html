@@ -1,40 +1,34 @@
-<p>profile works!</p>
 <div class=" profile">
-
     <div class="profile-bottom">
         <h3><i class="fa fa-user"></i>Profile</h3>
         <div class="profile-bottom-top">
-        <div class="col-md-4 profile-bottom-img">
-            <img src="images/pr.jpg" alt="">
-        </div>
-        <div class="col-md-8 profile-text">
-            <h6>{{user.ho_ten}}</h6>
-            <table>
-            <tr><td>Department</td>  
-            <td>:</td>  
-            <td>Web Designer</td></tr>
-            
-            <tr>
-            <td>Email</td>
-            <td> :</td>
-            <td><a href="info@gmail.com">info@lorem.com</a></td>
-            </tr>
-            <tr>
-            <td>Skills</td>
-            <td> :</td>
-            <td> HTML, CSS,Jqury, Bootstrap</td>
-            </tr>
-            <tr>
-            <td>Country </td>
-            <td>:</td>
-            <td> United Arab Emirates</td>
-            </tr>
-            </table>
-        </div>
-        <div class="clearfix"></div>
+            <div class="col-md-4 profile-bottom-img">
+                <img src="{{ createImg(User.avatar) }}" alt="" style="width: 100%; height:240px">
+            </div>
+            <div class="col-md-8 profile-text">
+                <h6>{{User.ho_ten}}</h6>
+                <table>
+                    <tr>
+                        <td>Số điện thoại</td>
+                        <td>:</td>
+                        <td>{{User.so_dien_thoai}}</td>
+                    </tr>
+                    <tr>
+                        <td>Email</td>
+                        <td> :</td>
+                        <td>{{User.email}}</td>
+                    </tr>
+                    <tr>
+                        <td>Địa chỉ</td>
+                        <td> :</td>
+                        <td>{{User.dia_chi}}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="clearfix"></div>
         </div>
         <div class="profile-bottom-bottom">
-        <div class="col-md-4 profile-fo">
+            <!-- <div class="col-md-4 profile-fo">
             <h4>23,5k</h4>
             <p>Followers</p>
             <a href="#" class="pro"><i class="fa fa-plus-circle"></i>Follow</a>
@@ -48,15 +42,160 @@
             <h4>23,5k</h4>
             <p>Snippets</p>
             <a href="#"><i class="fa fa-cog"></i>Options</a>
-        </div>
-        <div class="clearfix"></div>
+        </div> -->
+            <div class="clearfix"></div>
         </div>
         <div class="profile-btn">
-
-            <button type="button" href="#" class="btn bg-red">Save changes</button>
-       <div class="clearfix"></div>
+            <button style="float:right; margin-bottom:1%; margin-left:10px;" class="btn btn-success" (click)="editprofile()">Chỉnh sửa</button>
+            <button type="button" [routerLink]="['/dashboard']" routerLinkActive="router-link-active"
+                class="btn bg-red">Quay lại</button>
+            <div class="clearfix"></div>
         </div>
-         
-        
+    </div>
+    <div bsModal #editAndADD="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+        aria-labelledby="dialog-sizes-name1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                    <p-toast></p-toast>
+                    <div class="modal-header">
+                        <h4 id="dialog-sizes-name1" class="modal-title pull-left" style="margin-top: -1%;">Chỉnh sửa profile
+                            </h4>
+                        <button type="button" class="close pull-right" (click)="editAndADD.hide()" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- <div class="form-group">
+                                    <label for="id">Id cơ quan:</label>
+                                    <input type="text" class="form-control" value="" name="id"
+                                        formControlName="id">
+                                    <div *ngIf="iSubmited && form.controls.ten_co_quan.errors">
+                                        <span class="text-danger" *ngIf="form.controls.ten_co_quan.errors.required">Id
+                                            cơ quan không được để trống.</span>
+                                    </div>
+                                </div> -->
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Họ tên</label>
+                                    <input type="text" class="form-control" formControlName="ho_ten">
+                                    <div *ngIf="submitted && form.controls.ho_ten.errors">
+                                        <small class="error" *ngIf="form.controls.ho_ten.errors.required">Chưa nhập họ
+                                            tên.</small>
+                                        <small class="error" *ngIf="form.controls.ho_ten.errors.minlength">Họ tên không
+                                            được dưới 8 ký tự.</small>
+                                        <small class="error" *ngIf="form.controls.ho_ten.errors.minlength">Họ tên không
+                                            được trên 50 ký tự.</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Email</label>
+                                    <input type="text" class="form-control" formControlName="email">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="bmd-label-static">Số điện thoại</label>
+                                    <input type="text" class="form-control" formControlName="so_dien_thoai">
+                                    <div *ngIf="submitted && form.controls.so_dien_thoai.errors">
+                                        <small class="error" *ngIf="form.controls.so_dien_thoai.errors.required">Chưa
+                                            nhập số điện thoại.</small>
+                                        <small class="error" *ngIf="form.controls.so_dien_thoai.errors.pattern">Số điện
+                                            thoại không hợp lệ</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Ngày sinh</label>
+                                    <input type="date" formControlName="ngay_sinh"
+                                        class="form-control">
+                                    <div *ngIf="submitted && form.controls.ngay_sinh.errors">
+                                        <small class="error" *ngIf="form.controls.ngay_sinh.errors.required">Chưa nhập
+                                            ngày sinh.</small>
+                                        <small class="error" *ngIf="form.controls.ngay_sinh.errors.minlength">Ngày sinh
+                                            không hợp lệ.</small>
+                                        <small class="error" *ngIf="form.controls.ngay_sinh.errors.maxlength">Ngày sinh
+                                            không hợp lệ.</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row-md-12">
+                            <div class="form-group">
+                                <label>Địa chỉ cụ thể</label>
+                                <input type="text" class="form-control" formControlName="dia_chi">
+                                <div *ngIf="submitted && form.controls.dia_chi.errors">
+                                    <small class="error" *ngIf="form.controls.dia_chi.errors.required">Chưa nhập địa
+                                        chỉ.</small>
+                                    <small class="error" *ngIf="form.controls.dia_chi.errors.minlength">Địa chỉ không
+                                        được dưới 2 ký tự.</small>
+                                    <small class="error" *ngIf="form.controls.dia_chi.errors.maxlength">Địa chỉ không
+                                        được trên 150 ký tự.</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="pl-5px">Tỉnh</label>
+                                    <div class="field">
+                                        <select formControlName="city" (change)="getDistrict($event.target.value)"
+                                            class="form-control">
+                                            <option *ngFor="let item of listProvince" value="{{item.id}}">{{item.name}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="pl-5px">Huyện</label>
+                                    <div class="field">
+                                        <select formControlName="district" (change)="getCommune($event.target.value)"
+                                            class="form-control">
+                                            <option *ngFor="let item of listDistrict" value="{{item.id}}">{{item.name}}
+                                            </option>
+                                        </select> </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="pl-5px">Xã</label>
+                                    <div class="field">
+                                        <select formControlName="commune" class="form-control">
+                                            <option *ngFor="let item of listCommune" value="{{item.id}}">{{item.name}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                                <label for="hinh_anh">Ảnh đại diện:</label>
+                                <p-fileUpload [multiple]="false" #file accept="image/*" maxFileSize="1000000">
+                                </p-fileUpload>
+                                <div *ngIf="submitted && form.controls.hinh_anh.errors">
+                                    <span class="text-danger" *ngIf="form.controls.hinh_anh.errors.required">Hình
+                                        ảnh
+                                        không được để trống.</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-default">Submit</button>
+                            <button type="button" class="btn btn-default" (click)="editAndADD.hide()"
+                                data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 </div>

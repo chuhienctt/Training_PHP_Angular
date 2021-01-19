@@ -36,6 +36,10 @@ export class AuthService {
     return this._http.post(baseUrl + "change-pass", user);
   }
 
+  editprofile(user) {
+    return this._http.put(baseUrl + "update", user);
+  }
+
   logout(user) {
     localStorage.removeItem(user);
   }

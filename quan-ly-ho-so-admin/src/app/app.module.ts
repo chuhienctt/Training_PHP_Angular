@@ -13,6 +13,7 @@ import { QuanLyNguoiDungModule } from './quan-ly-nguoi-dung/quan-ly-nguoi-dung.m
 import { QuanLyBuocModule } from './quan-ly-buoc/quan-ly-buoc.module';
 import { SharedModule } from './shared/shared.module';
 import { Login1Module } from './login1/login1.module';
+import { ProfileModule } from './profile/profile.module'
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule} from '@angular/common/http';
@@ -24,7 +25,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthGuard } from './_guards/auth-guards.services';
 import { LoginGuard } from './_guards/login-guards';
 import { FileUploadModule } from 'primeng/fileupload';
-import { ProfileComponent } from './profile/profile.component';
+// import { ProfileComponent } from './profile/profile.component';
 import { ChangepassComponent } from './changepass/changepass.component';
 
 //import { Login1Component } from './login1/login1.component';
@@ -56,10 +57,6 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     loadChildren: () => import('./changepass/changepass.module').then(m => m.ChangepassModule)  
   },
-  // {
-  //   path: 'login',
-  //   loadChildren: () => import('./login/login.module').then(m => m.LoginModule)  
-  // },
   {
     path: 'quan-ly-buoc',
     canActivate: [AuthGuard],
@@ -94,6 +91,11 @@ const routes: Routes = [
     path: 'quan-ly-thu-tuc',
     canActivate: [AuthGuard],
     loadChildren: () => import('./quan-ly-thu-tuc/quan-ly-thu-tuc.module').then(m => m.QuanLyThuTucModule)  
+  },
+  {
+    path: 'update profile',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./profile/profile.module').then(m => m.ProfileModule)  
   },
   {
     path: '',

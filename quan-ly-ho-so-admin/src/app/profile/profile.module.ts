@@ -2,8 +2,12 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Routes } from '@angular/router';
 import { ProfileComponent } from './profile.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { FileUploadModule } from 'primeng/fileupload';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { DropdownModule } from 'primeng/dropdown';
+import { ToastModule } from 'primeng/toast';
 
 const routes: Routes = [
   {
@@ -16,9 +20,13 @@ const routes: Routes = [
   declarations: [ProfileComponent],
   imports: [
     CommonModule,
-
+    FileUploadModule,
+    ModalModule.forRoot(),
     FormsModule,
-    //ModalModule.forRoot(),
+    CommonModule,
+    DropdownModule,
+    ReactiveFormsModule,
+    ToastModule,
     RouterModule.forChild(routes),
   ]
 })

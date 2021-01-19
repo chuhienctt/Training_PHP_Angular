@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-quan-ly-quy-trinh',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class QuanLyQuyTrinhComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router,) { }
 
   ngOnInit(): void {
+  }
+
+  logout()
+  {
+    localStorage.removeItem('jwt');
+    this.router.navigate(['/login1']);
   }
 
 }

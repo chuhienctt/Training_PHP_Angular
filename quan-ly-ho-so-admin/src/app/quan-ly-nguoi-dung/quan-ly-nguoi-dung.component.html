@@ -14,11 +14,11 @@
                 <section class="full-top">
                     <button id="toggle"><i class="fa fa-arrows-alt"></i></button>
                 </section>
-                <form class=" navbar-left-right">
-                    <input type="text" value="Search..." onfocus="this.value = '';"
-                        onblur="if (this.value == '') {this.value = 'Search...';}">
-                    <input type="submit" value="" class="fa fa-search">
-                </form>
+                <!-- <form class=" navbar-left-right">
+              <input type="text" value="Search..." onfocus="this.value = '';"
+                onblur="if (this.value == '') {this.value = 'Search...';}">
+              <input type="submit" value="" class="fa fa-search">
+            </form> -->
                 <div class="clearfix"> </div>
             </div>
 
@@ -89,97 +89,76 @@
                     </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle dropdown-at" data-toggle="dropdown"><span
-                                class=" name-caret">Rackham<i class="caret"></i></span><img
+                                class=" name-caret">Lê Văn Long<i class="caret"></i></span><img
                                 src="./assets/images//wo.jpg"></a>
                         <ul class="dropdown-menu " role="menu">
-                            <li><a href="profile.html"><i class="fa fa-user"></i>Edit Profile</a></li>
-                            <li><a href="inbox.html"><i class="fa fa-envelope"></i>Inbox</a></li>
-                            <li><a href="calendar.html"><i class="fa fa-calendar"></i>Calender</a></li>
-                            <li><a href="inbox.html"><i class="fa fa-clipboard"></i>Tasks</a></li>
+                            <li><a (click)="logout()"><i class="fa fa-user"></i>Logout</a></li>
+                            <li><a [routerLink]="['/profile']" routerLinkActive="router-link-active"><i
+                                        class="fa fa-calendar"></i>Profile</a></li>
+                            <!-- <li><a href="inbox.html"><i class="fa fa-envelope"></i>Inbox</a></li>
+                  <li><a href="calendar.html"><i class="fa fa-calendar"></i>Calender</a></li>
+                  <li><a href="inbox.html"><i class="fa fa-clipboard"></i>Tasks</a></li> -->
                         </ul>
                     </li>
                 </ul>
             </div>
             <div class="clearfix">
-
             </div>
-
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
-
                         <li>
-                          <a [routerLink]="['/dashboard']" routerLinkActive="router-link-active"  class=" hvr-bounce-to-right"><i class="fa fa-dashboard nav_icon "></i><span
-                              class="nav-label">Dashboards</span> </a>
-                        </li>
-            
-                        <li>
-                          <a href="#" class=" hvr-bounce-to-right"><i class="fa fa-indent nav_icon"></i> <span class="nav-label">Hồ
-                              sơ</span><span class="fa arrow"></span></a>
-                          <ul class="nav nav-second-level">
-                            <li><a [routerLink]="['/quan-ly-ho-so']" routerLinkActive="router-link-active"  class=" hvr-bounce-to-right"><i
-                                  class="fa fa-file-text-o nav_icon"></i>Quản lý hồ sơ</a></li>
-                          </ul>
+                            <a [routerLink]="['/dashboard']" routerLinkActive="router-link-active"
+                                class=" hvr-bounce-to-right"><i class="fa fa-dashboard nav_icon "></i><span
+                                    class="nav-label">Dashboards</span> </a>
                         </li>
                         <li>
-                          <a href="#" class=" hvr-bounce-to-right"><i class="fa fa-indent nav_icon"></i> <span class="nav-label">Thủ
-                              tục</span><span class="fa arrow"></span></a>
-                          <ul class="nav nav-second-level">
-                            <li><a [routerLink]="['/quan-ly-thu-tuc']" routerLinkActive="router-link-active"  class=" hvr-bounce-to-right"><i
-                                  class="fa fa-file-text-o nav_icon"></i>Quản lý thủ tục</a></li>
-                          </ul>
+                            <a [routerLink]="['/quan-ly-ho-so']" routerLinkActive="router-link-active"
+                                class=" hvr-bounce-to-right"><i class="fa fa-indent nav_icon"></i> <span
+                                    class="nav-label">Quản lý hồ
+                                    sơ</span></a>
                         </li>
                         <li>
-                          <a href="#" class=" hvr-bounce-to-right"><i class="fa fa-desktop nav_icon"></i> <span class="nav-label">Cơ
-                              quan</span><span class="fa arrow"></span></a>
-                          <ul class="nav nav-second-level">
-                            <li><a [routerLink]="['/quan-ly-co-quan']" routerLinkActive="router-link-active"  class=" hvr-bounce-to-right"><i class="fa fa-question-circle nav_icon"></i>Quản
-                                lý cơ quan</a></li>
-                          </ul>
+                            <a [routerLink]="['/quan-ly-thu-tuc']" routerLinkActive="router-link-active"
+                                class=" hvr-bounce-to-right"><i class="fa fa-indent nav_icon"></i> <span
+                                    class="nav-label">Quản lý thủ tục
+                                </span></a>
                         </li>
                         <li>
-                          <a href="#" class=" hvr-bounce-to-right"><i class="fa fa-list nav_icon"></i> <span class="nav-label">Lĩnh
-                              vực</span><span class="fa arrow"></span></a>
-                          <ul class="nav nav-second-level">
-                            <li><a [routerLink]="['/quan-ly-linh-vuc']" routerLinkActive="router-link-active"  class=" hvr-bounce-to-right"><i class="fa fa-align-left nav_icon"></i>
-                                Quản lý lĩnh vực</a></li>
-                          </ul>
+                            <a [routerLink]="['/quan-ly-co-quan']" routerLinkActive="router-link-active"
+                                class=" hvr-bounce-to-right"><i class="fa fa-desktop nav_icon"></i> <span
+                                    class="nav-label">Quản lý cơ
+                                    quan</span></a>
                         </li>
                         <li>
-                          <a href="#" class=" hvr-bounce-to-right"><i class="fa fa-list nav_icon"></i> <span class="nav-label">Quy
-                              trình</span><span class="fa arrow"></span></a>
-                          <ul class="nav nav-second-level">
-                            <li><a [routerLink]="['/quan-ly-quy-trinh']" routerLinkActive="router-link-active"  class=" hvr-bounce-to-right"><i class="fa fa-align-left nav_icon"></i>
-                                Quản lý quy trình</a></li>
-                          </ul>
+                            <a [routerLink]="['/quan-ly-linh-vuc']" routerLinkActive="router-link-active"
+                                class=" hvr-bounce-to-right"><i class="fa fa-list nav_icon"></i> <span
+                                    class="nav-label">Quản lý lĩnh
+                                    vực</span></a>
                         </li>
                         <li>
-                          <a href="#" class=" hvr-bounce-to-right"><i class="fa fa-list nav_icon"></i> <span class="nav-label">Người
-                              dùng</span><span class="fa arrow"></span></a>
-                          <ul class="nav nav-second-level">
-                            <li><a [routerLink]="['/quan-ly-nguoi-dung']" routerLinkActive="router-link-active"  class=" hvr-bounce-to-right"><i class="fa fa-align-left nav_icon"></i>
-                                Quản lý người dùng</a></li>
-                          </ul>
+                            <a [routerLink]="['/quan-ly-quy-trinh']" routerLinkActive="router-link-active"
+                                class=" hvr-bounce-to-right"><i class="fa fa-list nav_icon"></i> <span
+                                    class="nav-label">Quản lý quy trình</span></a>
                         </li>
                         <li>
-                          <a href="#" class=" hvr-bounce-to-right"><i class="fa fa-list nav_icon"></i> <span class="nav-label">Các bước
-                              </span><span class="fa arrow"></span></a>
-                          <ul class="nav nav-second-level">
-                            <li><a [routerLink]="['/quan-ly-buoc']" routerLinkActive="router-link-active"  class=" hvr-bounce-to-right"><i class="fa fa-align-left nav_icon"></i>
-                                Quản lý các bước</a></li>
-                          </ul>
+                            <a [routerLink]="['/quan-ly-nguoi-dung']" routerLinkActive="router-link-active"
+                                class=" hvr-bounce-to-right"><i class="fa fa-list nav_icon"></i> <span
+                                    class="nav-label">Người
+                                    dùng</span></a>
                         </li>
-                        <li>
-                          <a href="#" class=" hvr-bounce-to-right"><i class="fa fa-cog nav_icon"></i> <span
-                              class="nav-label">Settings</span><span class="fa arrow"></span></a>
-                          <ul class="nav nav-second-level">
-                            <li><a href="signin.html" class=" hvr-bounce-to-right"><i class="fa fa-sign-in nav_icon"></i>Signin</a>
-                            </li>
-                            <li><a href="signup.html" class=" hvr-bounce-to-right"><i class="fa fa-sign-in nav_icon"></i>Singup</a>
-                            </li>
-                          </ul>
-                        </li>
-                      </ul>
+                       
+                        <!-- <li>
+                  <a class=" hvr-bounce-to-right"><i class="fa fa-cog nav_icon"></i> <span
+                      class="nav-label">Settings</span><span class="fa arrow"></span></a>
+                  <ul class="nav nav-second-level">
+                    <li><a href="signin.html" class=" hvr-bounce-to-right"><i class="fa fa-sign-in nav_icon"></i>Signin</a>
+                    </li>
+                    <li><a href="signup.html" class=" hvr-bounce-to-right"><i class="fa fa-sign-in nav_icon"></i>Singup</a>
+                    </li>
+                  </ul>
+                </li> -->
+                    </ul>
                 </div>
             </div>
         </div>
@@ -192,7 +171,7 @@
                     <i class="fa fa-angle-right"></i>
                     <span>Quan-ly-nguoi-dung</span>
                 </h2>
-            </div><br/>
+            </div><br />
             <div class="banner">
                 <div>
                     <h3>Quản lý người dùng</h3><br />
@@ -214,145 +193,145 @@
                             <tr>
                                 <td>1</td>
                                 <td>
-                                   Ảnh
+                                    Ảnh
                                 </td>
                                 <td>H</td>
                                 <td>H</td>
                                 <td>H</td>
                                 <td>H</td>
                                 <td>
-                                    <button style="margin-left: 2%;" class="btn btn-info"><i
-                                            class="fa fa-eye" aria-hidden="true"></i></button>
-                                    <button style="margin-left: 2%;" class="btn btn-success"><i
-                                            class="fa fa-pencil" aria-hidden="true"></i></button>
-                                    <button style="margin-left: 2%;" class="btn btn-danger"><i
-                                            class="fa fa-trash-o" aria-hidden="true"></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>
-                                   Ảnh
-                                </td>
-                                <td>H</td>
-                                <td>H</td>
-                                <td>H</td>
-                                <td>H</td>
-                                <td>
-                                    <button style="margin-left: 2%;" class="btn btn-info"><i
-                                            class="fa fa-eye" aria-hidden="true"></i></button>
-                                    <button style="margin-left: 2%;" class="btn btn-success"><i
-                                            class="fa fa-pencil" aria-hidden="true"></i></button>
-                                    <button style="margin-left: 2%;" class="btn btn-danger"><i
-                                            class="fa fa-trash-o" aria-hidden="true"></i></button>
+                                    <button style="margin-left: 2%;" class="btn btn-info"><i class="fa fa-eye"
+                                            aria-hidden="true"></i></button>
+                                    <button style="margin-left: 2%;" class="btn btn-success"><i class="fa fa-pencil"
+                                            aria-hidden="true"></i></button>
+                                    <button style="margin-left: 2%;" class="btn btn-danger"><i class="fa fa-trash-o"
+                                            aria-hidden="true"></i></button>
                                 </td>
                             </tr>
                             <tr>
                                 <td>1</td>
                                 <td>
-                                   Ảnh
+                                    Ảnh
                                 </td>
                                 <td>H</td>
                                 <td>H</td>
                                 <td>H</td>
                                 <td>H</td>
                                 <td>
-                                    <button style="margin-left: 2%;" class="btn btn-info"><i
-                                            class="fa fa-eye" aria-hidden="true"></i></button>
-                                    <button style="margin-left: 2%;" class="btn btn-success"><i
-                                            class="fa fa-pencil" aria-hidden="true"></i></button>
-                                    <button style="margin-left: 2%;" class="btn btn-danger"><i
-                                            class="fa fa-trash-o" aria-hidden="true"></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>
-                                   Ảnh
-                                </td>
-                                <td>H</td>
-                                <td>H</td>
-                                <td>H</td>
-                                <td>H</td>
-                                <td>
-                                    <button style="margin-left: 2%;" class="btn btn-info"><i
-                                            class="fa fa-eye" aria-hidden="true"></i></button>
-                                    <button style="margin-left: 2%;" class="btn btn-success"><i
-                                            class="fa fa-pencil" aria-hidden="true"></i></button>
-                                    <button style="margin-left: 2%;" class="btn btn-danger"><i
-                                            class="fa fa-trash-o" aria-hidden="true"></i></button>
+                                    <button style="margin-left: 2%;" class="btn btn-info"><i class="fa fa-eye"
+                                            aria-hidden="true"></i></button>
+                                    <button style="margin-left: 2%;" class="btn btn-success"><i class="fa fa-pencil"
+                                            aria-hidden="true"></i></button>
+                                    <button style="margin-left: 2%;" class="btn btn-danger"><i class="fa fa-trash-o"
+                                            aria-hidden="true"></i></button>
                                 </td>
                             </tr>
                             <tr>
                                 <td>1</td>
                                 <td>
-                                   Ảnh
+                                    Ảnh
                                 </td>
                                 <td>H</td>
                                 <td>H</td>
                                 <td>H</td>
                                 <td>H</td>
                                 <td>
-                                    <button style="margin-left: 2%;" class="btn btn-info"><i
-                                            class="fa fa-eye" aria-hidden="true"></i></button>
-                                    <button style="margin-left: 2%;" class="btn btn-success"><i
-                                            class="fa fa-pencil" aria-hidden="true"></i></button>
-                                    <button style="margin-left: 2%;" class="btn btn-danger"><i
-                                            class="fa fa-trash-o" aria-hidden="true"></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>
-                                   Ảnh
-                                </td>
-                                <td>H</td>
-                                <td>H</td>
-                                <td>H</td>
-                                <td>H</td>
-                                <td>
-                                    <button style="margin-left: 2%;" class="btn btn-info"><i
-                                            class="fa fa-eye" aria-hidden="true"></i></button>
-                                    <button style="margin-left: 2%;" class="btn btn-success"><i
-                                            class="fa fa-pencil" aria-hidden="true"></i></button>
-                                    <button style="margin-left: 2%;" class="btn btn-danger"><i
-                                            class="fa fa-trash-o" aria-hidden="true"></i></button>
+                                    <button style="margin-left: 2%;" class="btn btn-info"><i class="fa fa-eye"
+                                            aria-hidden="true"></i></button>
+                                    <button style="margin-left: 2%;" class="btn btn-success"><i class="fa fa-pencil"
+                                            aria-hidden="true"></i></button>
+                                    <button style="margin-left: 2%;" class="btn btn-danger"><i class="fa fa-trash-o"
+                                            aria-hidden="true"></i></button>
                                 </td>
                             </tr>
                             <tr>
                                 <td>1</td>
                                 <td>
-                                   Ảnh
+                                    Ảnh
                                 </td>
                                 <td>H</td>
                                 <td>H</td>
                                 <td>H</td>
                                 <td>H</td>
                                 <td>
-                                    <button style="margin-left: 2%;" class="btn btn-info"><i
-                                            class="fa fa-eye" aria-hidden="true"></i></button>
-                                    <button style="margin-left: 2%;" class="btn btn-success"><i
-                                            class="fa fa-pencil" aria-hidden="true"></i></button>
-                                    <button style="margin-left: 2%;" class="btn btn-danger"><i
-                                            class="fa fa-trash-o" aria-hidden="true"></i></button>
+                                    <button style="margin-left: 2%;" class="btn btn-info"><i class="fa fa-eye"
+                                            aria-hidden="true"></i></button>
+                                    <button style="margin-left: 2%;" class="btn btn-success"><i class="fa fa-pencil"
+                                            aria-hidden="true"></i></button>
+                                    <button style="margin-left: 2%;" class="btn btn-danger"><i class="fa fa-trash-o"
+                                            aria-hidden="true"></i></button>
                                 </td>
                             </tr>
                             <tr>
                                 <td>1</td>
                                 <td>
-                                   Ảnh
+                                    Ảnh
                                 </td>
                                 <td>H</td>
                                 <td>H</td>
                                 <td>H</td>
                                 <td>H</td>
                                 <td>
-                                    <button style="margin-left: 2%;" class="btn btn-info"><i
-                                            class="fa fa-eye" aria-hidden="true"></i></button>
-                                    <button style="margin-left: 2%;" class="btn btn-success"><i
-                                            class="fa fa-pencil" aria-hidden="true"></i></button>
-                                    <button style="margin-left: 2%;" class="btn btn-danger"><i
-                                            class="fa fa-trash-o" aria-hidden="true"></i></button>
+                                    <button style="margin-left: 2%;" class="btn btn-info"><i class="fa fa-eye"
+                                            aria-hidden="true"></i></button>
+                                    <button style="margin-left: 2%;" class="btn btn-success"><i class="fa fa-pencil"
+                                            aria-hidden="true"></i></button>
+                                    <button style="margin-left: 2%;" class="btn btn-danger"><i class="fa fa-trash-o"
+                                            aria-hidden="true"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>
+                                    Ảnh
+                                </td>
+                                <td>H</td>
+                                <td>H</td>
+                                <td>H</td>
+                                <td>H</td>
+                                <td>
+                                    <button style="margin-left: 2%;" class="btn btn-info"><i class="fa fa-eye"
+                                            aria-hidden="true"></i></button>
+                                    <button style="margin-left: 2%;" class="btn btn-success"><i class="fa fa-pencil"
+                                            aria-hidden="true"></i></button>
+                                    <button style="margin-left: 2%;" class="btn btn-danger"><i class="fa fa-trash-o"
+                                            aria-hidden="true"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>
+                                    Ảnh
+                                </td>
+                                <td>H</td>
+                                <td>H</td>
+                                <td>H</td>
+                                <td>H</td>
+                                <td>
+                                    <button style="margin-left: 2%;" class="btn btn-info"><i class="fa fa-eye"
+                                            aria-hidden="true"></i></button>
+                                    <button style="margin-left: 2%;" class="btn btn-success"><i class="fa fa-pencil"
+                                            aria-hidden="true"></i></button>
+                                    <button style="margin-left: 2%;" class="btn btn-danger"><i class="fa fa-trash-o"
+                                            aria-hidden="true"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>
+                                    Ảnh
+                                </td>
+                                <td>H</td>
+                                <td>H</td>
+                                <td>H</td>
+                                <td>H</td>
+                                <td>
+                                    <button style="margin-left: 2%;" class="btn btn-info"><i class="fa fa-eye"
+                                            aria-hidden="true"></i></button>
+                                    <button style="margin-left: 2%;" class="btn btn-success"><i class="fa fa-pencil"
+                                            aria-hidden="true"></i></button>
+                                    <button style="margin-left: 2%;" class="btn btn-danger"><i class="fa fa-trash-o"
+                                            aria-hidden="true"></i></button>
                                 </td>
                             </tr>
                         </tbody>
@@ -360,7 +339,7 @@
                 </div>
             </div>
             <div class="copy">
-                <p> &copy; 2020 Minimal. All Rights Reserved | Design by 
+                <p> &copy; 2020 Minimal. All Rights Reserved | Design by
                 </p>
             </div>
         </div>

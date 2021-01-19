@@ -14,13 +14,14 @@
                 <section class="full-top">
                     <button id="toggle"><i class="fa fa-arrows-alt"></i></button>
                 </section>
-                <form class=" navbar-left-right">
-                    <input type="text" value="Search..." onfocus="this.value = '';"
-                        onblur="if (this.value == '') {this.value = 'Search...';}">
-                    <input type="submit" value="" class="fa fa-search">
-                </form>
+                <!-- <form class=" navbar-left-right">
+              <input type="text" value="Search..." onfocus="this.value = '';"
+                onblur="if (this.value == '') {this.value = 'Search...';}">
+              <input type="submit" value="" class="fa fa-search">
+            </form> -->
                 <div class="clearfix"> </div>
             </div>
+
             <div class="drop-men">
                 <ul class=" nav_1">
 
@@ -88,113 +89,75 @@
                     </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle dropdown-at" data-toggle="dropdown"><span
-                                class=" name-caret">Rackham<i class="caret"></i></span><img
+                                class=" name-caret">Lê Văn Long<i class="caret"></i></span><img
                                 src="./assets/images//wo.jpg"></a>
                         <ul class="dropdown-menu " role="menu">
-                            <li><a href="profile.html"><i class="fa fa-user"></i>Edit Profile</a></li>
-                            <li><a href="inbox.html"><i class="fa fa-envelope"></i>Inbox</a></li>
-                            <li><a href="calendar.html"><i class="fa fa-calendar"></i>Calender</a></li>
-                            <li><a href="inbox.html"><i class="fa fa-clipboard"></i>Tasks</a></li>
+                            <li><a (click)="logout()"><i class="fa fa-user"></i>Logout</a></li>
+                            <li><a [routerLink]="['/profile']" routerLinkActive="router-link-active"><i
+                                        class="fa fa-calendar"></i>Profile</a></li>
+                            <!-- <li><a href="inbox.html"><i class="fa fa-envelope"></i>Inbox</a></li>
+                  <li><a href="calendar.html"><i class="fa fa-calendar"></i>Calender</a></li>
+                  <li><a href="inbox.html"><i class="fa fa-clipboard"></i>Tasks</a></li> -->
                         </ul>
                     </li>
                 </ul>
             </div>
             <div class="clearfix">
-
             </div>
-
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
-
                         <li>
                             <a [routerLink]="['/dashboard']" routerLinkActive="router-link-active"
                                 class=" hvr-bounce-to-right"><i class="fa fa-dashboard nav_icon "></i><span
                                     class="nav-label">Dashboards</span> </a>
                         </li>
-
                         <li>
-                            <a href="#" class=" hvr-bounce-to-right"><i class="fa fa-indent nav_icon"></i> <span
-                                    class="nav-label">Hồ
-                                    sơ</span><span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li><a [routerLink]="['/quan-ly-ho-so']" routerLinkActive="router-link-active"
-                                        class=" hvr-bounce-to-right"><i class="fa fa-file-text-o nav_icon"></i>Quản lý
-                                        hồ sơ</a></li>
-                            </ul>
+                            <a [routerLink]="['/quan-ly-ho-so']" routerLinkActive="router-link-active"
+                                class=" hvr-bounce-to-right"><i class="fa fa-indent nav_icon"></i> <span
+                                    class="nav-label">Quản lý hồ
+                                    sơ</span></a>
                         </li>
                         <li>
-                            <a href="#" class=" hvr-bounce-to-right"><i class="fa fa-indent nav_icon"></i> <span
-                                    class="nav-label">Thủ
-                                    tục</span><span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li><a [routerLink]="['/quan-ly-thu-tuc']" routerLinkActive="router-link-active"
-                                        class=" hvr-bounce-to-right"><i class="fa fa-file-text-o nav_icon"></i>Quản lý
-                                        thủ tục</a></li>
-                            </ul>
+                            <a [routerLink]="['/quan-ly-thu-tuc']" routerLinkActive="router-link-active"
+                                class=" hvr-bounce-to-right"><i class="fa fa-indent nav_icon"></i> <span
+                                    class="nav-label">Quản lý thủ tục
+                                </span></a>
                         </li>
                         <li>
-                            <a href="#" class=" hvr-bounce-to-right"><i class="fa fa-desktop nav_icon"></i> <span
-                                    class="nav-label">Cơ
-                                    quan</span><span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li><a [routerLink]="['/quan-ly-co-quan']" routerLinkActive="router-link-active"
-                                        class=" hvr-bounce-to-right"><i class="fa fa-question-circle nav_icon"></i>Quản
-                                        lý cơ quan</a></li>
-                            </ul>
+                            <a [routerLink]="['/quan-ly-co-quan']" routerLinkActive="router-link-active"
+                                class=" hvr-bounce-to-right"><i class="fa fa-desktop nav_icon"></i> <span
+                                    class="nav-label">Quản lý cơ
+                                    quan</span></a>
                         </li>
                         <li>
-                            <a href="#" class=" hvr-bounce-to-right"><i class="fa fa-list nav_icon"></i> <span
-                                    class="nav-label">Lĩnh
-                                    vực</span><span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li><a [routerLink]="['/quan-ly-linh-vuc']" routerLinkActive="router-link-active"
-                                        class=" hvr-bounce-to-right"><i class="fa fa-align-left nav_icon"></i>
-                                        Quản lý lĩnh vực</a></li>
-                            </ul>
+                            <a [routerLink]="['/quan-ly-linh-vuc']" routerLinkActive="router-link-active"
+                                class=" hvr-bounce-to-right"><i class="fa fa-list nav_icon"></i> <span
+                                    class="nav-label">Quản lý lĩnh
+                                    vực</span></a>
                         </li>
                         <li>
-                            <a href="#" class=" hvr-bounce-to-right"><i class="fa fa-list nav_icon"></i> <span
-                                    class="nav-label">Quy
-                                    trình</span><span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li><a [routerLink]="['/quan-ly-quy-trinh']" routerLinkActive="router-link-active"
-                                        class=" hvr-bounce-to-right"><i class="fa fa-align-left nav_icon"></i>
-                                        Quản lý quy trình</a></li>
-                            </ul>
+                            <a [routerLink]="['/quan-ly-quy-trinh']" routerLinkActive="router-link-active"
+                                class=" hvr-bounce-to-right"><i class="fa fa-list nav_icon"></i> <span
+                                    class="nav-label">Quản lý quy trình</span></a>
                         </li>
                         <li>
-                            <a href="#" class=" hvr-bounce-to-right"><i class="fa fa-list nav_icon"></i> <span
+                            <a [routerLink]="['/quan-ly-nguoi-dung']" routerLinkActive="router-link-active"
+                                class=" hvr-bounce-to-right"><i class="fa fa-list nav_icon"></i> <span
                                     class="nav-label">Người
-                                    dùng</span><span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li><a [routerLink]="['/quan-ly-nguoi-dung']" routerLinkActive="router-link-active"
-                                        class=" hvr-bounce-to-right"><i class="fa fa-align-left nav_icon"></i>
-                                        Quản lý người dùng</a></li>
-                            </ul>
+                                    dùng</span></a>
                         </li>
-                        <li>
-                            <a href="#" class=" hvr-bounce-to-right"><i class="fa fa-list nav_icon"></i> <span
-                                    class="nav-label">Các bước
-                                </span><span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li><a [routerLink]="['/quan-ly-buoc']" routerLinkActive="router-link-active"
-                                        class=" hvr-bounce-to-right"><i class="fa fa-align-left nav_icon"></i>
-                                        Quản lý các bước</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="#" class=" hvr-bounce-to-right"><i class="fa fa-cog nav_icon"></i> <span
-                                    class="nav-label">Settings</span><span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li><a href="signin.html" class=" hvr-bounce-to-right"><i
-                                            class="fa fa-sign-in nav_icon"></i>Signin</a>
-                                </li>
-                                <li><a href="signup.html" class=" hvr-bounce-to-right"><i
-                                            class="fa fa-sign-in nav_icon"></i>Singup</a>
-                                </li>
-                            </ul>
-                        </li>
+                       
+                        <!-- <li>
+                  <a class=" hvr-bounce-to-right"><i class="fa fa-cog nav_icon"></i> <span
+                      class="nav-label">Settings</span><span class="fa arrow"></span></a>
+                  <ul class="nav nav-second-level">
+                    <li><a href="signin.html" class=" hvr-bounce-to-right"><i class="fa fa-sign-in nav_icon"></i>Signin</a>
+                    </li>
+                    <li><a href="signup.html" class=" hvr-bounce-to-right"><i class="fa fa-sign-in nav_icon"></i>Singup</a>
+                    </li>
+                  </ul>
+                </li> -->
                     </ul>
                 </div>
             </div>
@@ -229,31 +192,38 @@
                                 <td>
                                     {{item.ten_linh_vuc}}
                                 </td>
-                                <td><img style="width: 50px; height: 50px; vertical-align: middle" *ngIf="item.hinh_anh" [src]="createImg(item.hinh_anh)"></td>
+                                <td><img style="width: 50px; height: 50px; vertical-align: middle" *ngIf="item.hinh_anh"
+                                        [src]="createImg(item.hinh_anh)"></td>
                                 <!-- <td>{{item.hinh_anh}}</td> -->
                                 <td>{{item.mo_ta}}</td>
                                 <td>
-                                    <button style="margin-left: 2%;" class="btn btn-info" (click)="showDetail(item.id)"><i class="fa fa-eye"
-                                        aria-hidden="true"></i></button>
-                                    <button style="margin-left: 2%;" class="btn btn-success" (click)="showEdit(item.id)"><i class="fa fa-pencil"
+                                    <!-- <button style="margin-left: 2%;" class="btn btn-info" (click)="showDetail(item.id)"><i class="fa fa-eye"
+                                        aria-hidden="true"></i></button> -->
+                                    <button style="margin-left: 2%;" class="btn btn-success"
+                                        (click)="showEdit(item.id)"><i class="fa fa-pencil"
                                             aria-hidden="true"></i></button>
-                                    <button style="margin-left: 2%;" class="btn btn-danger" (click)="deleteShow(item.id)"><i
-												class="fa fa-trash-o" aria-hidden="true"></i></button>
+                                    <button style="margin-left: 2%;" class="btn btn-danger"
+                                        (click)="deleteShow(item.id)"><i class="fa fa-trash-o"
+                                            aria-hidden="true"></i></button>
                                 </td>
                             </tr>
 
                         </tbody>
                     </table>
+                                <p-paginator [rows]="rows" totalRecords="{{totalRecords}}" (onPageChange)="loadData($event)"></p-paginator>
+
                 </div>
             </div>
+            <!-- Modal thêm lĩnh vực -->
             <div bsModal #editAndADD="bs-modal" class="modal fade" tabindex="-1" role="dialog"
                 aria-labelledby="dialog-sizes-name1">
-                <div class="modal-dialog modal-content">
+                <div class="modal-dialog modal-lg">
                     <div class="modal-content">
-                        
-                        <form #newTypeForm="ngForm" (ngSubmit)="SaveForm(newTypeForm.value)" *ngIf="entity">
+                        <form [formGroup]="form" (ngSubmit)="SaveForm()" *ngIf="entity">
+                            <p-toast></p-toast>
                             <div class="modal-header">
-                                <h4 id="dialog-sizes-name1" class="modal-title pull-left" style="margin-top: -1%;">Quản lý lĩnh vực</h4>
+                                <h4 id="dialog-sizes-name1" class="modal-title pull-left" style="margin-top: -1%;">Thêm
+                                    lĩnh vực</h4>
                                 <button type="button" class="close pull-right" (click)="editAndADD.hide()"
                                     aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
@@ -263,17 +233,45 @@
                                 <div class="form-group">
                                     <label for="ten_linh_vuc">Tên lĩnh vực:</label>
                                     <input type="text" class="form-control" value="" name="ten_linh_vuc"
-                                        [(ngModel)]="entity.ten_linh_vuc">
+                                        formControlName="ten_linh_vuc">
+                                    <div *ngIf="iSubmited && form.controls.ten_linh_vuc.errors">
+                                        <span class="text-danger" *ngIf="form.controls.ten_linh_vuc.errors.required">Tên
+                                            lĩnh vực không được để trống.</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="ten_linh_vuc">Code:</label>
+                                    <input type="text" class="form-control" value="" name="code" formControlName="code">
+                                    <div *ngIf="iSubmited && form.controls.code.errors">
+                                        <span class="text-danger" *ngIf="form.controls.code.errors.required">Mã code
+                                            không được để trống.</span>
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="mo_ta">Mô tả:</label>
                                     <input type="text" class="form-control" value="" name="mo_ta"
-                                        [(ngModel)]="entity.mo_ta">
+                                        formControlName="mo_ta">
+                                    <div *ngIf="iSubmited && form.controls.mo_ta.errors">
+                                        <span class="text-danger" *ngIf="form.controls.mo_ta.errors.required">Mô tả
+                                            không được để trống.</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 col-form-label">Chọn cơ quan</label>
+                                    <select formControlName="co_quan" class="form-control" multiple>
+                                        <option *ngFor="let item of listCoquan" value="{{item.id}}">{{item.ten_co_quan}}
+                                        </option>
+                                    </select>
                                 </div>
                                 <div class="form-group">
                                     <label for="hinh_anh">Hình ảnh:</label>
-                                    <p-fileUpload #file chooseLabel="Chọn ảnh" [multiple]="false" accept="image/*" maxFileSize="1000000">
+                                    <p-fileUpload [multiple]="false" #file accept="image/*" maxFileSize="1000000">
                                     </p-fileUpload>
+                                    <div *ngIf="iSubmited && form.controls.hinh_anh.errors">
+                                        <span class="text-danger" *ngIf="form.controls.hinh_anh.errors.required">Hình
+                                            ảnh
+                                            không được để trống.</span>
+                                    </div>
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -285,81 +283,64 @@
                     </div>
                 </div>
             </div>
-            <div bsModal #editAndADD1="bs-modal" class="modal fade" tabindex="-1" role="dialog"
-                aria-labelledby="dialog-sizes-name1">
-                <div class="modal-dialog modal-content">
-                    <div class="modal-content">
-                        <form #newTypeForm="ngForm" (ngSubmit)="SaveForm(newTypeForm.value)" *ngIf="entity1">
-                            <div class="modal-header">
-                                <h4 id="dialog-sizes-name1" class="modal-title pull-left" style="margin-top: -1%;">Xem lĩnh vực</h4>
-                                <button type="button" class="close pull-right" (click)="editAndADD1.hide()"
-                                    aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="form-group">
-                                    <label for="id">Id:</label>
-                                    <input type="text" class="form-control" value="" name="id"
-                                        [(ngModel)]="entity1.id">
-                                </div>
-                                <div class="form-group">
-                                    <label for="ten_linh_vuc">Tên lĩnh vực:</label>
-                                    <input type="text" class="form-control" value="" name="ten_linh_vuc"
-                                        [(ngModel)]="entity1.ten_linh_vuc">
-                                </div>
-                                <div class="form-group">
-                                    <label for="mo_ta">Mô tả:</label>
-                                    <input type="text" class="form-control" value="" name="mo_ta"
-                                        [(ngModel)]="entity1.mo_ta">
-                                </div>
-                                <div class="form-group">
-                                    <label for="hinh_anh">Hình ảnh:</label>
-                                    <img style="margin-left:2px  ; width: 50px; height: 50px; vertical-align: middle" *ngIf="entity1.hinh_anh" [src]="createImg(entity1.hinh_anh)"/>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <!-- <button type="submit" class="btn btn-default">Submit</button> -->
-                                <button type="button" class="btn btn-default" (click)="editAndADD1.hide()"
-                                    data-dismiss="modal">Close</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
+            <!-- modal sửa lĩnh vực -->
             <div bsModal #editAndADD2="bs-modal" class="modal fade" tabindex="-1" role="dialog"
                 aria-labelledby="dialog-sizes-name1">
-                <div class="modal-dialog modal-content">
+                <div class="modal-dialog modal-lg">
                     <div class="modal-content">
-                        <form #newTypeForm="ngForm" (ngSubmit)="SaveForm(newTypeForm.value)" *ngIf="entity2">
+                        <form [formGroup]="form" (ngSubmit)="SaveForm()" *ngIf="entity">
+                            <p-toast></p-toast>
                             <div class="modal-header">
-                                <h4 id="dialog-sizes-name1" class="modal-title pull-left" style="margin-top: -1%;">Sửa lĩnh vực</h4>
+                                <h4 id="dialog-sizes-name1" class="modal-title pull-left" style="margin-top: -1%;">Sửa
+                                    lĩnh vực</h4>
                                 <button type="button" class="close pull-right" (click)="editAndADD2.hide()"
                                     aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <!-- <div class="form-group">
-                                    <label for="id">Id:</label>
-                                    <input type="text" class="form-control" value="" name="id"
-                                        [(ngModel)]="entity2.id">
-                                </div> -->
                                 <div class="form-group">
                                     <label for="ten_linh_vuc">Tên lĩnh vực:</label>
                                     <input type="text" class="form-control" value="" name="ten_linh_vuc"
-                                        [(ngModel)]="entity2.ten_linh_vuc">
+                                        formControlName="ten_linh_vuc">
+                                    <div *ngIf="iSubmited && form.controls.ten_linh_vuc.errors">
+                                        <span class="text-danger" *ngIf="form.controls.ten_linh_vuc.errors.required">Tên
+                                            lĩnh vực không được để trống.</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="ten_linh_vuc">Code:</label>
+                                    <input type="text" class="form-control" value="" name="code" formControlName="code">
+                                    <div *ngIf="iSubmited && form.controls.code.errors">
+                                        <span class="text-danger" *ngIf="form.controls.code.errors.required">Mã code
+                                            không được để trống.</span>
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="mo_ta">Mô tả:</label>
                                     <input type="text" class="form-control" value="" name="mo_ta"
-                                        [(ngModel)]="entity2.mo_ta">
+                                        formControlName="mo_ta">
+                                    <div *ngIf="iSubmited && form.controls.mo_ta.errors">
+                                        <span class="text-danger" *ngIf="form.controls.mo_ta.errors.required">Mô tả
+                                            không được để trống.</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 col-form-label">Chọn cơ quan</label>
+                                    <select formControlName="co_quan" class="form-control" multiple>
+                                        <option *ngFor="let item of listCoquan" value="{{item.id}}">{{item.ten_co_quan}}
+                                        </option>
+                                    </select>
                                 </div>
                                 <div class="form-group">
                                     <label for="hinh_anh">Hình ảnh:</label>
-                                    <img style="margin-left:2px  ; width: 50px; height: 50px; vertical-align: middle" *ngIf="entity2.hinh_anh" [src]="createImg(entity2.hinh_anh)"/>
-                                    <p-fileUpload #file chooseLabel="Chọn ảnh" [multiple]="false" accept="image/*" maxFileSize="1000000">
+                                    <p-fileUpload [multiple]="false" #file accept="image/*" maxFileSize="1000000">
                                     </p-fileUpload>
+                                    <div *ngIf="iSubmited && form.controls.hinh_anh.errors">
+                                        <span class="text-danger" *ngIf="form.controls.hinh_anh.errors.required">Hình
+                                            ảnh
+                                            không được để trống.</span>
+                                    </div>
                                 </div>
                             </div>
                             <div class="modal-footer">
