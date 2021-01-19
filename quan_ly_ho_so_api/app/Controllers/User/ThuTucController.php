@@ -77,6 +77,16 @@ class ThuTucController extends Controller {
             ]);
         }
 
+        if(request()->has('co_quan') && gettype(request()->co_quan) === 'array') {
+
+            foreach (request()->co_quan as $id) {
+                $model = $model->orWhere([
+                    'id_co_quan' => $id
+                ]);
+            }
+            
+        }
+
         $paging = Pagination::create($model, $page, $pageSize);
 
         return response()->json([

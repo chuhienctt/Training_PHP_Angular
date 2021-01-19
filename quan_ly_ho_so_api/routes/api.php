@@ -38,7 +38,7 @@ Route::group([
     ], function () {
 
         Route::get('/get', 'User\ThuTucController@get');
-        Route::get('/pagination', 'User\ThuTucController@pagination');
+        Route::post('/pagination', 'User\ThuTucController@pagination');
 
     });
 
