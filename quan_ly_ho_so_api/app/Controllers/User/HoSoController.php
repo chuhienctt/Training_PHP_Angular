@@ -50,6 +50,16 @@ class HoSoController extends Controller {
 
         $data = Template::get_data($temp_object, request()->all());
 
-        return response()->json($data);
+        $ho_so = new HoSo();
+
+        $ho_so->id_quy_trinh = request()->id_quy_trinh;
+        $ho_so->code = 'HS'.time().mt_rand(0, 9);
+        $ho_so->thong_tin = json_encode($data);
+        $ho_so->trang_thai = 0;
+
+        if($ho_so->save()) {
+            return response()->success(1, 'Thêm hồ sơ thành công!', $ho_so);
+        }
+        return response()->error(2, 'Thêm hồ sơ thất bại!');
     }
 }

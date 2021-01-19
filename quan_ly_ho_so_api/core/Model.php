@@ -2,6 +2,8 @@
 
 namespace Core;
 
+use App\Helpers\Format;
+
 class Model {
     protected $table = '';
     private $db = [];
@@ -65,6 +67,10 @@ class Model {
 
     public function where($data) {
         return $this->db->where($data, $this);
+    }
+
+    public function orWhere($data) {
+        return $this->db->orWhere($data, $this);
     }
 
     public function orderBy($column, $type = 'asc') {
