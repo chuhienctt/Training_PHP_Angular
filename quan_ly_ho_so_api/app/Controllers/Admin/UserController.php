@@ -8,17 +8,18 @@ use Core\Validator;
 use App\Helpers\Format;
 use Core\File;
 use App\Models\Users;
+use App\Models\CoQuan;
 
 class UserController extends Controller {
 
     public function get() {
         
         if(request()->has('id')) {
-            $data = model('Users')->find(request()->id);
+            $data = Users::find(request()->id);
         } else if(request()->has('id_co_quan')) {
-            $data = model('Users')->where(['id_co_quan' => request()->id_co_quan])->get();
+            $data = Users::where(['id_co_quan' => request()->id_co_quan])->get();
         } else {
-            $data = model('Users')->all();
+            $data = Users::all();
         }
         
         return response()->json($data);
@@ -28,10 +29,10 @@ class UserController extends Controller {
         $first = request()->first ?? 0;
         $row = request()->row ?? 10;
 
-        $data = model('Users')->offset($first)->limit($row)->get();
+        $data = Users::offset($first)->limit($row)->get();
 
         return response()->json([
-            'total' => model('Users')->count(),
+            'total' => Users::count(),
             'data' => $data,
         ]);
     }
@@ -107,7 +108,7 @@ class UserController extends Controller {
         // add cơ quan khi là cán bộ
         if($user->role == 2) {
             $id_co_quan = request()->id_co_quan;
-            $co_quan = model('CoQuan')->find($id_co_quan);
+            $co_quan = CoQuan::find($id_co_quan);
             if($co_quan) {
                 $user->id_co_quan = $id_co_quan;
             } else {
@@ -159,7 +160,7 @@ class UserController extends Controller {
             ],
         ]);
 
-        $user = model('Users')->find(request()->id);
+        $user = Users::find(request()->id);
 
         // k cho sửa thông tin của admin
         if($user->role == 3) {
@@ -179,7 +180,7 @@ class UserController extends Controller {
         // update cơ quan khi là cán bộ
         if($user->role == 2) {
             $id_co_quan = request()->id_co_quan;
-            $co_quan = model('CoQuan')->find($id_co_quan);
+            $co_quan = CoQuan::find($id_co_quan);
             if($co_quan) {
                 $user->id_co_quan = $id_co_quan;
             } else {
@@ -216,7 +217,7 @@ class UserController extends Controller {
             ],
         ]);
 
-        $user = model('Users')->find(request()->id);
+        $user = Users::find(request()->id);
 
         // k cho khóa admin khác
         if($user->role == 3) {
@@ -229,11 +230,7 @@ class UserController extends Controller {
             $model = $user->show();
         }
 
-        if($model) {
-            return response()->success(1, 'Thao tác thành công!');
-        }
-
-        return response()->error(2, 'Thao tác thất bại!');
+        return response()->success(1, 'Thao tác thành công!');
     }
 
     public function block() {

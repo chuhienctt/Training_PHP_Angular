@@ -3,11 +3,7 @@
 namespace App\Controller\Admin;
 
 use Core\Controller;
-use Core\Auth;
-use Core\Validator;
-use App\Helpers\Format;
 use Core\File;
-use Core\DB;
 use App\Models\HoSo;
 
 class HoSoController extends Controller {
@@ -15,9 +11,9 @@ class HoSoController extends Controller {
     public function get() {
         
         if(request()->has('id')) {
-            $data = model('HoSo')->find(request()->id);
+            $data = HoSo::find(request()->id);
         } else {
-            $data = model('HoSo')->all();
+            $data = HoSo::all();
         }
         
         return response()->json($data);
@@ -27,10 +23,10 @@ class HoSoController extends Controller {
         $first = request()->first ?? 0;
         $row = request()->row ?? 10;
 
-        $data = model('HoSo')->offset($first)->limit($row)->get();
+        $data = HoSo::offset($first)->limit($row)->get();
 
         return response()->json([
-            'total' => model('HoSo')->count(),
+            'total' => HoSo::count(),
             'data' => $data,
         ]);
     }

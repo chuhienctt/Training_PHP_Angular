@@ -3,33 +3,31 @@
 namespace App\Controller\Admin;
 
 use Core\Controller;
-use Core\Auth;
 use Core\Validator;
-use App\Helpers\Format;
-use Core\File;
-use Core\DB;
 use App\Models\Nhom;
 use App\Models\NhomUsers;
+use App\Models\Users;
+use Illuminate\Database\Capsule\Manager as DB;
 
 class NhomUsersController extends Controller {
 
     public function get() {
         
         if(request()->has('id')) {
-            $data = model('Nhom')->find(request()->id);
+            $data = Nhom::find(request()->id);
             if($data) {
-                $data->co_quan = $data->co_quan();
-                $data->users = $data->users();
+                $data->co_quan = $data->co_quan;
+                $data->users = $data->users;
             }
         } else if(request()->has('id_co_quan')) {
-            $data = model('Nhom')->where(['id_co_quan' => request()->id_co_quan])->get();
+            $data = Nhom::where(['id_co_quan' => request()->id_co_quan])->get();
 
             foreach ($data as $item) {
-                $item->co_quan = $item->co_quan();
-                $item->users = $item->users();
+                $data->co_quan = $item->co_quan;
+                $data->users = $item->users;
             }
         } else {
-            $data = model('Nhom')->all();
+            $data = Nhom::all();
         }
         
         return response()->json($data);
@@ -39,15 +37,15 @@ class NhomUsersController extends Controller {
         $first = request()->first ?? 0;
         $row = request()->row ?? 10;
 
-        $data = model('Nhom')->offset($first)->limit($row)->get();
+        $data = Nhom::offset($first)->limit($row)->get();
 
         foreach ($data as $item) {
-            $item->co_quan = $item->co_quan();
-            $item->users = $item->users();
+            $data->co_quan = $item->co_quan;
+            $data->users = $item->users;
         }
 
         return response()->json([
-            'total' => model('Nhom')->count(),
+            'total' => Nhom::count(),
             'data' => $data,
         ]);
     }
@@ -82,13 +80,13 @@ class NhomUsersController extends Controller {
                 // add user
                 foreach(request()->users as $user) {
 
-                    $result = model('Users')->where(['id' => $user, 'id_co_quan' => $nhom->id_co_quan, 'role' => 2, 'deleted_at' => null])->first();
+                    $result = Users::where(['id' => $user, 'id_co_quan' => $nhom->id_co_quan, 'role' => 2, 'deleted_at' => null])->first();
 
                     if(!$result) {
                         throw new \PDOException('Người dùng không hợp lệ!');
                     }
 
-                    $result = model('NhomUsers')->insert([
+                    $result = NhomUsers::insert([
                         'id_nhom' => $nhom->id,
                         'id_users' => $user,
                     ]);
@@ -128,7 +126,7 @@ class NhomUsersController extends Controller {
             ],
         ]);
 
-        $nhom = model('Nhom')->find(request()->id);
+        $nhom = Nhom::find(request()->id);
 
         $nhom->ten_nhom = request()->ten_nhom;
 
@@ -138,20 +136,20 @@ class NhomUsersController extends Controller {
 
             try {
                 // remove user
-                model('NhomUsers')->where([
+                NhomUsers::where([
                     'id_nhom' => $nhom->id
                 ])->delete();
 
                 // add user
                 foreach(request()->users as $user) {
 
-                    $result = model('Users')->where(['id' => $user, 'id_co_quan' => $nhom->id_co_quan, 'role' => 2, 'deleted_at' => null])->first();
+                    $result = Users::where(['id' => $user, 'id_co_quan' => $nhom->id_co_quan, 'role' => 2, 'deleted_at' => null])->first();
 
                     if(!$result) {
                         throw new \PDOException('Người dùng không hợp lệ!');
                     }
 
-                    $result = model('NhomUsers')->insert([
+                    $result = NhomUsers::insert([
                         'id_nhom' => $nhom->id,
                         'id_users' => $user,
                     ]);
@@ -184,16 +182,12 @@ class NhomUsersController extends Controller {
         ]);
 
         if($type == 'hide') {
-            $model = model('Nhom')->find(request()->id)->hide();
+            $model = Nhom::find(request()->id)->hide();
         } else {
-            $model = model('Nhom')->find(request()->id)->show();
+            $model = Nhom::find(request()->id)->show();
         }
 
-        if($model) {
-            return response()->success(1, 'Thao tác thành công!');
-        }
-
-        return response()->error(2, 'Thao tác thất bại!');
+        return response()->success(1, 'Thao tác thành công!');
     }
 
     public function delete() {

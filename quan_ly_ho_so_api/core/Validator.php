@@ -4,6 +4,7 @@ namespace Core;
 
 use DateTime;
 use App\Helpers\Format;
+use Illuminate\Database\Capsule\Manager as DB;
 
 class Validator {
 
@@ -96,7 +97,7 @@ class Validator {
                 $id = request()->id ?? null;
 
                 if($id) {
-                    $data['id'] = ['<>', $id];
+                    $data[] = ['id', '<>', $id];
                 }
                 $data[$key] = $value;
 

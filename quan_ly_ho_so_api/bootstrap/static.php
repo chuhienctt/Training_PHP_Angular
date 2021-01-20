@@ -3,7 +3,6 @@
 use Core\Response;
 use Core\Request;
 use Core\Validator;
-use Core\DB;
 
 $response = new Response();
 $request = new Request();
@@ -17,11 +16,6 @@ function response() {
 function request() {
     global $request;
     return $request;
-}
-
-function model($modelName) {
-    global $models;
-    return $models[$modelName];
 }
 
 function validator() {

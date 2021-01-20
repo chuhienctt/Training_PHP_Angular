@@ -3,16 +3,15 @@
 namespace App\Controller\Admin;
 
 use Core\Controller;
-use Core\Auth;
-use Core\Validator;
-use App\Helpers\Format;
-use Core\File;
-use Core\DB;
+use Illuminate\Database\Capsule\Manager as DB;
+use App\Models\DiaChinh\Province;
+use App\Models\DiaChinh\District;
+use App\Models\DiaChinh\Ward;
 
 class DiaChinhController extends Controller {
 
     public function getTinh() {
-        $data = DB::table('province')->all();
+        $data = Province::all();
 
         return response()->json($data);
     }
@@ -20,29 +19,29 @@ class DiaChinhController extends Controller {
     public function getHuyen() {
         $id = request()->id ?? '01';
 
-        $data = DB::table('district')->where(['province_id' => $id])->get();
+        $data = District::where(['province_id' => $id])->get();
         return response()->json($data);
     }
 
     public function getXa() {
         $id = request()->id ?? '001';
 
-        $data = DB::table('ward')->where(['district_id' => $id])->get();
+        $data = Ward::where(['district_id' => $id])->get();
         return response()->json($data);
     }
 
     public function getDiaChi() {
         $id = request()->id ?? '00001';
 
-        $ward = DB::table('ward')->find($id);
+        $ward = Ward::find($id);
 
-        $district = DB::table('district')->find($ward->district_id);
+        $district = District::find($ward->district_id);
 
-        $province = DB::table('province')->find($district->province_id);
+        $province = Province::find($district->province_id);
 
-        $list_province = DB::table('province')->all();
-        $list_district = DB::table('district')->where(['province_id' => $province->id])->get();
-        $list_ward = DB::table('ward')->where(['district_id' => $district->id])->get();
+        $list_province = Province::all();
+        $list_district = District::where(['province_id' => $province->id])->get();
+        $list_ward = Ward::where(['district_id' => $district->id])->get();
 
         return response()->json([
             'ward' => $ward,
@@ -57,9 +56,9 @@ class DiaChinhController extends Controller {
     public function get_tinh() {
         
         if(request()->has('id')) {
-            $data = DB::table('province')->find(request()->id);
+            $data = Province::find(request()->id);
         } else {
-            $data = DB::table('province')->all();
+            $data = Province::all();
         }
         
         return response()->json($data);
@@ -69,10 +68,10 @@ class DiaChinhController extends Controller {
         $first = request()->first ?? 0;
         $row = request()->row ?? 10;
 
-        $data = DB::table('province')->offset($first)->limit($row)->get();
+        $data = Province::offset($first)->limit($row)->get();
 
         return response()->json([
-            'total' => DB::table('province')->count(),
+            'total' => Province::count(),
             'data' => $data,
         ]);
     }
@@ -80,11 +79,11 @@ class DiaChinhController extends Controller {
     public function get_huyen() {
 
         if(request()->has('id')) {
-            $data = DB::table('district')->find(request()->id);
+            $data = District::find(request()->id);
         } else if(request()->has('province_id')) {
-            $data = DB::table('district')->where(['province_id' => request()->province_id])->get();
+            $data = District::where(['province_id' => request()->province_id])->get();
         } else {
-            $data = DB::table('district')->all();
+            $data = District::all();
         }
         
         return response()->json($data);
@@ -96,11 +95,11 @@ class DiaChinhController extends Controller {
         $province_id = request()->province_id ?? null;
 
         if($province_id) {
-            $total = DB::table('district')->where(['province_id' => $province_id])->count();
-            $data = DB::table('district')->where(['province_id' => $province_id])->offset($first)->limit($row)->get();
+            $total = District::where(['province_id' => $province_id])->count();
+            $data = District::where(['province_id' => $province_id])->offset($first)->limit($row)->get();
         } else {
-            $total = DB::table('district')->count();
-            $data = DB::table('district')->offset($first)->limit($row)->get();
+            $total = District::count();
+            $data = District::offset($first)->limit($row)->get();
         }
 
         return response()->json([
@@ -112,11 +111,11 @@ class DiaChinhController extends Controller {
     public function get_xa() {
 
         if(request()->has('id')) {
-            $data = DB::table('ward')->find(request()->id);
+            $data = Ward::find(request()->id);
         } else if(request()->has('district_id')) {
-            $data = DB::table('ward')->where(['district_id' => request()->district_id])->get();
+            $data = Ward::where(['district_id' => request()->district_id])->get();
         } else {
-            $data = DB::table('ward')->all();
+            $data = Ward::all();
         }
         
         return response()->json($data);
@@ -128,11 +127,11 @@ class DiaChinhController extends Controller {
         $district_id = request()->district_id ?? null;
 
         if($district_id) {
-            $total = DB::table('ward')->where(['district_id' => $district_id])->count();
-            $data = DB::table('ward')->where(['district_id' => $district_id])->offset($first)->limit($row)->get();
+            $total = Ward::where(['district_id' => $district_id])->count();
+            $data = Ward::where(['district_id' => $district_id])->offset($first)->limit($row)->get();
         } else {
-            $total = DB::table('ward')->count();
-            $data = DB::table('ward')->offset($first)->limit($row)->get();
+            $total = Ward::count();
+            $data = Ward::offset($first)->limit($row)->get();
         }
 
         return response()->json([
@@ -155,7 +154,7 @@ class DiaChinhController extends Controller {
             ],
         ]);
 
-        $result = DB::table('province')->insert([
+        $result = Province::insert([
             'name' => request()->name,
             'type' => request()->type,
         ]);
@@ -184,7 +183,7 @@ class DiaChinhController extends Controller {
             ],
         ]);
 
-        $result = DB::table('province')->where(['id' => request()->id])
+        $result = Province::where('id', request()->id)
         ->update([
             'name' => request()->name,
             'type' => request()->type,
@@ -207,16 +206,12 @@ class DiaChinhController extends Controller {
         ]);
 
         if($type == 'hide') {
-            $model = DB::table('province')->where(['id' => request()->id])->hide();
+            $model = Province::find(request()->id)->hide();
         } else {
-            $model = DB::table('province')->where(['id' => request()->id])->show();
+            $model = Province::find(request()->id)->show();
         }
 
-        if($model) {
-            return response()->success(1, 'Thao tác thành công!');
-        }
-
-        return response()->error(2, 'Thao tác thất bại!');
+        return response()->success(1, 'Thao tác thành công!');
     }
 
     public function delete_tinh() {
@@ -245,7 +240,7 @@ class DiaChinhController extends Controller {
             ],
         ]);
 
-        $result = DB::table('district')->insert([
+        $result = District::insert([
             'name' => request()->name,
             'type' => request()->type,
             'province_id' => request()->province_id,
@@ -279,7 +274,7 @@ class DiaChinhController extends Controller {
             ],
         ]);
 
-        $result = DB::table('district')->find(request()->id)
+        $result = District::where('id', request()->id)
         ->update([
             'name' => request()->name,
             'type' => request()->type,
@@ -303,16 +298,12 @@ class DiaChinhController extends Controller {
         ]);
 
         if($type == 'hide') {
-            $model = DB::table('district')->where(['id' => request()->id])->hide();
+            $model = District::find(request()->id)->hide();
         } else {
-            $model = DB::table('district')->where(['id' => request()->id])->show();
+            $model = District::find(request()->id)->show();
         }
 
-        if($model) {
-            return response()->success(1, 'Thao tác thành công!');
-        }
-
-        return response()->error(2, 'Thao tác thất bại!');
+        return response()->success(1, 'Thao tác thành công!');
     }
 
     public function delete_huyen() {
@@ -341,7 +332,7 @@ class DiaChinhController extends Controller {
             ],
         ]);
 
-        $result = DB::table('ward')->insert([
+        $result = Ward::insert([
             'name' => request()->name,
             'type' => request()->type,
             'district_id' => request()->district_id,
@@ -375,7 +366,7 @@ class DiaChinhController extends Controller {
             ],
         ]);
 
-        $result = DB::table('ward')->where(['id' => request()->id])
+        $result = Ward::where('id', request()->id)
         ->update([
             'name' => request()->name,
             'type' => request()->type,
@@ -399,16 +390,12 @@ class DiaChinhController extends Controller {
         ]);
 
         if($type == 'hide') {
-            $model = DB::table('ward')->where(['id' => request()->id])->hide();
+            $model = Ward::find(request()->id)->hide();
         } else {
-            $model = DB::table('ward')->where(['id' => request()->id])->show();
+            $model = Ward::find(request()->id)->show();
         }
 
-        if($model) {
-            return response()->success(1, 'Thao tác thành công!');
-        }
-
-        return response()->error(2, 'Thao tác thất bại!');
+        return response()->success(1, 'Thao tác thành công!');
     }
 
     public function delete_xa() {

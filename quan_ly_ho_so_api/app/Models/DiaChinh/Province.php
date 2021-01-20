@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\DiaChinh;
 
 use \Illuminate\Database\Eloquent\Model;
 use App\Helpers\Format;
-use App\Models\CoQuanLinhVuc;
 
-class CoQuan extends Model {
-    protected $table = 'co_quan';
+class Province extends Model {
+    protected $table = 'province';
 
     public function show() {
         $this->deleted_at = NULL;
@@ -17,9 +16,5 @@ class CoQuan extends Model {
     public function hide() {
         $this->deleted_at = Format::timeNow();
         $this->save();
-    }
-    
-    public function linh_vuc() {
-        return $this->belongsToMany('App\Models\LinhVuc', 'co_quan_linh_vuc', 'id_co_quan', 'id_linh_vuc');
     }
 }

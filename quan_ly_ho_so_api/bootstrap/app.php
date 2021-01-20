@@ -24,6 +24,14 @@ if($_SERVER["REQUEST_METHOD"] == 'OPTIONS') {
 
 define('_ROOT', __DIR__);
 
+
+// // autoload model
+// $files = getFiles(_ROOT.'/../app/Models/', 'php');
+
+// foreach($files as $file) {
+//     require_once _ROOT.'/../app/Models/'.$file;
+// }
+
 // autoload core
 $files = getFiles(_ROOT.'/../core/', 'php');
 
@@ -31,27 +39,12 @@ foreach($files as $file) {
     require_once _ROOT.'/../core/'.$file;
 }
 
-// autoload models
-$files = getFiles(_ROOT.'/../app/Models/', 'php');
+// // autoload helpers
+// $files = getFiles(_ROOT.'/../app/Helpers/', 'php');
 
-
-$models = [];
-foreach($files as $file) {
-    require_once _ROOT.'/../app/Models/'.$file;
-
-    // init model
-    $modelName = explode('.', $file)[0];
-    $class = "App\\Models\\".$modelName;
-
-    $models[$modelName] =  new $class();
-}
-
-// autoload helpers
-$files = getFiles(_ROOT.'/../app/Helpers/', 'php');
-
-foreach($files as $file) {
-    require_once _ROOT.'/../app/Helpers/'.$file;
-}
+// foreach($files as $file) {
+//     require_once _ROOT.'/../app/Helpers/'.$file;
+// }
 
 
 require_once "static.php";

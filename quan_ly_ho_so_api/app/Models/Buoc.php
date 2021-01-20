@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Core\Model;
+use \Illuminate\Database\Eloquent\Model;
 
 class Buoc extends Model {
     protected $table = 'buoc';
