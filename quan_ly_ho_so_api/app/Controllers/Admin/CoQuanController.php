@@ -3,24 +3,22 @@
 namespace App\Controller\Admin;
 
 use Core\Controller;
-use Core\Auth;
 use Core\Validator;
-use App\Helpers\Format;
 use Core\File;
-use Core\DB;
 use App\Models\CoQuan;
+use App\Models\LinhVuc;
+use App\Models\CoQuanLinhVuc;
+use Illuminate\Database\Capsule\Manager as DB;
 
 class CoQuanController extends Controller {
 
     public function get() {
         
         if(request()->has('id')) {
-            $data = model('CoQuan')->find(request()->id);
-            if($data) {
-                $data->linh_vuc = $data->all_linh_vuc();
-            }
+            $data = CoQuan::find(request()->id);
+            $data && $data->linh_vuc = $data->linh_vuc;
         } else {
-            $data = model('CoQuan')->all();
+            $data = CoQuan::all();
         }
         
         return response()->json($data);
@@ -30,10 +28,10 @@ class CoQuanController extends Controller {
         $first = request()->first ?? 0;
         $row = request()->row ?? 10;
 
-        $data = model('CoQuan')->offset($first)->limit($row)->get();
+        $data = CoQuan::offset($first)->limit($row)->get();
 
         return response()->json([
-            'total' => model('CoQuan')->count(),
+            'total' => CoQuan::count(),
             'data' => $data,
         ]);
     }
@@ -105,8 +103,8 @@ class CoQuanController extends Controller {
             // add referenced
             try {
                 foreach($linh_vucs as $option) {
-                    if(model('LinhVuc')->find($option)) {
-                        $result = model('CoQuanLinhVuc')->insert([
+                    if(LinhVuc::find($option)) {
+                        $result = CoQuanLinhVuc::insert([
                             'id_linh_vuc' => $option,
                             'id_co_quan' => $co_quan->id,
                         ]);
@@ -168,7 +166,7 @@ class CoQuanController extends Controller {
             ],
         ]);
 
-        $co_quan = model('CoQuan')->find(request()->id);
+        $co_quan = CoQuan::find(request()->id);
 
         if(request()->has('hinh_anh') && !Validator::check('base64', request()->hinh_anh)) {
             $file = File::createBase64(request()->hinh_anh);
@@ -198,14 +196,14 @@ class CoQuanController extends Controller {
 
             try {
                 // remove referenced
-                model('CoQuanLinhVuc')->where([
+                CoQuanLinhVuc::where([
                     'id_co_quan' => $co_quan->id
                 ])->delete();
 
                 // add referenced
                 foreach($linh_vucs as $option) {
-                    if(model('LinhVuc')->find($option)) {
-                        $result = model('CoQuanLinhVuc')->insert([
+                    if(LinhVuc::find($option)) {
+                        $result = CoQuanLinhVuc::insert([
                             'id_linh_vuc' => $option,
                             'id_co_quan' => $co_quan->id,
                         ]);
@@ -239,16 +237,12 @@ class CoQuanController extends Controller {
         ]);
 
         if($type == 'hide') {
-            $model = model('CoQuan')->find(request()->id)->hide();
+            $model = CoQuan::find(request()->id)->hide();
         } else {
-            $model = model('CoQuan')->find(request()->id)->show();
+            $model = CoQuan::find(request()->id)->show();
         }
 
-        if($model) {
-            return response()->success(1, 'Thao tác thành công!');
-        }
-
-        return response()->error(2, 'Thao tác thất bại!');
+        return response()->success(1, 'Thao tác thành công!');
     }
 
     public function delete() {

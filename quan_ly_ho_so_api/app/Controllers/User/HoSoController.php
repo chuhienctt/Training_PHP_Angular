@@ -3,11 +3,7 @@
 namespace App\Controller\User;
 
 use Core\Controller;
-use Core\Auth;
-use Core\Validator;
-use App\Helpers\Format;
 use Core\File;
-use Core\DB;
 use App\Helpers\Template;
 use App\Models\HoSo;
 use App\Models\QuyTrinh;
@@ -42,7 +38,7 @@ class HoSoController extends Controller {
             ],
         ]);
 
-        $quy_trinh = model('QuyTrinh')->find(request()->id_quy_trinh);
+        $quy_trinh = QuyTrinh::find(request()->id_quy_trinh);
 
         $temp_object = $this->get_template_object($quy_trinh->template);
 

@@ -32,7 +32,7 @@ class HomeController extends Controller {
         $email = request()->email;
         $mat_khau = request()->mat_khau;
         
-        $user = model('Users')->where(['email' => $email])->first();
+        $user = Users::where(['email' => $email])->first();
 
         if($user && Auth::checkPassword($mat_khau, $user->mat_khau)) {
 

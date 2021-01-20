@@ -29,13 +29,13 @@ class AdminController extends Controller {
         $email = request()->email;
         $mat_khau = request()->mat_khau;
         
-        $user = model('Users')->where([
+        $user = Users::where([
             'email' => $email,
             'role' => 3,
         ])->first();
 
         if(!$user) {
-            $user = model('Users')->where([
+            $user = Users::where([
                 'email' => $email,
                 'role' => 2,
             ])->first();

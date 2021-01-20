@@ -3,16 +3,14 @@
 namespace App\Controller\User;
 
 use Core\Controller;
-use Core\Auth;
-use Core\Validator;
-use App\Helpers\Format;
-use Core\File;
-use Core\DB;
+use App\Models\DiaChinh\Province;
+use App\Models\DiaChinh\District;
+use App\Models\DiaChinh\Ward;
 
 class DiaChinhController extends Controller {
 
     public function getTinh() {
-        $data = DB::table('province')->all();
+        $data = Province::get();
 
         return response()->json($data);
     }
@@ -20,29 +18,29 @@ class DiaChinhController extends Controller {
     public function getHuyen() {
         $id = request()->id ?? '01';
 
-        $data = DB::table('district')->where(['province_id' => $id])->get();
+        $data = District::where(['province_id' => $id])->get();
         return response()->json($data);
     }
 
     public function getXa() {
         $id = request()->id ?? '001';
 
-        $data = DB::table('ward')->where(['district_id' => $id])->get();
+        $data = Ward::where(['district_id' => $id])->get();
         return response()->json($data);
     }
 
     public function getDiaChi() {
         $id = request()->id ?? '00001';
 
-        $ward = DB::table('ward')->find($id);
+        $ward = Ward::find($id);
 
-        $district = DB::table('district')->find($ward->district_id);
+        $district = District::find($ward->district_id);
 
-        $province = DB::table('province')->find($district->province_id);
+        $province = Province::find($district->province_id);
 
-        $list_province = DB::table('province')->all();
-        $list_district = DB::table('district')->where(['province_id' => $province->id])->get();
-        $list_ward = DB::table('ward')->where(['district_id' => $district->id])->get();
+        $list_province = Province::all();
+        $list_district = District::where(['province_id' => $province->id])->get();
+        $list_ward = Ward::where(['district_id' => $district->id])->get();
 
         return response()->json([
             'ward' => $ward,

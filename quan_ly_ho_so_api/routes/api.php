@@ -11,10 +11,16 @@ Route::group([
     Route::post('/auth/login', 'User\HomeController@login');
     Route::post('/auth/register', 'User\HomeController@register');
 
-    Route::get('/dia-chinh/get-tinh', 'User\DiaChinhController@getTinh');
-    Route::get('/dia-chinh/get-huyen', 'User\DiaChinhController@getHuyen');
-    Route::get('/dia-chinh/get-xa', 'User\DiaChinhController@getXa');
-    Route::get('/dia-chinh/get-dia-chi', 'User\DiaChinhController@getDiaChi');
+    Route::group([
+        'prefix' => '/dia-chinh'
+    ], function () {
+
+        Route::get('/get-tinh', 'User\DiaChinhController@getTinh');
+        Route::get('/get-huyen', 'User\DiaChinhController@getHuyen');
+        Route::get('/get-xa', 'User\DiaChinhController@getXa');
+        Route::get('/get-dia-chi', 'User\DiaChinhController@getDiaChi');
+
+    });
 
     Route::group([
         'middleware' => 'UserGuard'
@@ -102,26 +108,6 @@ Route::group([
             Route::put('/update', 'Admin\ThuTucController@update');
             Route::delete('/delete', 'Admin\ThuTucController@delete');
             Route::delete('/undelete', 'Admin\ThuTucController@undelete');
-
-        });
-
-        
-        Route::group([
-            'prefix' => '/quy-trinh'
-        ], function () {
-
-            Route::delete('/delete', 'Admin\QuyTrinhController@delete');
-            Route::delete('/undelete', 'Admin\QuyTrinhController@undelete');
-
-        });
-
-        
-        Route::group([
-            'prefix' => '/buoc'
-        ], function () {
-
-            Route::delete('/delete', 'Admin\BuocController@delete');
-            Route::delete('/undelete', 'Admin\BuocController@undelete');
 
         });
 

@@ -3,37 +3,35 @@
 namespace App\Controller\Admin;
 
 use Core\Controller;
-use Core\Auth;
 use Core\Validator;
 use App\Helpers\Format;
-use Core\DB;
 use Core\File;
 use App\Models\ThuTuc;
 use App\Models\QuyTrinh;
 use App\Models\Buoc;
+use Illuminate\Database\Capsule\Manager as DB;
 
 class ThuTucController extends Controller {
 
     public function get() {
         
         if(request()->has('id')) {
-            $data = model('ThuTuc')->find(request()->id);
-
-            $data->co_quan = $data->co_quan();
-            $data->linh_vuc = $data->linh_vuc();
-            $data->quy_trinh = $data->quy_trinh();
+            $data = ThuTuc::find(request()->id);
+            $data->co_quan = $data->co_quan;
+            $data->linh_vuc = $data->linh_vuc;
+            $data->quy_trinh = $data->quy_trinh;
 
             foreach ($data->quy_trinh as $qt) {
-                $qt->buoc = $qt->buoc();
+                $qt->buoc = $qt->buoc;
             }
 
         } else {
-            $data = model('ThuTuc')->all();
+            $data = ThuTuc::all();
 
             foreach($data as $tt) {
-                $tt->co_quan = $tt->co_quan();
-                $tt->linh_vuc = $tt->linh_vuc();
-                $tt->quy_trinh = $tt->quy_trinh();
+                $tt->co_quan = $tt->co_quan;
+                $tt->linh_vuc = $tt->linh_vuc;
+                $tt->quy_trinh = $tt->quy_trinh;
             }
         }
         
@@ -44,16 +42,16 @@ class ThuTucController extends Controller {
         $first = request()->first ?? 0;
         $row = request()->row ?? 10;
 
-        $data = model('ThuTuc')->offset($first)->limit($row)->get();
+        $data = ThuTuc::offset($first)->limit($row)->get();
 
         foreach($data as $tt) {
-            $tt->co_quan = $tt->co_quan();
-            $tt->linh_vuc = $tt->linh_vuc();
-            $tt->quy_trinh = $tt->quy_trinh();
+            $tt->co_quan = $tt->co_quan;
+            $tt->linh_vuc = $tt->linh_vuc;
+            $tt->quy_trinh = $tt->quy_trinh;
         }
 
         return response()->json([
-            'total' => model('ThuTuc')->count(),
+            'total' => ThuTuc::count(),
             'data' => $data,
         ]);
     }
@@ -224,7 +222,7 @@ class ThuTucController extends Controller {
             Validator::alert("Lĩnh vực không thuộc cơ quan đã chọn!");
         }
 
-        $thu_tuc = model('ThuTuc')->find(request()->id);
+        $thu_tuc = ThuTuc::find(request()->id);
 
         $thu_tuc->code = request()->code;
         $thu_tuc->id_co_quan = request()->id_co_quan;
@@ -263,7 +261,7 @@ class ThuTucController extends Controller {
                             throw new \PDOException("Quy trình không tồn tại");
                         }
 
-                        $qt_new = model('QuyTrinh')->find($qt['id']);
+                        $qt_new = QuyTrinh::find($qt['id']);
     
                         $qt_new->ten_quy_trinh = $qt['ten_quy_trinh'];
                         $qt_new->ghi_chu = $qt['ghi_chu'];
@@ -307,7 +305,7 @@ class ThuTucController extends Controller {
                                     throw new \PDOException("Bước không tồn tại");
                                 }
 
-                                $bc_new = model('Buoc')->find($bc['id']);
+                                $bc_new = Buoc::find($bc['id']);
 
                                 $bc_new->id_nhom = $bc['id_nhom'];
                                 $bc_new->ten_buoc = $bc['ten_buoc'];
@@ -326,9 +324,7 @@ class ThuTucController extends Controller {
 
                             }
 
-                            if(!$bc_new->save()) {
-                                throw new \PDOException("Không thể lưu bước");
-                            }
+                            $bc_new->save();
                         }
                     } else {
                         throw new \PDOException("Không thể lưu quy trình");
@@ -357,16 +353,12 @@ class ThuTucController extends Controller {
         ]);
 
         if($type == 'hide') {
-            $model = model('ThuTuc')->find(request()->id)->hide();
+            $model = ThuTuc::find(request()->id)->hide();
         } else {
-            $model = model('ThuTuc')->find(request()->id)->show();
+            $model = ThuTuc::find(request()->id)->show();
         }
 
-        if($model) {
-            return response()->success(1, 'Thao tác thành công!');
-        }
-
-        return response()->error(2, 'Thao tác thất bại!');
+        return response()->success(1, 'Thao tác thành công!');
     }
 
     public function delete() {
