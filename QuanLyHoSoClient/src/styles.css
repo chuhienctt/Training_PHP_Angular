@@ -73,3 +73,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; } */
 .p-toast {
   width: 30rem !important;
 }
+
+.float-right {
+  float: right !important;
+}

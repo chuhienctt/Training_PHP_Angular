@@ -23,6 +23,7 @@ import { GetImagePipe } from './libs/get.image.pipe';
 import { NiceSelectModule } from "ng-nice-select";
 import { ChangepassComponent } from './main/changepass/changepass.component';
 import { ListComponent } from './main/list/list.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 export function tokenGetter() {
   let user = JSON.parse(localStorage.getItem("jwt"));
@@ -60,7 +61,8 @@ export function tokenGetter() {
         blacklistedRoutes: []
       }
     }),
-    FileUploadModule
+    FileUploadModule,
+    NgbModule
   ],
   providers: [],
   exports: [

@@ -100,6 +100,18 @@
               </div>
             </div>
             <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label>Mô tả <span class="text-danger">*</span></label>
+                  <textarea class="form-control" formControlName="mo_ta"></textarea>
+                  <div *ngIf="submitted && form.controls.mo_ta.errors">
+                    <small class="error" *ngIf="form.controls.mo_ta.errors.required">Chưa nhập mô tả.</small>
+                    <small class="error" *ngIf="form.controls.mo_ta.errors.maxlength">Mô tả không được lớn hơn 250 ký tự.</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
               <div class="col-md-4">
                 <mat-form-field appearance="standard" [style]="{'width': '100%'}">
                   <mat-label>Chọn cơ quan <span class="text-danger">*</span></mat-label>
@@ -331,7 +343,7 @@
                 <small class="error" *ngIf="formStep.controls.ghi_chu.errors.required">Chưa nhập ghi chú.</small>
               </div>
             </div>
-            <div class="form-group" å>
+            <div class="form-group">
               <mat-form-field appearance="standard" [style]="{'width': '100%'}">
                 <mat-label>Chọn nhóm <span class="text-danger">*</span></mat-label>
                 <mat-select formControlName="id_nhom">
