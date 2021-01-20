@@ -74,7 +74,7 @@
         <div class="modal-body">
           <div class="card-body ">
             <div class="row">
-              <label class="col-sm-4 col-form-label">Tên huyện</label>
+              <label class="col-sm-4 col-form-label">Tên xã</label>
               <div class="col-sm-8">
                 <div class="form-group bmd-form-group">
                   <input class="form-control" type="text" formControlName="name">
@@ -92,9 +92,9 @@
                   <mat-form-field appearance="standard" [style]="{'width': '100%'}">
                     <mat-label>Chọn kiểu</mat-label>
                     <mat-select formControlName="type">
-                      <mat-option value="Thị xã">Thị xã</mat-option>
-                      <mat-option value="Quận">Quận</mat-option>
-                      <mat-option value="Huyện">Huyện</mat-option>
+                      <mat-option value="Thị trấn">Thị trấn</mat-option>
+                      <mat-option value="Xã">Xã</mat-option>
+                      <mat-option value="Phường">Phường</mat-option>
                     </mat-select>
                   </mat-form-field>
                   <div *ngIf="submitted && form.controls.type.errors">
