@@ -56,18 +56,24 @@ class ThuTucController extends Controller {
 
         if(request()->has('keyword')) {
             $model = $model->where(function($query) {
+
                 $query->orWhere('ten_thu_tuc', 'like', '%'.request()->keyword.'%')
                 ->orWhere('mo_ta', 'like', '%'.request()->keyword.'%');
+                
             });
         }
 
         if(request()->has('co_quan') && gettype(request()->co_quan) === 'array') {
 
-            foreach (request()->co_quan as $id) {
-                $model = $model->orWhere([
-                    'id_co_quan' => $id
-                ]);
-            }
+            $model = $model->where(function($query) {
+
+                foreach (request()->co_quan as $id) {
+                    $query->orWhere([
+                        'id_co_quan' => $id
+                    ]);
+                }
+
+            });
 
         }
 
