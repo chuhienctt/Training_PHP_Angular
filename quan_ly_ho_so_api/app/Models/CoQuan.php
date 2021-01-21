@@ -5,6 +5,7 @@ namespace App\Models;
 use \Illuminate\Database\Eloquent\Model;
 use App\Helpers\Format;
 use App\Models\CoQuanLinhVuc;
+use App\Models\ThuTuc;
 
 class CoQuan extends Model {
     protected $table = 'co_quan';
@@ -21,5 +22,9 @@ class CoQuan extends Model {
     
     public function linh_vuc() {
         return $this->belongsToMany('App\Models\LinhVuc', 'co_quan_linh_vuc', 'id_co_quan', 'id_linh_vuc');
+    }
+    
+    public function count_thu_tuc() {
+        return ThuTuc::where('id_co_quan', $this->id)->count();
     }
 }

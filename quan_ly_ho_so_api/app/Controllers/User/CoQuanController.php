@@ -22,6 +22,12 @@ class CoQuanController extends Controller {
             
             foreach ($data as $item) {
                 $item->linh_vuc = $item->linh_vuc;
+
+                foreach ($item->linh_vuc as $lv) {
+                    $lv->count_tt = $lv->count_thu_tuc($item->id);
+                }
+
+                $item->count_tt = $item->count_thu_tuc();
             }
         }
         
