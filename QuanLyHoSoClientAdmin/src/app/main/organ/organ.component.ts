@@ -10,6 +10,7 @@ import {FileUpload} from "primeng/fileupload";
 import {FileService} from "../../libs/file.service";
 import {AddressService} from "../../services/address.service";
 import {GetImagePipe} from "../../libs/get.image.pipe";
+import { ShareService } from 'src/app/services/share.service';
 
 declare var $: any;
 
@@ -46,7 +47,8 @@ export class OrganComponent extends ScriptService implements OnInit {
     private organService: OrganService,
     private messageService: MessageService,
     private fileService: FileService,
-    private addressService: AddressService
+    private addressService: AddressService,
+    private shareService: ShareService
   ) {
     super(injetor)
   }
@@ -61,12 +63,15 @@ export class OrganComponent extends ScriptService implements OnInit {
     this.loadScripts();
 
     this.addressService.getProvince().subscribe((res: any) => {
-      this.listCity = res;
+      this.listCity = res.filter(e => {
+        return e.deleted_at == null;
+      });
     });
 
     this.form = this.formBuilder.group({
       id: [''],
       ten_co_quan: ['', [Validators.required, Validators.maxLength(255)]],
+      code: ['',[Validators.required, Validators.maxLength(255)]],
       dia_chi: ['', [Validators.maxLength(255)]],
       email: ['', [Validators.maxLength(100), Validators.required, Validators.email]],
       so_dien_thoai: ['', [Validators.required, Validators.pattern('^(0)[0-9]{9}$')]],
@@ -87,9 +92,7 @@ export class OrganComponent extends ScriptService implements OnInit {
     this.first = event.first;
     this.rows = event.rows;
     this.organService.getData(this.first, this.rows).subscribe((res: any) => {
-      this.listOrgan = res.data.filter(e => {
-        return e.deleted_at == null
-      });
+      this.listOrgan = res.data;
       this.totalRecords = res.total;
     })
   }
@@ -110,22 +113,25 @@ export class OrganComponent extends ScriptService implements OnInit {
     this.form.controls.commune.enable();
 
     this.organService.edit(id).subscribe((res: any) => {
+      this.form.patchValue({
+        id: res.id,
+        ten_co_quan: res.ten_co_quan,
+        code: res.code,
+        email: res.email,
+        dia_chi: res.dia_chi,
+        so_dien_thoai: res.so_dien_thoai,
+        linh_vuc: res.linh_vuc.map(e => {return e.id})
+      })
+      this.image = new GetImagePipe().transform(res.hinh_anh);
       this.addressService.getAddress(res.ward_id).subscribe((data:any) => {
         this.listCity = data.list_province;
         this.listDistrict = data.list_district;
         this.listCommune = data.list_ward;
         this.form.patchValue({
-          id: res.id,
-          ten_co_quan: res.ten_co_quan,
-          email: res.email,
-          dia_chi: res.dia_chi,
-          so_dien_thoai: res.so_dien_thoai,
           city: data.province.id,
           district: data.district.id,
           commune: data.ward.id,
-          linh_vuc: res.linh_vuc.map(e => {return e.id})
         })
-        this.image = new GetImagePipe().transform(res.hinh_anh);
       })
     })
   }
@@ -135,44 +141,38 @@ export class OrganComponent extends ScriptService implements OnInit {
     if (this.form.invalid) {
       return;
     }
-    let organ = {
-      id: this.form.value.id,
-      ten_co_quan: this.form.value.ten_co_quan,
-      email: this.form.value.email,
-      dia_chi: this.form.value.dia_chi,
-      so_dien_thoai: this.form.value.so_dien_thoai,
-      linh_vuc: this.form.value.linh_vuc,
-      hinh_anh: null,
-      ward_id: this.form.value.commune
-    }
+    this.form.value.ward_id = this.form.value.commune;
     if (this.aoe == true) {
       this.fileService.getEncodeFromImage(this.file_img).subscribe(data => {
         if (data != null) {
-          organ.hinh_anh = data;
+          this.form.value.hinh_anh = data;
         }
-        this.organService.create(organ).subscribe((res: any) => {
+        this.shareService.openLoading();
+        this.organService.create(this.form.value).subscribe((res: any) => {
+          this.shareService.closeLoading();
           this.submitted = false;
           this.loadData({first: this.first, rows: this.rows});
           this.closeModal();
           this.messageService.add({severity: 'success', summary: 'Thành công!', detail: "Thêm cơ quan thành công!"});
         }, err => {
-          console.log(err)
+          this.shareService.closeLoading();
           this.messageService.add({severity: 'error', summary: 'Thất bại!', detail: err.error.message});
         })
       })
     } else {
       this.fileService.getEncodeFromImage(this.file_img).subscribe(data => {
         if (data != null) {
-          organ.hinh_anh = data;
+          this.form.value.hinh_anh = data;
         }
-        console.log(organ)
-        this.organService.update(organ).subscribe((res: any) => {
+        this.shareService.openLoading();
+        this.organService.update(this.form.value).subscribe((res: any) => {
+          this.shareService.closeLoading();
           this.submitted = false;
           this.loadData({first: this.first, rows: this.rows});
           this.closeModal();
           this.messageService.add({severity: 'success', summary: 'Thành công!', detail: "Cập nhật cơ quan thành công!"});
         }, err => {
-          console.log(err)
+          this.shareService.closeLoading();
           this.messageService.add({severity: 'error', summary: 'Thất bại!', detail: err.error.message});
         })
       })
@@ -181,11 +181,13 @@ export class OrganComponent extends ScriptService implements OnInit {
 
   delete(id) {
     if (confirm("Bạn muốn xóa cơ quan này?")) {
+        this.shareService.openLoading();
       this.organService.delete(id).subscribe((res: any) => {
+          this.shareService.closeLoading();
         this.loadData({first: this.first, rows: this.rows});
         this.messageService.add({severity: 'success', summary: 'Thành công!', detail: "Xoá cơ quan thành công!"});
       }, err => {
-        console.log(err)
+          this.shareService.closeLoading();
         this.messageService.add({severity: 'error', summary: 'Thất bại!', detail: err.error.message});
       })
     }
@@ -195,7 +197,9 @@ export class OrganComponent extends ScriptService implements OnInit {
     this.listDistrict = [];
     this.listCommune = [];
     this.addressService.getDistrict(id).subscribe((res:any) => {
-      this.listDistrict = res;
+      this.listDistrict = res.filter(e => {
+        return e.deleted_at == null;
+      });
       if (this.listDistrict.length != 0) {
         this.form.controls.district.enable();
       }
@@ -205,7 +209,9 @@ export class OrganComponent extends ScriptService implements OnInit {
   getCommune(id) {
     this.listCommune = [];
     this.addressService.getCommune(id).subscribe((res:any) => {
-      this.listCommune = res;
+      this.listCommune = res.filter(e => {
+        return e.deleted_at == null;
+      });
       if (this.listCommune.length != 0) {
         this.form.controls.commune.enable();
       }
@@ -219,11 +225,47 @@ export class OrganComponent extends ScriptService implements OnInit {
   }
 
   openModal() {
+    this.submitted = false;
+    $("[data-dismiss=\"fileinput\"]").click();
     $("#myModal").modal("show");
     this.form.reset();
   }
 
   closeModal() {
     $("#myModal").modal("hide");
+  }
+
+  status(event) {
+    if (event.target.checked == true) {
+      if (confirm("Bạn muốn hiện cơ quan này?")) {
+        this.shareService.openLoading();
+        this.organService.unDelete(event.target.value).subscribe((res:any) => {
+          this.shareService.closeLoading();
+          // this.loadData({first: this.first, rows: this.rows});
+          this.messageService.add({severity: 'success', summary: 'Thành công!', detail: "Hiển thị cơ quan thành công!"});
+        }, err => {
+          this.shareService.closeLoading();
+          this.loadData({first: this.first, rows: this.rows});
+          this.messageService.add({severity: 'error', summary: 'Thất bại!', detail: err.error.message});
+        })
+      } else {
+        this.loadData({first: this.first, rows: this.rows});
+      }
+    } else {
+      if (confirm("Bạn muốn ẩn cơ quan này?")) {
+        this.shareService.openLoading();
+        this.organService.delete(event.target.value).subscribe((res:any) => {
+          this.shareService.closeLoading();
+          // this.loadData({first: this.first, rows: this.rows});
+          this.messageService.add({severity: 'success', summary: 'Thành công!', detail: "Ẩn cơ quan thành công!"});
+        }, err => {
+          this.shareService.closeLoading();
+          this.loadData({first: this.first, rows: this.rows});
+          this.messageService.add({severity: 'error', summary: 'Thất bại!', detail: err.error.message});
+        })
+      } else {
+        this.loadData({first: this.first, rows: this.rows});
+      }
+    }
   }
 }

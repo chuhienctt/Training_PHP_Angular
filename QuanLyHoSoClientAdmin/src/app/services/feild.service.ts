@@ -34,4 +34,8 @@ export class FeildService {
   delete(id) {
     return this._http.delete(baseUrl + "delete?id=" + id);
   }
+
+  unDelete(id) {
+    return this._http.delete(baseUrl + "undelete?id=" + id);
+  }
 }

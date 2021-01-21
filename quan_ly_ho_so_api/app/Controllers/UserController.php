@@ -15,6 +15,8 @@ class UserController extends Controller {
         
         if(request()->has('id')) {
             $data = model('Users')->find(request()->id);
+        } else if(request()->has('id_co_quan')) {
+            $data = model('Users')->where(['id_co_quan' => request()->id_co_quan])->get();
         } else {
             $data = model('Users')->all();
         }
@@ -205,7 +207,7 @@ class UserController extends Controller {
         return response()->error(2, 'Không thể thay đổi thông tin!');
     }
 
-    public function block() {
+    public function change($type) {
         
         validator()->validate([
             'id' => [
@@ -218,31 +220,27 @@ class UserController extends Controller {
 
         // k cho khóa admin khác
         if($user->role == 3) {
-            Validator::alert("Không thể khóa người dùng này!");
+            Validator::alert("Không thể thao tác với người dùng này!");
         }
 
-        if($user->hide()) {
-            return response()->success(1, 'Đã khóa người dùng thành công!');
+        if($type == 'hide') {
+            $model = $user->hide();
+        } else {
+            $model = $user->show();
         }
 
-        return response()->error(2, 'Khóa người dùng không thành công!');
+        if($model) {
+            return response()->success(1, 'Thao tác thành công!');
+        }
+
+        return response()->error(2, 'Thao tác thất bại!');
+    }
+
+    public function block() {
+        return $this->change('hide');
     }
 
     public function unblock() {
-        
-        validator()->validate([
-            'id' => [
-                'required' => 'Thiếu id người dùng',
-                'exists:users' => 'Không tồn tại người dùng',
-            ],
-        ]);
-
-        $user = model('Users')->find(request()->id);
-
-        if($user->show()) {
-            return response()->success(1, 'Đã mở khóa người dùng thành công!');
-        }
-
-        return response()->error(2, 'Mở khóa người dùng không thành công!');
+        return $this->change('show');
     }
 }

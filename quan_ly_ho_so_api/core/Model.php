@@ -13,6 +13,10 @@ class Model {
         $this->columns = $this->db->columns();
     }
 
+    public function getHidden() {
+        return $this->hidden ?? [];
+    }
+
     public function all() {
         return $this->cast($this->db->all());
     }
@@ -101,6 +105,8 @@ class Model {
                 }
             }
         }
+
+        // var_dump($data);
         
         if(isset($this->id)) {
             // update
@@ -126,11 +132,11 @@ class Model {
         }
     }
 
-    public function hasMany($model, $foreign_key, $model2 = null, $foreign_key2 = null) {
+    public function hasMany($model, $foreign_key, $model2 = null, $foreign_key2 = null, $where = []) {
 
-        $data = model($model)->where([
-            $foreign_key => $this->id
-        ])->get();
+        $where[$foreign_key] = $this->id;
+
+        $data = model($model)->where($where)->get();
 
         if($model2 && $foreign_key2) {
             $new_data = [];
@@ -143,6 +149,10 @@ class Model {
         }
 
         return $data;
+    }
+
+    public function hasManyWhere($model, $foreign_key, $where) {
+        return $this->hasMany($model, $foreign_key, null, null, $where);
     }
 
     public function belongsTo($model, $foreign_key) {
@@ -173,6 +183,7 @@ class Model {
         $modelName = $this->getModelName();
         
         $model = clone model($modelName);
+
         $model->original_data = [];
 
         foreach($this->columns as $column) {

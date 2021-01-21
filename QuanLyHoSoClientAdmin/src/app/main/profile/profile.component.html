@@ -38,6 +38,12 @@
                 <div class="form-group">
                   <label>Họ tên</label>
                   <input type="text" class="form-control" formControlName="ho_ten">
+                  <input type="text" class="form-control" formControlName="ho_ten">
+                  <div *ngIf="submitted && form.controls.ho_ten.errors">
+                    <small class="error" *ngIf="form.controls.ho_ten.errors.required">Chưa nhập họ tên.</small>
+                    <small class="error" *ngIf="form.controls.ho_ten.errors.minlength">Họ tên không được dưới 8 ký tự.</small>
+                    <small class="error" *ngIf="form.controls.ho_ten.errors.minlength">Họ tên không được trên 50 ký tự.</small>
+                  </div>
                 </div>
               </div>
               <div class="col-md-6">
@@ -52,12 +58,21 @@
                 <div class="form-group">
                   <label class="bmd-label-static">Số điện thoại</label>
                   <input type="text" class="form-control" formControlName="so_dien_thoai">
+                  <div *ngIf="submitted && form.controls.so_dien_thoai.errors">
+                    <small class="error" *ngIf="form.controls.so_dien_thoai.errors.required">Chưa nhập số điện thoại.</small>
+                    <small class="error" *ngIf="form.controls.so_dien_thoai.errors.pattern">Số điện thoại không hợp lệ</small>
+                  </div>
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="form-group">
                   <label>Ngày sinh</label>
                   <input type="text" formControlName="ngay_sinh" [bsConfig]="datetimePicker" class="form-control" bsDatepicker>
+                  <div *ngIf="submitted && form.controls.ngay_sinh.errors">
+                    <small class="error" *ngIf="form.controls.ngay_sinh.errors.required">Chưa nhập ngày sinh.</small>
+                    <small class="error" *ngIf="form.controls.ngay_sinh.errors.minlength">Ngày sinh không hợp lệ.</small>
+                    <small class="error" *ngIf="form.controls.ngay_sinh.errors.maxlength">Ngày sinh không hợp lệ.</small>
+                  </div>
                 </div>
               </div>
             </div>
@@ -65,6 +80,11 @@
               <div class="form-group">
                 <label>Địa chỉ cụ thể</label>
                 <input type="text" class="form-control" formControlName="dia_chi">
+                <div *ngIf="submitted && form.controls.dia_chi.errors">
+                  <small class="error" *ngIf="form.controls.dia_chi.errors.required">Chưa nhập địa chỉ.</small>
+                  <small class="error" *ngIf="form.controls.dia_chi.errors.minlength">Địa chỉ không được dưới 2 ký tự.</small>
+                  <small class="error" *ngIf="form.controls.dia_chi.errors.maxlength">Địa chỉ không được trên 150 ký tự.</small>
+                </div>
               </div>
             </div>
             <div class="row">
@@ -102,6 +122,7 @@
                       </mat-option>
                     </mat-select>
                   </mat-form-field>
+                  <small class="error" *ngIf="submitted && form.controls.commune.errors?.required">Chưa chọn xã, phường, thị trấn.</small>
                 </div>
               </div>
             </div>

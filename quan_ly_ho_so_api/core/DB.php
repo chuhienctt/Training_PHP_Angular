@@ -67,6 +67,10 @@ class DB {
 
         $sql = "SELECT $select FROM $this->table $where[where] $this->orderBy $limit $offset";
 
+        // if($this->table == 'co_quan_linh_vuc') {
+        //     var_dump($sql, $data);
+        // }
+
         $statement = self::$connect->prepare($sql);
 
         $index = 1;
@@ -113,10 +117,10 @@ class DB {
         foreach($data as $value) {
             $statement->bindValue($index++, $value, gettype($value) != 'string' ? PDO::PARAM_INT : PDO::PARAM_STR);
         }
-        $statement->execute();
+        $result = $statement->execute();
         $this->clearOption();
 
-        return $statement->rowCount();
+        return $result;
     }
 
     public function update($data = []) {
@@ -143,10 +147,10 @@ class DB {
         foreach($data as $value) {
             $statement->bindValue($index++, $value, gettype($value) != 'string' ? PDO::PARAM_INT : PDO::PARAM_STR);
         }
-        $statement->execute();
+        $result = $statement->execute();
         $this->clearOption();
 
-        return true;
+        return $result;
     }
 
     public function delete() {
@@ -163,10 +167,10 @@ class DB {
         foreach($data as $value) {
             $statement->bindValue($index++, $value, gettype($value) != 'string' ? PDO::PARAM_INT : PDO::PARAM_STR);
         }
-        $statement->execute();
+        $result = $statement->execute();
         $this->clearOption();
 
-        return $statement->rowCount();
+        return $result;
     }
 
     public function hide() {
@@ -174,14 +178,39 @@ class DB {
     }
 
     public function show() {
-        return $this->update(['deleted_at' => 'null']);
+        return $this->update(['deleted_at' => null]);
     }
 
     public function count() {
-        $sql = "SELECT COUNT(*) AS count FROM $this->table";
+        $where = $this->buildWhere();
+        $offset = $this->offset ? "OFFSET ?" : "";
+        $limit = $this->limit ? "LIMIT ?" : "";
+
+        $data = $where['values'];
+
+        if($this->limit) {
+            $data[] = $this->limit;
+        } else if($this->offset) {
+            $limit = "LIMIT ?";
+            $data[] = PHP_INT_MAX;
+        }
+        
+        if($this->offset) {
+            $data[] = $this->offset;
+        }
+
+        $sql = "SELECT COUNT(*) AS count FROM $this->table $where[where] $this->orderBy $limit $offset";
+
         $statement = self::$connect->prepare($sql);
+
+        $index = 1;
+        foreach($data as $value) {
+            $statement->bindValue($index++, $value, gettype($value) != 'string' ? PDO::PARAM_INT : PDO::PARAM_STR);
+        }
+
         $statement->execute();
         $this->clearOption();
+
         return $statement->fetchColumn();
     }
 
@@ -215,13 +244,13 @@ class DB {
                 $fields[] = "$key $value[0] ?";
                 $values[] = $value[1];
             } else {
-                $fields[] = "$key = ?";
+                $fields[] = "$key ".($value ? "=" : "is")." ?";
                 $values[] = $value;
             }
         }
 
         return [
-            'where' => count($fields) ? "WHERE ".implode('AND ', $fields) : '',
+            'where' => count($fields) ? "WHERE ".implode(' AND ', $fields) : '',
             'values' => $values,
         ];
     }
@@ -254,6 +283,18 @@ class DB {
 
     public static function lastInsertId() {
         return self::$connect->lastInsertId();
+    }
+
+    public static function beginTransaction() {
+        return self::$connect->beginTransaction();
+    }
+
+    public static function rollBack() {
+        return self::$connect->rollBack();
+    }
+
+    public static function commit() {
+        return self::$connect->commit();
     }
 
     // schema

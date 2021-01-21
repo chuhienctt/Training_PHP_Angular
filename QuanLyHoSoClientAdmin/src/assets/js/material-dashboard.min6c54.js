@@ -1,6 +1,6 @@
 var mainpanel, ps, sidebar, ps1, sidebarwrapper, ps2, dropdownmenu, ps3, pageheader, ps4,
   isWindows = -1 < navigator.platform.indexOf("Win");
-isWindows ? (0 != $(".main-panel").length && (mainpanel = document.querySelector(".main-panel"), ps = new PerfectScrollbar(mainpanel)), 0 != $(".sidebar").length && (sidebar = document.querySelector(".sidebar"), ps1 = new PerfectScrollbar(sidebar)), 0 != $(".sidebar-wrapper").length && (sidebarwrapper = document.querySelector(".sidebar-wrapper"), ps2 = new PerfectScrollbar(sidebarwrapper)), 0 != $(".dropdown-menu").length && (dropdownmenu = document.querySelector(".dropdown-menu"), ps3 = new PerfectScrollbar(dropdownmenu)), 0 != $(".page-header").length && (pageheader = document.querySelector(".page-header"), ps4 = new PerfectScrollbar(pageheader)), $("html").addClass("perfect-scrollbar-on")) : $("html").addClass("perfect-scrollbar-off");
+isWindows ? (0 != $(".main-panel").length && (mainpanel = document.querySelector(".main-panel"), ps = new PerfectScrollbar(mainpanel)), 0 != $(".sibar").length && (sidebar = document.querySelector(".sibar"), ps1 = new PerfectScrollbar(sidebar)), 0 != $(".sibar-wrapper").length && (sidebarwrapper = document.querySelector(".sibar-wrapper"), ps2 = new PerfectScrollbar(sidebarwrapper)), 0 != $(".dropdown-menu").length && (dropdownmenu = document.querySelector(".dropdown-menu"), ps3 = new PerfectScrollbar(dropdownmenu)), 0 != $(".page-header").length && (pageheader = document.querySelector(".page-header"), ps4 = new PerfectScrollbar(pageheader)), $("html").addClass("perfect-scrollbar-on")) : $("html").addClass("perfect-scrollbar-off");
 var breakCards = !0, searchVisible = 0, transparent = !0, transparentDemo = !0, fixedTop = !1, mobile_menu_visible = 0,
   mobile_menu_initialized = !1, toggle_initialized = !1, bootstrap_nav_initialized = !1, seq = 0, delays = 80,
   durations = 500, seq2 = 0, delays2 = 80, durations2 = 500;
@@ -16,7 +16,7 @@ function debounce(a, i, n) {
 }
 
 $(document).ready(function () {
-  $sidebar = $(".sidebar"), window_width = $(window).width(), $("body").bootstrapMaterialDesign({autofill: !1}), md.initSidebarsCheck(), window_width = $(window).width(), md.checkSidebarImage(), md.initMinimizeSidebar(), $(".dropdown-menu a.dropdown-toggle").on("click", function (e) {
+  $sidebar = $(".sibar"), window_width = $(window).width(), $("body").bootstrapMaterialDesign({autofill: !1}), md.initSidebarsCheck(), window_width = $(window).width(), md.checkSidebarImage(), md.initMinimizeSidebar(), $(".dropdown-menu a.dropdown-toggle").on("click", function (e) {
     var t = $(this), a = $(this).offsetParent(".dropdown-menu");
     return $(this).next().hasClass("show") || $(this).parents(".dropdown-menu").first().find(".show").removeClass("show"), $(this).next(".dropdown-menu").toggleClass("show"), $(this).closest("a").toggleClass("open"), $(this).parents("a.dropdown-item.dropdown.show").on("hidden.bs.dropdown", function (e) {
       $(".dropdown-menu .show").removeClass("show")
@@ -69,7 +69,7 @@ $(document).ready(function () {
   }, 500)
 }), md = {
   misc: {navbar_menu_visible: 0, active_collapse: !0, disabled_collapse_init: 0}, checkSidebarImage: function () {
-    $sidebar = $(".sidebar"), image_src = $sidebar.data("image"), void 0 !== image_src && $(".sidebar-background").css("background-image", "url(" + image_src + ")")
+    $sidebar = $(".sibar"), image_src = $sidebar.data("image"), void 0 !== image_src && $(".sibar-background").css("background-image", "url(" + image_src + ")")
   }, showNotification: function (e, t) {
     type = ["", "info", "danger", "success", "warning", "rose", "primary"], color = Math.floor(6 * Math.random() + 1), $.notify({
       icon: "add_alert",
@@ -181,7 +181,7 @@ $(document).ready(function () {
   }, checkScrollForTransparentNavbar: debounce(function () {
     260 < $(document).scrollTop() ? transparent && (transparent = !1, $(".navbar-color-on-scroll").removeClass("navbar-transparent")) : transparent || (transparent = !0, $(".navbar-color-on-scroll").addClass("navbar-transparent"))
   }, 17), initRightMenu: debounce(function () {
-    $sidebar_wrapper = $(".sidebar-wrapper"), mobile_menu_initialized ? 991 < $(window).width() && ($sidebar_wrapper.find(".navbar-form").remove(), $sidebar_wrapper.find(".nav-mobile-menu").remove(), mobile_menu_initialized = !1) : ($navbar = $("nav").find(".navbar-collapse").children(".navbar-nav"), mobile_menu_content = "", nav_content = $navbar.html(), nav_content = '<ul class="nav navbar-nav nav-mobile-menu">' + nav_content + "</ul>", navbar_form = $("nav").find(".navbar-form").get(0).outerHTML, $sidebar_nav = $sidebar_wrapper.find(" > .nav"), $nav_content = $(nav_content), $navbar_form = $(navbar_form), $nav_content.insertBefore($sidebar_nav), $navbar_form.insertBefore($nav_content), $(".sidebar-wrapper .dropdown .dropdown-menu > li > a").click(function (e) {
+    $sidebar_wrapper = $(".sibar-wrapper"), mobile_menu_initialized ? 991 < $(window).width() && ($sidebar_wrapper.find(".navbar-form").remove(), $sidebar_wrapper.find(".nav-mobile-menu").remove(), mobile_menu_initialized = !1) : ($navbar = $("nav").find(".navbar-collapse").children(".navbar-nav"), mobile_menu_content = "", nav_content = $navbar.html(), nav_content = '<ul class="nav navbar-nav nav-mobile-menu">' + nav_content + "</ul>", navbar_form = $("nav").find(".navbar-form").get(0).outerHTML, $sidebar_nav = $sidebar_wrapper.find(" > .nav"), $nav_content = $(nav_content), $navbar_form = $(navbar_form), $nav_content.insertBefore($sidebar_nav), $navbar_form.insertBefore($nav_content), $(".sibar-wrapper .dropdown .dropdown-menu > li > a").click(function (e) {
       e.stopPropagation()
     }), window.dispatchEvent(new Event("resize")), mobile_menu_initialized = !0)
   }, 200), startAnimationForLineChart: function (e) {

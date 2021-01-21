@@ -1,15 +1,16 @@
-import {Component, Injector, OnInit, ViewChild} from '@angular/core';
-import {MessageService, PrimeNGConfig} from "primeng/api";
-import {ScriptService} from "../../libs/script.service";
-import {FeildService} from "../../services/feild.service";
-import {environment} from "../../../environments/environment";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import { Component, Injector, OnInit, ViewChild } from '@angular/core';
+import { MessageService, PrimeNGConfig } from "primeng/api";
+import { ScriptService } from "../../libs/script.service";
+import { FeildService } from "../../services/feild.service";
+import { environment } from "../../../environments/environment";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import {OrganService} from "../../services/organ.service";
-import {FileService} from "../../libs/file.service";
-import {GetImagePipe} from "../../libs/get.image.pipe";
+import { OrganService } from "../../services/organ.service";
+import { FileService } from "../../libs/file.service";
+import { GetImagePipe } from "../../libs/get.image.pipe";
+import { ShareService } from 'src/app/services/share.service';
 
-declare var $:any;
+declare var $: any;
 
 @Component({
   selector: 'app-feild',
@@ -28,7 +29,7 @@ export class FeildComponent extends ScriptService implements OnInit {
   listOrgan = [];
   first = 0;
   rows = 10;
-  image:string;
+  image: string;
   file_img: File;
 
   constructor(
@@ -38,7 +39,8 @@ export class FeildComponent extends ScriptService implements OnInit {
     private formBuilder: FormBuilder,
     private organService: OrganService,
     private fileService: FileService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private shareService: ShareService
   ) {
     super(injetor)
   }
@@ -55,23 +57,25 @@ export class FeildComponent extends ScriptService implements OnInit {
 
     this.form = this.formBuilder.group({
       id: [''],
-      ten_linh_vuc: ['',[Validators.required, Validators.maxLength(200)]],
-      mo_ta: ['',[Validators.maxLength(250)]],
-      co_quan: ['', Validators.required]
+      ten_linh_vuc: ['', [Validators.required, Validators.maxLength(200)]],
+      icon: ['', [Validators.required, Validators.maxLength(255)]],
+      code: ['', [Validators.required, Validators.maxLength(255)]],
+      mo_ta: ['', [Validators.maxLength(250)]],
+      co_quan: ['']
     })
 
-    this.organService.getAll().subscribe((res:any) => {
-      this.listOrgan = res.filter(e => {return e.deleted_at == null});
+    this.organService.getAll().subscribe((res: any) => {
+      this.listOrgan = res.filter(e => { return e.deleted_at == null });
     })
 
-    this.loadData({first: this.first, rows: this.rows});
+    this.loadData({ first: this.first, rows: this.rows });
   }
 
   loadData(event) {
     this.first = event.first;
     this.rows = event.rows;
     this.feildService.getData(this.first, this.rows).subscribe((res: any) => {
-      this.listFeild = res.data.filter(e => {return e.deleted_at == null});
+      this.listFeild = res.data;
       this.totalRecords = res.total;
     })
   }
@@ -86,57 +90,56 @@ export class FeildComponent extends ScriptService implements OnInit {
   edit(id) {
     this.openModal();
     this.aoe = false;
-    this.feildService.edit(id).subscribe((res:any) => {
+    this.feildService.edit(id).subscribe((res: any) => {
       this.form.patchValue({
         id: res.id,
         ten_linh_vuc: res.ten_linh_vuc,
+        code: res.code,
         mo_ta: res.mo_ta,
-        co_quan: res.co_quan.map(e => {return e.id})
+        icon: res.icon,
+        co_quan: res.co_quan.map(e => { return e.id })
       })
       this.image = new GetImagePipe().transform(res.hinh_anh);
     })
 
   }
 
-  onSubmit()  {
+  onSubmit() {
     this.submitted = true;
     if (this.form.invalid && !this.file_img) {
       return;
     }
-    let feild = {
-      id: this.form.value.id,
-      ten_linh_vuc: this.form.value.ten_linh_vuc,
-      mo_ta: this.form.value.mo_ta,
-      co_quan: this.form.value.co_quan,
-      hinh_anh: null
-    }
     if (this.aoe == true) {
-      this.fileService.getEncodeFromImage(this.file_img).subscribe((data:any) => {
+      this.fileService.getEncodeFromImage(this.file_img).subscribe((data: any) => {
         if (data != null) {
-          feild.hinh_anh = data;
+          this.form.value.hinh_anh = data;
         }
-        this.feildService.create(feild).subscribe((res:any) => {
+        this.shareService.openLoading();
+        this.feildService.create(this.form.value).subscribe((res: any) => {
+          this.shareService.closeLoading();
           this.submitted = false;
-          this.loadData({first: this.first, rows: this.rows});
+          this.loadData({ first: this.first, rows: this.rows });
           this.closeModal();
           this.messageService.add({ severity: 'success', summary: 'Thành công!', detail: "Thêm lĩnh vực thành công!" });
         }, err => {
-          console.log(err)
+          this.shareService.closeLoading();
           this.messageService.add({ severity: 'error', summary: 'Thất bại!', detail: err.error.message });
         })
       })
     } else {
-      this.fileService.getEncodeFromImage(this.file_img).subscribe((data:any) => {
+      this.fileService.getEncodeFromImage(this.file_img).subscribe((data: any) => {
         if (data != null) {
-          feild.hinh_anh = data;
+          this.form.value.hinh_anh = data;
         }
-        this.feildService.update(feild).subscribe((res:any) => {
+        this.shareService.openLoading();
+        this.feildService.update(this.form.value).subscribe((res: any) => {
+          this.shareService.closeLoading();
           this.submitted = false;
-          this.loadData({first: this.first, rows: this.rows});
+          this.loadData({ first: this.first, rows: this.rows });
           this.closeModal();
           this.messageService.add({ severity: 'success', summary: 'Thành công!', detail: "Cập nhật lĩnh vực thành công!" });
         }, err => {
-          console.log(err)
+          this.shareService.closeLoading();
           this.messageService.add({ severity: 'error', summary: 'Thất bại!', detail: err.error.message });
         })
       })
@@ -145,10 +148,13 @@ export class FeildComponent extends ScriptService implements OnInit {
 
   delete(id) {
     if (confirm("Bạn muốn xóa lĩnh vực này?")) {
-      this.feildService.delete(id).subscribe((res:any) => {
-        this.loadData({first: this.first, rows: this.rows});
+      this.shareService.openLoading();
+      this.feildService.delete(id).subscribe((res: any) => {
+        this.shareService.closeLoading();
+        this.loadData({ first: this.first, rows: this.rows });
         this.messageService.add({ severity: 'success', summary: 'Thành công!', detail: "Xoá lĩnh vực thành công!" });
       }, err => {
+        this.shareService.closeLoading();
         this.messageService.add({ severity: 'error', summary: 'Thất bại!', detail: err.error.message });
       })
     }
@@ -161,6 +167,8 @@ export class FeildComponent extends ScriptService implements OnInit {
   }
 
   openModal() {
+    this.submitted = false;
+    $("[data-dismiss=\"fileinput\"]").click();
     this.form.reset();
     $("#myModal").modal("show");
   }
@@ -169,4 +177,37 @@ export class FeildComponent extends ScriptService implements OnInit {
     $("#myModal").modal("hide");
   }
 
+  status(event) {
+    if (event.target.checked == true) {
+      if (confirm("Bạn muốn hiện lĩnh vực này?")) {
+        this.shareService.openLoading();
+        this.feildService.unDelete(event.target.value).subscribe((res: any) => {
+          this.shareService.closeLoading();
+          // this.loadData({first: this.first, rows: this.rows});
+          this.messageService.add({ severity: 'success', summary: 'Thành công!', detail: "Hiển thị lĩnh vực thành công!" });
+        }, err => {
+          this.shareService.closeLoading();
+          this.loadData({ first: this.first, rows: this.rows });
+          this.messageService.add({ severity: 'error', summary: 'Thất bại!', detail: err.error.message });
+        })
+      } else {
+        this.loadData({ first: this.first, rows: this.rows });
+      }
+    } else {
+      if (confirm("Bạn muốn ẩn lĩnh vực này?")) {
+        this.shareService.openLoading();
+        this.feildService.delete(event.target.value).subscribe((res: any) => {
+          this.shareService.closeLoading();
+          // this.loadData({first: this.first, rows: this.rows});
+          this.messageService.add({ severity: 'success', summary: 'Thành công!', detail: "Ẩn lĩnh vực thành công!" });
+        }, err => {
+          this.shareService.closeLoading();
+          this.loadData({ first: this.first, rows: this.rows });
+          this.messageService.add({ severity: 'error', summary: 'Thất bại!', detail: err.error.message });
+        })
+      } else {
+        this.loadData({ first: this.first, rows: this.rows });
+      }
+    }
+  }
 }

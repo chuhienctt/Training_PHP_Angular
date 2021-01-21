@@ -1,0 +1,72 @@
+<p-toast></p-toast>
+<section class="w3l-form-36">
+    <div class="form-36-mian section-gap">
+        <div class="wrapper">
+            <div class="form-inner-cont">
+                <h3>Đổi mật khẩu</h3>
+                <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                <!-- <form> -->
+                    <div class="form-input">
+                        <span class="fa fa-envelope-o" aria-hidden="true"></span> <input type="password"
+                            placeholder="Mật khẩu cũ"  formControlName="mat_khau_cu">
+                    </div>
+                    <div *ngIf="iSubmited && form.controls.mat_khau_cu.errors">
+                        <span class="text-danger" *ngIf="form.controls.mat_khau_cu.errors.required">Chưa nhập mật khẩu cũ.</span>
+                    </div>
+                    <div class="form-input">
+                        <span class="fa fa-key" aria-hidden="true"></span> <input type="password"
+                            placeholder="Mật khẩu mới" formControlName="mat_khau_moi" required />
+                    </div>
+                    <div *ngIf="iSubmited && form.controls.mat_khau_moi.errors">
+                        <div class="text-danger" *ngIf="form.controls.mat_khau_moi.errors.required">Chưa nhập mật khẩu mới.</div>
+                        <div class="text-danger" *ngIf="form.controls.mat_khau_moi.errors.minlength">Mật khẩu không được dưới 8 ký tự.</div>
+                        <div class="text-danger" *ngIf="form.controls.mat_khau_moi.errors.maxlength">Mật khẩu không được trên 50 ký tự.</div>
+                        <div class="text-danger" *ngIf="form.controls.mat_khau_moi.errors.pattern">Mật khẩu không đúng định dạng.</div>
+                      </div>
+                      
+                    <div class="form-input">
+                        <span class="fa fa-key" aria-hidden="true"></span> <input type="password"
+                            placeholder="Nhập lại mật khẩu mới" formControlName="mat_khau_2" required />
+                    </div>
+                      <div *ngIf="iSubmited && form.controls.mat_khau_2.errors">
+                          <div class="text-danger" *ngIf="form.controls.mat_khau_2.errors.required">Chưa nhập mật khẩu mới.</div>
+                        </div>
+                    <div class="login-remember d-grid">
+                        <label class="check-remaind">
+                            <!-- <input type="checkbox"> -->
+                            <!-- <span class="checkmark"></span> -->
+                            <!-- <p class="remember">Nhớ tôi</p> -->
+                        </label>
+                        <button type="submit" class="button1 btn theme-button">Đăng nhập</button>
+                    </div>
+                    <!-- <div class="new-signup">
+                        <a href="#reload" class="signuplink">Bạn quên mật khẩu?</a>
+                    </div> -->
+                </form>
+                <!-- <div class="social-icons">
+                    <p class="continue"><span>Or</span></p>
+                    <div class="social-login">
+                        <a href="#facebook">
+                            <div class="facebook">
+                                <span class="fa fa-facebook" aria-hidden="true"></span>
+
+                            </div>
+                        </a>
+                        <a href="#google">
+                            <div class="google">
+                                <span class="fa fa-google-plus" aria-hidden="true"></span>
+                            </div>
+                        </a>
+                    </div>
+                </div> -->
+                <!-- <p class="signup">Bạn chưa có tài khoản? <a href="#signup.html" class="signuplink">Đăng ký</a></p> -->
+            </div>
+            <!-- copyright -->
+            <!-- <div class="copy-right">
+                <p>© 2020 Active Login Form. All rights reserved | Design by <a href="http://w3layouts.com/"
+                        target="_blank">W3Layouts</a></p>
+            </div> -->
+            <!-- //copyright -->
+        </div>
+    </div>
+</section>

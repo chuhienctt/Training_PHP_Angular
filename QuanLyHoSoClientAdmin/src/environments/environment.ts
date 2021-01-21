@@ -4,14 +4,15 @@
 
 import { HttpHeaders } from '@angular/common/http';
 
+const Method = "http://";
 const Domain = "localhost:8200";
 
 export const environment = {
   production: false,
   domain: Domain,
-  urlImg: "http://" + Domain + "/storage",
-  apiBase: "http://" + Domain + "/api/",
-  apiUrl: "http://" + Domain + "/api/admin/",
+  urlImg: Method + Domain + "/storage",
+  apiBase: Method + Domain + "/api/",
+  apiUrl: Method + Domain + "/api/admin/",
   headerOptions: new HttpHeaders({
     'Content-Type': 'application/json'
   })

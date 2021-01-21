@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AdminService} from "../../services/admin.service";
 import {MessageService} from "primeng/api";
+import { ShareService } from 'src/app/services/share.service';
 
 declare var md:any;
 
@@ -13,11 +14,13 @@ declare var md:any;
 })
 export class ChangepassComponent implements OnInit {
   form: FormGroup;
+  submitted: boolean;
 
   constructor(
     private adminService: AdminService,
     private formBuider: FormBuilder,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private shareService: ShareService
   ) { }
 
   ngOnInit(): void {
@@ -52,10 +55,18 @@ export class ChangepassComponent implements OnInit {
   }
 
   onSubmit() {
+    this.submitted = true;
+    if (this.form.invalid) {
+      return;
+    }
+    this.shareService.openLoading();
     this.adminService.changePass(this.form.value).subscribe((res:any) => {
+      this.shareService.closeLoading();
+      this.submitted = false;
       this.messageService.add({ severity: 'success', summary: 'Thành công!', detail: "Cập nhật mật khẩu thành công." });
       this.form.reset();
     }, err => {
+      this.shareService.closeLoading();
       this.messageService.add({ severity: 'error', summary: 'Thất bại!', detail: err.error.message });
     })
   }

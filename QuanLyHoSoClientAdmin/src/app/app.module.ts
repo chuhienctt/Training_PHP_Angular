@@ -14,18 +14,18 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {environment} from "../environments/environment";
 import { LoginComponent } from './auth/login/login.component';
 import { MainComponent } from './main/main.component';
-import { AuthComponent } from './auth/auth.component';
 import {ShareModule} from "./share/share.module";
-import {SibarComponent} from "./share/sibar/sibar.component";
 import {ErrorInterceptor} from "./libs/error.interceptor";
+import {SidebarComponent} from "./share/sidebar/sidebar.component";
+import { NotFoundComponent } from './auth/not-found/not-found.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     MainComponent,
-    AuthComponent,
-    SibarComponent
+    SidebarComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,

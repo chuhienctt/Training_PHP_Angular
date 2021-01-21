@@ -21,6 +21,78 @@
 /*  background-color: #ffffff;*/
 /*}*/
 
-/*.mat-form-field-infix {*/
-/*  border-top: 0*/
-/*}*/
+.mat-form-field-infix {
+  border-top: 0
+}
+
+.modal {
+  /*padding-right: 0px !important;*/
+}
+
+body {padding-right: 0! Important}
+
+.modal-open {
+  padding-right: 0 !important;
+}
+
+.modal { overflow-y: auto !important; }
+
+.modal-title {
+  font-weight: 700;
+}
+
+.progress-bg {
+  background-color: rgba(0, 0, 0, 0.8);
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  z-index: 9998;
+}
+
+.progress-spinner {
+  position: fixed;
+  z-index: 9999;
+  height: 2em;
+  width: 2em;
+  overflow: show;
+  margin: auto;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+.sp {
+  width: 80px;
+  height: 80px;
+  clear: both;
+  margin: 20px auto;
+}
+
+.sp-circle {
+  border: 8px rgba(188, 41, 93, 0.25) solid;
+  border-top: 8px rgb(227, 48, 111) solid;
+  border-radius: 50%;
+  -webkit-animation: spCircRot .6s infinite linear;
+  animation: spCircRot .6s infinite linear;
+}
+
+@-webkit-keyframes spCircRot {
+  from {
+      -webkit-transform: rotate(0deg);
+  }
+  to {
+      -webkit-transform: rotate(359deg);
+  }
+}
+
+@keyframes spCircRot {
+  from {
+      transform: rotate(0deg);
+  }
+  to {
+      transform: rotate(359deg);
+  }
+}

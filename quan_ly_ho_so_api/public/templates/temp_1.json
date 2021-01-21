@@ -1,0 +1,9 @@
+{
+    "ho_ten": "text",
+    "ngay_sinh": "date",
+    "dia_chi": "text",
+    "email": "email",
+    "so_dien_thoai": "phone_number",
+    "ly_do": "text",
+    "dinh_kem": "file"
+}

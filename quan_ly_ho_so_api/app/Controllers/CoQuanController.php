@@ -16,7 +16,9 @@ class CoQuanController extends Controller {
         
         if(request()->has('id')) {
             $data = model('CoQuan')->find(request()->id);
-            $data->linh_vuc = $data->all_linh_vuc();
+            if($data) {
+                $data->linh_vuc = $data->all_linh_vuc();
+            }
         } else {
             $data = model('CoQuan')->all();
         }
@@ -39,6 +41,11 @@ class CoQuanController extends Controller {
     public function create() {
         
         validator()->validate([
+            'code' => [
+                'required' => 'Mã cơ quan không được để trống',
+                'max:255' => 'Mã cơ quan không quá 255 kí tự',
+                'unique:co_quan' => 'Mã cơ quan đã tồn tại',
+            ],
             'ten_co_quan' => [
                 'required' => 'Tên cơ quan không được để trống',
                 'max:255' => 'Tên cơ quan không quá 255 kí tự',
@@ -81,6 +88,7 @@ class CoQuanController extends Controller {
 
         $co_quan = new CoQuan();
 
+        $co_quan->code = request()->code;
         $co_quan->ten_co_quan = request()->ten_co_quan;
         $co_quan->dia_chi = request()->dia_chi;
         $co_quan->email = request()->email;
@@ -88,23 +96,35 @@ class CoQuanController extends Controller {
         $co_quan->hinh_anh = '/co-quan-images/'.$file->getFileName();
         $co_quan->ward_id = request()->ward_id;
 
+        DB::beginTransaction();
+
         if($co_quan->save()) {
+            
+            $linh_vucs = request()->linh_vuc ?? [];
 
             // add referenced
-            if(request()->has('linh_vuc') && is_array(request()->linh_vuc)) {
-
-                foreach(request()->linh_vuc as $option) {
+            try {
+                foreach($linh_vucs as $option) {
                     if(model('LinhVuc')->find($option)) {
-                        model('CoQuanLinhVuc')->insert([
+                        $result = model('CoQuanLinhVuc')->insert([
                             'id_linh_vuc' => $option,
                             'id_co_quan' => $co_quan->id,
                         ]);
+
+                        if(!$result) {
+                            throw new \PDOException();
+                        }
+                    } else {
+                        throw new \PDOException();
                     }
                 }
 
-            }
+                DB::commit();
 
-            return response()->success(1, 'Thêm cơ quan thành công!', $co_quan);
+                return response()->success(1, 'Thêm cơ quan thành công!', $co_quan);
+            } catch(\PDOException $e) {
+                DB::rollBack();
+            }
         }
 
         return response()->error(2, 'Thêm cơ quan thất bại!');
@@ -116,6 +136,11 @@ class CoQuanController extends Controller {
             'id' => [
                 'required' => 'Thiếu id cơ quan',
                 'exists:co_quan' => 'Không tồn tại cơ quan',
+            ],
+            'code' => [
+                'required' => 'Mã cơ quan không được để trống',
+                'max:255' => 'Mã cơ quan không quá 255 kí tự',
+                'unique:co_quan' => 'Mã cơ quan đã tồn tại',
             ],
             'ten_co_quan' => [
                 'required' => 'Tên cơ quan không được để trống',
@@ -136,7 +161,6 @@ class CoQuanController extends Controller {
                 'required' => 'Số điện thoại không được để trống',
                 'max:10' => 'Số điện thoại không quá 10 kí tự',
                 'phone_number' => 'Số điện thoại không đúng định dạng',
-                'unique:co_quan' => 'Số điện thoại này đã tồn tại',
             ],
             'ward_id' => [
                 'required' => 'Xã, phường không được để trống',
@@ -159,40 +183,53 @@ class CoQuanController extends Controller {
             $co_quan->hinh_anh = '/co-quan-images/'.$file->getFileName();
         }
 
+        $co_quan->code = request()->code;
         $co_quan->ten_co_quan = request()->ten_co_quan;
         $co_quan->dia_chi = request()->dia_chi;
         $co_quan->email = request()->email;
         $co_quan->so_dien_thoai = request()->so_dien_thoai;
         $co_quan->ward_id = request()->ward_id;
 
+        DB::beginTransaction();
+
         if($co_quan->save()) {
 
-            if(request()->has('linh_vuc') && is_array(request()->linh_vuc)) {
+            $linh_vucs = request()->linh_vuc ?? [];
 
+            try {
                 // remove referenced
                 model('CoQuanLinhVuc')->where([
                     'id_co_quan' => $co_quan->id
                 ])->delete();
 
                 // add referenced
-                foreach(request()->linh_vuc as $option) {
+                foreach($linh_vucs as $option) {
                     if(model('LinhVuc')->find($option)) {
-                        model('CoQuanLinhVuc')->insert([
+                        $result = model('CoQuanLinhVuc')->insert([
                             'id_linh_vuc' => $option,
                             'id_co_quan' => $co_quan->id,
                         ]);
+
+                        if(!$result) {
+                            throw new \PDOException();
+                        }
+                    } else {
+                        throw new \PDOException();
                     }
                 }
 
-            }
+                DB::commit();
 
-            return response()->success(1, 'Sửa cơ quan thành công!', $co_quan);
+                return response()->success(1, 'Sửa cơ quan thành công!', $co_quan);
+            } catch(\PDOException $e) {
+                DB::rollBack();
+            }
         }
 
         return response()->error(2, 'Sửa cơ quan thất bại!');
     }
 
-    public function delete() {
+    public function change($type) {
         
         validator()->validate([
             'id' => [
@@ -201,12 +238,24 @@ class CoQuanController extends Controller {
             ],
         ]);
 
-        $row = model('CoQuan')->where(['id' => request()->id])->hide();
-
-        if($row) {
-            return response()->success(1, 'Xóa cơ quan thành công!');
+        if($type == 'hide') {
+            $model = model('CoQuan')->find(request()->id)->hide();
+        } else {
+            $model = model('CoQuan')->find(request()->id)->show();
         }
 
-        return response()->error(2, 'Xóa cơ quan thất bại!');
+        if($model) {
+            return response()->success(1, 'Thao tác thành công!');
+        }
+
+        return response()->error(2, 'Thao tác thất bại!');
+    }
+
+    public function delete() {
+        return $this->change('hide');
+    }
+
+    public function undelete() {
+        return $this->change('show');
     }
 }

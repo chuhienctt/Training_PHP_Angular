@@ -2,8 +2,15 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+import { HttpHeaders } from '@angular/common/http'; 
+
+const domain = "localhost:8200";
 export const environment = {
-  production: false
+  production: false,
+  domain: domain,
+  urlImg: "http://" + domain + "/",
+  apiUrl: "http://" + domain + "/api/admin/"
+ 
 };
 
 /*
@@ -14,3 +21,16 @@ export const environment = {
  * on performance if an error is thrown.
  */
 // import 'zone.js/dist/zone-error';  // Included with Angular CLI.
+// import { HttpHeaders } from '@angular/common/http';
+
+// const Domain = "localhost:8200";
+
+// export const environment = {
+//   production: false,
+//   domain: Domain,
+//   urlImg: "http://" + Domain + "/",
+//   apiUrl: "http://" + Domain + "/api/admin/",
+//   headerOptions: new HttpHeaders({
+//     'Content-Type': 'application/json'
+//   })
+// };

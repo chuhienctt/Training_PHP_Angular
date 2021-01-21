@@ -81,6 +81,8 @@ class DiaChinhController extends Controller {
 
         if(request()->has('id')) {
             $data = DB::table('district')->find(request()->id);
+        } else if(request()->has('province_id')) {
+            $data = DB::table('district')->where(['province_id' => request()->province_id])->get();
         } else {
             $data = DB::table('district')->all();
         }
@@ -91,11 +93,18 @@ class DiaChinhController extends Controller {
     public function pagination_huyen() {
         $first = request()->first ?? 0;
         $row = request()->row ?? 10;
+        $province_id = request()->province_id ?? null;
 
-        $data = DB::table('district')->offset($first)->limit($row)->get();
+        if($province_id) {
+            $total = DB::table('district')->where(['province_id' => $province_id])->count();
+            $data = DB::table('district')->where(['province_id' => $province_id])->offset($first)->limit($row)->get();
+        } else {
+            $total = DB::table('district')->count();
+            $data = DB::table('district')->offset($first)->limit($row)->get();
+        }
 
         return response()->json([
-            'total' => DB::table('district')->count(),
+            'total' => $total,
             'data' => $data,
         ]);
     }
@@ -104,6 +113,8 @@ class DiaChinhController extends Controller {
 
         if(request()->has('id')) {
             $data = DB::table('ward')->find(request()->id);
+        } else if(request()->has('district_id')) {
+            $data = DB::table('ward')->where(['district_id' => request()->district_id])->get();
         } else {
             $data = DB::table('ward')->all();
         }
@@ -114,11 +125,18 @@ class DiaChinhController extends Controller {
     public function pagination_xa() {
         $first = request()->first ?? 0;
         $row = request()->row ?? 10;
+        $district_id = request()->district_id ?? null;
 
-        $data = DB::table('ward')->offset($first)->limit($row)->get();
+        if($district_id) {
+            $total = DB::table('ward')->where(['district_id' => $district_id])->count();
+            $data = DB::table('ward')->where(['district_id' => $district_id])->offset($first)->limit($row)->get();
+        } else {
+            $total = DB::table('ward')->count();
+            $data = DB::table('ward')->offset($first)->limit($row)->get();
+        }
 
         return response()->json([
-            'total' => DB::table('ward')->count(),
+            'total' => $total,
             'data' => $data,
         ]);
     }
@@ -135,10 +153,6 @@ class DiaChinhController extends Controller {
                 'required' => 'Loại tỉnh, thành phố không được để trống',
                 'max:45' => 'Loại tỉnh, thành phố không quá 45 kí tự',
             ],
-            'districts' => [
-                'required' => 'Danh sách quận, huyện không được để trống',
-                'array' => 'Quận huyện phải là một danh sách',
-            ],
         ]);
 
         $result = DB::table('province')->insert([
@@ -147,12 +161,6 @@ class DiaChinhController extends Controller {
         ]);
 
         if($result) {
-            $province_id = DB::lastInsertId();
-
-            foreach($districts as $district) {
-                DB::table('district')->where(['id' => $district])->update(['province_id' => $province_id]);
-            }
-
             return response()->success(1, 'Thêm tỉnh, thành phố thành công!');
         }
 
@@ -189,23 +197,35 @@ class DiaChinhController extends Controller {
         return response()->error(2, 'Sửa tỉnh, thành phố thất bại!');
     }
 
-    // public function delete_tinh() {
+    public function change_tinh($type) {
         
-    //     validator()->validate([
-    //         'id' => [
-    //             'required' => 'Mã tỉnh, thành phố không được để trống',
-    //             'exists:province' => 'Mã tỉnh, thành phố không tồn tại',
-    //         ],
-    //     ]);
+        validator()->validate([
+            'id' => [
+                'required' => 'Mã tỉnh, thành phố không được để trống',
+                'exists:province' => 'Mã tỉnh, thành phố không tồn tại',
+            ],
+        ]);
 
-    //     $result = DB::table('province')->where(['id' => request()->id])->hide();
+        if($type == 'hide') {
+            $model = DB::table('province')->where(['id' => request()->id])->hide();
+        } else {
+            $model = DB::table('province')->where(['id' => request()->id])->show();
+        }
 
-    //     if($result) {
-    //         return response()->success(1, 'Xóa tỉnh, thành phố thành công!');
-    //     }
+        if($model) {
+            return response()->success(1, 'Thao tác thành công!');
+        }
 
-    //     return response()->error(2, 'Xóa tỉnh, thành phố thất bại!');
-    // }
+        return response()->error(2, 'Thao tác thất bại!');
+    }
+
+    public function delete_tinh() {
+        return $this->change_tinh('hide');
+    }
+
+    public function undelete_tinh() {
+        return $this->change_tinh('show');
+    }
 
     public function create_huyen() {
         
@@ -259,7 +279,7 @@ class DiaChinhController extends Controller {
             ],
         ]);
 
-        $result = DB::table('district')->where(['id' => request()->id])
+        $result = DB::table('district')->find(request()->id)
         ->update([
             'name' => request()->name,
             'type' => request()->type,
@@ -273,23 +293,35 @@ class DiaChinhController extends Controller {
         return response()->error(2, 'Sửa quận, huyện thất bại!');
     }
 
-    // public function delete_huyen() {
+    public function change_huyen($type) {
         
-    //     validator()->validate([
-    //         'id' => [
-    //             'required' => 'Mã quận, huyện không được để trống',
-    //             'exists:district' => 'Mã quận, huyện không tồn tại',
-    //         ],
-    //     ]);
+        validator()->validate([
+            'id' => [
+                'required' => 'Mã quận, huyện không được để trống',
+                'exists:district' => 'Mã quận, huyện không tồn tại',
+            ],
+        ]);
 
-    //     $result = DB::table('district')->where(['id' => request()->id])->hide();
+        if($type == 'hide') {
+            $model = DB::table('district')->where(['id' => request()->id])->hide();
+        } else {
+            $model = DB::table('district')->where(['id' => request()->id])->show();
+        }
 
-    //     if($result) {
-    //         return response()->success(1, 'Xóa quận, huyện thành công!');
-    //     }
+        if($model) {
+            return response()->success(1, 'Thao tác thành công!');
+        }
 
-    //     return response()->error(2, 'Xóa quận, huyện thất bại!');
-    // }
+        return response()->error(2, 'Thao tác thất bại!');
+    }
+
+    public function delete_huyen() {
+        return $this->change_huyen('hide');
+    }
+
+    public function undelete_huyen() {
+        return $this->change_huyen('show');
+    }
 
     public function create_xa() {
         
@@ -357,21 +389,33 @@ class DiaChinhController extends Controller {
         return response()->error(2, 'Sửa xã, phường thất bại!');
     }
 
-    // public function delete_xa() {
+    public function change_xa($type) {
         
-    //     validator()->validate([
-    //         'id' => [
-    //             'required' => 'Mã xã, phường không được để trống',
-    //             'exists:ward' => 'Mã xã, phường không tồn tại',
-    //         ],
-    //     ]);
+        validator()->validate([
+            'id' => [
+                'required' => 'Mã xã, phường không được để trống',
+                'exists:ward' => 'Mã xã, phường không tồn tại',
+            ],
+        ]);
 
-    //     $result = DB::table('ward')->where(['id' => request()->id])->hide();
+        if($type == 'hide') {
+            $model = DB::table('ward')->where(['id' => request()->id])->hide();
+        } else {
+            $model = DB::table('ward')->where(['id' => request()->id])->show();
+        }
 
-    //     if($result) {
-    //         return response()->success(1, 'Xóa xã, phường thành công!');
-    //     }
+        if($model) {
+            return response()->success(1, 'Thao tác thành công!');
+        }
 
-    //     return response()->error(2, 'Xóa xã, phường thất bại!');
-    // }
+        return response()->error(2, 'Thao tác thất bại!');
+    }
+
+    public function delete_xa() {
+        return $this->change_xa('hide');
+    }
+
+    public function undelete_xa() {
+        return $this->change_xa('show');
+    }
 }

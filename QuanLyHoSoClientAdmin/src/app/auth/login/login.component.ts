@@ -3,6 +3,7 @@ import {MessageService} from "primeng/api";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {AdminService} from "../../services/admin.service";
 import { Router } from "@angular/router";
+import { ShareService } from 'src/app/services/share.service';
 declare var $:any;
 
 @Component({
@@ -20,7 +21,9 @@ export class LoginComponent implements OnInit {
     private formBuilder: FormBuilder,
     private adminService: AdminService,
     private router: Router,
-    private messageService: MessageService) {
+    private messageService: MessageService,
+    private shareService: ShareService
+    ) {
   }
 
   ngOnInit(): void {
@@ -43,12 +46,15 @@ export class LoginComponent implements OnInit {
       email: this.form.value.email,
       mat_khau: this.form.value.mat_khau
     }
+    this.shareService.openLoading();
     this.adminService.login(user).subscribe((res: any) => {
+      this.shareService.closeLoading();
       localStorage.setItem("jwt", JSON.stringify(res.data));
       this.adminService.input(res.data);
-      location.replace("/admin");
+      location.replace("/");
       // this.router.navigate(["/admin"]);
     }, err => {
+      this.shareService.closeLoading();
       this.messageService.add({ severity: 'error', summary: 'Thất bại!', detail: err.error.message });
     });
   }
