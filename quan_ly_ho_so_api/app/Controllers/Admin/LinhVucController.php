@@ -15,7 +15,7 @@ class LinhVucController extends Controller {
     public function get() {
         
         if(request()->has('id')) {
-            $data = LinhVuc::find(request()->id);
+            $data = LinhVuc::withTrashed()->find(request()->id);
             $data && $data->co_quan = $data->co_quan;
         } else {
             $data = LinhVuc::all();
@@ -28,10 +28,10 @@ class LinhVucController extends Controller {
         $first = request()->first ?? 0;
         $row = request()->row ?? 10;
 
-        $data = LinhVuc::offset($first)->limit($row)->get();
+        $data = LinhVuc::withTrashed()->offset($first)->limit($row)->get();
 
         return response()->json([
-            'total' => LinhVuc::count(),
+            'total' => LinhVuc::withTrashed()->count(),
             'data' => $data,
         ]);
     }
@@ -139,7 +139,7 @@ class LinhVucController extends Controller {
             ],
         ]);
 
-        $linh_vuc = LinhVuc::find(request()->id);
+        $linh_vuc = LinhVuc::withTrashed()->find(request()->id);
 
         if(request()->has('hinh_anh') && !Validator::check('base64', request()->hinh_anh)) {
             $file = File::createBase64(request()->hinh_anh);
@@ -210,9 +210,9 @@ class LinhVucController extends Controller {
         ]);
 
         if($type == 'hide') {
-            $model = LinhVuc::find(request()->id)->hide();
+            $model = LinhVuc::withTrashed()->find(request()->id)->delete();
         } else {
-            $model = LinhVuc::find(request()->id)->show();
+            $model = LinhVuc::withTrashed()->find(request()->id)->restore();
         }
 
         return response()->success(1, 'Thao tác thành công!');

@@ -11,7 +11,7 @@ use App\Models\DiaChinh\Ward;
 class DiaChinhController extends Controller {
 
     public function getTinh() {
-        $data = Province::all();
+        $data = Province::withTrashed()->all();
 
         return response()->json($data);
     }
@@ -19,29 +19,29 @@ class DiaChinhController extends Controller {
     public function getHuyen() {
         $id = request()->id ?? '01';
 
-        $data = District::where(['province_id' => $id])->get();
+        $data = District::withTrashed()->where(['province_id' => $id])->get();
         return response()->json($data);
     }
 
     public function getXa() {
         $id = request()->id ?? '001';
 
-        $data = Ward::where(['district_id' => $id])->get();
+        $data = Ward::withTrashed()->where(['district_id' => $id])->get();
         return response()->json($data);
     }
 
     public function getDiaChi() {
         $id = request()->id ?? '00001';
 
-        $ward = Ward::find($id);
+        $ward = Ward::withTrashed()->find($id);
 
-        $district = District::find($ward->district_id);
+        $district = District::withTrashed()->find($ward->district_id);
 
-        $province = Province::find($district->province_id);
+        $province = Province::withTrashed()->find($district->province_id);
 
-        $list_province = Province::all();
-        $list_district = District::where(['province_id' => $province->id])->get();
-        $list_ward = Ward::where(['district_id' => $district->id])->get();
+        $list_province = Province::withTrashed()->all();
+        $list_district = District::withTrashed()->where(['province_id' => $province->id])->get();
+        $list_ward = Ward::withTrashed()->where(['district_id' => $district->id])->get();
 
         return response()->json([
             'ward' => $ward,
@@ -56,9 +56,9 @@ class DiaChinhController extends Controller {
     public function get_tinh() {
         
         if(request()->has('id')) {
-            $data = Province::find(request()->id);
+            $data = Province::withTrashed()->find(request()->id);
         } else {
-            $data = Province::all();
+            $data = Province::withTrashed()->all();
         }
         
         return response()->json($data);
@@ -68,10 +68,10 @@ class DiaChinhController extends Controller {
         $first = request()->first ?? 0;
         $row = request()->row ?? 10;
 
-        $data = Province::offset($first)->limit($row)->get();
+        $data = Province::withTrashed()->offset($first)->limit($row)->get();
 
         return response()->json([
-            'total' => Province::count(),
+            'total' => Province::withTrashed()->count(),
             'data' => $data,
         ]);
     }
@@ -79,11 +79,11 @@ class DiaChinhController extends Controller {
     public function get_huyen() {
 
         if(request()->has('id')) {
-            $data = District::find(request()->id);
+            $data = District::withTrashed()->find(request()->id);
         } else if(request()->has('province_id')) {
-            $data = District::where(['province_id' => request()->province_id])->get();
+            $data = District::withTrashed()->where(['province_id' => request()->province_id])->get();
         } else {
-            $data = District::all();
+            $data = District::withTrashed()->all();
         }
         
         return response()->json($data);
@@ -95,11 +95,11 @@ class DiaChinhController extends Controller {
         $province_id = request()->province_id ?? null;
 
         if($province_id) {
-            $total = District::where(['province_id' => $province_id])->count();
-            $data = District::where(['province_id' => $province_id])->offset($first)->limit($row)->get();
+            $total = District::withTrashed()->where(['province_id' => $province_id])->count();
+            $data = District::withTrashed()->where(['province_id' => $province_id])->offset($first)->limit($row)->get();
         } else {
-            $total = District::count();
-            $data = District::offset($first)->limit($row)->get();
+            $total = District::withTrashed()->count();
+            $data = District::withTrashed()->offset($first)->limit($row)->get();
         }
 
         return response()->json([
@@ -111,11 +111,11 @@ class DiaChinhController extends Controller {
     public function get_xa() {
 
         if(request()->has('id')) {
-            $data = Ward::find(request()->id);
+            $data = Ward::withTrashed()->find(request()->id);
         } else if(request()->has('district_id')) {
-            $data = Ward::where(['district_id' => request()->district_id])->get();
+            $data = Ward::withTrashed()->where(['district_id' => request()->district_id])->get();
         } else {
-            $data = Ward::all();
+            $data = Ward::withTrashed()->all();
         }
         
         return response()->json($data);
@@ -127,11 +127,11 @@ class DiaChinhController extends Controller {
         $district_id = request()->district_id ?? null;
 
         if($district_id) {
-            $total = Ward::where(['district_id' => $district_id])->count();
-            $data = Ward::where(['district_id' => $district_id])->offset($first)->limit($row)->get();
+            $total = Ward::withTrashed()->where(['district_id' => $district_id])->count();
+            $data = Ward::withTrashed()->where(['district_id' => $district_id])->offset($first)->limit($row)->get();
         } else {
-            $total = Ward::count();
-            $data = Ward::offset($first)->limit($row)->get();
+            $total = Ward::withTrashed()->count();
+            $data = Ward::withTrashed()->offset($first)->limit($row)->get();
         }
 
         return response()->json([
@@ -183,7 +183,7 @@ class DiaChinhController extends Controller {
             ],
         ]);
 
-        $result = Province::where('id', request()->id)
+        $result = Province::withTrashed()->find(request()->id)
         ->update([
             'name' => request()->name,
             'type' => request()->type,
@@ -206,9 +206,9 @@ class DiaChinhController extends Controller {
         ]);
 
         if($type == 'hide') {
-            $model = Province::find(request()->id)->hide();
+            $model = Province::withTrashed()->find(request()->id)->hide();
         } else {
-            $model = Province::find(request()->id)->show();
+            $model = Province::withTrashed()->find(request()->id)->show();
         }
 
         return response()->success(1, 'Thao tác thành công!');
@@ -274,7 +274,7 @@ class DiaChinhController extends Controller {
             ],
         ]);
 
-        $result = District::where('id', request()->id)
+        $result = District::withTrashed()->find(request()->id)
         ->update([
             'name' => request()->name,
             'type' => request()->type,
@@ -298,9 +298,9 @@ class DiaChinhController extends Controller {
         ]);
 
         if($type == 'hide') {
-            $model = District::find(request()->id)->hide();
+            $model = District::withTrashed()->find(request()->id)->hide();
         } else {
-            $model = District::find(request()->id)->show();
+            $model = District::withTrashed()->find(request()->id)->show();
         }
 
         return response()->success(1, 'Thao tác thành công!');
@@ -366,7 +366,7 @@ class DiaChinhController extends Controller {
             ],
         ]);
 
-        $result = Ward::where('id', request()->id)
+        $result = Ward::withTrashed()->find(request()->id)
         ->update([
             'name' => request()->name,
             'type' => request()->type,
@@ -390,9 +390,9 @@ class DiaChinhController extends Controller {
         ]);
 
         if($type == 'hide') {
-            $model = Ward::find(request()->id)->hide();
+            $model = Ward::withTrashed()->find(request()->id)->hide();
         } else {
-            $model = Ward::find(request()->id)->show();
+            $model = Ward::withTrashed()->find(request()->id)->show();
         }
 
         return response()->success(1, 'Thao tác thành công!');

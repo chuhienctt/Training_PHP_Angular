@@ -15,11 +15,11 @@ class UserController extends Controller {
     public function get() {
         
         if(request()->has('id')) {
-            $data = Users::find(request()->id);
+            $data = Users::withTrashed()->find(request()->id);
         } else if(request()->has('id_co_quan')) {
-            $data = Users::where(['id_co_quan' => request()->id_co_quan])->get();
+            $data = Users::withTrashed()->where(['id_co_quan' => request()->id_co_quan])->get();
         } else {
-            $data = Users::all();
+            $data = Users::withTrashed()->all();
         }
         
         return response()->json($data);
@@ -29,10 +29,10 @@ class UserController extends Controller {
         $first = request()->first ?? 0;
         $row = request()->row ?? 10;
 
-        $data = Users::offset($first)->limit($row)->get();
+        $data = Users::withTrashed()->offset($first)->limit($row)->get();
 
         return response()->json([
-            'total' => Users::count(),
+            'total' => Users::withTrashed()->count(),
             'data' => $data,
         ]);
     }
@@ -108,7 +108,7 @@ class UserController extends Controller {
         // add cơ quan khi là cán bộ
         if($user->role == 2) {
             $id_co_quan = request()->id_co_quan;
-            $co_quan = CoQuan::find($id_co_quan);
+            $co_quan = CoQuan::withTrashed()->find($id_co_quan);
             if($co_quan) {
                 $user->id_co_quan = $id_co_quan;
             } else {
@@ -160,7 +160,7 @@ class UserController extends Controller {
             ],
         ]);
 
-        $user = Users::find(request()->id);
+        $user = Users::withTrashed()->find(request()->id);
 
         // k cho sửa thông tin của admin
         if($user->role == 3) {
@@ -180,7 +180,7 @@ class UserController extends Controller {
         // update cơ quan khi là cán bộ
         if($user->role == 2) {
             $id_co_quan = request()->id_co_quan;
-            $co_quan = CoQuan::find($id_co_quan);
+            $co_quan = CoQuan::withTrashed()->find($id_co_quan);
             if($co_quan) {
                 $user->id_co_quan = $id_co_quan;
             } else {
@@ -217,7 +217,7 @@ class UserController extends Controller {
             ],
         ]);
 
-        $user = Users::find(request()->id);
+        $user = Users::withTrashed()->find(request()->id);
 
         // k cho khóa admin khác
         if($user->role == 3) {

@@ -50,7 +50,7 @@ class Response {
 
     public function code($code, $data = []) {
         header($_SERVER["SERVER_PROTOCOL"]." $code ".$this->httpStatus[$code]);
-        echo json_encode($this->hiddenVariable($data));
+        echo json_encode($data);
         exit;
     }
 
@@ -74,27 +74,27 @@ class Response {
         ]);
     }
 
-    public function hiddenVariable($data) {
-        if($data instanceof Model) {
-            // la model
+    // public function hiddenVariable($data) {
+    //     if($data instanceof Model) {
+    //         // la model
             
-            foreach ($data->getHidden() as $hide) {
-                unset($data->{$hide});
-            }
-        } else if(gettype($data) == 'object') {
-            // la object thuong
-            $vars = get_class_vars(get_class($data));
+    //         foreach ($data->getHidden() as $hide) {
+    //             unset($data->{$hide});
+    //         }
+    //     } else if(gettype($data) == 'object') {
+    //         // la object thuong
+    //         $vars = get_class_vars(get_class($data));
 
-            foreach ($vars as $key => $value) {
-                $this->hiddenVariable($value);
-            }
-        } else if(gettype($data) == 'array') {
-            foreach ($data as $key => $value) {
-                $this->hiddenVariable($value);
-            }
-        }
+    //         foreach ($vars as $key => $value) {
+    //             $this->hiddenVariable($value);
+    //         }
+    //     } else if(gettype($data) == 'array') {
+    //         foreach ($data as $key => $value) {
+    //             $this->hiddenVariable($value);
+    //         }
+    //     }
 
-        return $data;
-    }
+    //     return $data;
+    // }
 
 }

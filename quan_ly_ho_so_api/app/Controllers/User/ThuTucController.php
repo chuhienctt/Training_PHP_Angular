@@ -40,48 +40,32 @@ class ThuTucController extends Controller {
         $page = request()->page ?? 1;
         $pageSize = request()->pageSize ?? 10;
 
-        $where = [
-            'deleted_at' => NULL
-        ];
-
-        $co_quan = CoQuan::where($where)->get();
-        $linh_vuc = NULL;
-
+        $model = ThuTuc::where(['deleted_at' => NULL]);
+        
         if(request()->has('id_linh_vuc')) {
-            $where['id_linh_vuc'] = request()->id_linh_vuc;
-            $linh_vuc = LinhVuc::find(request()->id_linh_vuc);
+            $model = $model->where('id_linh_vuc', request()->id_linh_vuc);
         }
-
-        $model = ThuTuc::where($where);
+        
+        if(request()->has('id_co_quan')) {
+            $model = $model->where('id_co_quan', request()->id_co_quan);
+        }
 
         if(request()->has('keyword')) {
             $model = $model->where(function($query) {
 
                 $query->orWhere('ten_thu_tuc', 'like', '%'.request()->keyword.'%')
-                ->orWhere('mo_ta', 'like', '%'.request()->keyword.'%');
+                ->orWhere('code', 'like', '%'.request()->keyword.'%');
                 
             });
         }
-
-        if(request()->has('co_quan') && gettype(request()->co_quan) === 'array') {
-
-            $model = $model->where(function($query) {
-
-                foreach (request()->co_quan as $id) {
-                    $query->orWhere([
-                        'id_co_quan' => $id
-                    ]);
-                }
-
-            });
-
+        
+        if(request()->has('muc_do')) {
+            $model = $model->where('muc_do', request()->muc_do);
         }
 
         $paging = Pagination::create($model, $page, $pageSize);
 
         return response()->json([
-            'co_quan' => $co_quan,
-            'linh_vuc' => $linh_vuc,
             'total' => $paging['total_records'],
             'data' => $paging['data'],
         ]);

@@ -14,20 +14,20 @@ class NhomUsersController extends Controller {
     public function get() {
         
         if(request()->has('id')) {
-            $data = Nhom::find(request()->id);
+            $data = Nhom::withTrashed()->find(request()->id);
             if($data) {
                 $data->co_quan = $data->co_quan;
                 $data->users = $data->users;
             }
         } else if(request()->has('id_co_quan')) {
-            $data = Nhom::where(['id_co_quan' => request()->id_co_quan])->get();
+            $data = Nhom::withTrashed()->where(['id_co_quan' => request()->id_co_quan])->get();
 
             foreach ($data as $item) {
                 $data->co_quan = $item->co_quan;
                 $data->users = $item->users;
             }
         } else {
-            $data = Nhom::all();
+            $data = Nhom::withTrashed()->all();
         }
         
         return response()->json($data);
@@ -37,7 +37,7 @@ class NhomUsersController extends Controller {
         $first = request()->first ?? 0;
         $row = request()->row ?? 10;
 
-        $data = Nhom::offset($first)->limit($row)->get();
+        $data = Nhom::withTrashed()->offset($first)->limit($row)->get();
 
         foreach ($data as $item) {
             $data->co_quan = $item->co_quan;
@@ -45,7 +45,7 @@ class NhomUsersController extends Controller {
         }
 
         return response()->json([
-            'total' => Nhom::count(),
+            'total' => Nhom::withTrashed()->count(),
             'data' => $data,
         ]);
     }
@@ -80,7 +80,7 @@ class NhomUsersController extends Controller {
                 // add user
                 foreach(request()->users as $user) {
 
-                    $result = Users::where(['id' => $user, 'id_co_quan' => $nhom->id_co_quan, 'role' => 2, 'deleted_at' => null])->first();
+                    $result = Users::withTrashed()->where(['id' => $user, 'id_co_quan' => $nhom->id_co_quan, 'role' => 2, 'deleted_at' => null])->first();
 
                     if(!$result) {
                         throw new \PDOException('Người dùng không hợp lệ!');
@@ -126,7 +126,7 @@ class NhomUsersController extends Controller {
             ],
         ]);
 
-        $nhom = Nhom::find(request()->id);
+        $nhom = Nhom::withTrashed()->find(request()->id);
 
         $nhom->ten_nhom = request()->ten_nhom;
 
@@ -143,7 +143,7 @@ class NhomUsersController extends Controller {
                 // add user
                 foreach(request()->users as $user) {
 
-                    $result = Users::where(['id' => $user, 'id_co_quan' => $nhom->id_co_quan, 'role' => 2, 'deleted_at' => null])->first();
+                    $result = Users::withTrashed()->where(['id' => $user, 'id_co_quan' => $nhom->id_co_quan, 'role' => 2, 'deleted_at' => null])->first();
 
                     if(!$result) {
                         throw new \PDOException('Người dùng không hợp lệ!');
@@ -182,9 +182,9 @@ class NhomUsersController extends Controller {
         ]);
 
         if($type == 'hide') {
-            $model = Nhom::find(request()->id)->hide();
+            $model = Nhom::withTrashed()->find(request()->id)->hide();
         } else {
-            $model = Nhom::find(request()->id)->show();
+            $model = Nhom::withTrashed()->find(request()->id)->show();
         }
 
         return response()->success(1, 'Thao tác thành công!');

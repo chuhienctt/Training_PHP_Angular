@@ -39,12 +39,21 @@ Route::group([
 
     });
 
+    
+    Route::group([
+        'prefix' => '/co-quan'
+    ], function () {
+
+        Route::get('/get', 'User\CoQuanController@get');
+
+    });
+
     Route::group([
         'prefix' => '/thu-tuc'
     ], function () {
 
         Route::get('/get', 'User\ThuTucController@get');
-        Route::post('/pagination', 'User\ThuTucController@pagination');
+        Route::get('/pagination', 'User\ThuTucController@pagination');
 
     });
 

@@ -14,7 +14,7 @@ class LinhVucController extends Controller {
             $data && $data->co_quan = $data->co_quan;
 
         } else {
-            $data = LinhVuc::where(['deleted_at' => NULL])->get();
+            $data = LinhVuc::all();
         }
         
         return response()->json($data);

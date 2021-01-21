@@ -4,8 +4,11 @@ namespace App\Models;
 
 use \Illuminate\Database\Eloquent\Model;
 use App\Helpers\Format;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class LinhVuc extends Model {
+    use SoftDeletes;
+    
     protected $table = 'linh_vuc';
 
     public function show() {

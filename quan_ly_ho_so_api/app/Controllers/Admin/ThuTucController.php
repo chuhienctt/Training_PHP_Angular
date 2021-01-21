@@ -16,7 +16,7 @@ class ThuTucController extends Controller {
     public function get() {
         
         if(request()->has('id')) {
-            $data = ThuTuc::find(request()->id);
+            $data = ThuTuc::withTrashed()->find(request()->id);
             $data->co_quan = $data->co_quan;
             $data->linh_vuc = $data->linh_vuc;
             $data->quy_trinh = $data->quy_trinh;
@@ -26,7 +26,7 @@ class ThuTucController extends Controller {
             }
 
         } else {
-            $data = ThuTuc::all();
+            $data = ThuTuc::withTrashed()->all();
 
             foreach($data as $tt) {
                 $tt->co_quan = $tt->co_quan;
@@ -42,7 +42,7 @@ class ThuTucController extends Controller {
         $first = request()->first ?? 0;
         $row = request()->row ?? 10;
 
-        $data = ThuTuc::offset($first)->limit($row)->get();
+        $data = ThuTuc::withTrashed()->offset($first)->limit($row)->get();
 
         foreach($data as $tt) {
             $tt->co_quan = $tt->co_quan;
@@ -222,7 +222,7 @@ class ThuTucController extends Controller {
             Validator::alert("Lĩnh vực không thuộc cơ quan đã chọn!");
         }
 
-        $thu_tuc = ThuTuc::find(request()->id);
+        $thu_tuc = ThuTuc::withTrashed()->find(request()->id);
 
         $thu_tuc->code = request()->code;
         $thu_tuc->id_co_quan = request()->id_co_quan;
@@ -261,7 +261,7 @@ class ThuTucController extends Controller {
                             throw new \PDOException("Quy trình không tồn tại");
                         }
 
-                        $qt_new = QuyTrinh::find($qt['id']);
+                        $qt_new = QuyTrinh::withTrashed()->find($qt['id']);
     
                         $qt_new->ten_quy_trinh = $qt['ten_quy_trinh'];
                         $qt_new->ghi_chu = $qt['ghi_chu'];
@@ -305,7 +305,7 @@ class ThuTucController extends Controller {
                                     throw new \PDOException("Bước không tồn tại");
                                 }
 
-                                $bc_new = Buoc::find($bc['id']);
+                                $bc_new = Buoc::withTrashed()->find($bc['id']);
 
                                 $bc_new->id_nhom = $bc['id_nhom'];
                                 $bc_new->ten_buoc = $bc['ten_buoc'];
@@ -353,9 +353,9 @@ class ThuTucController extends Controller {
         ]);
 
         if($type == 'hide') {
-            $model = ThuTuc::find(request()->id)->hide();
+            $model = ThuTuc::withTrashed()->find(request()->id)->hide();
         } else {
-            $model = ThuTuc::find(request()->id)->show();
+            $model = ThuTuc::withTrashed()->find(request()->id)->show();
         }
 
         return response()->success(1, 'Thao tác thành công!');
