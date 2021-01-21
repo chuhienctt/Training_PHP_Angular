@@ -11,9 +11,9 @@ class HoSoController extends Controller {
     public function get() {
         
         if(request()->has('id')) {
-            $data = HoSo::find(request()->id);
+            $data = HoSo::withTrashed()->find(request()->id);
         } else {
-            $data = HoSo::all();
+            $data = HoSo::withTrashed()->all();
         }
         
         return response()->json($data);
@@ -23,10 +23,10 @@ class HoSoController extends Controller {
         $first = request()->first ?? 0;
         $row = request()->row ?? 10;
 
-        $data = HoSo::offset($first)->limit($row)->get();
+        $data = HoSo::withTrashed()->offset($first)->limit($row)->get();
 
         return response()->json([
-            'total' => HoSo::count(),
+            'total' => HoSo::withTrashed()->count(),
             'data' => $data,
         ]);
     }

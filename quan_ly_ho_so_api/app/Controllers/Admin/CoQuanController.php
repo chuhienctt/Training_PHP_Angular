@@ -15,7 +15,7 @@ class CoQuanController extends Controller {
     public function get() {
         
         if(request()->has('id')) {
-            $data = CoQuan::find(request()->id);
+            $data = CoQuan::withTrashed()->find(request()->id);
             $data && $data->linh_vuc = $data->linh_vuc;
         } else {
             $data = CoQuan::all();
@@ -28,10 +28,10 @@ class CoQuanController extends Controller {
         $first = request()->first ?? 0;
         $row = request()->row ?? 10;
 
-        $data = CoQuan::offset($first)->limit($row)->get();
+        $data = CoQuan::withTrashed()->offset($first)->limit($row)->get();
 
         return response()->json([
-            'total' => CoQuan::count(),
+            'total' => CoQuan::withTrashed()->count(),
             'data' => $data,
         ]);
     }
@@ -166,7 +166,7 @@ class CoQuanController extends Controller {
             ],
         ]);
 
-        $co_quan = CoQuan::find(request()->id);
+        $co_quan = CoQuan::withTrashed()->find(request()->id);
 
         if(request()->has('hinh_anh') && !Validator::check('base64', request()->hinh_anh)) {
             $file = File::createBase64(request()->hinh_anh);
@@ -237,9 +237,9 @@ class CoQuanController extends Controller {
         ]);
 
         if($type == 'hide') {
-            $model = CoQuan::find(request()->id)->hide();
+            $model = CoQuan::withTrashed()->find(request()->id)->hide();
         } else {
-            $model = CoQuan::find(request()->id)->show();
+            $model = CoQuan::withTrashed()->find(request()->id)->show();
         }
 
         return response()->success(1, 'Thao tác thành công!');
