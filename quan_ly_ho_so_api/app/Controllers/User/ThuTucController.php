@@ -65,6 +65,11 @@ class ThuTucController extends Controller {
 
         $paging = Pagination::create($model, $page, $pageSize);
 
+        foreach ($paging['data'] as $item) {
+            $item->linh_vuc = $item->linh_vuc;
+            $item->co_quan = $item->co_quan;
+        }
+
         return response()->json([
             'total' => $paging['total_records'],
             'data' => $paging['data'],
