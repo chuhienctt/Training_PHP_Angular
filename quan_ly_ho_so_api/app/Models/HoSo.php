@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use \Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Helpers\Format;
 
 class HoSo extends Model {
+    use SoftDeletes;
+    
     protected $table = 'ho_so';
 
     public function show() {

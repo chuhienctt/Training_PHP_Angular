@@ -3,10 +3,13 @@
 namespace App\Models;
 
 use \Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Helpers\Format;
 use App\Models\CoQuan;
 
 class ThuTuc extends Model {
+    use SoftDeletes;
+    
     protected $table = 'thu_tuc';
 
     public function show() {
