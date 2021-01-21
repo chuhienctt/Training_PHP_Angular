@@ -35,7 +35,7 @@ class Request {
     }
 
     public function has($variable) {
-        return isset($this->{$variable});
+        return isset($this->{$variable}) && !empty($this->{$variable});
     }
 
     public function get($variable) {
