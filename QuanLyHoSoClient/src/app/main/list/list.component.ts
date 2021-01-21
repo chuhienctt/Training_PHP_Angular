@@ -10,12 +10,17 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 })
 export class ListComponent implements OnInit {
   page = 1;
-  pageSize = 4;
+  pageSize = 10;
   listProcedure = [];
   feild:any;
-  id: any;
   organ: any;
+  lever: any;
+  totalRecords: number;
   form:FormGroup;
+  arr = [];
+  id = "";
+  muc_do = "";
+  id_co_quan = "";
 
   constructor(
     private listService:ListService,
@@ -24,47 +29,63 @@ export class ListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe((params:ParamMap) => {
-      this.id = params.get('id');
-    });
-    this.pageChange(this.page);
-
     this.form = this.formBuilder.group({
-      keyword: ['', Validators.required]
+      keyword: [''],
+      id_co_quan: [''],
+      id_linh_vuc: [''],
+      muc_do: [''],
+    })
+
+    this.pageChange(this.page);
+    this.getAllFeild();
+    this.getAllOrgan();
+  }
+
+  getAllFeild() {
+    this.listService.getAllFeild().subscribe(res => {
+      this.feild = res;
+    })
+  }
+
+  getAllOrgan() {
+    this.listService.getAllOrgan().subscribe(res => {
+      this.organ = res;
     })
   }
 
   pageChange(page) {
     this.page = page;
-    let item = {
-      id_linh_vuc: this.id,
-      page: page,
-      pageSize: this.pageSize
-    }
-    this.listService.getProcedure(item).subscribe((res:any) => {
-      this.feild = res.linh_vuc;
+    this.listService.getProcedure(this.page, this.pageSize, this.form.value.id_linh_vuc, this.form.value.id_co_quan, this.form.value.muc_do, this.form.value.keyword).subscribe((res:any) => {
       this.listProcedure = res.data;
-      this.organ = res.co_quan;
+      this.totalRecords = res.total;
     })
   }
 
-  search() {
-    if (this.form.invalid) {
-      return;
-    }
+  onSubmit() {
+    console.log(this.form.value)
+    this.pageChange(this.page);
+  }
 
-    let item = {
-      id_linh_vuc: this.id,
-      page: this.page,
-      pageSize: this.pageSize,
-      keyword: this.form.value.keyword
+  filterByOrgan(id_co_quan) {
+    this.form.value.id_co_quan = id_co_quan;
+    this.form.value.id_linh_vuc = "";
+    this.pageChange(this.page);
+  }
+
+  filterByFeild(id_linh_vuc) {
+    this.form.value.id_linh_vuc = id_linh_vuc;
+    this.pageChange(this.page);
+  }
+
+  getFeild(event) {
+    this.form.value.id_linh_vuc = "";
+    if (!event.target.value) {
+      this.getAllFeild();
+    } else {
+      this.listService.getFeild(event.target.value).subscribe((res:any) => {
+        this.feild = res.linh_vuc;
+      })
     }
-    this.listService.getProcedure(item).subscribe((res:any) => {
-      console.log(res)
-      this.feild = res.linh_vuc;
-      this.listProcedure = res.data;
-      this.organ = res.co_quan;
-    })
   }
 
 }
