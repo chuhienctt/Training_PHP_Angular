@@ -8,7 +8,7 @@ import { LoginComponent } from './main/login/login.component';
 import { HeaderComponent } from './share/header/header.component';
 import { FooterComponent } from './share/footer/footer.component';
 import { MenuComponent } from './share/menu/menu.component';
-import {HttpClientModule} from '@angular/common/http';
+import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {DropdownModule} from 'primeng/dropdown';
 import {CalendarModule} from 'primeng/calendar';
@@ -24,6 +24,7 @@ import { NiceSelectModule } from "ng-nice-select";
 import { ChangepassComponent } from './main/changepass/changepass.component';
 import { ListComponent } from './main/list/list.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ErrorInterceptor } from './libs/error.interceptor';
 
 export function tokenGetter() {
   let user = JSON.parse(localStorage.getItem("jwt"));
@@ -64,7 +65,9 @@ export function tokenGetter() {
     FileUploadModule,
     NgbModule
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
+  ],
   exports: [
     HeaderComponent
   ],

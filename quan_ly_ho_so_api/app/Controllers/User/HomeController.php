@@ -213,4 +213,8 @@ class HomeController extends Controller {
 
         return response()->error(2, 'Không thể thay đổi thông tin!');
     }
+
+    public function check() {
+        return response()->json(true);
+    }
 }

@@ -1,30 +1,72 @@
 [
     {
+        "title": "Họ tên",
         "name": "ho_ten",
-        "type": "text"
+        "type": "text",
+        "value": "",
+        "required": true
     },
     {
+        "title": "Ngày sinh",
         "name": "ngay_sinh",
-        "type": "date"
+        "type": "date",
+        "value": "",
+        "required": true
     },
     {
+        "title": "Địa chỉ",
         "name": "dia_chi",
-        "type": "text"
+        "type": "text",
+        "value": "",
+        "required": true
     },
     {
+        "title": "Tỉnh/thành phố",
+        "name": "province",
+        "type": "select",
+        "value": "model:App\\Models\\DiaChinh\\Province",
+        "required": true
+    },
+    {
+        "title": "Quận/huyện/thị xã",
+        "name": "district",
+        "type": "select",
+        "value": "model:App\\Models\\DiaChinh\\District",
+        "required": true
+    },
+    {
+        "title": "Xã/phường/thị trấn",
+        "name": "ward",
+        "type": "select",
+        "value": "model:App\\Models\\DiaChinh\\Ward",
+        "required": true
+    },
+    {
+        "title": "Email",
         "name": "email",
-        "type": "email"
+        "type": "email",
+        "value": "",
+        "required": true
     },
     {
+        "title": "Số điện thoại",
         "name": "so_dien_thoai",
-        "type": "phone_number"
+        "type": "phone_number",
+        "value": "",
+        "required": true
     },
     {
+        "title": "Lý do",
         "name": "ly_do",
-        "type": "text"
+        "type": "longtext",
+        "value": "",
+        "required": true
     },
     {
+        "title": "Đính kèm",
         "name": "dinh_kem",
-        "type": "file"
+        "type": "file",
+        "value": "",
+        "required": true
     }
 ]
