@@ -3,11 +3,14 @@
 namespace App\Models;
 
 use \Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Helpers\Format;
 use App\Models\CoQuanLinhVuc;
 use App\Models\ThuTuc;
 
 class CoQuan extends Model {
+    use SoftDeletes;
+    
     protected $table = 'co_quan';
 
     public function show() {
