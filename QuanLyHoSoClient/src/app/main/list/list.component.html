@@ -31,7 +31,7 @@
                       <div class="panel panel-default">
                         <div class="panel-heading">
                           <h4 class="check-title">
-                            <a data-toggle="collapse" class="" data-parent="#accordion1" href="#check">
+                            <a  data-toggle="collapse" data-parent="#accordion" href="#check">
                               <span class="acc-icons"></span>Tìm kiếm nâng cao.
                             </a>
                           </h4>
@@ -54,7 +54,7 @@
                                 <div class="col-md-9">
                                   <select nice-select formControlName="id_co_quan" class="form-control" (change)="getFeild($event)">
                                     <option value="">-- Chọn cơ quan --</option>
-                                    <option *ngFor="let item of organ" [value]="item.id">{{item.ten_co_quan}}</option>
+                                    <option *ngFor="let item of organ" value="{{item.id}}">{{item.ten_co_quan}}</option>
                                   </select>
                                 </div>
                               </div>
@@ -108,6 +108,7 @@
                       <th>Tên thủ tục</th>
                       <th>Mức độ</th>
                       <th>Lĩnh vực</th>
+                      <th>Thao tác</th>
                     </tr>
                     <tr *ngFor="let item of listProcedure; let i = index">
                       <td>{{i + 1}}</td>
@@ -117,6 +118,10 @@
                         <div class="muc-do">Mức độ {{item.muc_do}}</div>
                       </td>
                       <td>{{item.linh_vuc.ten_linh_vuc}}</td>
+                      <td>
+                        <button type="button" class="btn btn-primary mr-1">Nộp hồ sơ</button>
+                        <button type="button" class="btn btn-warning">Xem chi tiết</button>
+                      </td>
                     </tr>
                     <tr *ngIf="totalRecords == 0">
                       <td colspan="5">Không có thủ tục.</td>
