@@ -1,0 +1,185 @@
+<!-- Start breadcrumbs area -->
+<div class="page-area">
+  <div class="breadcumb-overlay"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="breadcrumb text-center">
+          <ul>
+            <li class="home-bread">Trang chủ</li>
+            <li>Danh sách thủ tục</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End breadcrumbs area -->
+<!--Blog Area Start-->
+<div class="blog-page-area bg-color fix area-padding">
+  <div class="container">
+    <div class="row">
+      <div class="blog-sidebar-right">
+        <div class="col-md-8 col-sm-8 col-xs-12">
+          <div class="row">
+            <div class="blog-grid blog-left-content">
+              <div class="col-md-12">
+                <div class="faq-full" style="margin-left: 0">
+                  <div class="faq-details">
+                    <div class="panel-group" id="accordion1">
+                      <!-- Panel Default -->
+                      <div class="panel panel-default">
+                        <div class="panel-heading">
+                          <h4 class="check-title">
+                            <a  data-toggle="collapse" data-parent="#accordion" href="#check">
+                              <span class="acc-icons"></span>Tìm kiếm nâng cao.
+                            </a>
+                          </h4>
+                        </div>
+                        <div id="check" class="panel-collapse collapse">
+                          <div class="panel-body">
+                            <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                              <div class="row">
+                                <div class="col-md-3">
+                                  <label>Mã, tên thủ tục</label>
+                                </div>
+                                <div class="col-md-9">
+                                  <input formControlName="keyword" type="text" placeholder="Tìm kiếm theo mã, tên thủ tục." class="form-control">
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col-md-3">
+                                  <label>Cơ quan</label>
+                                </div>
+                                <div class="col-md-9">
+                                  <select nice-select formControlName="id_co_quan" class="form-control" (change)="getFeild($event)">
+                                    <option value="">-- Chọn cơ quan --</option>
+                                    <option *ngFor="let item of organ" value="{{item.id}}">{{item.ten_co_quan}}</option>
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col-md-3">
+                                  <label>Lĩnh vực</label>
+                                </div>
+                                <div class="col-md-9">
+                                  <select nice-select formControlName="id_linh_vuc" class="form-control">
+                                    <option value="">-- Chọn lĩnh vực --</option>
+                                    <option *ngFor="let item of feild" value="{{item.id}}">{{item.ten_linh_vuc}}</option>
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col-md-3">
+                                  <label>Mức độ</label>
+                                </div>
+                                <div class="col-md-9">
+                                  <select nice-select formControlName="muc_do" class="form-control">
+                                    <option value="">-- Chọn mức độ --</option>
+                                    <option value="1">Mức độ 1</option>
+                                    <option value="2">Mức độ 2</option>
+                                    <option value="3">Mức độ 3</option>
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col-md-12">
+                                  <button type="submit">Tìm kiếm</button>
+                                </div>
+                              </div>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- End Panel Default -->
+                    </div>
+                  </div>
+                  <!-- End FAQ -->
+                </div>
+              </div>
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <p>Tìm thấy <span class="text-danger">{{totalRecords}} thủ tục.</span></p>
+                <div class="form-inner table-inner" style="padding: 0">
+                  <table>
+                    <tbody>
+                    <tr>
+                      <th>STT</th>
+                      <th>Mã TT</th>
+                      <th>Tên thủ tục</th>
+                      <th>Mức độ</th>
+                      <th>Lĩnh vực</th>
+                      <th>Thao tác</th>
+                    </tr>
+                    <tr *ngFor="let item of listProcedure; let i = index">
+                      <td>{{i + 1}}</td>
+                      <td>{{item.code}}</td>
+                      <td>{{item.ten_thu_tuc}}</td>
+                      <td>
+                        <div class="muc-do">Mức độ {{item.muc_do}}</div>
+                      </td>
+                      <td>{{item.linh_vuc.ten_linh_vuc}}</td>
+                      <td>
+                        <button type="button" class="btn btn-primary mr-1">Nộp hồ sơ</button>
+                        <button type="button" class="btn btn-warning">Xem chi tiết</button>
+                      </td>
+                    </tr>
+                    <tr *ngIf="totalRecords == 0">
+                      <td colspan="5">Không có thủ tục.</td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="blog-pagination">
+                  <ngb-pagination
+                    [(page)]="page"
+                    [pageSize]="pageSize"
+                    [collectionSize]="totalRecords"></ngb-pagination>
+                </div>
+              </div>
+              <!-- End single blog -->
+            </div>
+          </div>
+        </div>
+        <!-- Start Right Sidebar blog -->
+        <div class="col-md-4 col-sm-4 col-xs-12">
+          <div class="left-head-blog right-side">
+            <div class="left-blog-page">
+              <div class="left-blog blog-category">
+                <h4>Cơ quan</h4>
+                <div class="faq-full" style="margin-left: 0">
+                  <div class="faq-details">
+                    <div class="panel-group" id="accordion">
+                      <!-- Panel Default -->
+                      <div class="panel panel-default" *ngFor="let item of organ">
+                        <div class="panel-heading">
+                          <h4 class="check-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#check{{item.id}}" class="cursor-pointer" (click)="filterByOrgan(item.id)">
+                              <span class="acc-icons"></span>{{item.ten_co_quan}}<span class="count-tt">{{item.count_tt}}</span>
+                            </a>
+                          </h4>
+                        </div>
+                        <div id="check{{item.id}}" class="panel-collapse collapse ">
+                          <div class="panel-body">
+                            <ul>
+                              <li *ngFor="let i of item.linh_vuc" class="cursor-pointer" (click)="filterByFeild(i.id)">{{i.ten_linh_vuc}}<span>{{i.count_tt}}</span></li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- End Panel Default -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End Right Sidebar -->
+    </div>
+    <!-- End row -->
+  </div>
+</div>
+<!--End of Blog Area-->

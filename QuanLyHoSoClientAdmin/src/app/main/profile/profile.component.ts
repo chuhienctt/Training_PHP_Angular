@@ -104,14 +104,6 @@ export class ProfileComponent extends ScriptService implements OnInit {
     return this.adminService.currentUser;
   }
 
-  createImg(path) {
-    return environment.urlImg + path;
-  }
-
-  a(event) {
-    console.log(event)
-  }
-
   onSubmit() {
     this.submitted = true;
     if (this.form.invalid) {

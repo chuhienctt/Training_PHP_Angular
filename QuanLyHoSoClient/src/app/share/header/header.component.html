@@ -53,11 +53,7 @@
                                     <div class="main-menu">
                                         <ul class="nav navbar-nav navbar-right">
                                             <li><a [routerLink]="['/']">Trang chủ</a></li>
-                                            <li><a class="pages" href="#">Lĩnh vực</a>
-                                                <ul class="sub-menu">
-                                                    <li><a [routerLink]="['/list', item.id]" *ngFor="let item of listFeild">{{item.ten_linh_vuc}}</a></li>
-                                                </ul>
-                                            </li>
+                                            <li><a [routerLink]="['/list']">Thủ tục</a></li>
                                             <li><a >Liên hệ</a></li>
                                         </ul>
                                     </div>
