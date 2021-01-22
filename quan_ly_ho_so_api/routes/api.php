@@ -26,6 +26,7 @@ Route::group([
         'middleware' => 'UserGuard'
     ], function () {
 
+        Route::get('/auth/check', 'User\HomeController@check');
         Route::post('/auth/change-pass', 'User\HomeController@change_pass');
         Route::put('/auth/update', 'User\HomeController@update');
 

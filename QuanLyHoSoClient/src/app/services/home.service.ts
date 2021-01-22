@@ -41,6 +41,10 @@ export class HomeService {
     return this._http.put(apiAuth + "update", profile);
   }
 
+  check() {
+    return this._http.get(apiAuth + "check");
+  }
+
   getFeild() {
     return this._http.get(baseUrl + "linh-vuc/get");
   }

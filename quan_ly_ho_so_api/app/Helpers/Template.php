@@ -11,13 +11,19 @@ class Template {
         foreach ($templates as $key => $field) {
             $value = $data[$field->name] ?? null;
 
+            if($file->require && Validator::check('required', $value)) {
+                Validator::alert($field->name." là bắt buộc");
+            }
+
             switch ($field->type) {
                 case 'text':
-                    if(Validator::check('required', $value)) {
-                        Validator::alert($field->name." là bắt buộc");
-                    }
                     if(Validator::check('max:255', $value)) {
                         Validator::alert($field->name." quá 255 kí tự");
+                    }
+                    break;
+                case 'longtext':
+                    if(Validator::check('max:3000', $value)) {
+                        Validator::alert($field->name." quá 3000 kí tự");
                     }
                     break;
                 case 'date':

@@ -1,18 +1,30 @@
 [
     {
+        "title": "Họ tên",
         "name": "ho_ten",
-        "type": "text"
+        "type": "text",
+        "value": "",
+        "required": true
     },
     {
-        "name": "email",
-        "type": "email"
-    },
-    {
+        "title": "Số điện thoại",
         "name": "so_dien_thoai",
-        "type": "phone_number"
+        "type": "phone_number",
+        "value": "",
+        "required": true
     },
     {
+        "title": "Lý do",
         "name": "ly_do",
-        "type": "text"
+        "type": "text",
+        "value": "",
+        "required": true
+    },
+    {
+        "title": "Đính kèm",
+        "name": "dinh_kem",
+        "type": "file",
+        "value": "",
+        "required": true
     }
 ]

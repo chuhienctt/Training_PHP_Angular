@@ -52,4 +52,17 @@ export class AlertService {
     })
   }
 
+  warning(message, callback) {
+    Swal.fire({
+      icon: 'warning',
+      title: 'Thất bại!',
+      text: message,
+      backdrop: 'rgba(0,0,0,0.4)'
+    }).then(result => {
+        if(result.isConfirmed) {
+            callback();
+        }
+    })
+  }
+
 }
