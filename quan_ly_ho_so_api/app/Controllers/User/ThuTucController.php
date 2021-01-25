@@ -16,6 +16,8 @@ class ThuTucController extends Controller {
             $data = ThuTuc::find(request()->id);
 
             $data->co_quan = $data->co_quan;
+            $data->co_quan->dia_chi = $data->co_quan->dia_chi.', '.DiaChinhController::getDiaChiString($data->co_quan->ward_id);
+
             $data->linh_vuc = $data->linh_vuc;
             $data->quy_trinh = $data->quy_trinh;
 

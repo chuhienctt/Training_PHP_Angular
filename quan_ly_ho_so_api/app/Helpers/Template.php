@@ -11,7 +11,7 @@ class Template {
         foreach ($templates as $key => $field) {
             $value = $data[$field->name] ?? null;
 
-            if($file->require && Validator::check('required', $value)) {
+            if($field->required && Validator::check('required', $value)) {
                 Validator::alert($field->name." là bắt buộc");
             }
 
@@ -41,25 +41,33 @@ class Template {
                         Validator::alert($field->name." không đúng định dạng");
                     }
                     break;
-                // case 'file':
+                case 'file':
 
-                //     $check = false;
+                    $check = false;
 
-                //     if(gettype($value) === 'array') {
-                //         foreach ($value as $file) {
-                //             if(!self::check('base64', $file)) {
-                //                 $check = true;
-                //             }
-                //         }
-                //     } else {
-                //         $check = true;
-                //     }
+                    if(gettype($value) === 'array') {
+                        foreach ($value as $file) {
+                            if(!Validator::check('base64', $file)) {
+                                $check = true;
+                            }
+                        }
+                    } else {
+                        $check = true;
+                    }
 
-                //     if($check) {
-                //         self::alert("Tệp đính kèm không đúng định dạng");
-                //     }
+                    if($check) {
+                        Validator::alert("Tệp đính kèm không đúng định dạng");
+                    }
 
-                //     break;
+                    break;
+                case 'select':
+                    if(stripos($field->value, 'model:') !== false) {
+                        $model = explode(':', $field->value)[1]::find($value);
+                        if(!$model) {
+                            Validator::alert($field->title." không tồn tại");
+                        }
+                    }
+                    break;
             }
         }
     }
@@ -79,9 +87,9 @@ class Template {
                         foreach ($value as $file) {
                             if(!Validator::check('base64', $file)) {
                                 $file = File::createBase64($file);
-                                $file->generateFileName();
-                                $file->save('/ho-so-images/');
-                                $files[] = '/ho-so-images/'.$file->getFileName();
+                                $file->generateFileName2();
+                                $file->save($file->generateDir('/ho-so/'));
+                                $files[] = $file->path;
                             }
                         }
                         $value = $files;

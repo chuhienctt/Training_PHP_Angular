@@ -9,6 +9,7 @@ class File {
     public $file_tmp = null;
     public $file_size = null;
     public $file_data = null;
+    public $path = null;
     private static $ext_image = ['png', 'jpg', 'jpeg'];
 
     function __construct() {
@@ -57,11 +58,20 @@ class File {
         return in_array($this->getFileExtension(), self::$ext_image);
     }
 
+    public function generateDir($dir = '/') {
+        return $dir.date('Y-m-d/');
+    }
+
     public function generateFileName() {
         $this->file_name = sha1(mt_rand(1, 90000).time().$this->file_name).'.'.$this->getFileExtension();
     }
 
+    public function generateFileName2() {
+        $this->file_name = date('H_i_s_').self::generateRandomString(6).'.'.$this->getFileExtension();
+    }
+
     public function save($dir = '/') {
+        $this->path = $dir.$this->file_name;
         $path = _ROOT."/../".CONFIG['storage'].$dir;
 
         try {
@@ -93,6 +103,16 @@ class File {
     public static function get_file($path) {
         $attachment_location = _ROOT.'/../public'.$path;
         return file_get_contents($attachment_location);
+    }
+
+    public static function generateRandomString($length = 10) {
+        $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
     }
 
     public static function fileRender($path) {

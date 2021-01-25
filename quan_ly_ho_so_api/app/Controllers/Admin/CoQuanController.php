@@ -91,7 +91,7 @@ class CoQuanController extends Controller {
         $co_quan->dia_chi = request()->dia_chi;
         $co_quan->email = request()->email;
         $co_quan->so_dien_thoai = request()->so_dien_thoai;
-        $co_quan->hinh_anh = '/co-quan-images/'.$file->getFileName();
+        $co_quan->hinh_anh = $file->path;
         $co_quan->ward_id = request()->ward_id;
 
         DB::beginTransaction();
@@ -178,7 +178,7 @@ class CoQuanController extends Controller {
             $file->generateFileName();
             $file->save('/co-quan-images/');
 
-            $co_quan->hinh_anh = '/co-quan-images/'.$file->getFileName();
+            $co_quan->hinh_anh = $file->path;
         }
 
         $co_quan->code = request()->code;

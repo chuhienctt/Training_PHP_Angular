@@ -116,7 +116,7 @@ class UserController extends Controller {
             }
         }
 
-        $user->avatar = '/avatar/'.$file->getFileName();
+        $user->avatar = $file->path;
 
         if($user->save()) {
             return response()->success(1, 'Thêm người dùng thành công!', $user);
@@ -198,7 +198,7 @@ class UserController extends Controller {
             $file->generateFileName();
             $file->save('/avatar/');
 
-            $user->avatar = '/avatar/'.$file->getFileName();
+            $user->avatar = $file->path;
         }
 
         if($user->save()) {
