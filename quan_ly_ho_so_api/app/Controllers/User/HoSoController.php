@@ -7,6 +7,8 @@ use Core\File;
 use App\Helpers\Template;
 use App\Models\HoSo;
 use App\Models\QuyTrinh;
+use App\Models\ThuTuc;
+use App\Models\LinhVuc;
 
 class HoSoController extends Controller {
 
@@ -46,6 +48,7 @@ class HoSoController extends Controller {
         ]);
 
         $quy_trinh = QuyTrinh::find(request()->id_quy_trinh);
+        $thu_tuc = ThuTuc::find($quy_trinh->id_thu_tuc);
 
         $temp_object = $this->get_template_object($quy_trinh->template);
 
@@ -55,9 +58,11 @@ class HoSoController extends Controller {
 
         $ho_so = new HoSo();
 
+        $ho_so->id_thu_tuc = $thu_tuc->id;
+        $ho_so->id_linh_vuc = $thu_tuc->id_linh_vuc;
+        $ho_so->id_co_quan = $thu_tuc->id_co_quan;
         $ho_so->id_quy_trinh = $quy_trinh->id;
-        $ho_so->id_thu_tuc = $quy_trinh->id_thu_tuc;
-        $ho_so->id_quy_trinh = $quy_trinh->id;
+
         $ho_so->code = 'HS'.time().mt_rand(0, 9);
         $ho_so->thong_tin = json_encode($data);
         $ho_so->trang_thai = 0;
