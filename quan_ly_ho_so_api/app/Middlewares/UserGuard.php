@@ -9,6 +9,17 @@ use App\Models\Users;
 class UserGuard extends Middleware {
 
     public function check() {
+        $user = self::getUserNonMiddleware();
+
+        if($user) {
+            Auth::set($user);
+            return true;
+        }
+
+        return false;
+    }
+
+    public static function getUserNonMiddleware() {
         $token = request()->getBearerToken();
 
         $dec_token = Auth::getToken($token);
@@ -19,14 +30,12 @@ class UserGuard extends Middleware {
                 $user =Users::where(['token' => $token])->first();
 
                 if($user && !$user->checkBlock()) {
-                    Auth::set($user);
-                    return true;
+                    return $user;
                 }
             }
 
         }
-
-        return false;
+        return null;
     }
 
     public function redirect() {
