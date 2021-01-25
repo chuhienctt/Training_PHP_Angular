@@ -5,7 +5,15 @@
         "type": "text",
         "value": "",
         "required": true,
-        "size": 2
+        "class": "col-md-12"
+    },
+    {
+        "title": "Ngày sinh",
+        "name": "ngay_sinh",
+        "type": "date",
+        "value": "",
+        "required": true,
+        "class": "col-md-6"
     },
     {
         "title": "Số điện thoại",
@@ -13,15 +21,15 @@
         "type": "phone_number",
         "value": "",
         "required": true,
-        "size": 2
+        "class": "col-md-6"
     },
     {
-        "title": "Lý do",
-        "name": "ly_do",
-        "type": "text",
+        "title": "Email",
+        "name": "email",
+        "type": "email",
         "value": "",
         "required": true,
-        "size": 1
+        "class": "col-md-12"
     },
     {
         "title": "Đính kèm",
@@ -29,6 +37,6 @@
         "type": "file",
         "value": "",
         "required": true,
-        "size": 1
+        "class": "col-md-12"
     }
 ]
