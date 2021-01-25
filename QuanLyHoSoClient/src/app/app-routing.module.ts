@@ -8,6 +8,7 @@ import { RegisterComponent } from './main/register/register.component';
 import { IsloginGuard } from './guards/islogin.guard';
 import { ChangepassComponent } from './main/changepass/changepass.component';
 import {ListComponent} from "./main/list/list.component";
+import {DetailComponent} from "./main/detail/detail.component";
 
 const routes: Routes = [
   {
@@ -42,6 +43,10 @@ const routes: Routes = [
   {
     path: 'list',
     component: ListComponent
+  },
+  {
+    path: 'detail/:id',
+    component: DetailComponent
   }
 ];
 

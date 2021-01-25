@@ -36,7 +36,6 @@ export class ListComponent implements OnInit {
       id_linh_vuc: [''],
       muc_do: [''],
     })
-
     this.pageChange(this.page);
     this.getAllFeild();
     this.getAllOrgan();

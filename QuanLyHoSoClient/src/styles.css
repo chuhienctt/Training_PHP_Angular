@@ -129,3 +129,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; } */
 .mr-1 {
   margin-right: 1rem;
 }
+
+.w-100 {
+  width: 100%;
+}

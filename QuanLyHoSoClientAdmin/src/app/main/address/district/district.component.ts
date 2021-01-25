@@ -38,12 +38,6 @@ export class DistrictComponent extends ScriptService implements OnInit {
   }
 
   ngOnInit(): void {
-    let elem = document.getElementsByClassName('script');
-    if (elem.length != undefined) {
-      for (let i = elem.length - 1; 0 <= i; i--) {
-        elem[i].remove();
-      }
-    }
     this.loadScripts();
 
     this.loadData({first: this.first, rows: this.rows});

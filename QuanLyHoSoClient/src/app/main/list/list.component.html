@@ -120,7 +120,7 @@
                       <td>{{item.linh_vuc.ten_linh_vuc}}</td>
                       <td>
                         <button type="button" class="btn btn-primary mr-1">Nộp hồ sơ</button>
-                        <button type="button" class="btn btn-warning">Xem chi tiết</button>
+                        <a [routerLink]="['/detail', item.id]" class="btn btn-warning" >Xem chi tiết</a>
                       </td>
                     </tr>
                     <tr *ngIf="totalRecords == 0">

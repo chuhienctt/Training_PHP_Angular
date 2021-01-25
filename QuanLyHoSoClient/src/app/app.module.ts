@@ -25,6 +25,9 @@ import { ChangepassComponent } from './main/changepass/changepass.component';
 import { ListComponent } from './main/list/list.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ErrorInterceptor } from './libs/error.interceptor';
+import { DetailComponent } from './main/detail/detail.component';
+import {TabViewModule} from 'primeng/tabview';
+import {PanelModule} from 'primeng/panel';
 
 export function tokenGetter() {
   let user = JSON.parse(localStorage.getItem("jwt"));
@@ -43,7 +46,8 @@ export function tokenGetter() {
     ProfileComponent,
     RegisterComponent,
     ChangepassComponent,
-    ListComponent
+    ListComponent,
+    DetailComponent
   ],
   imports: [
     BrowserModule,
@@ -63,7 +67,9 @@ export function tokenGetter() {
       }
     }),
     FileUploadModule,
-    NgbModule
+    NgbModule,
+    TabViewModule,
+    PanelModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
