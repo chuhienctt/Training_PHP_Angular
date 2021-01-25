@@ -17,8 +17,10 @@ class HoSoController extends Controller {
     public function get_template() {
 
         $data = [];
-        if(request()->has("name")) {
-            $data = $this->get_template_object(request()->name);
+        if(request()->has("id_quy_trinh")) {
+            $quy_trinh = QuyTrinh::find(request()->id_quy_trinh);
+
+            $data = $this->get_template_object($quy_trinh->template);
 
             foreach ($data as $key => $value) {
                 if($value->type === 'select' && stripos($value->value, 'model:') !== false) {
