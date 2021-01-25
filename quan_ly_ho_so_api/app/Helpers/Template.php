@@ -6,9 +6,18 @@ use Core\Validator;
 use Core\File;
 
 class Template {
+
+    protected static $fields_ignore = [
+        'province_id',
+        'district_id',
+    ];
     
     public static function validate($templates, $data) {
         foreach ($templates as $key => $field) {
+            if(in_array($field->name, self::$fields_ignore)) {
+                continue;
+            }
+
             $value = $data[$field->name] ?? null;
 
             if($field->required && Validator::check('required', $value)) {
@@ -47,7 +56,7 @@ class Template {
 
                     if(gettype($value) === 'array') {
                         foreach ($value as $file) {
-                            if(!Validator::check('base64', $file)) {
+                            if(Validator::check('base64', $file)) {
                                 $check = true;
                             }
                         }
@@ -75,6 +84,10 @@ class Template {
     public static function get_data($templates, $data) {
         $r_data = [];
         foreach ($templates as $key => $field) {
+            if(in_array($field->name, self::$fields_ignore)) {
+                continue;
+            }
+
             $value = $data[$field->name] ?? NULL;
 
             switch ($field->type) {

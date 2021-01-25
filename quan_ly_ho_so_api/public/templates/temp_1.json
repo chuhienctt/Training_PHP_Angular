@@ -25,7 +25,7 @@
     },
     {
         "title": "Tỉnh/thành phố",
-        "name": "province",
+        "name": "province_id",
         "type": "select",
         "value": "model:App\\Models\\DiaChinh\\Province",
         "required": true,
@@ -33,7 +33,7 @@
     },
     {
         "title": "Quận/huyện/thị xã",
-        "name": "district",
+        "name": "district_id",
         "type": "select",
         "value": "model:App\\Models\\DiaChinh\\District",
         "required": true,
@@ -41,7 +41,7 @@
     },
     {
         "title": "Xã/phường/thị trấn",
-        "name": "ward",
+        "name": "ward_id",
         "type": "select",
         "value": "model:App\\Models\\DiaChinh\\Ward",
         "required": true,
