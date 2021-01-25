@@ -29,6 +29,16 @@ class DiaChinhController extends Controller {
         return response()->json($data);
     }
 
+    public static function getDiaChiString($ward_id) {
+        $id = request()->id ?? '00001';
+
+        $ward = Ward::find($id);
+        $district = District::find($ward->district_id);
+        $province = Province::find($district->province_id);
+
+        return $ward->name.', '.$district->name.', '.$province->name;
+    }
+
     public function getDiaChi() {
         $id = request()->id ?? '00001';
 

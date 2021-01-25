@@ -138,7 +138,7 @@ class AdminController extends Controller {
                 $file->generateFileName();
                 $file->save('/avatar/');
     
-                $user->avatar = '/avatar/'.$file->getFileName();
+                $user->avatar = $file->path;
             }
 
             if($user->save()) {

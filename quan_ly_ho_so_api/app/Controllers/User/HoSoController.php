@@ -15,6 +15,13 @@ class HoSoController extends Controller {
         $data = [];
         if(request()->has("name")) {
             $data = $this->get_template_object(request()->name);
+
+            foreach ($data as $key => $value) {
+                if($value->type === 'select' && stripos($value->value, 'model:') !== false) {
+                    $model = explode(':', $value->value)[1]::all();
+                    $value->value = $model;
+                }
+            }
         }
 
         return response()->json($data);
@@ -48,7 +55,9 @@ class HoSoController extends Controller {
 
         $ho_so = new HoSo();
 
-        $ho_so->id_quy_trinh = request()->id_quy_trinh;
+        $ho_so->id_quy_trinh = $quy_trinh->id;
+        $ho_so->id_thu_tuc = $quy_trinh->id_thu_tuc;
+        $ho_so->id_quy_trinh = $quy_trinh->id;
         $ho_so->code = 'HS'.time().mt_rand(0, 9);
         $ho_so->thong_tin = json_encode($data);
         $ho_so->trang_thai = 0;

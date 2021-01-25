@@ -4,69 +4,79 @@
         "name": "ho_ten",
         "type": "text",
         "value": "",
-        "required": true
+        "required": true,
+        "size": 2
     },
     {
         "title": "Ngày sinh",
         "name": "ngay_sinh",
         "type": "date",
         "value": "",
-        "required": true
+        "required": true,
+        "size": 2
     },
     {
         "title": "Địa chỉ",
         "name": "dia_chi",
         "type": "text",
         "value": "",
-        "required": true
+        "required": true,
+        "size": 1
     },
     {
         "title": "Tỉnh/thành phố",
         "name": "province",
         "type": "select",
         "value": "model:App\\Models\\DiaChinh\\Province",
-        "required": true
+        "required": true,
+        "size": 3
     },
     {
         "title": "Quận/huyện/thị xã",
         "name": "district",
         "type": "select",
         "value": "model:App\\Models\\DiaChinh\\District",
-        "required": true
+        "required": true,
+        "size": 3
     },
     {
         "title": "Xã/phường/thị trấn",
         "name": "ward",
         "type": "select",
         "value": "model:App\\Models\\DiaChinh\\Ward",
-        "required": true
+        "required": true,
+        "size": 3
     },
     {
         "title": "Email",
         "name": "email",
         "type": "email",
         "value": "",
-        "required": true
+        "required": true,
+        "size": 1
     },
     {
         "title": "Số điện thoại",
         "name": "so_dien_thoai",
         "type": "phone_number",
         "value": "",
-        "required": true
+        "required": true,
+        "size": 1
     },
     {
         "title": "Lý do",
         "name": "ly_do",
         "type": "longtext",
         "value": "",
-        "required": true
+        "required": true,
+        "size": 1
     },
     {
         "title": "Đính kèm",
         "name": "dinh_kem",
         "type": "file",
         "value": "",
-        "required": true
+        "required": true,
+        "size": 1
     }
 ]

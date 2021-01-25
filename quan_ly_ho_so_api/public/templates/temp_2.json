@@ -4,27 +4,31 @@
         "name": "ho_ten",
         "type": "text",
         "value": "",
-        "required": true
+        "required": true,
+        "size": 2
     },
     {
         "title": "Số điện thoại",
         "name": "so_dien_thoai",
         "type": "phone_number",
         "value": "",
-        "required": true
+        "required": true,
+        "size": 2
     },
     {
         "title": "Lý do",
         "name": "ly_do",
         "type": "text",
         "value": "",
-        "required": true
+        "required": true,
+        "size": 1
     },
     {
         "title": "Đính kèm",
         "name": "dinh_kem",
         "type": "file",
         "value": "",
-        "required": true
+        "required": true,
+        "size": 1
     }
 ]

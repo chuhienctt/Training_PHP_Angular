@@ -76,7 +76,7 @@ class LinhVucController extends Controller {
         $linh_vuc->ten_linh_vuc = request()->ten_linh_vuc;
         $linh_vuc->mo_ta = request()->mo_ta ?? null;
         $linh_vuc->icon = request()->icon;
-        $linh_vuc->hinh_anh = '/linh-vuc-images/'.$file->getFileName();
+        $linh_vuc->hinh_anh = $file->path;
 
         DB::beginTransaction();
         
@@ -151,7 +151,7 @@ class LinhVucController extends Controller {
             $file->generateFileName();
             $file->save('/linh-vuc-images/');
 
-            $linh_vuc->hinh_anh = '/linh-vuc-images/'.$file->getFileName();
+            $linh_vuc->hinh_anh = $file->path;
         }
 
         $linh_vuc->code = request()->code;
