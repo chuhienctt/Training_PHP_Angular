@@ -14,11 +14,11 @@
                 <section class="full-top">
                     <button id="toggle"><i class="fa fa-arrows-alt"></i></button>
                 </section>
-                <!-- <form class=" navbar-left-right">
+                <form class=" navbar-left-right">
               <input type="text" value="Search..." onfocus="this.value = '';"
                 onblur="if (this.value == '') {this.value = 'Search...';}">
               <input type="submit" value="" class="fa fa-search">
-            </form> -->
+            </form>
                 <div class="clearfix"> </div>
             </div>
 
@@ -147,17 +147,6 @@
                                     class="nav-label">Người
                                     dùng</span></a>
                         </li>
-                       
-                        <!-- <li>
-                  <a class=" hvr-bounce-to-right"><i class="fa fa-cog nav_icon"></i> <span
-                      class="nav-label">Settings</span><span class="fa arrow"></span></a>
-                  <ul class="nav nav-second-level">
-                    <li><a href="signin.html" class=" hvr-bounce-to-right"><i class="fa fa-sign-in nav_icon"></i>Signin</a>
-                    </li>
-                    <li><a href="signup.html" class=" hvr-bounce-to-right"><i class="fa fa-sign-in nav_icon"></i>Singup</a>
-                    </li>
-                  </ul>
-                </li> -->
                     </ul>
                 </div>
             </div>
@@ -239,15 +228,6 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <!-- <div class="form-group">
-                                    <label for="id">Id cơ quan:</label>
-                                    <input type="text" class="form-control" value="" name="id"
-                                        formControlName="id">
-                                    <div *ngIf="iSubmited && form.controls.ten_co_quan.errors">
-                                        <span class="text-danger" *ngIf="form.controls.ten_co_quan.errors.required">Id
-                                            cơ quan không được để trống.</span>
-                                    </div>
-                                </div> -->
                                 <div class="form-group">
                                     <label for="code">Mã Code:</label>
                                     <input type="text" class="form-control" value="" name="code" formControlName="code">
@@ -261,8 +241,8 @@
                                     <input type="text" class="form-control" value="" name="ten_co_quan"
                                         formControlName="ten_co_quan">
                                     <div *ngIf="iSubmited && form.controls.ten_co_quan.errors">
-                                        <span class="text-danger" *ngIf="form.controls.ten_co_quan.errors.required">Tên
-                                            cơ quan không được để trống.</span>
+                                        <span class="text-danger" *ngIf="form.controls.ten_co_quan.errors.required">Tên cơ quan không được để trống.</span>
+                                        <span class="error" *ngIf="form.controls.ten_co_quan.errors.maxlength">Tên cơ quan không được lớn hơn 255 ký tự.</span>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -270,8 +250,8 @@
                                     <input type="text" class="form-control" value="" name="dia_chi"
                                         formControlName="dia_chi">
                                     <div *ngIf="iSubmited && form.controls.dia_chi.errors">
-                                        <span class="text-danger" *ngIf="form.controls.dia_chi.errors.required">Địa chỉ
-                                            không được để trống.</span>
+                                        <span class="text-danger" *ngIf="form.controls.dia_chi.errors.required">Địa chỉ không được để trống.</span>
+                                        <span class="error" *ngIf="form.controls.dia_chi.errors.maxlength">Địa chỉ không được lớn hơn 255 ký tự.</span>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -279,28 +259,18 @@
                                     <input type="text" class="form-control" value="" name="email"
                                         formControlName="email">
                                     <div *ngIf="iSubmited && form.controls.email.errors">
-                                        <span class="text-danger" *ngIf="form.controls.email.errors.required">Email
-                                            không được để trống.</span>
+                                        <span class="text-danger" *ngIf="form.controls.email.errors.required">Chưa nhập email.</span>
+                                        <span class="text-danger" *ngIf="form.controls.email.errors.email">Email không hợp lệ.</span>
+                                        <span class="text-danger" *ngIf="form.controls.email.errors.maxlength">Email không được lớn hơn 100 ký tự.</span>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="so_dien_thoai">Số điện thoại:</label>
-                                    <input type="text" class="form-control" value="" name="so_dien_thoai"
+                                    <input type="number" class="form-control" value="" name="so_dien_thoai"
                                         formControlName="so_dien_thoai">
                                     <div *ngIf="iSubmited && form.controls.so_dien_thoai.errors">
-                                        <span class="text-danger"
-                                            *ngIf="form.controls.so_dien_thoai.errors.required">Tên lĩnh vực không được
-                                            để trống.</span>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="mo_ta">Mô tả:</label>
-                                    <input type="text" class="form-control" value="" name="mo_ta"
-                                        formControlName="mo_ta">
-                                    <div *ngIf="iSubmited && form.controls.mo_ta.errors">
-                                        <span class="text-danger" *ngIf="form.controls.mo_ta.errors.required">Tên lĩnh
-                                            vực không được
-                                            để trống.</span>
+                                        <span class="text-danger" *ngIf="form.controls.so_dien_thoai.errors.required">Chưa nhập số điện thoại.</span>
+                                        <span class="text-danger" *ngIf="form.controls.so_dien_thoai.errors.pattern">Số điện thoại không hợp lệ.</span>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -309,6 +279,9 @@
                                         <option *ngFor="let item of listLinhvuc" value="{{item.id}}">
                                             {{item.ten_linh_vuc}}</option>
                                     </select>
+                                    <div *ngIf="iSubmited && form.controls.linh_vuc.errors">
+                                        <span class="text-danger" *ngIf="form.controls.linh_vuc.errors.required">Chưa chọn lĩnh vực.</span>
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-md-4">
@@ -343,11 +316,11 @@
                                     <label for="hinh_anh">Hình ảnh:</label>
                                     <p-fileUpload [multiple]="false" #file accept="image/*" maxFileSize="1000000">
                                     </p-fileUpload>
-                                    <div *ngIf="iSubmited && form.controls.hinh_anh.errors">
+                                    <!-- <div *ngIf="iSubmited && form.controls.hinh_anh.errors">
                                         <span class="text-danger" *ngIf="form.controls.hinh_anh.errors.required">Hình
                                             ảnh
                                             không được để trống.</span>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -361,135 +334,134 @@
             </div>
 
             <!-- modal sửa cơ quan -->
-            <div bsModal #editAndADD2="bs-modal" class="modal fade" tabindex="-1" role="dialog"
-                aria-labelledby="dialog-sizes-name1">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <form [formGroup]="form" (ngSubmit)="SaveForm()">
-                            <p-toast></p-toast>
-                            <div class="modal-header">
-                                <h4 id="dialog-sizes-name1" class="modal-title pull-left" style="margin-top: -1%;">Sửa
-                                    cơ quan</h4>
-                                <button type="button" class="close pull-right" (click)="editAndADD2.hide()"
-                                    aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
+            <div bsModal #editAndADD1="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <form [formGroup]="form" (ngSubmit)="SaveForm()" *ngIf="entity">
+                        <p-toast></p-toast>
+                        <div class="modal-header">
+                            <h4 id="dialog-sizes-name1" class="modal-title pull-left" style="margin-top: -1%;">Thêm
+                                cơ quan</h4>
+                            <button type="button" class="close pull-right" (click)="editAndADD1.hide()"
+                                aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="code">Mã Code:</label>
+                                <input type="text" class="form-control" value="" name="code" formControlName="code">
+                                <div *ngIf="iSubmited && form.controls.code.errors">
+                                    <span class="text-danger" *ngIf="form.controls.code.errors.required">Mã Code
+                                        không được để trống.</span>
+                                </div>
                             </div>
-                            <div class="modal-body">
-                                <div class="form-group">
-                                    <label for="code">Mã Code:</label>
-                                    <input type="text" class="form-control" value="" name="code" formControlName="code">
-                                    <div *ngIf="iSubmited && form.controls.code.errors">
-                                        <span class="text-danger" *ngIf="form.controls.code.errors.required">Mã Code
-                                            không được để trống.</span>
+                            <div class="form-group">
+                                <label for="ten_co_quan">Tên cơ quan:</label>
+                                <input type="text" class="form-control" value="" name="ten_co_quan"
+                                    formControlName="ten_co_quan">
+                                <div *ngIf="iSubmited && form.controls.ten_co_quan.errors">
+                                    <span class="text-danger" *ngIf="form.controls.ten_co_quan.errors.required">Tên cơ quan không được để trống.</span>
+                                    <span class="error" *ngIf="form.controls.ten_co_quan.errors.maxlength">Tên cơ quan không được lớn hơn 255 ký tự.</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="dia_chi">Địa chỉ:</label>
+                                <input type="text" class="form-control" value="" name="dia_chi"
+                                    formControlName="dia_chi">
+                                <div *ngIf="iSubmited && form.controls.dia_chi.errors">
+                                    <span class="text-danger" *ngIf="form.controls.dia_chi.errors.required">Địa chỉ không được để trống.</span>
+                                    <span class="error" *ngIf="form.controls.dia_chi.errors.maxlength">Địa chỉ không được lớn hơn 255 ký tự.</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email:</label>
+                                <input type="text" class="form-control" value="" name="email"
+                                    formControlName="email">
+                                <div *ngIf="iSubmited && form.controls.email.errors">
+                                    <span class="text-danger" *ngIf="form.controls.email.errors.required">Chưa nhập email.</span>
+                                    <span class="text-danger" *ngIf="form.controls.email.errors.email">Email không hợp lệ.</span>
+                                    <span class="text-danger" *ngIf="form.controls.email.errors.maxlength">Email không được lớn hơn 100 ký tự.</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="so_dien_thoai">Số điện thoại:</label>
+                                <input type="number" class="form-control" value="" name="so_dien_thoai"
+                                    formControlName="so_dien_thoai">
+                                <div *ngIf="iSubmited && form.controls.so_dien_thoai.errors">
+                                    <span class="text-danger" *ngIf="form.controls.so_dien_thoai.errors.required">Chưa nhập số điện thoại.</span>
+                                    <span class="text-danger" *ngIf="form.controls.so_dien_thoai.errors.pattern">Số điện thoại không hợp lệ.</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 col-form-label">Chọn lĩnh vực</label>
+                                <select formControlName="linh_vuc" class="form-control" multiple>
+                                    <option *ngFor="let item of listLinhvuc" value="{{item.id}}">
+                                        {{item.ten_linh_vuc}}</option>
+                                </select>
+                                <div *ngIf="iSubmited && form.controls.linh_vuc.errors">
+                                    <span class="text-danger" *ngIf="form.controls.linh_vuc.errors.required">Chưa chọn lĩnh vực.</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-4">
+                                    <label class="pl-5px">Tỉnh</label>
+                                    <div class="field">
+                                        <select formControlName="city" (change)=" getProvince($event.target.value)"
+                                            class="form-control">
+                                            <option *ngFor="let item of listCity1" value="{{item.id}}">{{item.name}}
+                                            </option>
+                                        </select>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="ten_co_quan">Tên cơ quan:</label>
-                                    <input type="text" class="form-control" value="" name="ten_co_quan"
-                                        formControlName="ten_co_quan">
-                                    <div *ngIf="iSubmited && form.controls.ten_co_quan.errors">
-                                        <span class="text-danger" *ngIf="form.controls.ten_co_quan.errors.required">Tên
-                                            cơ quan không được để trống.</span>
+                                <!-- <p-dropdown formControlName="city" (onChange)="getDistrict($event.value)"
+                                            optionLabel="name" [style]="style" [options]="listCity"
+                                            placeholder="Chọn tỉnh, thành phố" [virtualScroll]="true"
+                                            [itemSize]="31" [filter]="false"></p-dropdown> -->
+                                <div class="col-md-4">
+                                    <label class="pl-5px">Huyện</label>
+                                    <div class="field">
+                                        <select formControlName="district"
+                                            (change)="getCommune($event.target.value)" class="form-control">
+                                            <option *ngFor="let item of listDistrict" value="{{item.id}}">
+                                                {{item.name}}</option>
+                                        </select>
+                                        <!-- <p-dropdown formControlName="district" (onChange)="getCommune($event.value)"
+                                            optionLabel="name" [style]="style" [options]="listDistrict"
+                                            placeholder="Chọn quận, huyện" [virtualScroll]="true" [itemSize]="31"
+                                            [filter]="false"></p-dropdown> -->
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="dia_chi">Địa chỉ:</label>
-                                    <input type="text" class="form-control" value="" name="dia_chi"
-                                        formControlName="dia_chi">
-                                    <div *ngIf="iSubmited && form.controls.dia_chi.errors">
-                                        <span class="text-danger" *ngIf="form.controls.dia_chi.errors.required">Địa chỉ
-                                            không được để trống.</span>
+                                <div class="col-md-4">
+                                    <label class="pl-5px">Xã</label>
+                                    <div class="field">
+                                        <select formControlName="commune" class="form-control">
+                                            <option *ngFor="let item of listCommune" value="{{item.id}}">
+                                                {{item.name}}</option>
+                                        </select>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="email">Email:</label>
-                                    <input type="text" class="form-control" value="" name="email"
-                                        formControlName="email">
-                                    <div *ngIf="iSubmited && form.controls.email.errors">
-                                        <span class="text-danger" *ngIf="form.controls.email.errors.required">Email
-                                            không được để trống.</span>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="so_dien_thoai">Số điện thoại:</label>
-                                    <input type="text" class="form-control" value="" name="so_dien_thoai"
-                                        formControlName="so_dien_thoai">
-                                    <div *ngIf="iSubmited && form.controls.so_dien_thoai.errors">
-                                        <span class="text-danger"
-                                            *ngIf="form.controls.so_dien_thoai.errors.required">Tên lĩnh vực không được
-                                            để trống.</span>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-4 col-form-label">Chọn lĩnh vực</label>
-                                    <select formControlName="linh_vuc" class="form-control" multiple>
-                                        <option *ngFor="let item of listLinhvuc" value="{{item.id}}">
-                                            {{item.ten_linh_vuc}}</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-md-4">
-                                        <label class="pl-5px">Tỉnh</label>
-                                        <div class="field">
-                                            <select formControlName="city" (change)="getDistrict($event.target.value)"
-                                                class="form-control">
-                                                <option *ngFor="let item of listCity" value="{{item.id}}">{{item.name}}
-                                                </option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <!-- <p-dropdown formControlName="city" (onChange)="getDistrict($event.value)"
-                                                optionLabel="name" [style]="style" [options]="listCity"
-                                                placeholder="Chọn tỉnh, thành phố" [virtualScroll]="true"
-                                                [itemSize]="31" [filter]="false"></p-dropdown> -->
-                                    <div class="col-md-4">
-                                        <label class="pl-5px">Huyện</label>
-                                        <div class="field">
-                                            <select formControlName="district"
-                                                (change)="getCommune($event.target.value)" class="form-control">
-                                                <option *ngFor="let item of listDistrict" value="{{item.id}}">
-                                                    {{item.name}}</option>
-                                            </select>
-                                            <!-- <p-dropdown formControlName="district" (onChange)="getCommune($event.value)"
-                                                optionLabel="name" [style]="style" [options]="listDistrict"
-                                                placeholder="Chọn quận, huyện" [virtualScroll]="true" [itemSize]="31"
-                                                [filter]="false"></p-dropdown> -->
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <label class="pl-5px">Xã</label>
-                                        <div class="field">
-                                            <select formControlName="commune" class="form-control">
-                                                <option *ngFor="let item of listCommune" value="{{item.id}}">
-                                                    {{item.name}}</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- <div class="form-group">
-                                    <label for="hinh_anh">Hình ảnh:</label>
-                                    <img style="margin-left:2px  ; width: 50px; height: 50px; vertical-align: middle" *ngIf="form.controls.hinh_anh" [src]="createImg(form.controls.hinh_anh)"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="hinh_anh">Hình ảnh:</label>
+                                <!-- <img [src]="createImg(co_quan.hinh_anh)"  alt="..." style="width: 100px; height: 100px;"> -->
+                                <p-fileUpload [multiple]="false" #file accept="image/*" maxFileSize="1000000">
+                                </p-fileUpload>
+                                <!-- <div *ngIf="iSubmited && form.controls.hinh_anh.errors">
+                                    <span class="text-danger" *ngIf="form.controls.hinh_anh.errors.required">Hình
+                                        ảnh
+                                        không được để trống.</span>
                                 </div> -->
-                                <div class="form-group">
-                                    <label for="hinh_anh">Hình ảnh:</label>
-                                    <p-fileUpload [multiple]="false" #file accept="image/*" maxFileSize="1000000">
-                                    </p-fileUpload>
-                                    <div *ngIf="iSubmited && form.controls.hinh_anh.errors">
-                                        <span class="text-danger" *ngIf="form.controls.hinh_anh.errors.required">Hình
-                                            ảnh
-                                            không được để trống.</span>
-                                    </div>
-                                </div>
                             </div>
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-default">Submit</button>
-                                <button type="button" class="btn btn-default" (click)="editAndADD2.hide()"
-                                    data-dismiss="modal">Close</button>
-                            </div>
-                        </form>
-                    </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-default">Submit</button>
+                            <button type="button" class="btn btn-default" (click)="editAndADD1.hide()"
+                                data-dismiss="modal">Close</button>
+                        </div>
+                    </form>
                 </div>
+            </div>
             </div>
             <div class="copy">
                 <p> &copy; 2020 Minimal. All Rights Reserved | Design by

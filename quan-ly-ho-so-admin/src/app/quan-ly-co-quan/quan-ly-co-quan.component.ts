@@ -6,7 +6,7 @@ import { ScriptService } from '../lib/script.service';
 import { FileUpload } from 'primeng/fileupload';
 import { environment } from '../../environments/environment';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+// import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { MessageService } from 'primeng/api';
 import { AddressService} from '../_services/adress.service';
 //import { LinhvucService } from '../_services/linhvuc.service';
@@ -21,7 +21,7 @@ import { Router } from '@angular/router';
   providers: [MessageService],
 })
 export class QuanLyCoQuanComponent implements OnInit {
-  public Editor = ClassicEditor;
+  // public Editor = ClassicEditor;
   constructor(
     private router: Router,
     private coquan: QuanLyCoQuanService,
@@ -39,10 +39,7 @@ export class QuanLyCoQuanComponent implements OnInit {
   @ViewChild('editAndADD1', { static: false }) editAndADD1: ModalDirective;
   @ViewChild('editAndADD2', { static: false }) editAndADD2: ModalDirective;
   public entity: any;
-  public entity1: any;
-  public entity2: any;
   public items: any[];
-  public items1: any[]; 
   public form: FormGroup;
   public id: bigint;
   public checkedid: any;
@@ -55,42 +52,26 @@ export class QuanLyCoQuanComponent implements OnInit {
   first = 0;
   rows = 10;
   totalRecords: number;
+  //co_quan: any;
 
   ngOnInit(): void {
     
     this.loadData({ first: this.first, rows: this.rows });
 
     this.form = this.formBuilder.group({
-      id: ['', [Validators.required]],
-      code: ['', [Validators.required]],
-      ten_co_quan: ['', [Validators.required]],
-      dia_chi: ['', [Validators.required]],
-      email: [
-        '',
-        [
-          Validators.required,
-          Validators.email,
-          Validators.minLength(8),
-          Validators.maxLength(100),
-        ],
-      ],
-      so_dien_thoai: ['', [Validators.required]],
-      hinh_anh: ['', [Validators.required]],
+      id: [''],
+      ten_co_quan: ['', [Validators.required, Validators.maxLength(255)]],
+      code: ['',[Validators.required, Validators.maxLength(255)]],
+      dia_chi: ['', [Validators.maxLength(255)]],
+      email: ['', [Validators.maxLength(100), Validators.required, Validators.email]],
+      so_dien_thoai: ['', [Validators.required, Validators.pattern('^(0)[0-9]{9}$')]],
       linh_vuc: ['', [Validators.required]],
       city: ['', [Validators.required]],
-      district: ['', [Validators.required]],
-      commune: ['', [Validators.required]],
-    });
+      district: [{value: '', disabled: true}, [Validators.required]],
+      commune: [{value: '', disabled: true}, [Validators.required]]
+    })
 
-    this.adressService.getProvince().subscribe((res: any) => {
-      this.listCity1 = res;
-    });
-
-    // this.linhvuc.getList().subscribe((res: any) => {
-    //   this.listLinhvuc = res;
-    // });
-
-    this.linhvuc.getList().subscribe((res: any) => {
+     this.linhvuc.getList().subscribe((res: any) => {
       this.listLinhvuc = res.filter(e => {return e.deleted_at == null});
     })
   }
@@ -103,7 +84,7 @@ export class QuanLyCoQuanComponent implements OnInit {
 
   getProvince() {
     // console.log(val);
-    this.listCity = [];
+    this.listCity1 = [];
     this.listDistrict = [];
     this.listCommune = [];
     this.adressService.getProvince().subscribe((res: any) => {
@@ -195,7 +176,7 @@ export class QuanLyCoQuanComponent implements OnInit {
       
       // this.entity = res;
     });
-    this.editAndADD2.show();
+    this.editAndADD1.show();
   }
 
 
@@ -231,10 +212,8 @@ export class QuanLyCoQuanComponent implements OnInit {
         .subscribe((data: any) => {
           if (data != null) {
             organ.hinh_anh = data;
-            console.log(organ);
-            
+            //console.log(organ);
             this.coquan.postItme(organ).subscribe((res) => {
-              //console.log('ok');
                   if (res) {
                     alert('Đã thêm bản ghi lĩnh vực');
                     this.coquan.getData(this.first, this.rows)
@@ -258,7 +237,8 @@ export class QuanLyCoQuanComponent implements OnInit {
               );
           }
         });
-    } else {
+    } 
+    else {
       this.fileService
         .getEncodeFromImage(this.file.files[0])
         .subscribe((data: any) => {
@@ -266,12 +246,12 @@ export class QuanLyCoQuanComponent implements OnInit {
             organ.hinh_anh = data;
           }
           if (confirm('Bạn muốn sửa bản ghi cơ quan ?')) {
-            console.log(1, organ);
+            //console.log(1, organ);
             
             this.coquan.editItem(this.form.value.id, organ).subscribe(
               (res) => { 
                 this.coquan.getData(this.first, this.rows)
-                this.editAndADD2.hide();
+                this.editAndADD1.hide();
                 this.messageService.add({
                   severity: 'success',
                   summary: 'Thành công!',
@@ -321,19 +301,3 @@ export class QuanLyCoQuanComponent implements OnInit {
     }
   }
 }
-
-// import { Component, OnInit } from '@angular/core';
-
-// @Component({
-//   selector: 'app-quan-ly-co-quan',
-//   templateUrl: './quan-ly-co-quan.component.html',
-//   styleUrls: ['./quan-ly-co-quan.component.css']
-// })
-// export class QuanLyCoQuanComponent implements OnInit {
-
-//   constructor() { }
-
-//   ngOnInit(): void {
-//   }
-
-// }
