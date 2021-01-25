@@ -10,6 +10,16 @@ use App\Models\LinhVuc;
 
 class ThuTucController extends Controller {
 
+    public function get_list_quy_trinh() {
+        
+        if(request()->has('id')) {
+            $data = ThuTuc::find(request()->id);
+            return response()->json($data->quy_trinh);
+        }
+        
+        return response()->json([]);
+    }
+
     public function get() {
         
         if(request()->has('id')) {

@@ -48,6 +48,7 @@ Route::group([
 ], function () {
 
     Route::get('/get', 'User\ThuTucController@get');
+    Route::get('/get-quy-trinh', 'User\ThuTucController@get_list_quy_trinh');
     Route::get('/pagination', 'User\ThuTucController@pagination');
 
 });
