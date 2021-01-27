@@ -51,7 +51,7 @@
         "title": "Quận/huyện/thị xã",
         "name": "district_id",
         "type": "select",
-        "value": "model:App\\Models\\DiaChinh\\District",
+        "value": "",
         "required": true,
         "class": "col-md-4"
     },
@@ -59,7 +59,7 @@
         "title": "Xã/phường/thị trấn",
         "name": "ward_id",
         "type": "select",
-        "value": "model:App\\Models\\DiaChinh\\Ward",
+        "value": "",
         "required": true,
         "class": "col-md-4"
     },

@@ -85,6 +85,8 @@ class HoSoController extends Controller {
         $ho_so->ngay_xu_ly = $quy_trinh->thoi_gian_xu_ly;
 
         if($ho_so->save()) {
+            $ho_so->thu_tuc = $thu_tuc;
+            $ho_so->thoi_gian_du_kien = date('Y-m-d H:i:s', time() + $ho_so->ngay_xu_ly);
             return response()->success(1, 'Thêm hồ sơ thành công!', $ho_so);
         }
         return response()->error(2, 'Thêm hồ sơ thất bại!');
