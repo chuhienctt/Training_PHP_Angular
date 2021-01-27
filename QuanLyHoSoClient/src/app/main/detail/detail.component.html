@@ -1,0 +1,88 @@
+
+<!-- Start breadcrumbs area -->
+<div class="page-area">
+  <div class="breadcumb-overlay"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="breadcrumb text-center">
+          <div class="section-headline white-headline text-center">
+            <h3>Terms & Conditions</h3>
+          </div>
+          <ul>
+            <li class="home-bread">Home</li>
+            <li>Terms & Conditions </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End breadcrumbs area -->
+<!-- Start terms area -->
+<div class="terms-area bg-color area-padding-2">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="section-headline text-center">
+          <h3>Chi tiết thủ tục</h3>
+          <span class="muc-do" *ngIf="procedure">Mức độ {{procedure.muc_do}}</span>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12" *ngIf="procedure">
+          <p-panel header="Mã thủ tục: {{ procedure.code}}">
+            <div class="card">
+<!--              <h4>Default</h4>-->
+              <p-tabView>
+                <p-tabPanel header="Thông tin chung">
+                  <table class="w-100 table">
+                    <tbody *ngIf="procedure">
+                    <tr>
+                      <td style="width: 200px">Cơ quan thực hiện</td>
+                      <td>{{procedure.co_quan.ten_co_quan}}</td>
+                    </tr>
+                    <tr>
+                      <td style="width: 200px">Địa chỉ cơ quan</td>
+                      <td>{{procedure.co_quan.dia_chi}}</td>
+                    </tr>
+                    <tr>
+                      <td style="width: 200px">Lĩnh vực</td>
+                      <td>{{procedure.linh_vuc.ten_linh_vuc}}</td>
+                    </tr>
+                    <tr>
+                      <td style="width: 200px">Cách thực hiện</td>
+                      <td>{{procedure.mo_ta}}</td>
+                    </tr>
+                    <tr>
+                      <td style="width: 200px">Thời hạn</td>
+                      <td><span *ngFor="let item of procedure.quy_trinh"> {{item.ten_quy_trinh}}: {{getDays(item.thoi_gian_xu_ly)}} ngày {{item == procedure.quy_trinh[procedure.quy_trinh.length - 1] ? '' : ','}}</span></td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </p-tabPanel>
+                <p-tabPanel header="Trình tự thực hiện">
+                      <div class="row">
+                        <!-- Start Column Start -->
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                          <div class="company-terms">
+                            <div class="single-terms" *ngFor="let item of procedure.quy_trinh; let i = index">
+                              <h4><span class="number">{{i + 1}}.</span> <span class="condition-text">{{item.ten_quy_trinh}}</span></h4>
+                              <ul>
+                                <li *ngFor="let step of item.buoc; let index = index"><label class="font-700">Bước {{index + 1}}.</label> {{step.ten_buoc}}: <span innerHTML="{{step.ghi_chu}}"></span></li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                </p-tabPanel>
+              </p-tabView>
+            </div>
+            <a class="btn btn-primary" [routerLink]="['/send-profile', procedure.id]">Nộp hồ sơ</a>
+          </p-panel>
+        </div>
+    </div>
+  </div>
+</div>
+<!-- End terms area -->
