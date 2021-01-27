@@ -87,6 +87,20 @@ class HoSoController extends Controller {
         if($ho_so->save()) {
             $ho_so->thu_tuc = $thu_tuc;
             $ho_so->thoi_gian_du_kien = date('Y-m-d H:i:s', time() + $ho_so->ngay_xu_ly);
+
+            foreach ($data as $key => $value) {
+                if($value->name == 'dia_chi') {
+                    $dia_chi = $value;
+                }
+                if($dia_chi && $value->name == 'ward_id') {
+                    $dia_chi->value = $dia_chi->value.", ".DiaChinhController::getDiaChiString($value->value);
+                }
+                if($value->hide) {
+                    unset($value);
+                }
+            }
+            $ho_so->thong_tin = $data;
+
             return response()->success(1, 'Thêm hồ sơ thành công!', $ho_so);
         }
         return response()->error(2, 'Thêm hồ sơ thất bại!');

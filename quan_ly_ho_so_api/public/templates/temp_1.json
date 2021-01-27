@@ -5,6 +5,7 @@
         "type": "text",
         "value": "",
         "required": true,
+        "hide": false,
         "class": "col-md-12"
     },
     {
@@ -13,6 +14,7 @@
         "type": "date",
         "value": "",
         "required": true,
+        "hide": false,
         "class": "col-md-6"
     },
     {
@@ -21,6 +23,7 @@
         "type": "phone_number",
         "value": "",
         "required": true,
+        "hide": false,
         "class": "col-md-6"
     },
     {
@@ -29,6 +32,7 @@
         "type": "email",
         "value": "",
         "required": true,
+        "hide": false,
         "class": "col-md-12"
     },
     {
@@ -37,6 +41,7 @@
         "type": "text",
         "value": "",
         "required": true,
+        "hide": false,
         "class": "col-md-12"
     },
     {
@@ -45,6 +50,7 @@
         "type": "select",
         "value": "model:App\\Models\\DiaChinh\\Province",
         "required": true,
+        "hide": true,
         "class": "col-md-4"
     },
     {
@@ -53,6 +59,7 @@
         "type": "select",
         "value": "",
         "required": true,
+        "hide": true,
         "class": "col-md-4"
     },
     {
@@ -61,6 +68,7 @@
         "type": "select",
         "value": "",
         "required": true,
+        "hide": false,
         "class": "col-md-4"
     },
     {
@@ -69,6 +77,7 @@
         "type": "longtext",
         "value": "",
         "required": true,
+        "hide": true,
         "class": "col-md-12"
     },
     {
@@ -77,6 +86,7 @@
         "type": "file",
         "value": "",
         "required": true,
+        "hide": true,
         "class": "col-md-12"
     }
 ]
