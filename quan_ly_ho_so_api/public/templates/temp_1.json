@@ -68,7 +68,7 @@
         "type": "select",
         "value": "",
         "required": true,
-        "hide": false,
+        "hide": true,
         "class": "col-md-4"
     },
     {
@@ -77,7 +77,7 @@
         "type": "longtext",
         "value": "",
         "required": true,
-        "hide": true,
+        "hide": false,
         "class": "col-md-12"
     },
     {

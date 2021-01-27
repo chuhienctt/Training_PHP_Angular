@@ -88,6 +88,7 @@ class HoSoController extends Controller {
             $ho_so->thu_tuc = $thu_tuc;
             $ho_so->thoi_gian_du_kien = date('Y-m-d H:i:s', time() + $ho_so->ngay_xu_ly);
 
+            $dia_chi = null;
             foreach ($data as $key => $value) {
                 if($value->name == 'dia_chi') {
                     $dia_chi = $value;
@@ -96,7 +97,7 @@ class HoSoController extends Controller {
                     $dia_chi->value = $dia_chi->value.", ".DiaChinhController::getDiaChiString($value->value);
                 }
                 if($value->hide) {
-                    unset($value);
+                    unset($data[$key]);
                 }
             }
             $ho_so->thong_tin = $data;
