@@ -82,7 +82,6 @@ class Template {
     }
 
     public static function get_data($templates, $data) {
-        $r_data = [];
         foreach ($templates as $key => $field) {
             if(in_array($field->name, self::$fields_ignore)) {
                 continue;
@@ -110,9 +109,9 @@ class Template {
                     break;
             }
 
-            $r_data[$field->name] = $value;
+            $field->value = $value;
         }
 
-        return $r_data;
+        return $templates;
     }
 }
