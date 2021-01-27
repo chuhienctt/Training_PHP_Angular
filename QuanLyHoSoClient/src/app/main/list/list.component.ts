@@ -20,8 +20,6 @@ export class ListComponent implements OnInit {
   form:FormGroup;
   arr = [];
   id = "";
-  muc_do = "";
-  id_co_quan = "";
 
   constructor(
     private listService:ListService,

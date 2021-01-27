@@ -28,6 +28,8 @@ import { ErrorInterceptor } from './libs/error.interceptor';
 import { DetailComponent } from './main/detail/detail.component';
 import {TabViewModule} from 'primeng/tabview';
 import {PanelModule} from 'primeng/panel';
+import { StepsModule } from 'primeng/steps';
+import {SendProfileComponent} from "./main/send-profile/send-profile.component";
 
 export function tokenGetter() {
   let user = JSON.parse(localStorage.getItem("jwt"));
@@ -47,7 +49,8 @@ export function tokenGetter() {
     RegisterComponent,
     ChangepassComponent,
     ListComponent,
-    DetailComponent
+    DetailComponent,
+    SendProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -69,7 +72,8 @@ export function tokenGetter() {
     FileUploadModule,
     NgbModule,
     TabViewModule,
-    PanelModule
+    PanelModule,
+    StepsModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }

@@ -9,6 +9,7 @@ import { IsloginGuard } from './guards/islogin.guard';
 import { ChangepassComponent } from './main/changepass/changepass.component';
 import {ListComponent} from "./main/list/list.component";
 import {DetailComponent} from "./main/detail/detail.component";
+import {SendProfileComponent} from "./main/send-profile/send-profile.component";
 
 const routes: Routes = [
   {
@@ -47,6 +48,10 @@ const routes: Routes = [
   {
     path: 'detail/:id',
     component: DetailComponent
+  },
+  {
+    path: 'send-profile/:id',
+    component: SendProfileComponent
   }
 ];
 

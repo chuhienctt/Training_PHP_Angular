@@ -28,25 +28,26 @@ export class FileService {
         }
     }
 
-    public getEncodeFromImages(fileUpload: File[]) {
-        return new Promise((resolve, reject) => {
-            if (fileUpload) {
-                let pms = [];
-                for (let i = 0; i < fileUpload.length; i++) {
-                    pms.push(this.readFile(fileUpload[i]));
-                }
+  public getEncodeFromImages(fileUpload: File[]) {
+    return new Promise((resolve, reject) => {
+      if (fileUpload) {
+        let pms = [];
+        for (let i = 0; i < fileUpload.length; i++) {
+          pms.push(this.readFile(fileUpload[i]));
+        }
 
-                Promise.all(pms)
-                    .then(data => {
-                        resolve(data);
-                    });
-            } else {
-                resolve([]);
-            }
-        });
-    }
+        Promise.all(pms)
+          .then(data => {
+            resolve(data);
+          });
+      } else {
+        resolve([]);
+      }
+    });
+  }
 
-    public readFile(file: File) {
+
+  public readFile(file: File) {
         return new Promise((resolve, reject) => {
             let reader: FileReader = new FileReader();
             reader.readAsDataURL(file);
@@ -55,7 +56,7 @@ export class FileService {
                 let result = null;
                 let tmp: any = reader.result;
                 let baseCode = tmp.substring(tmp.indexOf('base64,', 0) + 7);
-                result = file.name + ';' + file.size + ';' + baseCode;
+                result = 'base64:' + file.name + ';' + file.size + ';' + baseCode;
                 resolve(result);
             };
 
