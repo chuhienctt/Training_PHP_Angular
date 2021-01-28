@@ -11,6 +11,7 @@ use App\Models\HoSo;
 use App\Models\QuyTrinh;
 use App\Models\ThuTuc;
 use App\Models\LinhVuc;
+use App\Helpers\Pagination;
 
 class HoSoController extends Controller {
 
@@ -43,11 +44,27 @@ class HoSoController extends Controller {
     }
 
     public function get_ho_so() {
+        $page = request()->page ?? 1;
+        $pageSize = request()->pageSize ?? 10;
+
         $user = Auth::get();
 
-        $ho_so = HoSo::where('id_user', $user->id)->get();
+        $ho_so = HoSo::where('id_user', $user->id);
+        
+        if(request()->has("trang_thai")) {
+            $ho_so = $ho_so->where('trang_thai', request()->trang_thai);
+        }
 
-        return response()->json($ho_so);
+        $paging = Pagination::create($ho_so, $page, $pageSize);
+
+        foreach ($paging['data'] as $item) {
+            $item->thong_tin = $this->convertDataTemplate($item, false);
+        }
+
+        return response()->json([
+            'total' => $paging['total_records'],
+            'data' => $paging['data'],
+        ]);
     }
 
     public function create() {
@@ -85,26 +102,40 @@ class HoSoController extends Controller {
         $ho_so->ngay_xu_ly = $quy_trinh->thoi_gian_xu_ly;
 
         if($ho_so->save()) {
-            $ho_so->thu_tuc = $thu_tuc;
-            $ho_so->thoi_gian_du_kien = date('Y-m-d H:i:s', time() + $ho_so->ngay_xu_ly);
-
-            $dia_chi = null;
-            foreach ($data as $key => $value) {
-                if($value->name == 'dia_chi') {
-                    $dia_chi = $value;
-                }
-                if($dia_chi && $value->name == 'ward_id') {
-                    $dia_chi->value = $dia_chi->value.", ".DiaChinhController::getDiaChiString($value->value);
-                }
-                if($value->hide) {
-                    unset($data[$key]);
-                }
-            }
-            $ho_so->thong_tin = $data;
+            $ho_so->thong_tin = $this->convertDataTemplate($ho_so);
 
             return response()->success(1, 'Thêm hồ sơ thành công!', $ho_so);
         }
         return response()->error(2, 'Thêm hồ sơ thất bại!');
+    }
+
+    public function convertDataTemplate($ho_so, $hide_attr = true) {
+        
+        $ho_so->thu_tuc = ThuTuc::find($ho_so->id_thu_tuc);
+        $ho_so->thoi_gian_du_kien = date('Y-m-d H:i:s', time() + $ho_so->ngay_xu_ly);
+
+        $data = json_decode($ho_so->thong_tin);
+        $dia_chi = null;
+        $r_data = [];
+        foreach ($data as $key => $value) {
+            if($value->name == 'dia_chi') {
+                $dia_chi = $value;
+            }
+            
+            if($dia_chi && $value->name == 'ward_id') {
+                $dia_chi->value = $dia_chi->value.", ".DiaChinhController::getDiaChiString($value->value);
+            }
+
+            if($value->type === 'select' && stripos($value->value, 'model:') !== false) {
+                $model = explode(':', $value->value)[1]::all();
+                $value->value = $model;
+            }
+
+            if(!$hide_attr || !$value->hide) {
+                $r_data[] = $value;
+            }
+        }
+        return $r_data;
     }
 
     public function update() {
