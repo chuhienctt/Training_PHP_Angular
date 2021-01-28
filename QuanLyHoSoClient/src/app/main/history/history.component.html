@@ -1,0 +1,120 @@
+
+<!-- Start breadcrumbs area -->
+<div class="page-area">
+  <div class="breadcumb-overlay"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="breadcrumb text-center">
+          <div class="section-headline white-headline text-center">
+            <h3>Lịch sử</h3>
+          </div>
+          <ul>
+            <li class="home-bread">Trang chủ</li>
+            <li>Lịch sử nộp hồ sơ</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End breadcrumbs area -->
+<div class="dsahboard-area bg-color area-padding">
+  <div class="container">
+    <div class="row">
+      <app-menu></app-menu>
+      <div class="col-md-9 col-sm-9 col-xs-12">
+        <div class="dashboard-content">
+          <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+              <div class="dashboard-head">
+                <div class="row">
+                  <div class="col-md-3 col-sm-3 col-xs-12">
+                    <div class="single-dash-head cursor-pointer" [ngClass]="status == 0 ? 'active' : ''" (click)="status = 0; pageChange(page)">
+                      <div class="dashboard-profile">
+                        <div class="profile-content">
+<!--                          <img src="img/about/profile.png" alt="">-->
+                          <span class="pro-name">Chờ xác nhận</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-3 col-sm-3 col-xs-12">
+                    <div class="single-dash-head cursor-pointer" [ngClass]="status == 1 ? 'active' : ''" (click)="status = 1; pageChange(page)">
+                      <div class="dashboard-amount">
+                        <div class="amount-content">
+<!--                          <i class="flaticon-028-money"></i>-->
+                          <span class="pro-name">Đang xử lý</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-3 col-sm-3 col-xs-12">
+                    <div class="single-dash-head cursor-pointer" [ngClass]="status == 2 ? 'active' : ''" (click)="status = 2; pageChange(page)">
+                      <div class="dashboard-amount">
+                        <div class="amount-content">
+<!--                          <i class="ti-pencil-alt"></i>-->
+<!--                          <i class="flaticon-043-bank-2"></i>-->
+                          <span class="pro-name">Hoàn thành</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-3 col-sm-3 col-xs-12">
+                    <div class="single-dash-head cursor-pointer" [ngClass]="status == 3 ? 'active' : ''" (click)="status = 3; pageChange(page)">
+                      <div class="dashboard-amount">
+                        <div class="amount-content">
+<!--                          <i class="ti-pencil-alt"></i>-->
+<!--                          <i class="flaticon-050-credit-card-2"></i>-->
+                          <span class="pro-name">Bị hủy</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12 col-sm-12 col-xs-12">
+              <div class="form-inner table-inner" style="padding: 0">
+                <table>
+                  <tbody>
+                  <tr>
+                    <th>STT</th>
+                    <th>Mã hồ sơ</th>
+                    <th>Tên thủ tục</th>
+                    <th>Ngày nộp</th>
+                    <th>Thao tác</th>
+                  </tr>
+                  <tr *ngFor="let item of listProcedure; let i = index">
+                    <td>{{i + 1}}</td>
+                    <td>{{item.code}}</td>
+                    <td>{{item.thu_tuc.ten_thu_tuc}}</td>
+                    <td>
+                      <div>{{item.created_at | date: 'd-M-y'}}</div>
+                    </td>
+                    <td>
+                      <a [routerLink]="['/detail', item.id]" class="btn btn-warning" >Xem chi tiết</a>
+                    </td>
+                  </tr>
+                  <tr *ngIf="totalRecords == 0">
+                    <td colspan="5">Không có hồ sơ.</td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="col-md-12 col-sm-12 col-xs-12">
+              <div class="blog-pagination">
+                <ngb-pagination
+                  [(page)]="page"
+                  [pageSize]="pageSize"
+                  [collectionSize]="totalRecords"></ngb-pagination>
+              </div>
+            </div>
+            <!-- End single blog -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

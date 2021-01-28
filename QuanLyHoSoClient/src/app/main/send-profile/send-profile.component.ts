@@ -15,7 +15,7 @@ import {MessageService} from "primeng/api";
 })
 export class SendProfileComponent implements OnInit {
   pipe = new DatePipe("en-US");
-  activeIndex = 3;
+  activeIndex = 1;
   items: any;
   form: FormGroup;
   listProcedure: any;
@@ -64,15 +64,14 @@ export class SendProfileComponent implements OnInit {
     ];
 
     this.getProcedure(this.route.snapshot.params['id']);
-
-    this.form = this.formBuilder.group({
-      id_quy_trinh: ['', Validators.required]
-    })
   }
 
   getProcedure(id) {
     this.sendProfileService.getProcedure(id).subscribe((res: any) => {
       this.listProcedure = res;
+      if (res.length == 1) {
+        this.getTemplate(res[0].id, 2);
+      }
     })
   }
 
@@ -84,9 +83,11 @@ export class SendProfileComponent implements OnInit {
     this.activeIndex--;
   }
 
-  getTemplate(id) {
+  getTemplate(id, index= 1) {
     this.id_quy_trinh = id;
     this.sendProfileService.getTemplate(id).subscribe((res: any) => {
+      this.activeIndex = index;
+      this.template = res;
       let f: any = {};
       res.forEach(input => {
         let validate = [];
@@ -114,7 +115,6 @@ export class SendProfileComponent implements OnInit {
         }
         f[input.name] = new FormControl('', validate);
       })
-      this.template = res;
       this.form = new FormGroup(f);
     })
   }
@@ -136,8 +136,8 @@ export class SendProfileComponent implements OnInit {
       this.form.value.ngay_sinh = this.pipe.transform(this.form.value.ngay_sinh, "yyyy-MM-dd");
       this.form.value.id_quy_trinh = this.id_quy_trinh;
       this.sendProfileService.sendProfile(this.form.value).subscribe((res:any) => {
-        this.profile = res;
-        this.profileDetail = JSON.parse(res.thong_tin);
+        this.profile = res.data;
+        this.profileDetail = res.data.thong_tin;
         this.submitted = false;
         this.activeIndex = 3;
         this.messageService.add({ severity: 'success', summary: 'Thành công!', detail: res.message });

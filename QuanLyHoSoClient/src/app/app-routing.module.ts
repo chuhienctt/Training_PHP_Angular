@@ -1,15 +1,16 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {Routes, RouterModule} from '@angular/router';
 import {HomeComponent} from './main/home/home.component';
 import {LoginComponent} from './main/login/login.component';
 import {AuthGuard} from "./guards/auth.guard";
 import {ProfileComponent} from "./main/profile/profile.component";
-import { RegisterComponent } from './main/register/register.component';
-import { IsloginGuard } from './guards/islogin.guard';
-import { ChangepassComponent } from './main/changepass/changepass.component';
+import {RegisterComponent} from './main/register/register.component';
+import {IsloginGuard} from './guards/islogin.guard';
+import {ChangepassComponent} from './main/changepass/changepass.component';
 import {ListComponent} from "./main/list/list.component";
 import {DetailComponent} from "./main/detail/detail.component";
 import {SendProfileComponent} from "./main/send-profile/send-profile.component";
+import {HistoryComponent} from "./main/history/history.component";
 
 const routes: Routes = [
   {
@@ -52,6 +53,11 @@ const routes: Routes = [
   {
     path: 'send-profile/:id',
     component: SendProfileComponent
+  },
+  {
+    path: 'history',
+    component: HistoryComponent,
+    canActivate: [AuthGuard]
   }
 ];
 
@@ -60,4 +66,5 @@ const routes: Routes = [
   exports: [RouterModule],
   providers: [AuthGuard, IsloginGuard]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}

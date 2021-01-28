@@ -2826,7 +2826,8 @@ span.email-notes{
     background: #1B2654;
 }
 .single-dash-head{
-    background: #1B2654;
+    background: #1B2635;
+    color: #6666;
     margin-bottom: 30px;
     padding: 30px;
     text-align: center;

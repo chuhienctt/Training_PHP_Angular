@@ -1,0 +1,89 @@
+
+<!-- Start breadcrumbs area -->
+<div class="page-area">
+  <div class="breadcumb-overlay"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="breadcrumb text-center">
+          <div class="section-headline white-headline text-center">
+            <h3>Lịch sử</h3>
+          </div>
+          <ul>
+            <li class="home-bread">Trang chủ</li>
+            <li>Lịch sử nộp hồ sơ</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End breadcrumbs area -->
+<div class="dsahboard-area bg-color area-padding">
+  <div class="container">
+    <div class="row">
+      <app-menu></app-menu>
+      <div class="col-md-9 col-sm-9 col-xs-12">
+        <div class="dashboard-content">
+          <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+              <div class="send-money-form mt-3">
+                <div class="form-text">
+                  <h4 class="form-top">Thông tin người nộp hồ sơ</h4>
+                  <div class="form-inner" style="padding: 30px 50px 90px 50px">
+                    <form [formGroup]="form" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
+                      <div class="row">
+                        <div *ngFor="let item of template" class="{{item.class}}">
+                          <label class="w-100">{{item.title}}</label>
+                          <ng-container [ngSwitch]="item.type">
+                            <input *ngSwitchCase="'text'" type="text" [formControlName]="item.name" class="form-control"
+                                   placeholder="{{item.title}}">
+                            <input *ngSwitchCase="'email'" type="email" [formControlName]="item.name" class="form-control"
+                                   placeholder="{{item.title}}">
+                            <input *ngSwitchCase="'phone_number'" type="text" [formControlName]="item.name"
+                                   class="form-control" placeholder="{{item.title}}">
+                            <input *ngSwitchCase="'file'" (change)="readFileUpload($event.target.files)" type="file"
+                                   style="padding: calc(55px/3)" [formControlName]="item.name" class="form-control"
+                                   placeholder="{{item.title}}" multiple>
+                            <p-calendar *ngSwitchCase="'date'" [formControlName]="item.name"
+                                        [style]="{'width': '100%', 'height': '55px', 'border': '1px solid white', 'border-radius': '4px'}"
+                                        [inputStyle]="{'background-color': '#1B2654', 'font-size': '14px'}"
+                                        placeholder="Ngày sinh" dateFormat="dd/mm/yy">
+                            </p-calendar>
+                            <textarea *ngSwitchCase="'longtext'" style="height: 150px" class="form-control"
+                                      [formControlName]="item.name"></textarea>
+                            <select nice-select *ngSwitchCase="'select'"
+                                    (change)="changeSelect($event.target.value, item.name)" [formControlName]="item.name">
+                              <option value="">-- {{item.title}} --</option>
+                              <option *ngFor="let i of item.value ? item.value : []" value="{{i.id}}">{{i.name}}</option>
+                            </select>
+                            <ng-container *ngIf="submitted && form.controls[item.name].errors">
+                              <small class="text-danger" *ngFor="let i of item.validate">
+                                <ng-container *ngIf="form.controls[item.name].errors[i.name]">
+                                  {{i.message}}
+                                </ng-container>
+                              </small>
+                            </ng-container>
+                          </ng-container>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12">
+                          <button type="button" [disabled]="listProcedure.length == 1" class="float-left btn btn-primary" (click)="previousTab()">Quay lại
+                          </button>
+                          <button type="submit" [disabled]="form.invalid" class="float-right btn btn-primary">Nộp hồ sơ
+                          </button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- End single blog -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -97,9 +97,9 @@
                   </div>
                   <div class="row">
                     <div class="col-md-12">
-                      <button type="button" class="float-left btn btn-primary" (click)="previousTab()">Quay lại
+                      <button type="button" [disabled]="listProcedure.length == 1" class="float-left btn btn-primary" (click)="previousTab()">Quay lại
                       </button>
-                      <button type="submit" class="float-right btn btn-primary">Nộp hồ sơ
+                      <button type="submit" [disabled]="form.invalid" class="float-right btn btn-primary">Nộp hồ sơ
                       </button>
                     </div>
                   </div>
@@ -127,19 +127,25 @@
                       <td>{{profile.code}}</td>
                     </tr>
                     <tr>
-                      <td>Lĩnh vực</td>
-                      <td>{{profile.code}}</td>
+                      <td>Tên thủ tục</td>
+                      <td>{{profile.thu_tuc.ten_thu_tuc}}</td>
                     </tr>
                     <tr>
                       <td>Thời gian nộp</td>
                       <td>{{profile.created_at | date: 'd-M-y'}}</td>
                     </tr>
-<!--                    <tr>-->
-<!--                      <td>Thời gian nộp</td>-->
-<!--                      <td>{{profile.created_at | date: 'd-M-y'}}</td>-->
-<!--                    </tr>-->
+                    <tr>
+                      <td>Dự kiến hoàn thành</td>
+                      <td>{{profile.thoi_gian_du_kien | date: 'd-M-y'}}</td>
+                    </tr>
                     </tbody>
                   </table>
+                </div>
+                <div class="row mt-3">
+                  <div class="col-md-12">
+                    <a routerLink="/history"  class="float-right btn btn-primary">Xem lịch sử
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>

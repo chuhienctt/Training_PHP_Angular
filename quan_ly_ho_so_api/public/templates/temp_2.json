@@ -5,6 +5,7 @@
         "type": "text",
         "value": "",
         "required": true,
+        "hide": false,
         "class": "col-md-12"
     },
     {
@@ -13,6 +14,7 @@
         "type": "date",
         "value": "",
         "required": true,
+        "hide": false,
         "class": "col-md-6"
     },
     {
@@ -21,6 +23,7 @@
         "type": "phone_number",
         "value": "",
         "required": true,
+        "hide": false,
         "class": "col-md-6"
     },
     {
@@ -29,6 +32,52 @@
         "type": "email",
         "value": "",
         "required": true,
+        "hide": false,
+        "class": "col-md-12"
+    },
+    {
+        "title": "Địa chỉ",
+        "name": "dia_chi",
+        "type": "text",
+        "value": "",
+        "required": true,
+        "hide": false,
+        "class": "col-md-12"
+    },
+    {
+        "title": "Tỉnh/thành phố",
+        "name": "province_id",
+        "type": "select",
+        "value": "model:App\\Models\\DiaChinh\\Province",
+        "required": true,
+        "hide": true,
+        "class": "col-md-4"
+    },
+    {
+        "title": "Quận/huyện/thị xã",
+        "name": "district_id",
+        "type": "select",
+        "value": "",
+        "required": true,
+        "hide": true,
+        "class": "col-md-4"
+    },
+    {
+        "title": "Xã/phường/thị trấn",
+        "name": "ward_id",
+        "type": "select",
+        "value": "",
+        "required": true,
+        "hide": true,
+        "class": "col-md-4"
+    },
+    {
+        "title": "Lý do",
+        "name": "ly_do",
+        "type": "longtext",
+        "value": "",
+        "required": true,
+        "hide": false,
         "class": "col-md-12"
     },
     {
@@ -37,6 +86,7 @@
         "type": "file",
         "value": "",
         "required": true,
+        "hide": true,
         "class": "col-md-12"
     }
 ]
