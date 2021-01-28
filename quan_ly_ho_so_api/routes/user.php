@@ -64,7 +64,11 @@ Route::group([
         'middleware' => 'UserGuard'
     ], function () {
     
+        Route::get('/get', 'User\HoSoController@get_ho_so_update');
+
         Route::get('/get-ho-so', 'User\HoSoController@get_ho_so');
+
+        Route::put('/update', 'User\HoSoController@update');
     
     });
 

@@ -5,6 +5,7 @@
         "type": "text",
         "value": "",
         "required": true,
+        "hide": false,
         "class": "col-md-12"
     },
     {
@@ -13,6 +14,7 @@
         "type": "date",
         "value": "",
         "required": true,
+        "hide": false,
         "class": "col-md-6"
     },
     {
@@ -21,6 +23,7 @@
         "type": "phone_number",
         "value": "",
         "required": true,
+        "hide": false,
         "class": "col-md-6"
     },
     {
@@ -29,6 +32,7 @@
         "type": "email",
         "value": "",
         "required": true,
+        "hide": false,
         "class": "col-md-12"
     },
     {
@@ -37,6 +41,7 @@
         "type": "file",
         "value": "",
         "required": true,
+        "hide": true,
         "class": "col-md-12"
     }
 ]
