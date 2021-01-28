@@ -12,6 +12,7 @@ use App\Models\QuyTrinh;
 use App\Models\ThuTuc;
 use App\Models\LinhVuc;
 use App\Helpers\Pagination;
+use Core\Validator;
 
 class HoSoController extends Controller {
 
@@ -65,6 +66,29 @@ class HoSoController extends Controller {
             'total' => $paging['total_records'],
             'data' => $paging['data'],
         ]);
+    }
+
+    public function get_ho_so_update() {
+        
+        validator()->validate([
+            'id' => [
+                'required' => 'Thiếu id hồ sơ',
+                'exists:ho_so' => 'Không tồn tại hồ sơ',
+            ],
+        ]);
+
+        $ho_so = HoSo::find(request()->id);
+
+        $ho_so->thong_tin = json_decode($ho_so->thong_tin);
+        
+        foreach ($ho_so->thong_tin as $key => $value) {
+            if($value->type === 'select' && stripos($value->value, 'model:') !== false) {
+                $model = explode(':', $value->value)[1]::all();
+                $value->value = $model;
+            }
+        }
+
+        return response()->json($ho_so);
     }
 
     public function create() {
@@ -121,7 +145,7 @@ class HoSoController extends Controller {
             if($value->name == 'dia_chi') {
                 $dia_chi = $value;
             }
-            
+
             if($dia_chi && $value->name == 'ward_id') {
                 $dia_chi->value = $dia_chi->value.", ".DiaChinhController::getDiaChiString($value->value);
             }
@@ -147,34 +171,29 @@ class HoSoController extends Controller {
             ],
         ]);
 
-        $ho_so = HoSo::find(request()->id);
+        $ho_so = HoSo::where([
+            'id' => request()->id,
+            'id_user' => Auth::get()->id,
+            'trang_thai' => 0,
+        ])->first();
 
-        $quy_trinh = QuyTrinh::find(request()->id_quy_trinh);
-        $thu_tuc = ThuTuc::find($quy_trinh->id_thu_tuc);
+        if($ho_so == null) {
+            Validator::alert("Không thể sửa hồ sơ này!");
+        }
 
-        $temp_object = $this->get_template_object($quy_trinh->template);
+        $temp_object = json_decode($ho_so->thong_tin);
 
         Template::validate($temp_object, request()->all());
 
         $data = Template::get_data($temp_object, request()->all());
 
-        $ho_so->id_thu_tuc = $thu_tuc->id;
-        $ho_so->id_linh_vuc = $thu_tuc->id_linh_vuc;
-        $ho_so->id_quy_trinh = $quy_trinh->id;
-
-        $user = UserGuard::getUserNonMiddleware();
-        if($user) {
-            $ho_so->id_user = $user->id;
-        }
-
-        $ho_so->code = "HS-{$quy_trinh->id}.{$thu_tuc->code}-".date('ymd-His');
         $ho_so->thong_tin = json_encode($data);
-        $ho_so->trang_thai = 0;
-        $ho_so->ngay_xu_ly = $quy_trinh->thoi_gian_xu_ly;
 
         if($ho_so->save()) {
-            return response()->success(1, 'Thêm hồ sơ thành công!', $ho_so);
+            $ho_so->thong_tin = $this->convertDataTemplate($ho_so);
+
+            return response()->success(1, 'Sửa hồ sơ thành công!', $ho_so);
         }
-        return response()->error(2, 'Thêm hồ sơ thất bại!');
+        return response()->error(2, 'Sửa hồ sơ thất bại!');
     }
 }
