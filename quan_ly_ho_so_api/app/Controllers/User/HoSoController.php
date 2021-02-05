@@ -68,6 +68,17 @@ class HoSoController extends Controller {
         ]);
     }
 
+    public function find_ho_so() {
+        $ho_so = null;
+        
+        if(request()->has("code")) {
+            $ho_so = HoSo::where('code', request()->code)->first();
+            $ho_so->thong_tin = $this->convertDataTemplate($ho_so);
+        }
+
+        return response()->json($ho_so);
+    }
+
     public function get_ho_so_update() {
         
         validator()->validate([

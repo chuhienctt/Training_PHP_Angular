@@ -59,6 +59,7 @@ Route::group([
 ], function () {
 
     Route::get('/get-template', 'User\HoSoController@get_template');
+    Route::post('/tra-cuu', 'User\HoSoController@find_ho_so');
 
     Route::group([
         'middleware' => 'UserGuard'
