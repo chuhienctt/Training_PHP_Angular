@@ -93,7 +93,7 @@
                       <div>{{item.created_at | date: 'd-M-y'}}</div>
                     </td>
                     <td>
-                      <a [routerLink]="['/detail', item.id]" class="btn btn-warning" >Xem chi tiết</a>
+                      <a [routerLink]="['/history-detail', item.id]" class="btn btn-warning" >Xem chi tiết</a>
                     </td>
                   </tr>
                   <tr *ngIf="totalRecords == 0">
