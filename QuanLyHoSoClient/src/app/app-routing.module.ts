@@ -12,6 +12,7 @@ import {DetailComponent} from "./main/detail/detail.component";
 import {SendProfileComponent} from "./main/send-profile/send-profile.component";
 import {HistoryComponent} from "./main/history/history.component";
 import {HistoryDetailComponent} from "./main/history-detail/history-detail.component";
+import {SearchProfileComponent} from "./main/search-profile/search-profile.component";
 
 const routes: Routes = [
   {
@@ -64,6 +65,10 @@ const routes: Routes = [
     path: 'history-detail/:id',
     component: HistoryDetailComponent,
     canActivate: [AuthGuard]
+  },
+  {
+    path: 'search-profile',
+    component: SearchProfileComponent
   }
 ];
 

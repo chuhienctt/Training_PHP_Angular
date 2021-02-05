@@ -1,0 +1,88 @@
+<!-- Start breadcrumbs area -->
+<div class="page-area">
+  <div class="breadcumb-overlay"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="breadcrumb text-center">
+          <ul>
+            <li class="home-bread">Trang chủ</li>
+            <li>Tra cứu hồ sơ</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End breadcrumbs area -->
+<!--Blog Area Start-->
+<div class="blog-page-area bg-color fix area-padding">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="section-headline text-center">
+          <h3>Tra cứu hồ sơ</h3>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="blog-sidebar-right">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+          <div class="row">
+            <div class="blog-grid blog-left-content faq-full">
+              <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                <div class="row">
+                  <div class="col-md-9">
+                    <input type="text" formControlName="code" class="form-control">
+                  </div>
+                  <div class="col-md-3">
+                    <button type="submit" class="btn btn-primary">Tra cứu</button>
+                  </div>
+                </div>
+              </form>
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="form-inner table-inner" style="padding: 0">
+                  <table>
+                    <tbody>
+                    <tr>
+                      <th>Mã hồ sơ</th>
+                      <th>Tên thủ tục</th>
+                      <th>Ngày nộp</th>
+                      <th>Thời gian dự tính</th>
+                      <th>Trạng thái trả về</th>
+                    </tr>
+                    <tr *ngIf="profile">
+                      <td>{{profile.code}}</td>
+                      <td>{{profile.thu_tuc.ten_thu_tuc}}</td>
+                      <td>
+                        <div>{{profile.created_at | date: 'd-M-y'}}</div>
+                      </td>
+                      <td>
+                        {{profile.thoi_gian_du_kien | date: 'd-M-y'}}
+                      </td>
+                      <td>
+                        <div *ngIf="profile.trang_thai == 0">Chưa xử lý</div>
+                        <div *ngIf="profile.trang_thai == 1">Đã tiếp nhận</div>
+                        <div *ngIf="profile.trang_thai == 2">Đang xử lý</div>
+                        <div *ngIf="profile.trang_thai == 3">Hoàn thành</div>
+                        <div *ngIf="profile.trang_thai == 4">Bị hủy</div>
+                      </td>
+                    </tr>
+                    <tr *ngIf="!profile">
+                      <td colspan="5">Không có hồ sơ.</td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <!-- End single blog -->
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End Right Sidebar -->
+    </div>
+    <!-- End row -->
+  </div>
+</div>
+<!--End of Blog Area-->

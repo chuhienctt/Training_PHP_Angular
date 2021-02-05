@@ -16,4 +16,12 @@ export class HistoryService {
   getDetail(id) {
     return this._http.get(environment.apiUrl + "ho-so/get?id=" + id);
   }
+
+  updateProfile(id, profile) {
+    return this._http.put(environment.apiUrl + "ho-so/update?id=" + id, profile);
+  }
+
+  search(code) {
+    return this._http.post(environment.apiUrl + "ho-so/tra-cuu", {code: code})
+  }
 }

@@ -34,6 +34,49 @@
       <div class="col-md-12 col-sm-12 col-xs-12">
         <p-steps [model]="items" [(activeIndex)]="activeIndex" [readonly]="true">
         </p-steps>
+        <div *ngIf="activeIndex == 0">
+          <div class="col-md-offset-1 col-sm-offset-1 col-md-10 col-sm-10 col-xs-12 mt-3">
+            <div class="login-form">
+              <h4 class="login-title text-center">ĐĂNG NHẬP</h4>
+              <div class="row">
+                <form [formGroup]="formLogin" (ngSubmit)="login()" class="log-form">
+                  <div class="col-md-offset-2 col-sm-offset-2 col-md-8 col-sm-8 col-xs-12 mb-3">
+                    <input formControlName="email" type="text" class="form-control" placeholder="Nhập email..." required>
+                    <div *ngIf="sumittedLo && formLogin.controls.email.errors">
+                      <div class="text-danger" *ngIf="formLogin.controls.email.errors.required">Chưa nhập email.</div>
+                      <div class="text-danger" *ngIf="formLogin.controls.email.errors.email">Email không đúng định dạng.</div>
+                      <div class="text-danger" *ngIf="formLogin.controls.email.errors.minlength">Email không được nhỏ hơn 8 ký tự.</div>
+                      <div class="text-danger" *ngIf="formLogin.controls.email.errors.maxlength">Email không được lớn hơn 50 ký tự.</div>
+                    </div>
+                  </div>
+                  <div class="col-md-offset-2 col-sm-offset-2 col-md-8 col-sm-8 col-xs-12 mb-3">
+                    <input formControlName="mat_khau" type="password" class="form-control" placeholder="Nhập mật khẩu..." required>
+                    <div *ngIf="sumittedLo && formLogin.controls.mat_khau.errors">
+                      <div class="text-danger" *ngIf="formLogin.controls.mat_khau.errors.required">Chưa nhập mật khẩu.</div>
+                      <div class="text-danger" *ngIf="formLogin.controls.mat_khau.errors.minlength">Mật khẩu không được dưới 8 ký tự.</div>
+                      <div class="text-danger" *ngIf="formLogin.controls.mat_khau.errors.maxlength">Mật khẩu không được trên 50 ký tự.</div>
+                      <div class="text-danger" *ngIf="formLogin.controls.mat_khau.errors.pattern">Mật khẩu không đúng định dạng.</div>
+                    </div>
+                  </div>
+                  <div class="col-md-12 col-sm-12 col-xs-12 text-center">
+                    <div class="clear"></div>
+                    <div class="separetor text-center"><span>Hoặc đăng nhập với</span></div>
+                    <div class="sign-icon">
+                      <ul>
+                        <li><a class="facebook" href="#"><i class="ti-facebook"></i></a></li>
+                        <li><a class="twitter" href="#"><i class="ti-twitter"></i></a></li>
+                        <li><a class="google" href="#"><i class="ti-google"></i></a></li>
+                      </ul>
+                      <div class="acc-not">Bạn chưa có tài khoản? <a [routerLink]="['/register']">Đăng ký ngay!</a></div>
+                    </div>
+                  </div>
+                  <button type="submit" class="float-right btn btn-primary">Tiếp theo
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
         <div *ngIf="activeIndex == 1">
           <div class="send-money-form mt-3">
             <div class="form-text">

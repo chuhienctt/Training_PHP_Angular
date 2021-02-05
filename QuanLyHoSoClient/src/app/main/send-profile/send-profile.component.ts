@@ -6,6 +6,7 @@ import {AddressService} from "../../services/address.service";
 import {FileService} from "../../libs/file.service";
 import {DatePipe} from "@angular/common";
 import {MessageService} from "primeng/api";
+import {HomeService} from "../../services/home.service";
 
 @Component({
   selector: 'app-send-profile',
@@ -15,7 +16,7 @@ import {MessageService} from "primeng/api";
 })
 export class SendProfileComponent implements OnInit {
   pipe = new DatePipe("en-US");
-  activeIndex = 1;
+  activeIndex = 0;
   items: any;
   form: FormGroup;
   listProcedure: any;
@@ -25,6 +26,8 @@ export class SendProfileComponent implements OnInit {
   submitted: boolean;
   profile:any;
   profileDetail: any;
+  formLogin: FormGroup;
+  sumittedLo: boolean;
 
   constructor(
     private sendProfileService: SendProfileService,
@@ -32,7 +35,8 @@ export class SendProfileComponent implements OnInit {
     private route: ActivatedRoute,
     private addressService: AddressService,
     private fileService: FileService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private homeService: HomeService
   ) {
   }
 
@@ -64,6 +68,11 @@ export class SendProfileComponent implements OnInit {
     ];
 
     this.getProcedure(this.route.snapshot.params['id']);
+
+    this.formLogin = this.formBuilder.group({
+      email: ['', [Validators.required, Validators.email, Validators.minLength(8), Validators.maxLength(100)]],
+      mat_khau: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(50), Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$')]],
+    })
   }
 
   getProcedure(id) {
@@ -168,6 +177,24 @@ export class SendProfileComponent implements OnInit {
         return e;
       })
     }
+  }
+
+  login() {
+    this.sumittedLo = true;
+
+    if(this.formLogin.invalid) {
+      return;
+    }
+    this.homeService.login(this.formLogin.value).subscribe((res:any) => {
+      localStorage.setItem("jwt", JSON.stringify(res.data));
+      this.homeService.input(res.data);
+      this.activeIndex = 1;
+
+    }, err => {
+      if (err.status != 1) {
+        this.messageService.add({ severity: 'error', summary: 'Thất bại!', detail: err.error.message });
+      }
+    })
   }
 
 }

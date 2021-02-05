@@ -32,6 +32,7 @@ import { StepsModule } from 'primeng/steps';
 import {SendProfileComponent} from "./main/send-profile/send-profile.component";
 import { HistoryComponent } from './main/history/history.component';
 import { HistoryDetailComponent } from './main/history-detail/history-detail.component';
+import { SearchProfileComponent } from './main/search-profile/search-profile.component';
 
 export function tokenGetter() {
   let user = JSON.parse(localStorage.getItem("jwt"));
@@ -54,7 +55,8 @@ export function tokenGetter() {
     DetailComponent,
     SendProfileComponent,
     HistoryComponent,
-    HistoryDetailComponent
+    HistoryDetailComponent,
+    SearchProfileComponent
   ],
   imports: [
     BrowserModule,
